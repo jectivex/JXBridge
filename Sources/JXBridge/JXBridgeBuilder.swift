@@ -3,6 +3,9 @@ import Foundation
 import ScriptBridgeObjC
 #endif
 
+// TODO: Expand builder constructors, funcs to handle additional arguments.
+// TODO: Expand builder to handle async funcs.
+
 /// Build the bridge for scripting a native type.
 public class JXBridgeBuilder<T> {
     /// Supply the type to bridge.

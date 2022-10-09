@@ -1,20 +1,11 @@
-//
-//  JXBridgeObjectiveCBuilder.swift
-//  
-//  Created by Abe White on 8/21/22.
-//
-
 #if canImport(ObjectiveC)
 
-import ScriptBridgeObjC
+import JXBridgeObjC
 
 extension JXBridge {
-    /**
-     Convenience init to create a bridge for any ObjectiveC class without using
-     a `JXBridgeBuilder`.
-     - parameter filter Return `false` to exclude a property or selector name
-        from the resulting bridge.
-     */
+    /// Convenience init to create a bridge for any ObjectiveC class without using a `JXBridgeBuilder`.
+    /// - Parameters:
+    ///   - filter Return `false` to exclude a property or selector name from the resulting bridge.
     public init(objectiveCClass cls: AnyClass, with typeName: String? = nil, filter: (String) -> Bool = { _ in true }) {
         var bridge = JXBridge(cls)
         if let typeName {
@@ -38,15 +29,15 @@ class JXBridgeObjectiveCBuilder {
 
     func addObjectiveCPropertiesAndMethods(filter: (String) -> Bool) {
         let reflector = JXObjectiveCReflector(with: self.class)
-        reflector.constructors.filter { filter($0.name) }.forEach { _addConstructor($0) }
+        reflector.constructors.filter { filter($0.name) }.forEach { addConstructor($0) }
         reflector.properties.filter { filter($0.name) }.forEach { add($0) }
         reflector.methods.filter { filter($0.name) }.forEach { add($0) }
-        reflector.classProperties.filter { filter($0.name) }.forEach { _addClass($0) }
-        reflector.classMethods.filter { filter($0.name) }.forEach { _addClass($0) }
+        reflector.classProperties.filter { filter($0.name) }.forEach { addClass($0) }
+        reflector.classMethods.filter { filter($0.name) }.forEach { addClass($0) }
     }
 
-    private func _addConstructor(_ method: JXObjectiveCMethod) {
-        let typeName = self.bridge.typeName
+    private func addConstructor(_ method: JXObjectiveCMethod) {
+        let typeName = bridge.typeName
         let constructorBridge = ConstructorBridge(typeName: typeName, parameterCount: method.parameterCount) { args, registry in
             try validate(typeName: typeName, function: "init", arguments: args, count: method.parameterCount)
             var convertedArgs: [AnyObject] = []
@@ -97,7 +88,7 @@ class JXBridgeObjectiveCBuilder {
         self.bridge.functions.append(functionBridge)
     }
 
-    private func _addClass(_ property: JXObjectiveCProperty) {
+    private func addClass(_ property: JXObjectiveCProperty) {
         let typeName = self.bridge.typeName
         let name = property.name
         let getter: (Any, JXBridgeRegistry) throws -> Any? = { obj, registry in
@@ -118,7 +109,7 @@ class JXBridgeObjectiveCBuilder {
         self.bridge.classProperties.append(PropertyBridge(typeName: typeName, name: name, getter: getter, setter: setter))
     }
 
-    fileprivate func _addClass(_ method: JXObjectiveCMethod) {
+    private func addClass(_ method: JXObjectiveCMethod) {
         let typeName = self.bridge.typeName
         let functionName = _functionName(forSelectorName: method.name)
         let functionBridge = FunctionBridge(typeName: typeName, name: functionName) { obj, args, registry in
@@ -136,12 +127,8 @@ class JXBridgeObjectiveCBuilder {
     }
 }
 
-/**
- To create a function name from a selector we concatenate all the words,
- capitalizing words after `:`s. E.g. `doSomething:withArg:` becomes
- `doSomethingWithArg(_, _)`.
- */
-private func _functionName(forSelectorName name: String) -> String {
+/// To create a function name from a selector we concatenate all the words, capitalizing words after `:`s. E.g. `doSomething:withArg:` becomes `doSomethingWithArg(_, _)`.
+private func functionName(forSelectorName name: String) -> String {
     var scriptName = ""
     var capitalizeNext = false
     for char in name {
@@ -160,6 +147,148 @@ private func validate(typeName: String, function: String, arguments: [Any?], cou
     if arguments.count != count {
         throw JXBridgeErrors.invalidArgumentCount(typeName, function)
     }
+}
+
+/// Convert from a value we got from a script to a boxed ObjectiveC `id` value to use as a selector argument via `JXObjectiveCReflector`.
+private func convertObjectiveCFromScript(typeName: String, function: String, argument: Any?, index: Int, toBoxed type: JXObjectiveCType, registry: JXBridgeRegistry) throws -> AnyObject {
+    guard let value = argument else {
+        return JXObjectiveCNilPlaceholder as NSString
+    }
+
+    switch type {
+    case .char:
+        fallthrough
+    case .unsignedChar:
+        // Reflector expects a number
+        if let string = value as? String, string.count > 0 {
+            return NSNumber(value: string.utf8CString[0])
+        }
+        if let number = value as? NSNumber {
+            return number
+        }
+    case .int:
+        fallthrough
+    case .short:
+        fallthrough
+    case .long:
+        fallthrough
+    case .longLong:
+        fallthrough
+    case .unsignedInt:
+        fallthrough
+    case .unsignedShort:
+        fallthrough
+    case .unsignedLong:
+        fallthrough
+    case .unsignedLongLong:
+        fallthrough
+    case .float:
+        fallthrough
+    case .double:
+        if let number = value as? NSNumber {
+            return number
+        }
+    case .void:
+        throw JXBridgeErrors.cannotConvertFromScript(typeName, function, index, ())
+    case .object:
+        if let string = value as? NSString {
+            return string
+        }
+        if let number = value as? NSNumber {
+            return number
+        }
+        if let date = value as? NSDate {
+            return date
+        }
+        if let nsobject = value as? NSObject, registry.hasBridge(for: Swift.type(of: nsobject)) {
+            return nsobject
+        }
+    case .class:
+        if let string = value as? String, let cls = NSClassFromString(string) {
+            return cls
+        }
+    case .selector:
+        // Reflector expects a string
+        if let string = value as? NSString {
+            return string
+        }
+    case .unsupported:
+        break
+    @unknown default:
+        break
+    }
+    throw JXBridgeErrors.cannotConvertFromScript(typeName, function, index, value)
+}
+
+/// Convert a boxed ObjectiveC return value from `JXObjectiveCReflector` to a value that we can transfer to a script.
+private func convertBoxedObjectiveCToScript(typeName: String, function: String, value: Any?, type: JXObjectiveCType, registry: JXBridgeRegistry) throws -> Any? {
+    guard let value else {
+        return nil
+    }
+    if let nilPlaceholder = value as? String, nilPlaceholder == JXObjectiveCNilPlaceholder {
+        return nil
+    }
+
+    switch type {
+    case .char:
+        fallthrough
+    case  .unsignedChar:
+        // Reflector returns a number
+        if let number = value as? NSNumber, let string = String(utf8String: [CChar(number.intValue), 0]) {
+            return string
+        }
+    case .int:
+        fallthrough
+    case .short:
+        fallthrough
+    case .long:
+        fallthrough
+    case .longLong:
+        fallthrough
+    case .unsignedInt:
+        fallthrough
+    case .unsignedShort:
+        fallthrough
+    case .unsignedLong:
+        fallthrough
+    case .unsignedLongLong:
+        fallthrough
+    case .float:
+        fallthrough
+    case .double:
+        if let number = value as? NSNumber {
+            return number
+        }
+    case .void:
+        return nil
+    case .object:
+        if let string = value as? String {
+            return string
+        }
+        if let number = value as? NSNumber {
+            return number
+        }
+        if let date = value as? Date {
+            return date
+        }
+        if let nsobject = value as? NSObject, registry.hasBridge(for: type(of: nsobject)) {
+            return nsobject
+        }
+    case .class:
+        if let cls = value as? AnyClass {
+            return NSStringFromClass(cls)
+        }
+    case .selector:
+        // Reflector returns a string
+        if let string = value as? String {
+            return string
+        }
+    case .unsupported:
+        fallthrough
+    @unknown default:
+        break
+    }
+    throw JXBridgeErrors.cannotConvertToScript(typeName, function, value)
 }
 
 #endif

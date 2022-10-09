@@ -410,6 +410,7 @@ JXObjectiveCType JXObjectiveCTypeFromEncoding(const char *encoding)
     } else if (!strcmp(encoding, ":")) {
         return JXObjectiveCTypeSelector;
     } else {
+        // TODO: Support encodable/decodable structs
         return JXObjectiveCTypeUnsupported;
     }
 }

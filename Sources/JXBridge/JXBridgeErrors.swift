@@ -30,9 +30,9 @@ public enum JXBridgeErrors: Error {
 
     /// We do not support converting the given argument to the corresponding native type.
     /// (Type name, member name, argument index, value.)
-    case unsupportedConvertFromScript(String, String, Int, Any)
+    case cannotConvertFromScript(String, String, Int, Any)
 
     /// We do not support converting the function return or property value to a script value.
     /// (Type name, member name, value.)
-    case unsupportedConvertToScript(String, String, Any)
+    case cannotConvertToScript(String, String, Any)
 }

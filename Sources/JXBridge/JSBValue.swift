@@ -71,7 +71,7 @@ public struct JXBValue {
                 try object.setProperty(entry.key, _jxValue(for: entry.value, in: context, registry: registry))
             }
         }
-        throw JXBridgeErrors.unsupportedConvertToScript("", "", value)
+        throw JXBridgeErrors.cannotConvertToScript("", "", value)
     }
 
     public var isNull: Bool {

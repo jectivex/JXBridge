@@ -122,14 +122,14 @@ struct Converter {
             if let converted = convertibleType.fromScript(value) as? T {
                 return converted
             }
-            throw JXBridgeErrors.unsupportedConvertFromScript(typeName, function, index, value)
+            throw JXBridgeErrors.cannotConvertFromScript(typeName, function, index, value)
         }
 #if canImport(ObjectiveC)
         if let convertibleType = type as? JXScriptConvertible.Type {
             if let converted = convertibleType.fromScript(value) as? T {
                 return converted
             }
-            throw JXBridgeErrors.unsupportedConvertFromScript(typeName, function, index, value)
+            throw JXBridgeErrors.cannotConvertFromScript(typeName, function, index, value)
         }
 #endif
         if let decodableType = type as? Decodable.Type {
@@ -139,9 +139,9 @@ struct Converter {
                 }
             } catch {
             }
-            throw JXBridgeErrors.unsupportedConvertFromScript(typeName, function, index, value)
+            throw JXBridgeErrors.cannotConvertFromScript(typeName, function, index, value)
         }
-        throw JXBridgeErrors.unsupportedConvertFromScript(typeName, function, index, value)
+        throw JXBridgeErrors.cannotConvertFromScript(typeName, function, index, value)
     }
 
     /**
@@ -167,7 +167,7 @@ struct Converter {
             return auto
         }
         guard let array = value as? [Any] else {
-            throw JXBridgeErrors.unsupportedConvertFromScript(typeName, function, index, value)
+            throw JXBridgeErrors.cannotConvertFromScript(typeName, function, index, value)
         }
         return try array.map { element in
             return try self.convertFromScript(typeName: typeName, function: function, argument: element, index: index, to: T.self, registry: registry)
@@ -197,7 +197,7 @@ struct Converter {
             return auto
         }
         guard let dictionary = value as? [AnyHashable: Any] else {
-            throw JXBridgeErrors.unsupportedConvertFromScript(typeName, function, index, value)
+            throw JXBridgeErrors.cannotConvertFromScript(typeName, function, index, value)
         }
         return try dictionary.reduce(into: [T: U]()) { result, entry in
             let convertedKey = try self.convertFromScript(typeName: typeName, function: function, argument: entry.key, index: index, to: T.self, registry: registry)
@@ -257,14 +257,14 @@ struct Converter {
             if let converted = convertible.toScript {
                 return converted
             }
-            throw JXBridgeErrors.unsupportedConvertToScript(typeName, function, value)
+            throw JXBridgeErrors.cannotConvertToScript(typeName, function, value)
         }
 #if canImport(ObjectiveC)
         if let convertible = value as? JXScriptConvertible {
             if let converted = convertible.toScript {
                 return converted
             }
-            throw JXBridgeErrors.unsupportedConvertToScript(typeName, function, value)
+            throw JXBridgeErrors.cannotConvertToScript(typeName, function, value)
         }
 #endif
         if registry.hasJXBridge(for: T.self) {
@@ -274,10 +274,10 @@ struct Converter {
             do {
                 return try encodable.sb_toScript
             } catch {
-                throw JXBridgeErrors.unsupportedConvertToScript(typeName, function, value)
+                throw JXBridgeErrors.cannotConvertToScript(typeName, function, value)
             }
         }
-        throw JXBridgeErrors.unsupportedConvertToScript(typeName, function, value)
+        throw JXBridgeErrors.cannotConvertToScript(typeName, function, value)
     }
 
     /**
@@ -295,162 +295,10 @@ struct Converter {
     static func convertToScript<T, U>(typeName: String, function: String, value: [T: U]?, registry: JXBridgeRegistry) throws -> Any? {
         return try value?.reduce(into: [AnyHashable: Any]()) { result, entry in
             guard let convertedKey = try self.convertToScript(typeName: typeName, function: function, value: entry.key, registry: registry) as? AnyHashable else {
-                throw JXBridgeErrors.unsupportedConvertToScript(typeName, function, entry.key)
+                throw JXBridgeErrors.cannotConvertToScript(typeName, function, entry.key)
             }
             let convertedValue = try self.convertToScript(typeName: typeName, function: function, value: entry.value, registry: registry)
             result[convertedKey] = convertedValue
         }
     }
-
-#if canImport(ObjectiveC)
-
-    /**
-     Convert from a script value to a boxed ObjectiveC `id` value to use as
-     a selector argument via `JXObjectiveCReflector`.
-     */
-    static func convertObjectiveCFromScript(typeName: String, function: String, argument: Any?, index: Int, toBoxed type: JXObjectiveCType, registry: JXBridgeRegistry) throws -> AnyObject {
-        guard let value = argument else {
-            return JXObjectiveCNilPlaceholder as NSString
-        }
-
-        switch type {
-        case .char:
-            fallthrough
-        case .unsignedChar:
-            // Reflector expects a number
-            if let string = value as? String, string.count > 0 {
-                return NSNumber(value: string.utf8CString[0])
-            }
-            if let number = value as? NSNumber {
-                return number
-            }
-        case .int:
-            fallthrough
-        case .short:
-            fallthrough
-        case .long:
-            fallthrough
-        case .longLong:
-            fallthrough
-        case .unsignedInt:
-            fallthrough
-        case .unsignedShort:
-            fallthrough
-        case .unsignedLong:
-            fallthrough
-        case .unsignedLongLong:
-            fallthrough
-        case .float:
-            fallthrough
-        case .double:
-            if let number = value as? NSNumber {
-                return number
-            }
-        case .void:
-            throw JXBridgeErrors.unsupportedConvertFromScript(typeName, function, index, ())
-        case .object:
-            if let string = value as? NSString {
-                return string
-            }
-            if let number = value as? NSNumber {
-                return number
-            }
-            if let date = value as? NSDate {
-                return date
-            }
-            if let nsobject = value as? NSObject, registry.hasJXBridge(for: Swift.type(of: nsobject)) {
-                return nsobject
-            }
-        case .class:
-            if let string = value as? String, let cls = NSClassFromString(string) {
-                return cls
-            }
-        case .selector:
-            // Reflector expects a string
-            if let string = value as? NSString {
-                return string
-            }
-        case .unsupported:
-            break
-        @unknown default:
-            break
-        }
-        throw JXBridgeErrors.unsupportedConvertFromScript(typeName, function, index, value)
-    }
-
-    /**
-     Convert a boxed ObjectiveC return value from `JXObjectiveCReflector` to a
-     script value.
-     */
-    static func convertBoxedObjectiveCToScript(typeName: String, function: String, value: Any?, type: JXObjectiveCType, registry: JXBridgeRegistry) throws -> Any? {
-        guard let value else {
-            return nil
-        }
-        if let nilPlaceholder = value as? String, nilPlaceholder == JXObjectiveCNilPlaceholder {
-            return nil
-        }
-
-        switch type {
-        case .char:
-            fallthrough
-        case  .unsignedChar:
-            // Reflector returns a number
-            if let number = value as? NSNumber, let string = String(utf8String: [CChar(number.intValue), 0]) {
-                return string
-            }
-        case .int:
-            fallthrough
-        case .short:
-            fallthrough
-        case .long:
-            fallthrough
-        case .longLong:
-            fallthrough
-        case .unsignedInt:
-            fallthrough
-        case .unsignedShort:
-            fallthrough
-        case .unsignedLong:
-            fallthrough
-        case .unsignedLongLong:
-            fallthrough
-        case .float:
-            fallthrough
-        case .double:
-            if let number = value as? NSNumber {
-                return number
-            }
-        case .void:
-            return nil
-        case .object:
-            if let string = value as? String {
-                return string
-            }
-            if let number = value as? NSNumber {
-                return number
-            }
-            if let date = value as? Date {
-                return date
-            }
-            if let nsobject = value as? NSObject, registry.hasJXBridge(for: Swift.type(of: nsobject)) {
-                return nsobject
-            }
-        case .class:
-            if let cls = value as? AnyClass {
-                return NSStringFromClass(cls)
-            }
-        case .selector:
-            // Reflector returns a string
-            if let string = value as? String {
-                return string
-            }
-        case .unsupported:
-            fallthrough
-        @unknown default:
-            break
-        }
-        throw JXBridgeErrors.unsupportedConvertToScript(typeName, function, value)
-    }
-    
-#endif
 }
