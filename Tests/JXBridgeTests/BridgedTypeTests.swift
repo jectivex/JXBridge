@@ -1,40 +1,25 @@
-//
-//  JXBridgedTypeTests.swift
-//
-//  Created by Abe White on 7/27/22.
-//
-
 import Combine
 @testable import JXBridge
 import JXKit
-import ScriptBridge
 import XCTest
 
-final class JXBridgedTypeTests: XCTestCase {
-    private var _bridge: JXBridge!
-
-    override func setUp() {
-        super.setUp()
-        _bridge = JXBridge()
-    }
-
+final class BridgedTypeTests: XCTestCase {
     func testBoxTypes() throws {
-        let typeBuilder = JXBridgeBuilder(JXBridgedStruct.self)
+        let context = JXContext()
+        let builder = JXBridgeBuilder(JXBridgedStruct.self)
             .constructor { JXBridgedStruct.init }
             .var.readWriteInt { \.readWriteInt }
             .var.readOnlyInt { \.readOnlyInt }
             .var.computedInt { \.computedInt }
             .var.string { \.string }
+        context.registry.add(builder.bridge)
 
-        let jxContext = JXContext()
-        let registry = JXBridgeRegistry()
-        let box = InstanceBox(JXBridgedStruct(), bridge: typeBuilder.bridge, registry: registry)
-
-        let readWriteInt = jxContext.string("readWriteInt")
+        let box = InstanceBox(JXBridgedStruct(), bridge: builder.bridge, registry: context.registry)
+        let readWriteInt = context.string("readWriteInt")
         let intReturn = try box.get(property: readWriteInt)
         XCTAssertTrue(intReturn.isNumber)
-        try box.set(property: readWriteInt, value: jxContext.number(99.0))
-        XCTAssertEqual(try box.get(property: readWriteInt).numberValue, 99.0)
+        try box.set(property: readWriteInt, value: context.number(99.0))
+        XCTAssertEqual(try box.get(property: readWriteInt).double, 99.0)
     }
     
     // TODO: Fix tests

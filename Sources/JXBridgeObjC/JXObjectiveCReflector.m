@@ -19,8 +19,7 @@
 
 - (void)_buildNSObject
 {
-    // Only include core NSObject methods. If we reflect on all members, we pick
-    // up a ton of category methods that result in hundreds of selectors.
+    // Only include core NSObject methods. If we reflect on all members, we pick up a ton of category methods that result in hundreds of selectors.
     // TODO: Allow explicit bridging of additional NSObject API
     JXObjectiveCMethod *descriptionMethod = [[JXObjectiveCMethod alloc] initWithName:@"description" selector:@selector(description) signature:[NSMethodSignature methodSignatureForSelector:@selector(description)]];
     JXObjectiveCMethod *hashMethod = [[JXObjectiveCMethod alloc] initWithName:@"hash" selector:@selector(hash) signature:[NSMethodSignature methodSignatureForSelector:@selector(hash)]];

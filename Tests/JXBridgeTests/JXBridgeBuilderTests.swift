@@ -1,10 +1,4 @@
-//
-//  JXBridgeBuilderTests.swift
-//
-//  Created by Abe White on 7/24/22.
-//
-
-@testable import ScriptBridge
+@testable import JXBridge
 import XCTest
 
 final class JXBridgeBuilderTests: XCTestCase {

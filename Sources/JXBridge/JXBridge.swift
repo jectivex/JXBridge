@@ -1,3 +1,5 @@
+import JXKit
+
 /// Bridge a native type for use in scripting.
 public struct JXBridge {
     /// Supply the native type being bridged.
@@ -18,22 +20,22 @@ public struct JXBridge {
         guard let superclass = self.superclass else {
             return false
         }
-        return registry.hasJXBridge(for: superclass)
+        return registry.hasBridge(for: superclass)
     }
 
     func superclass(in registry: JXBridgeRegistry) throws -> JXBridge {
         guard let superclass = self.superclass else {
             throw JXBridgeErrors.unknownType(typeName + ".superclass")
         }
-        return try registry.typeBridge(for: superclass)
+        return try registry.bridge(for: superclass)
     }
 
     private func findSuperclass(in registry: JXBridgeRegistry) -> JXBridge? {
-        guard let superclass = self.superclass, registry.hasJXBridge(for: superclass) else {
+        guard let superclass = self.superclass, registry.hasBridge(for: superclass) else {
             return nil
         }
         do {
-            return try registry.typeBridge(for: superclass)
+            return try registry.bridge(for: superclass)
         } catch {
             // Should not be possible
             return nil
@@ -296,43 +298,43 @@ public struct JXBridge {
 /// Bridge a native constructor.
 struct ConstructorBridge {
     let parameterCount: Int
-    let constructor: ([Any?], JXBridgeRegistry) throws -> Any
+    let constructor: ([JXValue], JXContext) throws -> Any
 
     /// Call the constructor, returning the constructed instance.
-    func call(_ args: [Any?], registry: JXBridgeRegistry) throws -> Any {
-        return try constructor(args, registry)
+    func call(_ args: [JXValue], in context: JXContext) throws -> Any {
+        return try constructor(args, context)
     }
 }
 
 /// Bridge a native instance property.
 struct PropertyBridge {
     let name: String
-    let getter: (Any, JXBridgeRegistry) throws -> Any?
-    let setter: ((Any, Any?, JXBridgeRegistry) throws -> Any)? // Returns target instance (for value types)
+    let getter: (Any, JXContext) throws -> JXValue
+    let setter: ((Any, JXValue, JXContext) throws -> Any)? // Returns target instance (for value types)
 
     /// Call the getter, returning the value.
-    func get(for instance: Any, registry: JXBridgeRegistry) throws -> Any? {
-        return try getter(instance, registry)
+    func get(for instance: Any, in context: JXContext) throws -> JXValue {
+        return try getter(instance, context)
     }
 
     /// Call the setter, returning the target instance. For value types, this may be a different value.
-    func set(for instance: Any, value: Any?, registry: JXBridgeRegistry) throws -> Any {
+    func set(for instance: Any, value: JXValue, in context: JXContext) throws -> Any {
         guard let setter = self.setter else {
             let typeName = String(describing: type(of: instance))
             throw JXBridgeErrors.readOnlyProperty(typeName, name)
         }
-        return try setter(instance, value, registry)
+        return try setter(instance, value, context)
     }
 }
 
 /// Bridge a native instance function.
 struct FunctionBridge {
     let name: String
-    let function: (Any, [Any?], JXBridgeRegistry) throws -> (Any, Any?) // Returns target instance (for value types)
+    let function: (Any, [JXValue], JXContext) throws -> (Any, JXValue) // Returns target instance (for value types)
 
     /// Call the function, returning the target instance and function return. For value types, the target instance may be a different value.
-    func call(for instance: Any, with args: [Any?], registry: JXBridgeRegistry) throws -> (Any, Any?) {
-        return try function(instance, args, registry)
+    func call(for instance: Any, with args: [JXValue], in context: JXContext) throws -> (Any, JXValue) {
+        return try function(instance, args, context)
     }
 }
 
@@ -340,30 +342,30 @@ struct FunctionBridge {
 struct StaticPropertyBridge {
     let typeName: String
     let name: String
-    let getter: (JXBridgeRegistry) throws -> Any?
-    let setter: ((Any?, JXBridgeRegistry) throws -> Void)?
+    let getter: (JXContext) throws -> JXValue
+    let setter: ((JXValue, JXContext) throws -> Void)?
 
     /// Call the getter, returning the value.
-    func get(registry: JXBridgeRegistry) throws -> Any? {
-        return try getter(registry)
+    func get(in context: JXContext) throws -> JXValue {
+        return try getter(context)
     }
 
     /// Call the setter.
-    func set(value: Any?, registry: JXBridgeRegistry) throws {
+    func set(value: JXValue, in context: JXContext) throws {
         guard let setter = self.setter else {
             throw JXBridgeErrors.readOnlyProperty(typeName, name)
         }
-        try setter(value, registry)
+        try setter(value, context)
     }
 }
 
 /// Bridge a native static function.
 struct StaticFunctionBridge {
     let name: String
-    let function: ([Any?], JXBridgeRegistry) throws -> Any?
+    let function: ([JXValue], JXContext) throws -> JXValue
 
     /// Call the function, returning the function return.
-    func call(with args: [Any?], registry: JXBridgeRegistry) throws -> Any? {
-        return try self.function(args, registry)
+    func call(with args: [JXValue], in context: JXContext) throws -> JXValue {
+        return try function(args, context)
     }
 }

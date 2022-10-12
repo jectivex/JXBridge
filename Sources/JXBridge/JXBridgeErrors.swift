@@ -1,12 +1,14 @@
 /// Error encountered when bridging types to JavaScript.
 public enum JXBridgeErrors: Error {
+    /// An internal bridging error occurred.
+    case internalError(String)
+
      /// Script supplied incorrect number of arguments to a function.
      /// (Type name, function name.)
     case invalidArgumentCount(String, String)
 
-    /// Script supplied nil to an argument or value that requires non-nil.
-    /// (Type name, member name, argument index.)
-    case invalidNilArgument(String, String, Int)
+    /// The JXContext has been dealloc'd.
+    case invalidContext
 
     /// Script attempted to create an instance of a type without any bridged constructors.
     /// (Type name.)
@@ -28,11 +30,11 @@ public enum JXBridgeErrors: Error {
     /// (Type name.)
     case unknownType(String)
 
-    /// We do not support converting the given argument to the corresponding native type.
-    /// (Type name, member name, argument index, value.)
-    case cannotConvertFromScript(String, String, Int, Any)
-
-    /// We do not support converting the function return or property value to a script value.
+    /// We do not support converting the given argument to the corresponding ObjectiveC type.
     /// (Type name, member name, value.)
-    case cannotConvertToScript(String, String, Any)
+    case cannotConvertToObjectiveC(String, String, Any)
+
+    /// We do not support converting the ObjectiveC function return or property value to a JS value.
+    /// (Type name, member name, value.)
+    case cannotConvertFromObjectiveC(String, String, Any)
 }

@@ -29,7 +29,7 @@ let package = Package(
     platforms: [ .macOS(.v10_15), .iOS(.v13), .tvOS(.v13) ],
     products: products,
     dependencies: [
-        .package(url: "https://github.com/jectivex/JXKit.git", from: "3.1.0"),
+        .package(url: "https://github.com/jectivex/JXKit.git", from: "3.2.0"),
     ],
     targets: targets
 )
