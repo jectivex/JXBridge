@@ -26,10 +26,11 @@ let targets: [Target] = [
 
 let package = Package(
     name: "JXBridge",
-    platforms: [ .macOS(.v10_15), .iOS(.v13), .tvOS(.v13) ],
+    platforms: [ .macOS(.v12), .iOS(.v15), .tvOS(.v15) ],
     products: products,
     dependencies: [
-        .package(url: "https://github.com/jectivex/JXKit.git", from: "3.2.0"),
+        //~~~.package(url: "https://github.com/jectivex/JXKit.git", from: "3.2.0"),
+        .package(url: "https://github.com/aabewhite/JXKit.git", branch: "spitypefix"),
     ],
     targets: targets
 )

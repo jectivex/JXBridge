@@ -141,7 +141,7 @@ class JXBridgeContextSPI {
 }
 
 extension JXBridgeContextSPI: JXContextSPI {
-    func toJX<T>(_ value: T, in context: JXContext) throws -> JXValue? {
+    func toJX(_ value: Any, in context: JXContext) throws -> JXValue? {
         let valueType = type(of: value)
         guard registry.hasBridge(for: valueType) else {
             return nil

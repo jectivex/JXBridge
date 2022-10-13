@@ -13,7 +13,7 @@ struct JSCodeGenerator {
 class jxb {
     static import() {
         for (let i = 0; i < arguments.length; i++) {
-            _jxbImport(arguments[i])
+            _jxbImport(arguments[i]);
         }
     }
 }
@@ -46,6 +46,7 @@ class \(bridge.typeName)\(extendsClause) {
 \(functionsJS)
     }
 """
+        print(classJS) //~~~
         return classJS
     }
 
@@ -65,7 +66,7 @@ class \(bridge.typeName)\(extendsClause) {
     private func staticPropertyGetterJS(_ propertyName: String) -> String {
         return """
     static get \(propertyName)() {
-        return _jxbGet(this._jxbStaticNative, '\(propertyName)'));
+        return _jxbGet(this._jxbStaticNative, '\(propertyName)');
     }
 """
     }
