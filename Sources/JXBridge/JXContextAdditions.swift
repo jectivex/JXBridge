@@ -26,6 +26,8 @@ extension JXContext {
         }
     }
 
+    // TODO: Remove need to import types: we can detect use via a proxy object in JS and via checking return types from native methods and auto-import
+
     /// Import the given type for use in this context.
     public func `import`(_ type: Any.Type) throws {
         try bridgeSPI.import(type, in: self)
