@@ -3,23 +3,8 @@
 import JXBridgeObjC
 import JXKit
 
-extension JXBridge {
-    /// Convenience init to create a bridge for any ObjectiveC class without using a `JXBridgeBuilder`.
-    /// - Parameters:
-    ///   - filter Return `false` to exclude a property or selector name from the resulting bridge.
-    public init(objectiveCClass cls: AnyClass, with typeName: String? = nil, filter: (String) -> Bool = { _ in true }) {
-        var bridge = JXBridge(cls)
-        if let typeName {
-            bridge.typeName = typeName
-        }
-        let builder = JXBridgeObjectiveCBuilder(cls, bridge: bridge)
-        builder.addObjectiveCPropertiesAndMethods(filter: filter)
-        builder.bridge.prepareLookupCaches()
-        self = bridge
-    }
-}
-
-class JXBridgeObjectiveCBuilder {
+// TODO: Test and debug
+class ObjectiveCBuilder {
     init(_ cls: AnyClass, bridge: JXBridge) {
         self.class = cls
         self.bridge = bridge

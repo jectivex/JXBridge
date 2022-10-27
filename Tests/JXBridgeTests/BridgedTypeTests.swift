@@ -6,7 +6,7 @@ import XCTest
 final class BridgedTypeTests: XCTestCase {
     func testBoxTypes() throws {
         let context = JXContext()
-        let builder = JXBridgeBuilder(JXBridgedStruct.self)
+        let builder = JXBridgeBuilder(type: JXBridgedStruct.self)
             .constructor { JXBridgedStruct.init }
             .var.readWriteInt { \.readWriteInt }
             .var.readOnlyInt { \.readOnlyInt }
@@ -14,7 +14,7 @@ final class BridgedTypeTests: XCTestCase {
             .var.string { \.string }
         context.registry.add(builder.bridge)
 
-        let box = InstanceBox(JXBridgedStruct(), bridge: builder.bridge, registry: context.registry)
+        let box = try InstanceBox(JXBridgedStruct(), bridge: context.registry.bridge(for: JXBridgedStruct.self), registry: context.registry)
         let readWriteInt = context.string("readWriteInt")
         let intReturn = try box.get(property: readWriteInt)
         XCTAssertTrue(intReturn.isNumber)
@@ -24,7 +24,7 @@ final class BridgedTypeTests: XCTestCase {
     
     func testStructVars() throws {
         let context = JXContext()
-        let builder = JXBridgeBuilder(JXBridgedStruct.self)
+        let builder = JXBridgeBuilder(type: JXBridgedStruct.self)
             .constructor { JXBridgedStruct.init }
             .var.readWriteInt { \.readWriteInt }
             .var.readOnlyInt { \.readOnlyInt }
@@ -46,7 +46,7 @@ final class BridgedTypeTests: XCTestCase {
 
     func testScriptCanSetPrivateSetVar_UNDESIRED() throws {
         let context = JXContext()
-        let builder = JXBridgeBuilder(JXBridgedStruct.self)
+        let builder = JXBridgeBuilder(type: JXBridgedStruct.self)
             .constructor { JXBridgedStruct.init }
             .var.readOnlyInt { \.readOnlyInt }
         context.registry.add(builder.bridge)
@@ -59,10 +59,10 @@ final class BridgedTypeTests: XCTestCase {
 
     func testRelatedObject() throws {
         let context = JXContext()
-        let structBuilder = JXBridgeBuilder(JXBridgedStruct.self)
+        let structBuilder = JXBridgeBuilder(type: JXBridgedStruct.self)
             .constructor { JXBridgedStruct.init }
             .var.related { \.related }
-        let relatedBuilder = JXBridgeBuilder(JXBridgedRelated.self)
+        let relatedBuilder = JXBridgeBuilder(type: JXBridgedRelated.self)
             .constructor { JXBridgedRelated.init }
             .var.string { \.string }
         context.registry.add(structBuilder.bridge)
@@ -79,10 +79,10 @@ final class BridgedTypeTests: XCTestCase {
 
     func testScriptCannotAutoSetMutatedRelatedStruct_UNDESIRED() throws {
         let context = JXContext()
-        let structBuilder = JXBridgeBuilder(JXBridgedStruct.self)
+        let structBuilder = JXBridgeBuilder(type: JXBridgedStruct.self)
             .constructor { JXBridgedStruct.init }
             .var.related { \.related }
-        let relatedBuilder = JXBridgeBuilder(JXBridgedRelated.self)
+        let relatedBuilder = JXBridgeBuilder(type: JXBridgedRelated.self)
             .constructor { JXBridgedRelated.init }
             .var.string { \.string }
         context.registry.add(structBuilder.bridge)
@@ -100,7 +100,7 @@ bridged.related.string;
 
     func testNativeCodeThrowsException() throws {
         let context = JXContext()
-        let structBuilder = JXBridgeBuilder(JXBridgedStruct.self)
+        let structBuilder = JXBridgeBuilder(type: JXBridgedStruct.self)
             .constructor { JXBridgedStruct.init }
             .func.exceptionFunc { JXBridgedStruct.exceptionFunc }
         context.registry.add(structBuilder.bridge)
@@ -121,14 +121,14 @@ caughtErr;
 
     func testSubclass() throws {
         let context = JXContext()
-        let baseBuilder = JXBridgeBuilder(JXBridgedBaseClass.self)
+        let baseBuilder = JXBridgeBuilder(type: JXBridgedBaseClass.self)
             .constructor { JXBridgedBaseClass.init }
             .var.computedString { \.computedString }
             .class.var.computedClassString { $0.computedClassString }
             .class.var.baseClassString { $0.baseClassString }
             .class.func.classFunc { $0.classFunc() }
             .static.var.staticString { JXBridgedBaseClass.staticString }
-        let subclassBuilder = JXBridgeBuilder(JXBridgedSubClass.self)
+        let subclassBuilder = JXBridgeBuilder(type: JXBridgedSubClass.self)
             .superclass(JXBridgedBaseClass.self)
             .constructor { JXBridgedSubClass.init }
             .var.readWriteInt { \.readWriteInt }
@@ -156,7 +156,7 @@ caughtErr;
 
     func testPropertyWrapped() throws {
         let context = JXContext()
-        let bridge = JXBridgeBuilder(JXBridgedBaseClass.self)
+        let bridge = JXBridgeBuilder(type: JXBridgedBaseClass.self)
             .constructor { JXBridgedBaseClass.init }
             .var.publishedInt { \.publishedInt }
             .bridge

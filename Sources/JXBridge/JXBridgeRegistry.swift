@@ -1,7 +1,5 @@
 import Foundation
 
-// TODO: Add ability to build JXBridges using annotations on your class. Add option to auto-bridge annotated class types.
-
 /// Registry of bridged types.
 public class JXBridgeRegistry {
     /// Auto-bridging behavior.
@@ -26,21 +24,11 @@ public class JXBridgeRegistry {
     /// Add a type bridge.
     /// - Seealso `JXBridgeBuilder`
     public func add(_ bridge: JXBridge) {
-        bridgesByGivenTypeName[bridge.typeName] = bridge
-        bridgesByActualTypeName[String(describing: bridge.type)] = bridge
+        var preparedBridge = bridge
+        preparedBridge.prepareLookupCaches()
+        bridgesByGivenTypeName[bridge.typeName] = preparedBridge
+        bridgesByActualTypeName[String(describing: bridge.type)] = preparedBridge
     }
-
-#if canImport(ObjectiveC)
-
-    /// Add a type bridge for the ObjectiveC properties and methods of the given type.
-    /// - Seealso `JXBridgeBuilder.addObjectiveCPropertiesAndMethods`
-    public func addObjectiveC<T: NSObject>(type: T.Type) {
-        let builder = JXBridgeBuilder(type)
-        builder.addObjectiveCPropertiesAndMethods()
-        add(builder.bridge)
-    }
-    
-#endif
 
     /// Whether a type bridge is available for the given type name. If auto bridging is enabled, this will always return `true` for a type name that maps to an ObjectiveC type.
     ///

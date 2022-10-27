@@ -1,5 +1,13 @@
 /// Error encountered when bridging types to JavaScript.
 public enum JXBridgeErrors: Error {
+    /// We do not support converting the given argument to the corresponding ObjectiveC type.
+    /// (Type name, member name, value.)
+    case cannotConvertToObjectiveC(String, String, Any)
+
+    /// We do not support converting the ObjectiveC function return or property value to a JS value.
+    /// (Type name, member name, value.)
+    case cannotConvertFromObjectiveC(String, String, Any)
+
     /// An internal bridging error occurred.
     case internalError(String)
 
@@ -29,12 +37,4 @@ public enum JXBridgeErrors: Error {
     /// Script attempted to access an unknown type.
     /// (Type name.)
     case unknownType(String)
-
-    /// We do not support converting the given argument to the corresponding ObjectiveC type.
-    /// (Type name, member name, value.)
-    case cannotConvertToObjectiveC(String, String, Any)
-
-    /// We do not support converting the ObjectiveC function return or property value to a JS value.
-    /// (Type name, member name, value.)
-    case cannotConvertFromObjectiveC(String, String, Any)
 }

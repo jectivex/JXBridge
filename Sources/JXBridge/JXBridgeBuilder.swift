@@ -10,24 +10,17 @@ import JXKit
 /// Build the bridge for scripting a native type.
 public class JXBridgeBuilder<T> {
     /// Supply the type to bridge.
-    public init(_ type: T.Type) {
-        inProgressBridge = JXBridge(T.self)
+    public init(type: T.Type, as typeName: String? = nil) {
+        self.bridge = JXBridge(type: T.self, as: typeName)
     }
 
-    /// The type being bridged.
-    public let type = T.self
-
-    /// Retrieve the bridge that has been built.
-    public var bridge: JXBridge {
-        get {
-            inProgressBridge.prepareLookupCaches()
-            return inProgressBridge
-        }
-        set {
-            inProgressBridge = newValue
-        }
+    /// Supply an in-progress bridge to add to.
+    public init(bridge: JXBridge) {
+        self.bridge = bridge
     }
-    fileprivate var inProgressBridge: JXBridge
+
+    /// The bridge being created.
+    public var bridge: JXBridge
 
     /// Add bridged instance vars.
     public var `var`: JXBridgeBuilderVars<T> {
@@ -54,25 +47,9 @@ public class JXBridgeBuilder<T> {
         return JXBridgeBuilderClassMembers(builder: self)
     }
 
-#if canImport(ObjectiveC)
-
-    /// Convenience to add all ObjectiveC-visible properties and methods.
-    /// - Parameters:
-    ///   - filter: Return false to exclude the member with the given name.
-    @discardableResult public func addObjectiveCPropertiesAndMethods(filter: (String) -> Bool = { _ in true }) -> JXBridgeBuilder<T> {
-        guard let cls = type as? AnyClass else {
-            return self
-        }
-        let objcBuilder = JXBridgeObjectiveCBuilder(cls, bridge: inProgressBridge)
-        objcBuilder.addObjectiveCPropertiesAndMethods(filter: filter)
-        inProgressBridge = objcBuilder.bridge
-        return self
-    }
-
-#endif
-
-    @discardableResult public func superclass(_ superclass: Any.Type) -> JXBridgeBuilder<T> {
-        inProgressBridge.superclass = superclass
+    /// Set the mapped superclass.
+    @discardableResult public func superclass(_ superclass: Any.Type?) -> JXBridgeBuilder<T> {
+        bridge.superclass = superclass
         return self
     }
 
@@ -83,11 +60,7 @@ public class JXBridgeBuilder<T> {
 
     /// builder.constructor { Type() }
     @discardableResult public func constructor(_ cons: @escaping () throws -> T) -> JXBridgeBuilder<T> {
-        let typeName = inProgressBridge.typeName
-        let constructorBridge = ConstructorBridge(parameterCount: 0) { args, context in
-            try validate(typeName: typeName, function: "init", arguments: args, count: 0)
-            return try cons()
-        }
+        let constructorBridge = ConstructorBridge(cons)
         return add(constructorBridge)
     }
 
@@ -98,17 +71,12 @@ public class JXBridgeBuilder<T> {
 
     /// builder.constructor { Type(p0: $1) }
     @discardableResult public func constructor<P0>(_ cons: @escaping (P0) throws -> T) -> JXBridgeBuilder<T> {
-        let typeName = inProgressBridge.typeName
-        let constructorBridge = ConstructorBridge(parameterCount: 1) { args, context in
-            try validate(typeName: typeName, function: "init", arguments: args, count: 1)
-            let arg0 = try args[0].convey(to: P0.self)
-            return try cons(arg0)
-        }
+        let constructorBridge = ConstructorBridge(cons)
         return add(constructorBridge)
     }
 
     private func add(_ constructorBridge: ConstructorBridge) -> JXBridgeBuilder<T> {
-        inProgressBridge.constructors.append(constructorBridge)
+        bridge.constructors.append(constructorBridge)
         return self
     }
 }
@@ -131,24 +99,7 @@ public struct JXBridgeBuilderVars<T> {
 
         // builder.var.xxx { \.xxx }
         @discardableResult public func callAsFunction<V>(_ accessor: () -> KeyPath<T, V>) -> JXBridgeBuilder<T> {
-            let keyPath = accessor()
-            let name = self.name
-            let getter: (Any, JXContext) throws -> JXValue = { obj, context in
-                let ret = (obj as! T)[keyPath: keyPath]
-                return try context.convey(ret)
-            }
-            let setter: ((Any, JXValue, JXContext) throws -> Any)?
-            if let writeableKeyPath = keyPath as? WritableKeyPath<T, V> {
-                setter = { obj, value, context in
-                    var target = obj as! T
-                    let p0 = try value.convey(to: V.self)
-                    target[keyPath: writeableKeyPath] = p0
-                    return target
-                }
-            } else {
-                setter = nil
-            }
-            return add(PropertyBridge(name: name, getter: getter, setter: setter))
+            return add(PropertyBridge(name: self.name, keyPath: accessor()))
         }
 
         // builder.var.xxx { $0.xxx }
@@ -196,11 +147,11 @@ public struct JXBridgeBuilderVars<T> {
         }
 
         private var typeName: String {
-            return vars.builder.inProgressBridge.typeName
+            return vars.builder.bridge.typeName
         }
 
         private func add(_ propertyBridge: PropertyBridge) -> JXBridgeBuilder<T> {
-            vars.builder.inProgressBridge.properties.append(propertyBridge)
+            vars.builder.bridge.properties.append(propertyBridge)
             return vars.builder
         }
     }
@@ -270,11 +221,11 @@ public struct JXBridgeBuilderFuncs<T> {
         }
 
         private var typeName: String {
-            return funcs.builder.inProgressBridge.typeName
+            return funcs.builder.bridge.typeName
         }
 
         private func add(_ functionBridge: FunctionBridge) -> JXBridgeBuilder<T> {
-            funcs.builder.inProgressBridge.functions.append(functionBridge)
+            funcs.builder.bridge.functions.append(functionBridge)
             return funcs.builder
         }
     }
@@ -334,11 +285,11 @@ public struct JXBridgeBuilderMutatingFuncs<T> {
         }
 
         private var typeName: String {
-            return funcs.builder.inProgressBridge.typeName
+            return funcs.builder.bridge.typeName
         }
 
         private func add(_ functionBridge: FunctionBridge) -> JXBridgeBuilder<T> {
-            funcs.builder.inProgressBridge.functions.append(functionBridge)
+            funcs.builder.bridge.functions.append(functionBridge)
             return funcs.builder
         }
     }
@@ -395,11 +346,11 @@ public struct JXBridgeBuilderStaticVars<T> {
         }
 
         private var typeName: String {
-            return vars.builder.inProgressBridge.typeName
+            return vars.builder.bridge.typeName
         }
 
         private func add(_ propertyBridge: StaticPropertyBridge) -> JXBridgeBuilder<T> {
-            vars.builder.inProgressBridge.staticProperties.append(propertyBridge)
+            vars.builder.bridge.staticProperties.append(propertyBridge)
             return vars.builder
         }
     }
@@ -459,11 +410,11 @@ public struct JXBridgeBuilderStaticFuncs<T> {
         }
 
         private var typeName: String {
-            return funcs.builder.inProgressBridge.typeName
+            return funcs.builder.bridge.typeName
         }
 
         private func add(_ functionBridge: StaticFunctionBridge) -> JXBridgeBuilder<T> {
-            funcs.builder.inProgressBridge.staticFunctions.append(functionBridge)
+            funcs.builder.bridge.staticFunctions.append(functionBridge)
             return funcs.builder
         }
     }
@@ -523,11 +474,11 @@ public struct JXBridgeBuilderClassVars<T> {
         }
 
         private var typeName: String {
-            return vars.builder.inProgressBridge.typeName
+            return vars.builder.bridge.typeName
         }
 
         private func add(_ propertyBridge: PropertyBridge) -> JXBridgeBuilder<T> {
-            vars.builder.inProgressBridge.classProperties.append(propertyBridge)
+            vars.builder.bridge.classProperties.append(propertyBridge)
             return vars.builder
         }
     }
@@ -579,11 +530,11 @@ public struct JXBridgeBuilderClassFuncs<T> {
         }
 
         private var typeName: String {
-            return funcs.builder.inProgressBridge.typeName
+            return funcs.builder.bridge.typeName
         }
 
         private func add(_ functionBridge: FunctionBridge) -> JXBridgeBuilder<T> {
-            funcs.builder.inProgressBridge.classFunctions.append(functionBridge)
+            funcs.builder.bridge.classFunctions.append(functionBridge)
             return funcs.builder
         }
     }

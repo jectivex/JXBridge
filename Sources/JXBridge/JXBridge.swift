@@ -1,12 +1,44 @@
 import JXKit
+#if canImport(ObjectiveC)
+import ObjectiveC
+#endif
 
 /// Bridge a native type for use in scripting.
 public struct JXBridge {
     /// Supply the native type being bridged.
-    init(_ type: Any.Type) {
+    init(type: Any.Type, as typeName: String? = nil) {
         self.type = type
-        self.typeName = String(describing: type)
+        self.typeName = typeName ?? String(describing: type)
+#if canImport(ObjectiveC)
+        if let cls = type as? AnyClass {
+            self.superclass = class_getSuperclass(cls)
+        }
+#endif
     }
+
+    /// Create and populate a bridge for the type of the given instance using a `Mirror` to look for our bridging property wrappers.
+    public init<T: JXBridging>(reflecting instance: T, as typeName: String? = nil) {
+        let mirror = Mirror(reflecting: instance)
+        let bridge = JXBridge(type: Swift.type(of: instance), as: typeName)
+        let mirrorBuilder = MirrorBuilder(mirror, bridge: bridge)
+        mirrorBuilder.addReflectedMembers()
+
+        let builder = JXBridgeBuilder<T>(bridge: mirrorBuilder.bridge)
+        instance.bridge(with: builder)
+        self = builder.bridge
+    }
+
+#if canImport(ObjectiveC)
+    /// Create and populate a bridge for any ObjectiveC class using ObjectiveC reflection.
+    /// - Parameters:
+    ///   - filter Return `false` to exclude a property or selector name from the results.
+    public init(objectiveCClass cls: AnyClass, as typeName: String? = nil, filter: (String) -> Bool = { _ in true }) {
+        let bridge = JXBridge(type: cls, as: typeName)
+        let builder = ObjectiveCBuilder(cls, bridge: bridge)
+        builder.addObjectiveCPropertiesAndMethods(filter: filter)
+        self = builder.bridge
+    }
+#endif
 
     public let type: Any.Type
 

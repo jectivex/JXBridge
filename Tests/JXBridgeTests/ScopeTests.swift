@@ -8,7 +8,7 @@ final class ScopeTests: XCTestCase {
     override func setUp() {
         super.setUp()
         context = JXContext()
-        let builder = JXBridgeBuilder(ScopeTestsType.self)
+        let builder = JXBridgeBuilder(type: ScopeTestsType.self)
             .constructor { ScopeTestsType.init }
             .var.intProperty { \.intProperty }
         context.registry.add(builder.bridge)

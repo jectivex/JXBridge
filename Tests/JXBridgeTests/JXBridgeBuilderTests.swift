@@ -3,17 +3,17 @@ import XCTest
 
 final class JXBridgeBuilderTests: XCTestCase {
     func testType() {
-        let builder = JXBridgeBuilder(JXBridgeBuilderTestsStruct.self)
-        XCTAssertTrue(builder.type == JXBridgeBuilderTestsStruct.self)
+        let builder = JXBridgeBuilder(type: JXBridgeBuilderTestsStruct.self)
+        XCTAssertTrue(builder.bridge.type == JXBridgeBuilderTestsStruct.self)
     }
 
     func testTypeName() {
-        let builder = JXBridgeBuilder(JXBridgeBuilderTestsStruct.self)
+        let builder = JXBridgeBuilder(type: JXBridgeBuilderTestsStruct.self)
         XCTAssertEqual(builder.bridge.typeName, "JXBridgeBuilderTestsStruct")
     }
 
     func testVarsSyntax() {
-        let _ = JXBridgeBuilder(JXBridgeBuilderTestsStruct.self)
+        let _ = JXBridgeBuilder(type: JXBridgeBuilderTestsStruct.self)
             .var.instanceLet { \.instanceLet }
             .var.instanceVar { \.instanceVar }
             .var.instanceVarOptional { \.instanceVarOptional }
@@ -28,7 +28,7 @@ final class JXBridgeBuilderTests: XCTestCase {
     }
 
     func testStaticVarsSyntax() {
-        let _ = JXBridgeBuilder(JXBridgeBuilderTestsStruct.self)
+        let _ = JXBridgeBuilder(type: JXBridgeBuilderTestsStruct.self)
             .static.var.staticLet { JXBridgeBuilderTestsStruct.staticLet }
             .static.var.staticVar { JXBridgeBuilderTestsStruct.staticVar } set: { JXBridgeBuilderTestsStruct.staticVar = $0 }
             .static.var.staticComputedReadOnly { JXBridgeBuilderTestsStruct.staticComputedReadOnly }
@@ -36,7 +36,7 @@ final class JXBridgeBuilderTests: XCTestCase {
     }
 
     func testFuncsSyntax() {
-        let _ = JXBridgeBuilder(JXBridgeBuilderTestsStruct.self)
+        let _ = JXBridgeBuilder(type: JXBridgeBuilderTestsStruct.self)
             .func.instanceFunc { JXBridgeBuilderTestsStruct.instanceFunc }
             .func.instanceParamFunc { JXBridgeBuilderTestsStruct.instanceParamFunc(param:) }
             .func.syntheticFunc { $0.instanceFunc() }
@@ -44,12 +44,12 @@ final class JXBridgeBuilderTests: XCTestCase {
     }
 
     func testMutatingFuncsSyntax() {
-        let _ = JXBridgeBuilder(JXBridgeBuilderTestsStruct.self)
+        let _ = JXBridgeBuilder(type: JXBridgeBuilderTestsStruct.self)
             .mutating.func.instanceMutatingFunc { $0.instanceMutatingFunc() }
     }
 
     func testStaticFuncsSyntax() {
-        let _ = JXBridgeBuilder(JXBridgeBuilderTestsStruct.self)
+        let _ = JXBridgeBuilder(type: JXBridgeBuilderTestsStruct.self)
             .static.func.staticFunc { JXBridgeBuilderTestsStruct.staticFunc }
             .static.func.staticParamFunc { JXBridgeBuilderTestsStruct.staticParamFunc }
             .static.func.staticSyntheticFunc { JXBridgeBuilderTestsStruct.staticFunc() }
@@ -57,7 +57,7 @@ final class JXBridgeBuilderTests: XCTestCase {
     }
 
     func testConstructorsSyntax() {
-        let _ = JXBridgeBuilder(JXBridgeBuilderTestsStruct.self)
+        let _ = JXBridgeBuilder(type: JXBridgeBuilderTestsStruct.self)
             .constructor { JXBridgeBuilderTestsStruct.init }
             .constructor { JXBridgeBuilderTestsStruct.init(instanceVarOptional:) }
             .constructor { JXBridgeBuilderTestsStruct() } // Synthetic constructor
@@ -65,20 +65,19 @@ final class JXBridgeBuilderTests: XCTestCase {
     }
 
     func testClassVars() {
-        let _ = JXBridgeBuilder(JXBridgeBuilderTestsClass.self)
+        let _ = JXBridgeBuilder(type: JXBridgeBuilderTestsClass.self)
             .class.var.classProperty { $0.classProperty }
     }
 
     func testClassFuncs() {
-        let _ = JXBridgeBuilder(JXBridgeBuilderTestsClass.self)
+        let _ = JXBridgeBuilder(type: JXBridgeBuilderTestsClass.self)
             .class.func.classFunc { $0.classFunc() }
     }
 
 #if canImport(ObjectiveC)
 
     func testObjC() {
-        let _ = JXBridgeBuilder(JXBridgeBuilderTestsObjCClass.self)
-            .addObjectiveCPropertiesAndMethods()
+        let _ = JXBridge(objectiveCClass: JXBridgeBuilderTestsObjCClass.self)
     }
 
 #endif
