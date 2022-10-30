@@ -1,4 +1,6 @@
+#if canImport(ObjectiveC)
 import Foundation
+#endif
 import JXKit
 
 extension JXContext {

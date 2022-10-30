@@ -1,15 +1,37 @@
+#if canImport(Foundation)
 import Foundation
+#endif
 
+//~~~
 public struct JXBridgeAutoRegistration {
+    public static let related = JXBridgeAutoRegistration(RelatedTypesRegistering(processReachable: false))
+    static let reachable = JXBridgeAutoRegistration(RelatedTypesRegistering(processReachable: true))
+#if canImport(ObjectiveC)
+    static let objc = JXBridgeAutoRegistration(ObjectiveCRegistering())
+#endif
 
+    static func mapped(_ types: [String: Any]) -> JXBridgeAutoRegistration {
+        return JXBridgeAutoRegistration(MappedTypeNameRegistering(types: types))
+    }
+
+    static func custom(_ registering: JXBridgeRegistering) -> JXBridgeAutoRegistration {
+        return JXBridgeAutoRegistration(registering)
+    }
+
+    public let registering: JXBridgeRegistering
+
+    init(_ registering: JXBridgeRegistering) {
+        self.registering = registering
+    }
 }
 
-public protocol JXBridgeAutoRegistering {
-    func addBridge(typeName: String, type: Any.Type?, to registry: JXBridgeRegistry) -> Bool
+public protocol JXBridgeRegistering {
+    func addBridge(for typeName: String, to registry: JXBridgeRegistry) -> Bool
+    func addBridge(for type: Any.Type, to registry: JXBridgeRegistry) -> Bool
     func didAdd(bridge: JXBridge, to registry: JXBridgeRegistry)
 }
 
-class RelatedTypesAutoRegistering: JXBridgeAutoRegistering {
+class RelatedTypesRegistering: JXBridgeRegistering {
     private let processReachable: Bool
     private var recursionDepth = 0
 
@@ -17,12 +39,12 @@ class RelatedTypesAutoRegistering: JXBridgeAutoRegistering {
         self.processReachable = processReachable
     }
 
-    func addBridge(typeName: String, type: Any.Type?, to registry: JXBridgeRegistry) -> Bool {
-        guard let type else {
-            return false
-        }
-        registry.add(for: type)
-        return true
+    func addBridge(for typeName: String, to registry: JXBridgeRegistry) -> Bool {
+        return false
+    }
+
+    func addBridge(for type: Any.Type, to registry: JXBridgeRegistry) -> Bool {
+        return add(for: type, to: registry)
     }
 
     func didAdd(bridge: JXBridge, to registry: JXBridgeRegistry) {
@@ -31,37 +53,59 @@ class RelatedTypesAutoRegistering: JXBridgeAutoRegistering {
         }
         recursionDepth += 1
         for type in bridge.relatedTypes {
-            if let bridgingType = type as? JXBridging.Type {
-
-            } else {
-#if canImport(ObjectiveC)
-                if nsobjectType = type as? NSObject.Type {
-                    registry.add(forObjectiveCType: <#T##T.Type#>)
-                }
-#endif
-            }
             if !registry.hasBridge(for: type) {
-                registry.add(for: type)
+                add(for: type, to: registry)
             }
         }
         recursionDepth -= 1
+    }
+
+    private func add(for type: Any.Type, to registry: JXBridgeRegistry) -> Bool {
+        if let bridgingType = type as? JXBridging.Type {
+            registry.add(forBridgingType: bridgingType)
+            return true
+        }
+#if canImport(ObjectiveC)
+        if let nsobjectType = type as? NSObject.Type {
+            registry.add(forObjectiveCType: nsobjectType)
+            return true
+        }
+#endif
+        return false
+    }
+}
+
+struct MappedTypeNameRegistering: JXBridgeRegistering {
+    let types: [String: Any]
+
+    func addBridge(for typeName: String, to registry: JXBridgeRegistry) -> Bool {
+
+    }
+
+    func addBridge(for type: Any.Type, to registry: JXBridgeRegistry) -> Bool {
+        return false
+    }
+
+    func didAdd(bridge: JXBridge, to registry: JXBridgeRegistry) {
     }
 }
 
 #if canImport(ObjectiveC)
 
-struct ObjectiveCAutoRegistering: JXBridgeAutoRegistering {
-    func addBridge(typeName: String, type: Any.Type?, to registry: JXBridgeRegistry) -> Bool {
-        var objcClass: AnyClass? = nil
-        if type is NSObject.Type, let cls = type as? AnyClass {
-            objcClass = cls
-        } else if type == nil, let cls = NSClassFromString(typeName), cls is NSObject.Type {
-            objcClass = cls
-        }
-        guard let objcClass else {
+struct ObjectiveCRegistering: JXBridgeRegistering {
+    func addBridge(for typeName: String, to registry: JXBridgeRegistry) -> Bool {
+        guard let cls = NSClassFromString(typeName), let nsobjectType = cls as? NSObject.Type else {
             return false
         }
-        registry.add(for: objcClass)
+        registry.add(forObjectiveCType: nsobjectType)
+        return true
+    }
+
+    func addBridge(for type: Any.Type, to registry: JXBridgeRegistry) -> Bool {
+        guard let nsobjectType = type as? NSObject.Type else {
+            return false
+        }
+        registry.add(forObjectiveCType: nsobjectType)
         return true
     }
 

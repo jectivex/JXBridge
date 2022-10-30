@@ -3,12 +3,23 @@ import JXKit
 import ObjectiveC
 #endif
 
+public func JXTypeName(for type: Any.Type) -> String {
+    var str = String(describing: type)
+    if let packageEnd = str.lastIndex(of: "."), packageEnd != str.endIndex {
+        str = String(str.suffix(from: str.index(after: packageEnd)))
+    }
+    if let genericStart = str.firstIndex(of: "<"), str.last == ">" {
+
+    }
+}
+
+public func JX
+
 /// Bridge a native type for use in scripting.
 public struct JXBridge {
     /// Supply the native type being bridged.
-    init(type: Any.Type, as typeName: String? = nil) {
+    init(type: Any.Type) {
         self.type = type
-        self.typeName = typeName ?? String(describing: type)
 #if canImport(ObjectiveC)
         if let cls = type as? AnyClass {
             self.superclass = class_getSuperclass(cls)
@@ -17,9 +28,6 @@ public struct JXBridge {
     }
 
     public let type: Any.Type
-
-    /// It is possible to customize the name used for the type in scripts.
-    public var typeName: String
 
     /// Set the next mapped superclass.
     public var superclass: Any.Type?
@@ -36,7 +44,7 @@ public struct JXBridge {
 
     func superclass(in registry: JXBridgeRegistry) throws -> JXBridge {
         guard let superclass = self.superclass else {
-            throw JXBridgeErrors.unknownType(typeName + ".superclass")
+            throw JXBridgeErrors.unknownType("\(type).superclass")
         }
         return try registry.bridge(for: superclass)
     }
@@ -63,9 +71,9 @@ public struct JXBridge {
             return constructor
         }
         if constructors.isEmpty {
-            throw JXBridgeErrors.noConstructors(typeName)
+            throw JXBridgeErrors.noConstructors(String(describing: type))
         } else {
-            throw JXBridgeErrors.invalidArgumentCount(typeName, "init")
+            throw JXBridgeErrors.invalidArgumentCount(String(describing: type), "init")
         }
     }
 
@@ -100,7 +108,7 @@ public struct JXBridge {
         if let property = findProperty(for: name, superclassRegistry: superclassRegistry) {
             return property
         }
-        throw JXBridgeErrors.unknownPropertyName(typeName, name)
+        throw JXBridgeErrors.unknownPropertyName(String(describing: type), name)
     }
 
     private func findProperty(for name: String, superclassRegistry: JXBridgeRegistry?) -> PropertyBridge? {
@@ -132,7 +140,7 @@ public struct JXBridge {
         if let function = findFunction(for: name, superclassRegistry: superclassRegistry) {
             return function
         }
-        throw JXBridgeErrors.unknownFunctionName(typeName, name)
+        throw JXBridgeErrors.unknownFunctionName(String(describing: type), name)
     }
 
     private func findFunction(for name: String, superclassRegistry: JXBridgeRegistry? = nil) -> FunctionBridge? {
@@ -163,7 +171,7 @@ public struct JXBridge {
         if let property = findStaticProperty(for: name, superclassRegistry: superclassRegistry) {
             return property
         }
-        throw JXBridgeErrors.unknownPropertyName(typeName, name)
+        throw JXBridgeErrors.unknownPropertyName(String(describing: type), name)
     }
 
     private func findStaticProperty(for name: String, superclassRegistry: JXBridgeRegistry? = nil) -> StaticPropertyBridge? {
@@ -194,7 +202,7 @@ public struct JXBridge {
         if let function = findStaticFunction(for: name, superclassRegistry: superclassRegistry) {
             return function
         }
-        throw JXBridgeErrors.unknownFunctionName(typeName, name)
+        throw JXBridgeErrors.unknownFunctionName(String(describing: type), name)
     }
 
     private func findStaticFunction(for name: String, superclassRegistry: JXBridgeRegistry?) -> StaticFunctionBridge? {
@@ -225,7 +233,7 @@ public struct JXBridge {
         if let property = findClassProperty(for: name, superclassRegistry: superclassRegistry) {
             return property
         }
-        throw JXBridgeErrors.unknownPropertyName(typeName, name)
+        throw JXBridgeErrors.unknownPropertyName(String(describing: type), name)
     }
 
     private func findClassProperty(for name: String, superclassRegistry: JXBridgeRegistry?) -> PropertyBridge? {
@@ -257,7 +265,7 @@ public struct JXBridge {
         if let function = findClassFunction(for: name, superclassRegistry: superclassRegistry) {
             return function
         }
-        throw JXBridgeErrors.unknownFunctionName(typeName, name)
+        throw JXBridgeErrors.unknownFunctionName(String(describing: type), name)
     }
 
     private func findClassFunction(for name: String, superclassRegistry: JXBridgeRegistry? = nil) -> FunctionBridge? {
@@ -331,8 +339,7 @@ struct PropertyBridge {
     /// Call the setter, returning the target instance. For value types, this may be a different value.
     func set(for instance: Any, value: JXValue, in context: JXContext) throws -> Any {
         guard let setter = self.setter else {
-            let typeName = String(describing: type(of: instance))
-            throw JXBridgeErrors.readOnlyProperty(typeName, name)
+            throw JXBridgeErrors.readOnlyProperty(String(describing: type(of: instance)), name)
         }
         return try setter(instance, value, context)
     }

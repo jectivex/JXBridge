@@ -1,4 +1,6 @@
+#if canImport(ObjectiveC)
 import Foundation
+#endif
 import JXKit
 
 // TODO: Expand builder constructors, funcs to handle additional arguments.

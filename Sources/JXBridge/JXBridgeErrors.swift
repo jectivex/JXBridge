@@ -1,5 +1,8 @@
 /// Error encountered when bridging types to JavaScript.
 public enum JXBridgeErrors: Error {
+    /// Unable to register the given type (not a `JXBridging` or `NSObject` type).
+    case cannotRegisterType(String)
+
     /// We do not support converting the given argument to the corresponding ObjectiveC type.
     /// (Type name, member name, value.)
     case cannotConvertToObjectiveC(String, String, Any)
