@@ -13,13 +13,13 @@ class ObjectiveCBuilder {
     let `class`: AnyClass
     var bridge: JXBridge
 
-    func addObjectiveCPropertiesAndMethods(filter: (String) -> Bool) {
+    func addObjectiveCPropertiesAndMethods() {
         let reflector = JXObjectiveCReflector(with: self.class)
-        reflector.constructors.filter { filter($0.name) }.forEach { addConstructor($0) }
-        reflector.properties.filter { filter($0.name) }.forEach { addProperty($0) }
-        reflector.methods.filter { filter($0.name) }.forEach { addMethod($0) }
-        reflector.classProperties.filter { filter($0.name) }.forEach { addClassProperty($0) }
-        reflector.classMethods.filter { filter($0.name) }.forEach { addClassMethod($0) }
+        reflector.constructors.forEach { addConstructor($0) }
+        reflector.properties.forEach { addProperty($0) }
+        reflector.methods.forEach { addMethod($0) }
+        reflector.classProperties.forEach { addClassProperty($0) }
+        reflector.classMethods.forEach { addClassMethod($0) }
     }
 
     private func addConstructor(_ method: JXObjectiveCMethod) {

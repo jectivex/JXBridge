@@ -15,27 +15,12 @@ class MirrorBuilder {
         for child in mirror.children {
             addReflectedMembers(for: child)
         }
+        bridge.includesInstanceInfo = true
     }
 
     private func addReflectedMembers(for child: Mirror.Child) {
-        if let bridgingWrapper = child.value as? MirrorBridgingPropertyWrapper {
-            bridgingWrapper.addReflectedMembers(for: child, to: &bridge)
+        if let bridgingWrapper = child.value as? BridgingPropertyWrapper {
+            bridgingWrapper.addMembers(for: child.label ?? "", to: &bridge)
         }
-    }
-}
-
-protocol MirrorBridgingPropertyWrapper {
-    func addReflectedMembers(for child: Mirror.Child, to bridge: inout JXBridge)
-}
-
-extension MirrorBridgingPropertyWrapper {
-    func memberName(for child: Mirror.Child) -> String {
-        guard let name = child.label else {
-            return ""
-        }
-        guard name.first == "_" else {
-            return name
-        }
-        return String(name.dropFirst())
     }
 }

@@ -77,7 +77,9 @@ final class JXBridgeBuilderTests: XCTestCase {
 #if canImport(ObjectiveC)
 
     func testObjC() {
-        let _ = JXBridge(objectiveCClass: JXBridgeBuilderTestsObjCClass.self)
+        let builder = JXBridgeBuilder(type: JXBridgeBuilderTestsObjCClass.self)
+        builder.addObjectiveCPropertiesAndMethods()
+        // TODO
     }
 
 #endif

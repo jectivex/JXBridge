@@ -1,3 +1,4 @@
+import Foundation
 import JXKit
 
 extension JXContext {
@@ -144,12 +145,32 @@ class JXBridgeContextSPI {
 
 extension JXBridgeContextSPI: JXContextSPI {
     func toJX(_ value: Any, in context: JXContext) throws -> JXValue? {
+//~~~ This is also called for convey() not just param and return types. Need to figure out proper auto-register behavior
         let valueType = type(of: value)
-        guard registry.hasBridge(for: valueType) else {
-            return nil
+        if !registry.hasBridge(for: valueType) {
+            if let jxbridging = value as? JXBridging {
+                registry.add(for: jxbridging)
+            } else {
+#if canImport(ObjectiveC)
+                if let nsobject = value as? NSObject {
+                    registry.add(forObjectiveCType: type(of: nsobject))
+                } else {
+                    return nil
+                }
+#else
+                return nil
+#endif
+            }
         }
 
-        let bridge = try registry.bridge(for: valueType)
+        var bridge = try registry.bridge(for: valueType)
+        if !bridge.includesInstanceInfo && value is JXBridging {
+            let builder = MirrorBuilder(Mirror(reflecting: value), bridge: bridge)
+            builder.addReflectedMembers()
+            registry.add(builder.bridge)
+            bridge = try registry.bridge(for: valueType)
+        }
+
         // Construct with a special argument to avoid creating a new native instance on construction, then inject our value instance
         let obj = try context.eval("new \(bridge.typeName)('\(JSCodeGenerator.nativePropertyName)')")
         let instanceBox = InstanceBox(value, bridge: bridge, registry: registry)

@@ -1,11 +1,12 @@
 import JXKit
 
 public protocol JXBridging {
-    func bridge(with builder: JXBridgeBuilder<Self>)
+    static func bridgeJX() -> JXBridge
 }
 
 extension JXBridging {
-    func bridge(with builder: JXBridgeBuilder<Self>) {
+    public static func bridgeJX() -> JXBridge {
+        return JXBridge(type: self)
     }
 }
 
@@ -21,9 +22,30 @@ public struct JXVar<T, V> {
     public let wrappedValue: KeyPath<T, V>
 }
 
-extension JXVar: MirrorBridgingPropertyWrapper {
-    func addReflectedMembers(for child: Mirror.Child, to bridge: inout JXBridge) {
-        let propertyBridge = PropertyBridge(name: self.name ?? memberName(for: child), keyPath: self.wrappedValue)
+protocol BridgingPropertyWrapper {
+    func addMembers(for child: String, to bridge: inout JXBridge)
+}
+
+extension BridgingPropertyWrapper {
+    func memberName(for child: String, isSynthetic: Bool) -> String {
+        // Property wrapper vars have a '_' prefix
+        guard child.first == "_" else {
+            return child
+        }
+
+        // Let users give property wrappers on synthetic vars an additional
+        // '_' prefix so that they can mirror the name of the referenced var
+        var dropCount = 1
+        if (isSynthetic && child.hasPrefix("__")) {
+            dropCount = 2
+        }
+        return String(child.dropFirst(dropCount))
+    }
+}
+
+extension JXVar: BridgingPropertyWrapper {
+    func addMembers(for child: String, to bridge: inout JXBridge) {
+        let propertyBridge = PropertyBridge(name: self.name ?? memberName(for: child, isSynthetic: true), keyPath: self.wrappedValue)
         bridge.properties.append(propertyBridge)
     }
 }
@@ -50,8 +72,8 @@ public struct JXConstructor<T> {
     }
 }
 
-extension JXConstructor: MirrorBridgingPropertyWrapper {
-    func addReflectedMembers(for child: Mirror.Child, to bridge: inout JXBridge) {
+extension JXConstructor: BridgingPropertyWrapper {
+    func addMembers(for child: String, to bridge: inout JXBridge) {
         let constructorBridge = self.constructorBridge()
         bridge.constructors.append(constructorBridge)
     }

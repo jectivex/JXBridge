@@ -1,7 +1,4 @@
-#if canImport(ObjectiveC)
 import Foundation
-import JXBridgeObjC
-#endif
 import JXKit
 
 // TODO: Expand builder constructors, funcs to handle additional arguments.
@@ -545,3 +542,23 @@ private func validate(typeName: String, function: String, arguments: [Any?], cou
         throw JXBridgeErrors.invalidArgumentCount(typeName, function)
     }
 }
+
+extension JXBridgeBuilder where T: JXBridging {
+    func addInstanceInfo(_ instance: T) {
+        let builder = MirrorBuilder(Mirror(reflecting: instance), bridge: bridge)
+        builder.addReflectedMembers()
+        bridge = builder.bridge
+    }
+}
+
+#if canImport(ObjectiveC)
+
+extension JXBridgeBuilder where T: NSObject {
+    func addObjectiveCPropertiesAndMethods() {
+        let builder = ObjectiveCBuilder(T.self, bridge: bridge)
+        builder.addObjectiveCPropertiesAndMethods()
+        bridge = builder.bridge
+    }
+}
+
+#endif

@@ -16,30 +16,6 @@ public struct JXBridge {
 #endif
     }
 
-    /// Create and populate a bridge for the type of the given instance using a `Mirror` to look for our bridging property wrappers.
-    public init<T: JXBridging>(reflecting instance: T, as typeName: String? = nil) {
-        let mirror = Mirror(reflecting: instance)
-        let bridge = JXBridge(type: Swift.type(of: instance), as: typeName)
-        let mirrorBuilder = MirrorBuilder(mirror, bridge: bridge)
-        mirrorBuilder.addReflectedMembers()
-
-        let builder = JXBridgeBuilder<T>(bridge: mirrorBuilder.bridge)
-        instance.bridge(with: builder)
-        self = builder.bridge
-    }
-
-#if canImport(ObjectiveC)
-    /// Create and populate a bridge for any ObjectiveC class using ObjectiveC reflection.
-    /// - Parameters:
-    ///   - filter Return `false` to exclude a property or selector name from the results.
-    public init(objectiveCClass cls: AnyClass, as typeName: String? = nil, filter: (String) -> Bool = { _ in true }) {
-        let bridge = JXBridge(type: cls, as: typeName)
-        let builder = ObjectiveCBuilder(cls, bridge: bridge)
-        builder.addObjectiveCPropertiesAndMethods(filter: filter)
-        self = builder.bridge
-    }
-#endif
-
     public let type: Any.Type
 
     /// It is possible to customize the name used for the type in scripts.
@@ -47,6 +23,9 @@ public struct JXBridge {
 
     /// Set the next mapped superclass.
     public var superclass: Any.Type?
+
+    /// Whether this bridge includes information gleaned from examining an instance of the bridged type, e.g. property wrappers.
+    public internal(set) var includesInstanceInfo = false
 
     func hasSuperclass(in registry: JXBridgeRegistry) -> Bool {
         guard let superclass = self.superclass else {
