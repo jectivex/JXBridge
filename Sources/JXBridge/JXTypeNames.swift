@@ -9,6 +9,29 @@ extension String {
         let endGenericsIndex = genericsSuffix.lastIndex(of: "$") ?? genericsSuffix.endIndex
         let generics = genericsSuffix.prefix(upTo: endGenericsIndex)
 
+        var depth = 0
+        var startIndex = generics.startIndex
+        var endIndex = generics.endIndex
+        var index = startIndex
+        while index != endIndex {
+            switch generics[index] {
+            case "$":
+                let nextIndex = generics.index(after: index)
+                if nextIndex == endIndex || generics[nextIndex] == "_" || generics[nextIndex] == "$" {
+                    depth -= 1
+                } else {
+                    depth += 1
+                }
+            case "_":
+                if depth == 0 {
+                    let genericTypeName = generics[startIndex ..< index]
+                    //~~~ add generic type
+                } else {
+                    fallthrough
+                }
+            default:                                                                                                                                   
+            }
+        }
         //~~~ split generic types on _ by iterating through string and keeping track of $ depth
     }
 
