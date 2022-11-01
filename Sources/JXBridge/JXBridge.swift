@@ -3,18 +3,6 @@ import JXKit
 import ObjectiveC
 #endif
 
-public func JXTypeName(for type: Any.Type) -> String {
-    var str = String(describing: type)
-    if let packageEnd = str.lastIndex(of: "."), packageEnd != str.endIndex {
-        str = String(str.suffix(from: str.index(after: packageEnd)))
-    }
-    if let genericStart = str.firstIndex(of: "<"), str.last == ">" {
-
-    }
-}
-
-public func JX
-
 /// Bridge a native type for use in scripting.
 public struct JXBridge {
     /// Supply the native type being bridged.
