@@ -6,8 +6,9 @@ import ObjectiveC
 /// Bridge a native type for use in scripting.
 public struct JXBridge {
     /// Supply the native type being bridged.
-    init(type: Any.Type) {
+    init(type: Any.Type, as typeName: String? = nil) {
         self.type = type
+        self.typeName = typeName ?? JXTypeName(for: type)
 #if canImport(ObjectiveC)
         if let cls = type as? AnyClass {
             self.superclass = class_getSuperclass(cls)
@@ -16,9 +17,15 @@ public struct JXBridge {
     }
 
     public let type: Any.Type
-
+    
+    /// It is possible to customize the name used for the type in scripts.
+    public var typeName: String
+    
     /// Set the next mapped superclass.
     public var superclass: Any.Type?
+    
+    /// All types that appear in the bridged API of this type: property types, function return and param types, etc.
+    public let relatedTypes: [Any.Type] = [] //~~~
 
     /// Whether this bridge includes information gleaned from examining an instance of the bridged type, e.g. property wrappers.
     public internal(set) var includesInstanceInfo = false
