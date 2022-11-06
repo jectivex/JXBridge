@@ -24,7 +24,7 @@ class ObjectiveCBuilder {
 
     private func addConstructor(_ method: JXObjectiveCMethod) {
         let typeName = bridge.typeName
-        let constructorBridge = ConstructorBridge(parameterCount: method.parameterCount) { args, context in
+        let constructorBridge = ConstructorBridge(parameterTypes: swiftTypes(for: method.parameterTypes, count: method.parameterCount)) { args, context in
             try validate(typeName: typeName, function: "init", arguments: args, count: method.parameterCount)
             var convertedArgs: [AnyObject] = []
             for i in 0 ..< args.count {
@@ -55,13 +55,13 @@ class ObjectiveCBuilder {
         } else {
             setter = nil
         }
-        bridge.properties.append(PropertyBridge(name: name, getter: getter, setter: setter))
+        bridge.properties.append(PropertyBridge(name: name, type: swiftType(for: property.getter.returnType), getter: getter, setter: setter))
     }
 
     private func addMethod(_ method: JXObjectiveCMethod) {
         let typeName = bridge.typeName
         let functionName = functionName(forSelectorName: method.name)
-        let functionBridge = FunctionBridge(name: functionName) { obj, args, context in
+        let functionBridge = FunctionBridge(name: functionName, parameterTypes: swiftTypes(for: method.parameterTypes, count: method.parameterCount), returnType: swiftType(for: method.returnType)) { obj, args, context in
             try validate(typeName: typeName, function: functionName, arguments: args, count: method.parameterCount)
             var convertedArgs: [AnyObject] = []
             for i in 0 ..< args.count {
@@ -93,13 +93,13 @@ class ObjectiveCBuilder {
         } else {
             setter = nil
         }
-        bridge.classProperties.append(PropertyBridge(name: name, getter: getter, setter: setter))
+        bridge.classProperties.append(PropertyBridge(name: name, type: swiftType(for: property.getter.returnType), getter: getter, setter: setter))
     }
 
     private func addClassMethod(_ method: JXObjectiveCMethod) {
         let typeName = bridge.typeName
         let functionName = functionName(forSelectorName: method.name)
-        let functionBridge = FunctionBridge(name: functionName) { obj, args, context in
+        let functionBridge = FunctionBridge(name: functionName, parameterTypes: swiftTypes(for: method.parameterTypes, count: method.parameterCount), returnType: swiftType(for: method.returnType)) { obj, args, context in
             try validate(typeName: typeName, function: functionName, arguments: args, count: method.parameterCount)
             var convertedArgs: [AnyObject] = []
             for i in 0 ..< args.count {
@@ -281,6 +281,53 @@ private func conveyFromObjectiveC(_ object: Any?, into context: JXContext, fromB
         break
     }
     throw JXBridgeErrors.cannotConvertFromObjectiveC(typeName, member, object)
+}
+
+/// Return the equivalent Swift types.
+private func swiftTypes(for types: UnsafeMutablePointer<JXObjectiveCType>, count: Int) -> [Any.Type] {
+    return (0..<count).map { swiftType(for: types[$0]) }
+}
+
+/// Return the equivalent Swift type.
+private func swiftType(for type: JXObjectiveCType) -> Any.Type {
+    switch type {
+    case .char:
+        fallthrough
+    case  .unsignedChar:
+        return Character.self
+    case .int:
+        return Int.self
+    case .short:
+        return Int16.self
+    case .long:
+        fallthrough
+    case .longLong:
+        return Int64.self
+    case .unsignedInt:
+        return UInt.self
+    case .unsignedShort:
+        return UInt16.self
+    case .unsignedLong:
+        fallthrough
+    case .unsignedLongLong:
+        return UInt64.self
+    case .float:
+        return Float.self
+    case .double:
+        return Double.self
+    case .void:
+        return Void.self
+    case .object:
+        return AnyObject.self
+    case .class:
+        return AnyClass.self
+    case .selector:
+        return Selector.self
+    case .unsupported:
+        fallthrough
+    @unknown default:
+        return Any.Type.self
+    }
 }
 
 #endif

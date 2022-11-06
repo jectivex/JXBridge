@@ -43,6 +43,7 @@ public protocol JXBridgeAutoRegistrationPolicy {
     func addBridge(for type: Any.Type, to registry: JXBridgeRegistry) -> Bool
     
     /// Callback when a bridge is added to the registry. Use this to add related types if desired.
+    /// - Note: Adding additional bridges will result in recursive calls.
     func didAdd(bridge: JXBridge, to registry: JXBridgeRegistry)
 }
 
