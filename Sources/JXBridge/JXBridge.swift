@@ -24,34 +24,6 @@ public struct JXBridge {
     /// Set the next mapped superclass.
     public var superclass: Any.Type?
     
-    /// Computed set of types that appear in the bridged API of this type: superclass, property types, function return and parameter types.
-    public var relatedTypes: [Any.Type] {
-        var types: [String: Any.Type] = [:]
-        if let superclass {
-            types[String(describing: superclass)] = superclass
-        }
-        for constructor in constructors {
-            types = constructor.parameterTypes.reduce(into: types) { types, parameterType in
-                types[String(describing: parameterType)] = parameterType
-            }
-        }
-        types = properties.reduce(into: types) { types, property in
-            types[String(describing: property.type)] = property.type
-        }
-        for function in functions {
-            types = function.parameterTypes.reduce(into: types) { types, parameterType in
-                types[String(describing: parameterType)] = parameterType
-            }
-        }
-        return Array(types.values)
-    }
-    private func add(type: Any.Type?, to types: inout [String: Any.Type]) {
-        guard let type, type != Void.self else {
-            return
-        }
-        types[String(describing: type)] = type
-    }
-
     /// Whether this bridge includes information gleaned from examining an instance of the bridged type, e.g. property wrappers.
     public internal(set) var includesInstanceInfo = false
 
@@ -85,7 +57,7 @@ public struct JXBridge {
     var constructors: [ConstructorBridge] = []
 
     /// Return the bridged constructor with the given parameter count.
-    /// - Note Constructors are not inherited from base classes.
+    /// - Note: Constructors are not inherited from base classes.
     func constructor(forParameterCount count: Int, superclassRegistry: JXBridgeRegistry? = nil) throws -> ConstructorBridge {
         if let constructor = findConstructor(forParameterCount: count, superclassRegistry: superclassRegistry) {
             return constructor
@@ -98,7 +70,7 @@ public struct JXBridge {
     }
 
     private func findConstructor(forParameterCount count: Int, superclassRegistry: JXBridgeRegistry? = nil) -> ConstructorBridge? {
-        if let constructor = constructors.first(where: { $0.parameterTypes.count == count }) {
+        if let constructor = constructors.first(where: { $0.parameterCount == count }) {
             return constructor
         }
         // Special case for constructors: we only inherit superclass constructors if we don't define any ourselves
@@ -336,7 +308,7 @@ public struct JXBridge {
 
 /// Bridge a native constructor.
 struct ConstructorBridge {
-    let parameterTypes: [Any.Type]
+    let parameterCount: Int
     let constructor: ([JXValue], JXContext) throws -> Any
 
     /// Call the constructor, returning the constructed instance.
@@ -348,7 +320,6 @@ struct ConstructorBridge {
 /// Bridge a native instance property.
 struct PropertyBridge {
     let name: String
-    let type: Any.Type
     let getter: (Any, JXContext) throws -> JXValue
     let setter: ((Any, JXValue, JXContext) throws -> Any)? // Returns target instance (for value types)
 
@@ -369,8 +340,6 @@ struct PropertyBridge {
 /// Bridge a native instance function.
 struct FunctionBridge {
     let name: String
-    let parameterTypes: [Any.Type]
-    let returnType: Any.Type
     let function: (Any, [JXValue], JXContext) throws -> (Any, JXValue) // Returns target instance (for value types)
     let types: [Any.Type] = []
 
@@ -384,7 +353,6 @@ struct FunctionBridge {
 struct StaticPropertyBridge {
     let owningTypeName: String
     let name: String
-    let type: Any.Type
     let getter: (JXContext) throws -> JXValue
     let setter: ((JXValue, JXContext) throws -> Void)?
 
@@ -405,8 +373,6 @@ struct StaticPropertyBridge {
 /// Bridge a native static function.
 struct StaticFunctionBridge {
     let name: String
-    let parameterTypes: [Any.Type]
-    let returnType: Any.Type
     let function: ([JXValue], JXContext) throws -> JXValue
 
     /// Call the function, returning the function return.

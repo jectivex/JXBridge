@@ -1,25 +1,11 @@
 /// Generates JavaScript code.
 struct JSCodeGenerator {
-    static let importFunctionName = "_jxbImport"
     static let createNativeFunctionName = "_jxbCreateNative"
     static let createStaticNativeFunctionName = "_jxbCreateStaticNative"
     static let nativePropertyName = "_jxbNative"
     static let getPropertyFunctionName = "_jxbGet"
     static let setPropertyFunctionName = "_jxbSet"
     static let callFunctionName = "_jxbCall"
-
-    static func defineInitialFunctions() -> String {
-        let definitions = """
-class jxb {
-    static import() {
-        for (let i = 0; i < arguments.length; i++) {
-            _jxbImport(arguments[i]);
-        }
-    }
-}
-"""
-        return definitions
-    }
 
     let bridge: JXBridge
     let superclassBridge: JXBridge?

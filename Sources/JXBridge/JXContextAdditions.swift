@@ -3,6 +3,8 @@ import Foundation
 #endif
 import JXKit
 
+// TODO: What is the supported threading model? Currently we're assuming a given context is only used for a single thread or otherwise synchronized
+
 extension JXContext {
     private var bridgeSPI: JXBridgeContextSPI {
         if let bridgeSPI = self.spi as? JXBridgeContextSPI {
@@ -28,44 +30,32 @@ extension JXContext {
             bridgeSPI.registry = newValue
         }
     }
-
-    // TODO: Remove need to import types: we can detect use via a proxy object in JS and via checking return types from native methods and auto-import
-
-    /// Import the given type for use in this context.
-    public func `import`(_ type: Any.Type) throws {
-        try bridgeSPI.import(type, in: self)
-    }
 }
 
 class JXBridgeContextSPI {
+    //~~~ Need to create proxies for all namespaces and listen for new namespaces too
     lazy var registry = JXBridgeRegistry()
 
     func prepare(_ context: JXContext) throws {
         try defineInitialFunctions(in: context)
-        try context.eval(JSCodeGenerator.defineInitialFunctions())
     }
 
-    func `import`(_ type: Any.Type, in context: JXContext) throws {
-        try defineNativeAccessFunctions(in: context)
-        let bridge = try registry.bridge(for: type)
-        try defineClass(for: bridge, in: context)
-    }
-
-    private func defineInitialFunctions(in context: JXContext) throws {
-        let importFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
-            guard let self else {
-                throw JXBridgeErrors.invalidContext
-            }
-            guard args.count == 1 else {
-                throw JXBridgeErrors.internalError("import")
-            }
-            let bridge = try self.registry.bridge(for: args[0].string)
-            try self.defineNativeAccessFunctions(in: context)
-            try self.defineClass(for: bridge, in: context)
-            return context.undefined()
-        }
-        try context.global.setProperty(JSCodeGenerator.importFunctionName, importFunction)
-    }
+    //~~~
+//    private func defineInitialFunctions(in context: JXContext) throws {
+//        let importFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
+//            guard let self else {
+//                throw JXBridgeErrors.invalidContext
+//            }
+//            guard args.count == 1 else {
+//                throw JXBridgeErrors.internalError("import")
+//            }
+//            let bridge = try self.registry.bridge(for: args[0].string)
+//            try self.defineNativeAccessFunctions(in: context)
+//            try self.defineClass(for: bridge, in: context)
+//            return context.undefined()
+//        }
+//        try context.global.setProperty(JSCodeGenerator.importFunctionName, importFunction)
+//    }
 
     private func defineNativeAccessFunctions(in context: JXContext) throws {
         guard !hasDefinedNativeAccessFunctions else {
@@ -147,34 +137,12 @@ class JXBridgeContextSPI {
 
 extension JXBridgeContextSPI: JXContextSPI {
     func toJX(_ value: Any, in context: JXContext) throws -> JXValue? {
-//~~~ This is also called for convey() not just param and return types. Need to figure out proper auto-register behavior
-        let valueType = type(of: value)
-        if !registry.hasBridge(for: valueType) {
-            if let jxbridging = value as? JXBridging {
-                registry.add(for: jxbridging)
-            } else {
-#if canImport(ObjectiveC)
-                if let nsobject = value as? NSObject {
-                    registry.add(forObjectiveCType: type(of: nsobject))
-                } else {
-                    return nil
-                }
-#else
-                return nil
-#endif
-            }
-        }
-
-        var bridge = try registry.bridge(for: valueType)
-        if !bridge.includesInstanceInfo && value is JXBridging {
-            let builder = MirrorBuilder(Mirror(reflecting: value), bridge: bridge)
-            builder.addReflectedMembers()
-            registry.add(builder.bridge)
-            bridge = try registry.bridge(for: valueType)
+        guard let bridge = registry.findBridge(for: value, autobridging: true) else {
+            return nil
         }
 
         // Construct with a special argument to avoid creating a new native instance on construction, then inject our value instance
-        let obj = try context.eval("new \(bridge.typeName)('\(JSCodeGenerator.nativePropertyName)')")
+        let obj = try context.new(bridge.typeName, withArguments: [JSCodeGenerator.nativePropertyName])
         let instanceBox = InstanceBox(value, bridge: bridge, registry: registry)
         let nativeBox = context.object(peer: instanceBox)
         try obj.setProperty(JSCodeGenerator.nativePropertyName, nativeBox)

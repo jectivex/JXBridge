@@ -125,7 +125,7 @@ public struct JXBridgeBuilderVars<T> {
             } else {
                 setter = nil
             }
-            return add(PropertyBridge(name: name, type: V.self, getter: getter, setter: setter))
+            return add(PropertyBridge(name: name, getter: getter, setter: setter))
         }
 
         // builder.var.xxx { $0.xxx ) setter: { ... }
@@ -142,7 +142,7 @@ public struct JXBridgeBuilderVars<T> {
                 let ret = setterFunc(target, p0)
                 return ret
             }
-            return add(PropertyBridge(name: name, type: V.self, getter: getter, setter: setter))
+            return add(PropertyBridge(name: name, getter: getter, setter: setter))
         }
 
         private var typeName: String {
@@ -192,7 +192,7 @@ public struct JXBridgeBuilderFuncs<T> {
                 let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
                 return (target, retjx)
             }
-            return add(FunctionBridge(name: name, parameterTypes: [], returnType: R.self, function: function))
+            return add(FunctionBridge(name: name, function: function))
         }
 
         // builder.func.xxx { Type.xxx(p0:) }
@@ -216,7 +216,7 @@ public struct JXBridgeBuilderFuncs<T> {
                 let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
                 return (target, retjx)
             }
-            return add(FunctionBridge(name: name, parameterTypes: [P0.self], returnType: R.self, function: function))
+            return add(FunctionBridge(name: name, function: function))
         }
 
         private var typeName: String {
@@ -265,7 +265,7 @@ public struct JXBridgeBuilderMutatingFuncs<T> {
                 let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
                 return (target, retjx)
             }
-            return add(FunctionBridge(name: name, parameterTypes: [], returnType: R.self, function: function))
+            return add(FunctionBridge(name: name, function: function))
         }
 
         // builder.mutating.func.xxx { $0.xxx(p0: $1) }
@@ -280,7 +280,7 @@ public struct JXBridgeBuilderMutatingFuncs<T> {
                 let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
                 return (target, retjx)
             }
-            return add(FunctionBridge(name: name, parameterTypes: [P0.self], returnType: R.self, function: function))
+            return add(FunctionBridge(name: name, function: function))
         }
 
         private var typeName: String {
@@ -341,7 +341,7 @@ public struct JXBridgeBuilderStaticVars<T> {
             } else {
                 setter = nil
             }
-            return add(StaticPropertyBridge(owningTypeName: typeName, name: name, type: V.self, getter: getter, setter: setter))
+            return add(StaticPropertyBridge(owningTypeName: typeName, name: name, getter: getter, setter: setter))
         }
 
         private var typeName: String {
@@ -381,7 +381,7 @@ public struct JXBridgeBuilderStaticFuncs<T> {
         @discardableResult public func callAsFunction<R>(_ f: @escaping () throws -> R) -> JXBridgeBuilder<T> {
             let typeName = self.typeName
             let name = self.name
-            let functionBridge = StaticFunctionBridge(name: name, parameterTypes: [], returnType: R.self) { args, context in
+            let functionBridge = StaticFunctionBridge(name: name) { args, context in
                 try validate(typeName: typeName, function: name, arguments: args, count: 0)
                 let ret = try f()
                 return R.self == Void.self ? context.undefined() : try context.convey(ret)
@@ -399,7 +399,7 @@ public struct JXBridgeBuilderStaticFuncs<T> {
         @discardableResult public func callAsFunction<P0, R>(_ f: @escaping (P0) throws -> R) -> JXBridgeBuilder<T> {
             let typeName = self.typeName
             let name = self.name
-            let functionBridge = StaticFunctionBridge(name: name, parameterTypes: [P0.self], returnType: R.self) { args, context in
+            let functionBridge = StaticFunctionBridge(name: name) { args, context in
                 try validate(typeName: typeName, function: name, arguments: args, count: 1)
                 let p0 = try args[0].convey(to: P0.self)
                 let ret = try f(p0)
@@ -469,7 +469,7 @@ public struct JXBridgeBuilderClassVars<T> {
             } else {
                 setter = nil
             }
-            return add(PropertyBridge(name: name, type: V.self, getter: getter, setter: setter))
+            return add(PropertyBridge(name: name, getter: getter, setter: setter))
         }
 
         private var typeName: String {
@@ -510,7 +510,7 @@ public struct JXBridgeBuilderClassFuncs<T> {
                 let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
                 return (target, retjx)
             }
-            return add(FunctionBridge(name: name, parameterTypes: [], returnType: R.self, function: function))
+            return add(FunctionBridge(name: name, function: function))
         }
 
         // builder.class.func.xxx { $0.xxx(p0: $1) }
@@ -525,7 +525,7 @@ public struct JXBridgeBuilderClassFuncs<T> {
                 let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
                 return (target, retjx)
             }
-            return add(FunctionBridge(name: name, parameterTypes: [P0.self], returnType: R.self, function: function))
+            return add(FunctionBridge(name: name, function: function))
         }
 
         private var typeName: String {

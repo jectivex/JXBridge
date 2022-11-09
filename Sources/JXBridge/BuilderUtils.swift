@@ -2,13 +2,13 @@ import JXKit
 
 extension ConstructorBridge {
     init<T>(_ cons: @escaping () throws -> T) {
-        self = ConstructorBridge(parameterTypes: []) { _, _ in
+        self = ConstructorBridge(parameterCount: 0) { _, _ in
             return try cons()
         }
     }
 
     init<T, P0>(_ cons: @escaping (P0) throws -> T) {
-        self = ConstructorBridge(parameterTypes: [P0.self]) { args, context in
+        self = ConstructorBridge(parameterCount: 1) { args, context in
             let arg0 = try args[0].convey(to: P0.self)
             return try cons(arg0)
         }
@@ -32,6 +32,6 @@ extension PropertyBridge {
         } else {
             setter = nil
         }
-        self = PropertyBridge(name: name, type: V.self, getter: getter, setter: setter)
+        self = PropertyBridge(name: name, getter: getter, setter: setter)
     }
 }
