@@ -123,7 +123,7 @@ class JXBridgeContextSPI {
         guard !definedTypeNames.contains(bridge.typeName) else {
             return
         }
-        let superclassBridge = bridge.hasSuperclass(in: registry) ? try bridge.superclass(in: registry) : nil
+        let superclassBridge = bridge.superclass(in: registry)
         if let superclassBridge {
             try defineClass(for: superclassBridge, in: context)
         }
@@ -137,7 +137,7 @@ class JXBridgeContextSPI {
 
 extension JXBridgeContextSPI: JXContextSPI {
     func toJX(_ value: Any, in context: JXContext) throws -> JXValue? {
-        guard let bridge = registry.findBridge(for: value, autobridging: true) else {
+        guard let bridge = registry.bridge(for: value, autobridging: true) else {
             return nil
         }
 

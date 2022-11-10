@@ -27,30 +27,11 @@ public struct JXBridge {
     /// Whether this bridge includes information gleaned from examining an instance of the bridged type, e.g. property wrappers.
     public internal(set) var includesInstanceInfo = false
 
-    func hasSuperclass(in registry: JXBridgeRegistry) -> Bool {
+    func superclass(in registry: JXBridgeRegistry) -> JXBridge? {
         guard let superclass = self.superclass else {
-            return false
-        }
-        return registry.hasBridge(for: superclass)
-    }
-
-    func superclass(in registry: JXBridgeRegistry) throws -> JXBridge {
-        guard let superclass = self.superclass else {
-            throw JXBridgeErrors.unknownType("\(type).superclass")
-        }
-        return try registry.bridge(for: superclass)
-    }
-
-    private func findSuperclass(in registry: JXBridgeRegistry) -> JXBridge? {
-        guard let superclass = self.superclass, registry.hasBridge(for: superclass) else {
             return nil
         }
-        do {
-            return try registry.bridge(for: superclass)
-        } catch {
-            // Should not be possible
-            return nil
-        }
+        return registry.bridge(for: superclass)
     }
 
     /// Bridged constructors.
@@ -80,7 +61,7 @@ public struct JXBridge {
         guard let superclassRegistry else {
             return nil
         }
-        return findSuperclass(in: superclassRegistry)?.findConstructor(forParameterCount: count, superclassRegistry: superclassRegistry)
+        return superclass(in: superclassRegistry)?.findConstructor(forParameterCount: count, superclassRegistry: superclassRegistry)
     }
 
     /// Bridged instance properties.
@@ -110,7 +91,7 @@ public struct JXBridge {
         guard let superclassRegistry else {
             return nil
         }
-        return findSuperclass(in: superclassRegistry)?.findProperty(for: name, superclassRegistry: superclassRegistry)
+        return superclass(in: superclassRegistry)?.findProperty(for: name, superclassRegistry: superclassRegistry)
 
     }
     private var propertiesByName: [String: PropertyBridge]?
@@ -142,7 +123,7 @@ public struct JXBridge {
         guard let superclassRegistry else {
             return nil
         }
-        return findSuperclass(in: superclassRegistry)?.findFunction(for: name, superclassRegistry: superclassRegistry)
+        return superclass(in: superclassRegistry)?.findFunction(for: name, superclassRegistry: superclassRegistry)
     }
     private var functionsByName: [String: FunctionBridge]?
 
@@ -173,7 +154,7 @@ public struct JXBridge {
         guard let superclassRegistry else {
             return nil
         }
-        return findSuperclass(in: superclassRegistry)?.findStaticProperty(for: name, superclassRegistry: superclassRegistry)
+        return superclass(in: superclassRegistry)?.findStaticProperty(for: name, superclassRegistry: superclassRegistry)
     }
     private var staticPropertiesByName: [String: StaticPropertyBridge]?
 
@@ -204,7 +185,7 @@ public struct JXBridge {
         guard let superclassRegistry else {
             return nil
         }
-        return findSuperclass(in: superclassRegistry)?.findStaticFunction(for: name, superclassRegistry: superclassRegistry)
+        return superclass(in: superclassRegistry)?.findStaticFunction(for: name, superclassRegistry: superclassRegistry)
     }
     private var staticFunctionsByName: [String: StaticFunctionBridge]?
 
@@ -235,7 +216,7 @@ public struct JXBridge {
         guard let superclassRegistry else {
             return nil
         }
-        return findSuperclass(in: superclassRegistry)?.findClassProperty(for: name, superclassRegistry: superclassRegistry)
+        return superclass(in: superclassRegistry)?.findClassProperty(for: name, superclassRegistry: superclassRegistry)
 
     }
     private var classPropertiesByName: [String: PropertyBridge]?
@@ -267,7 +248,7 @@ public struct JXBridge {
         guard let superclassRegistry else {
             return nil
         }
-        return findSuperclass(in: superclassRegistry)?.findClassFunction(for: name, superclassRegistry: superclassRegistry)
+        return superclass(in: superclassRegistry)?.findClassFunction(for: name, superclassRegistry: superclassRegistry)
     }
     private var classFunctionsByName: [String: FunctionBridge]?
 

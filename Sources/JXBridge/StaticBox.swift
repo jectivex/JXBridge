@@ -3,7 +3,11 @@ import JXKit
 /// Boxes a native type to access its static and class properties and methods.
 class StaticBox: NativeBox {
     static func create(_ typeName: JXValue, registry: JXBridgeRegistry) throws -> StaticBox {
-        let bridge = try registry.bridge(for: typeName.string)
+        //~~~ Add namespace
+        let typeNameString = try typeName.string
+        guard let bridge = registry.bridge(for: typeNameString) else {
+            throw JXBridgeErrors.unknownType(typeNameString)
+        }
         return StaticBox(bridge: bridge, registry: registry)
     }
     

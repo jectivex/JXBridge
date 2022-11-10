@@ -73,26 +73,15 @@ public class JXBridgeRegistry {
 
 #endif
 
-    /// Whether a type bridge has been added for the given type name.
-    ///
-    /// - Parameters:
-    ///   - typeName: Corresponds to the desired `JXBridge.typeName`, which may not be the same as the class/struct name.
-    public func hasBridge(for typeName: String, namespace: String? = nil) -> Bool {
-        return findBridge(for: typeName, namespace: namespace ?? defaultNamespace, autobridging: false) != nil
-    }
-
-    /// Return the type bridge for the given type name. If auto-registration is enabled, this may return a bridge even when `hasBridge` returns `false`.
+    /// Return the registered type bridge for the given type name.
     /// 
     /// - Parameters:
     ///   - typeName: Corresponds to the desired `JXBridge.typeName`, which may not be the same as the class/struct name.
-    public func bridge(for typeName: String, namespace: String? = nil) throws -> JXBridge {
-        guard let bridge = findBridge(for: typeName, namespace: namespace ?? defaultNamespace, autobridging: true) else {
-            throw JXBridgeErrors.unknownType(typeName)
-        }
-        return bridge
+    public func bridge(for typeName: String, namespace: String? = nil) -> JXBridge? {
+        return bridge(for: typeName, namespace: namespace ?? defaultNamespace, autobridging: false)
     }
 
-    func findBridge(for typeName: String, namespace: String, autobridging: Bool) -> JXBridge? {
+    func bridge(for typeName: String, namespace: String, autobridging: Bool) -> JXBridge? {
         let key = Key(typeName: typeName, namespace: namespace)
         if let bridge = bridgesByGivenTypeName[key] {
             return bridge
@@ -103,27 +92,14 @@ public class JXBridgeRegistry {
         return nil
     }
 
-    /// Whether a type bridge has been added for the type of the given instance.
-    public func hasBridge(for instance: Any) -> Bool {
-        return hasBridge(for: type(of: instance))
-    }
-
-    /// Whether a type bridge has been added for the given type.
-    public func hasBridge(for type: Any.Type) -> Bool {
-        return findBridge(for: type) != nil
-    }
-
-    /// Return the type bridge for the given type. If auto-registration is enabled, this may return a bridge even when `hasBridge` returns `false`.
-    public func bridge(for instance: Any) throws -> JXBridge {
-        guard let bridge = findBridge(for: instance, autobridging: true) else {
-            throw JXBridgeErrors.unknownType(String(describing: type(of: instance)))
-        }
-        return bridge
+    /// Return the type bridge for the given instance's type.
+    public func bridge(for instance: Any) -> JXBridge? {
+        return bridge(for: instance, autobridging: false)
     }
     
-    func findBridge(for instance: Any, autobridging: Bool) -> JXBridge? {
+    func bridge(for instance: Any, autobridging: Bool) -> JXBridge? {
         let type = type(of: instance)
-        guard let bridge = findBridge(for: type) ?? (autobridging ? addAutoBridge(for: instance) : nil) else {
+        guard let bridge = bridge(for: type) ?? (autobridging ? addAutoBridge(for: instance) : nil) else {
             return nil
         }
         guard !bridge.includesInstanceInfo && instance is JXBridging else {
@@ -133,18 +109,11 @@ public class JXBridgeRegistry {
         let builder = MirrorBuilder(Mirror(reflecting: instance), bridge: bridge)
         builder.addReflectedMembers()
         add(builder.bridge, namespace: namespacesByActualTypeName[String(describing: type)])
-        return findBridge(for: type)
+        return self.bridge(for: type)
     }
 
     /// Return the type bridge for the given type.
-    public func bridge(for type: Any.Type) throws -> JXBridge {
-        guard let bridge = findBridge(for: type) else {
-            throw JXBridgeErrors.unknownType(String(describing: type))
-        }
-        return bridge
-    }
-
-    private func findBridge(for type: Any.Type) -> JXBridge? {
+    public func bridge(for type: Any.Type) -> JXBridge? {
         let typeName = String(describing: type)
         guard let namespace = namespacesByActualTypeName[typeName] else {
             return nil
@@ -156,7 +125,7 @@ public class JXBridgeRegistry {
     private func addAutoBridge(for typeName: String) -> JXBridge? {
         for registration in autoRegistration {
             if registration.policy.addBridge(for: typeName, to: self) {
-                return findBridge(for: typeName, namespace: defaultNamespace, autobridging: false)
+                return bridge(for: typeName, namespace: defaultNamespace, autobridging: false)
             }
         }
         return nil
@@ -165,7 +134,7 @@ public class JXBridgeRegistry {
     private func addAutoBridge(for instance: Any) -> JXBridge? {
         for registration in autoRegistration {
             if registration.policy.addBridge(for: instance, to: self) {
-                return findBridge(for: type(of: instance))
+                return bridge(for: type(of: instance))
             }
         }
         return nil
