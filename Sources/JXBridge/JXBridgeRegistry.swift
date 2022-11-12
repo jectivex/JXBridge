@@ -5,26 +5,28 @@ import Foundation
 
 /// Registry of bridged types.
 public class JXBridgeRegistry {
-    private struct Key: Hashable {
-        let typeName: String
-        let namespace: String
-    }
-    private var bridgesByGivenTypeName: [Key: JXBridge] = [:]
-    private var bridgesByActualTypeName: [Key: JXBridge] = [:]
+    private var bridgesByGivenTypeName: [QualifiedTypeName: JXBridge] = [:]
+    private var bridgesByActualTypeName: [QualifiedTypeName: JXBridge] = [:]
     private var namespacesByActualTypeName: [String: String] = [:]
     private var requestedInvalidTypeNames: Set<String> = []
     
     private(set) var namespaces: Set<String> = []
     let didAddNamespaceSubject = PassthroughSubject<String, Never>()
-    let didAddInstanceInfoSubject = PassthroughSubject<JXBridge, Never>()
+    let didAddInstanceInfoSubject = PassthroughSubject<(JXBridge, String), Never>()
 
     /// The default namespace to which bridged types are added in JavaScript. Defaults to `jx`. Any type that is added without an explicit namespace uses this default.
     public var defaultNamespace = "jx"
     
-    /// The set of auto-registration behaviors for this registry. Defaults to auto-registering returned and conveyed instances.
+    /// The set of auto-registration behaviors for this registry.
     ///
     /// - Note: Auto-registration only applies to type names in the default namespace.
-    public var autoRegistration: [JXBridgeAutoRegistration] = [.instance]
+    public var autoRegistration: [JXBridgeAutoRegistration] = []
+    // We rely on context.registry being accessed to initialize our SPI. Defaulting to no auto-registration
+    // ensures the developer must access the registry before attempting to use any bridged types
+    
+    public init() {
+        namespaces.insert(defaultNamespace)
+    }
 
     /// Add a type bridge.
     public func add(_ bridge: JXBridge, namespace: String? = nil) {
@@ -32,8 +34,8 @@ public class JXBridgeRegistry {
         preparedBridge.prepareLookupCaches()
          
         let assignedNamespace = namespace ?? defaultNamespace
-        bridgesByGivenTypeName[Key(typeName: bridge.typeName, namespace: assignedNamespace)] = preparedBridge
-        bridgesByActualTypeName[Key(typeName: String(describing: bridge.type), namespace: assignedNamespace)] = preparedBridge
+        bridgesByGivenTypeName[QualifiedTypeName(typeName: bridge.typeName, namespace: assignedNamespace)] = preparedBridge
+        bridgesByActualTypeName[QualifiedTypeName(typeName: String(describing: bridge.type), namespace: assignedNamespace)] = preparedBridge
         namespacesByActualTypeName[String(describing: bridge.type)] = assignedNamespace
         
         let (inserted, _) = namespaces.insert(assignedNamespace)
@@ -41,7 +43,7 @@ public class JXBridgeRegistry {
             didAddNamespaceSubject.send(assignedNamespace)
         }
         if bridge.includesInstanceInfo {
-            didAddInstanceInfoSubject.send(bridge)
+            didAddInstanceInfoSubject.send((bridge, assignedNamespace))
         }
     }
 
@@ -82,7 +84,7 @@ public class JXBridgeRegistry {
     }
 
     func bridge(for typeName: String, namespace: String, autobridging: Bool) -> JXBridge? {
-        let key = Key(typeName: typeName, namespace: namespace)
+        let key = QualifiedTypeName(typeName: typeName, namespace: namespace)
         if let bridge = bridgesByGivenTypeName[key] {
             return bridge
         }
@@ -118,7 +120,7 @@ public class JXBridgeRegistry {
         guard let namespace = namespacesByActualTypeName[typeName] else {
             return nil
         }
-        let key = Key(typeName: typeName, namespace: namespace)
+        let key = QualifiedTypeName(typeName: typeName, namespace: namespace)
         return bridgesByActualTypeName[key]
     }
 

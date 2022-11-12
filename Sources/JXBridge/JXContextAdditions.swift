@@ -1,3 +1,4 @@
+import Combine
 #if canImport(ObjectiveC)
 import Foundation
 #endif
@@ -11,18 +12,14 @@ extension JXContext {
             return bridgeSPI
         }
 
-        let bridgeSPI = JXBridgeContextSPI()
+        let bridgeSPI = JXBridgeContextSPI(context: self)
         self.spi = bridgeSPI
-        do {
-            try bridgeSPI.prepare(self)
-        } catch {
-            fatalError("Unable to initialize JXBridge: \(error))")
-        }
         return bridgeSPI
     }
 
     /// Register types bridged to JavaScript for use in this context.
     public var registry: JXBridgeRegistry {
+        // Note: Accessing the registry causes us to access bridgeSPI, which sets our SPI on the context if it wasn't already
         get {
             return bridgeSPI.registry
         }
@@ -33,29 +30,73 @@ extension JXContext {
 }
 
 class JXBridgeContextSPI {
-    //~~~ Need to create proxies for all namespaces and listen for new namespaces too
-    lazy var registry = JXBridgeRegistry()
-
-    func prepare(_ context: JXContext) throws {
-        try defineInitialFunctions(in: context)
+    private weak var context: JXContext?
+    private var namespaceSubscription: AnyCancellable?
+    private var instanceInfoSubscription: AnyCancellable?
+    
+    init(context: JXContext) {
+        self.context = context
+        do {
+            try defineNativeAccessFunctions(in: context)
+        } catch {
+            // No real way to process the error
+        }
     }
+    
+    var registry: JXBridgeRegistry {
+        get {
+            if let _registry {
+                return _registry
+            }
+            let registry = JXBridgeRegistry()
+            _registry = registry
+            initializeRegistry(registry)
+            return registry
+        }
+        set {
+            if newValue !== _registry {
+                _registry = newValue
+                initializeRegistry(newValue)
+            }
+        }
+    }
+    private var _registry: JXBridgeRegistry?
 
-    //~~~
-//    private func defineInitialFunctions(in context: JXContext) throws {
-//        let importFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
-//            guard let self else {
-//                throw JXBridgeErrors.invalidContext
-//            }
-//            guard args.count == 1 else {
-//                throw JXBridgeErrors.internalError("import")
-//            }
-//            let bridge = try self.registry.bridge(for: args[0].string)
-//            try self.defineNativeAccessFunctions(in: context)
-//            try self.defineClass(for: bridge, in: context)
-//            return context.undefined()
-//        }
-//        try context.global.setProperty(JSCodeGenerator.importFunctionName, importFunction)
-//    }
+    private func initializeRegistry(_ registry: JXBridgeRegistry) {
+        namespaceSubscription?.cancel()
+        namespaceSubscription = registry.didAddNamespaceSubject.sink { [weak self] namespace in
+            self?.defineNamespace(namespace)
+        }
+        
+        instanceInfoSubscription?.cancel()
+        instanceInfoSubscription = registry.didAddInstanceInfoSubject.sink { [weak self] (bridge, namespace) in
+            self?.addInstanceInfo(for: bridge, namespace: namespace)
+        }
+
+        registry.namespaces.forEach { defineNamespace($0) }
+    }
+    
+    private func defineNamespace(_ namespace: String) {
+        guard let context, !context.global.hasProperty(namespace) else {
+            return
+        }
+        do {
+            try context.eval(JSCodeGenerator.defineNamespaceProxy(namespace))
+        } catch {
+            // No real way to process the error
+        }
+    }
+    
+    private func addInstanceInfo(for bridge: JXBridge, namespace: String) {
+        guard let context, definedTypeNames.contains(QualifiedTypeName(typeName: bridge.typeName, namespace: namespace)) else {
+            return
+        }
+        do {
+            try context.eval(JSCodeGenerator.addInstanceInfo(for: bridge, namespace: namespace))
+        } catch {
+            // No real way to process the error
+        }
+    }
 
     private func defineNativeAccessFunctions(in context: JXContext) throws {
         guard !hasDefinedNativeAccessFunctions else {
@@ -123,7 +164,7 @@ class JXBridgeContextSPI {
         guard !definedTypeNames.contains(bridge.typeName) else {
             return
         }
-        let superclassBridge = bridge.superclass(in: registry)
+        let superclassBridge = bridge.superclassBridge(in: registry)
         if let superclassBridge {
             try defineClass(for: superclassBridge, in: context)
         }
@@ -132,7 +173,7 @@ class JXBridgeContextSPI {
         try context.eval(definition)
         definedTypeNames.insert(bridge.typeName)
     }
-    private var definedTypeNames: Set<String> = []
+    private var definedTypeNames: Set<QualifiedTypeName> = []
 }
 
 extension JXBridgeContextSPI: JXContextSPI {
