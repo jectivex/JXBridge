@@ -2,7 +2,7 @@ import JXKit
 
 /// Boxes a native instance to access its properties and methods.
 class InstanceBox: NativeBox {
-    static func create(typeName: JXValue, namespace: JXValue, arguments args: JXValue, registry: JXBridgeRegistry) throws -> InstanceBox {
+    static func create(typeName: JXValue, namespace: JXValue, arguments args: JXValue, registry: JXRegistry) throws -> InstanceBox {
         let typeNameString = try typeName.string
         let namespaceString = try namespace.string
         guard let bridge = registry.bridge(for: typeNameString, namespace: namespaceString) else {
@@ -14,7 +14,7 @@ class InstanceBox: NativeBox {
         return InstanceBox(instance, bridge: bridge, registry: registry)
     }
 
-    init(_ instance: Any, bridge: JXBridge, registry: JXBridgeRegistry) {
+    init(_ instance: Any, bridge: JXBridge, registry: JXRegistry) {
         self.instance = instance
         self.bridge = bridge
         self.registry = registry
@@ -22,7 +22,7 @@ class InstanceBox: NativeBox {
 
     var instance: Any
     let bridge: JXBridge
-    let registry: JXBridgeRegistry
+    let registry: JXRegistry
 
     func get(property: JXValue) throws -> JXValue {
         let propertyBridge = try bridge.property(for: property.string, superclassRegistry: registry)

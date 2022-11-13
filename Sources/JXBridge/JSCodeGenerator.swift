@@ -1,5 +1,6 @@
 /// Generates JavaScript code.
 struct JSCodeGenerator {
+    static let typeNamePropertyName = "_jxbTypeName"
     static let defineClassFunctionName = "_jxbDefineClass"
     static let createNativeFunctionName = "_jxbCreateNative"
     static let createStaticNativeFunctionName = "_jxbCreateStaticNative"
@@ -45,6 +46,7 @@ var \(namespace) = new Proxy({}, {
         let classJS = """
 \(declaration)\(extendsClause) {
     static _jxbStaticNative = _jxbCreateStaticNative('\(bridge.typeName)', '\(bridge.namespace ?? "")');
+    static _jxbTypeName = '\(bridge.typeName)';
     \(nativeDeclaration)
 \(staticPropertiesJS)
 \(staticFunctionsJS)

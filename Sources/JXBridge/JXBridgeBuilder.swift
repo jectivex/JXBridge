@@ -9,8 +9,8 @@ import JXKit
 /// Build the bridge for scripting a native type.
 public class JXBridgeBuilder<T> {
     /// Supply the type to bridge.
-    public init(type: T.Type, as typeName: String? = nil) {
-        self.bridge = JXBridge(type: T.self, as: typeName)
+    public init(type: T.Type, as typeName: String? = nil, namespace: String? = nil) {
+        self.bridge = JXBridge(type: T.self, as: typeName, namespace: namespace)
     }
 
     /// Supply an in-progress bridge to add to.

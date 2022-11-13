@@ -189,8 +189,7 @@
     if (!target) {
         return nil;
     }
-    // TODO: We could optimize cases for simple getters and setters using
-    // hand-crafted objc_msgSend calls
+    // TODO: We could optimize cases for simple getters and setters using hand-crafted objc_msgSend calls
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:self.signature];
     invocation.target = target;
     invocation.selector = self.selector;

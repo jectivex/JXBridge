@@ -18,7 +18,7 @@ extension JXContext {
     }
 
     /// Register types bridged to JavaScript for use in this context.
-    public var registry: JXBridgeRegistry {
+    public var registry: JXRegistry {
         // Note: Accessing the registry causes us to access bridgeSPI, which sets our SPI on the context if needed
         get {
             return bridgeSPI.registry
@@ -36,18 +36,18 @@ class JXBridgeContextSPI {
     init(context: JXContext) {
         self.context = context
         do {
-            try defineNativeAccessFunctions(in: context)
+            try defineGlobalFunctions(in: context)
         } catch {
             // No real way to process the error
         }
     }
     
-    var registry: JXBridgeRegistry {
+    var registry: JXRegistry {
         get {
             if let _registry {
                 return _registry
             }
-            let registry = JXBridgeRegistry()
+            let registry = JXRegistry()
             _registry = registry
             initializeRegistry(registry)
             return registry
@@ -59,14 +59,14 @@ class JXBridgeContextSPI {
             }
         }
     }
-    private var _registry: JXBridgeRegistry?
+    private var _registry: JXRegistry?
 
-    private func initializeRegistry(_ registry: JXBridgeRegistry) {
+    private func initializeRegistry(_ registry: JXRegistry) {
         namespaceSubscription?.cancel()
         namespaceSubscription = registry.didAddNamespaceSubject.sink { [weak self] namespace in
             self?.defineNamespace(namespace)
         }
-        registry.namespaces.forEach { defineNamespace($0) }
+        registry.modulesByNamespace.keys.forEach { defineNamespace($0) }
     }
     
     private func defineNamespace(_ namespace: String) {
@@ -80,7 +80,22 @@ class JXBridgeContextSPI {
         }
     }
     
-    private func defineNativeAccessFunctions(in context: JXContext) throws {
+    private func defineGlobalFunctions(in context: JXContext) throws {
+        defineNamespace(JXRegistry.defaultNamespace)
+        
+        // jx.import(type)
+        let importFunction = JXValue(newFunctionIn: context) { context, this, args in
+            guard args.count == 1 else {
+                throw JXBridgeErrors.invalidArgumentCount("jx", "import")
+            }
+            let typeName = try args[0][JSCodeGenerator.typeNamePropertyName].string
+            if !context.global.hasProperty(typeName) {
+                try context.global.setProperty(typeName, args[0])
+            }
+            return context.undefined()
+        }
+        try context.global[JXRegistry.defaultNamespace].setProperty("import", importFunction)
+        
         // Define a type accessed through a namespace
         let defineClassFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
@@ -92,7 +107,7 @@ class JXBridgeContextSPI {
             }
             let typeName = try args[0].string
             let namespace = try args[1].string
-            guard let bridge = self.registry.bridge(for: typeName, namespace: namespace) else {
+            guard let bridge = try self.registry.bridge(for: typeName, namespace: namespace, autobridging: true) else {
                 throw JXBridgeErrors.unknownType(namespace + "." + typeName)
             }
             try self.defineClass(for: bridge, in: context)
@@ -161,8 +176,8 @@ class JXBridgeContextSPI {
     }
 
     private func defineClass(for bridge: JXBridge, in context: JXContext) throws {
-        let qualifiedTypeName = QualifiedTypeName(typeName: bridge.typeName, namespace: bridge.namespace)
-        guard !definedTypeNames.contains(qualifiedTypeName) else {
+        let key = TypeNameKey(typeName: bridge.typeName, namespace: bridge.namespace)
+        guard !definedTypeNames.contains(key) else {
             return
         }
         let superclassBridge = bridge.superclassBridge(in: registry)
@@ -172,9 +187,9 @@ class JXBridgeContextSPI {
         let codeGenerator = JSCodeGenerator(bridge: bridge, superclassBridge: superclassBridge)
         let definition = codeGenerator.defineJSClass()
         try context.eval(definition)
-        definedTypeNames.insert(qualifiedTypeName)
+        definedTypeNames.insert(key)
     }
-    private var definedTypeNames: Set<QualifiedTypeName> = []
+    private var definedTypeNames: Set<TypeNameKey> = []
 }
 
 extension JXBridgeContextSPI: JXContextSPI {
