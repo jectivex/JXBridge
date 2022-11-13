@@ -1,7 +1,6 @@
 /// Error encountered when bridging types to JavaScript.
 public enum JXBridgeErrors: Error {
-    /// Unable to register the given type (not a `JXBridging` or `NSObject` type).
-    case cannotRegisterType(String)
+#if canImport(ObjectiveC)
 
     /// We do not support converting the given argument to the corresponding ObjectiveC type.
     /// (Type name, member name, value.)
@@ -10,6 +9,8 @@ public enum JXBridgeErrors: Error {
     /// We do not support converting the ObjectiveC function return or property value to a JS value.
     /// (Type name, member name, value.)
     case cannotConvertFromObjectiveC(String, String, Any)
+    
+#endif
 
     /// An internal bridging error occurred.
     case internalError(String)
@@ -28,6 +29,10 @@ public enum JXBridgeErrors: Error {
     /// Script attempted to set a read-only property.
     /// (Type name, property name.)
     case readOnlyProperty(String, String)
+    
+    /// Detected attempt to register the same type under multiple namespaces.
+    /// (Type name, existing namespace, new namespace)
+    case namespaceViolation(String, String, String)
 
     /// Script attempted to invoke an unknown function name.
     /// (Type name, function name.)

@@ -21,12 +21,17 @@ public struct JXBridge {
     /// It is possible to customize the name used for the type in scripts.
     public var typeName: String
     
+    var namespace: String? // Assigned when the bridge is added to a registry
+    var qualifiedTypeName: String {
+        guard let namespace = self.namespace, !namespace.isEmpty else {
+            return typeName
+        }
+        return namespace + "." + typeName
+    }
+    
     /// Set the next mapped superclass.
     public var superclass: Any.Type?
     
-    /// Whether this bridge includes information gleaned from examining an instance of the bridged type, e.g. property wrappers.
-    public internal(set) var includesInstanceInfo = false
-
     func superclassBridge(in registry: JXBridgeRegistry) -> JXBridge? {
         guard let superclass = self.superclass else {
             return nil

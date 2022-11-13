@@ -19,7 +19,7 @@ extension JXContext {
 
     /// Register types bridged to JavaScript for use in this context.
     public var registry: JXBridgeRegistry {
-        // Note: Accessing the registry causes us to access bridgeSPI, which sets our SPI on the context if it wasn't already
+        // Note: Accessing the registry causes us to access bridgeSPI, which sets our SPI on the context if needed
         get {
             return bridgeSPI.registry
         }
@@ -32,7 +32,6 @@ extension JXContext {
 class JXBridgeContextSPI {
     private weak var context: JXContext?
     private var namespaceSubscription: AnyCancellable?
-    private var instanceInfoSubscription: AnyCancellable?
     
     init(context: JXContext) {
         self.context = context
@@ -67,12 +66,6 @@ class JXBridgeContextSPI {
         namespaceSubscription = registry.didAddNamespaceSubject.sink { [weak self] namespace in
             self?.defineNamespace(namespace)
         }
-        
-        instanceInfoSubscription?.cancel()
-        instanceInfoSubscription = registry.didAddInstanceInfoSubject.sink { [weak self] (bridge, namespace) in
-            self?.addInstanceInfo(for: bridge, namespace: namespace)
-        }
-
         registry.namespaces.forEach { defineNamespace($0) }
     }
     
@@ -81,38 +74,42 @@ class JXBridgeContextSPI {
             return
         }
         do {
-            try context.eval(JSCodeGenerator.defineNamespaceProxy(namespace))
+            try context.eval(JSCodeGenerator.defineNamespace(namespace))
         } catch {
             // No real way to process the error
         }
     }
     
-    private func addInstanceInfo(for bridge: JXBridge, namespace: String) {
-        guard let context, definedTypeNames.contains(QualifiedTypeName(typeName: bridge.typeName, namespace: namespace)) else {
-            return
-        }
-        do {
-            try context.eval(JSCodeGenerator.addInstanceInfo(for: bridge, namespace: namespace))
-        } catch {
-            // No real way to process the error
-        }
-    }
-
     private func defineNativeAccessFunctions(in context: JXContext) throws {
-        guard !hasDefinedNativeAccessFunctions else {
-            return
+        // Define a type accessed through a namespace
+        let defineClassFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
+            guard let self else {
+                throw JXBridgeErrors.invalidContext
+            }
+            // Type name, namespace name
+            guard args.count == 2 else {
+                throw JXBridgeErrors.internalError("defineClass")
+            }
+            let typeName = try args[0].string
+            let namespace = try args[1].string
+            guard let bridge = self.registry.bridge(for: typeName, namespace: namespace) else {
+                throw JXBridgeErrors.unknownType(namespace + "." + typeName)
+            }
+            try self.defineClass(for: bridge, in: context)
+            return context.undefined()
         }
-        hasDefinedNativeAccessFunctions = true
-
+        try context.global.setProperty(JSCodeGenerator.defineClassFunctionName, defineClassFunction)
+        
         // Create a native instance box
         let createNativeFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
                 throw JXBridgeErrors.invalidContext
             }
-            guard args.count == 2 else {
+            // Type name, namespace name, args array
+            guard args.count == 3 else {
                 throw JXBridgeErrors.internalError("createNative")
             }
-            let instanceBox = try InstanceBox.create(typeName: args[0], arguments: args[1], registry: self.registry)
+            let instanceBox = try InstanceBox.create(typeName: args[0], namespace: args[1], arguments: args[2], registry: self.registry)
             let object = context.object(peer: instanceBox)
             return object
         }
@@ -123,10 +120,11 @@ class JXBridgeContextSPI {
             guard let self else {
                 throw JXBridgeErrors.invalidContext
             }
-            guard args.count == 1 else {
+            // Type name, namespace name
+            guard args.count == 2 else {
                 throw JXBridgeErrors.internalError("createStaticNative")
             }
-            let staticBox = try StaticBox.create(args[0], registry: self.registry)
+            let staticBox = try StaticBox.create(args[0], namespace: args[1], registry: self.registry)
             let object = context.object(peer: staticBox)
             return object
         }
@@ -134,6 +132,7 @@ class JXBridgeContextSPI {
 
         // Get, set, call native properties and methods
         let getPropertyFunction = JXValue(newFunctionIn: context) { context, this, args in
+            // Instance, property name
             guard args.count == 2, let nativeBox = args[0].peer as? NativeBox else {
                 throw JXBridgeErrors.internalError("getProperty")
             }
@@ -142,6 +141,7 @@ class JXBridgeContextSPI {
         try context.global.setProperty(JSCodeGenerator.getPropertyFunctionName, getPropertyFunction)
 
         let setPropertyFunction = JXValue(newFunctionIn: context) { context, this, args in
+            // Instance, property name, value
             guard args.count == 3, let nativeBox = args[0].peer as? NativeBox else {
                 throw JXBridgeErrors.internalError("setProperty")
             }
@@ -151,6 +151,7 @@ class JXBridgeContextSPI {
         try context.global.setProperty(JSCodeGenerator.setPropertyFunctionName, setPropertyFunction)
 
         let callFunction = JXValue(newFunctionIn: context) { context, this, args in
+            // Instance, function name, args array
             guard args.count == 3, let nativeBox = args[0].peer as? NativeBox else {
                 throw JXBridgeErrors.internalError("callFunction")
             }
@@ -158,10 +159,10 @@ class JXBridgeContextSPI {
         }
         try context.global.setProperty(JSCodeGenerator.callFunctionName, callFunction)
     }
-    private var hasDefinedNativeAccessFunctions = false
 
     private func defineClass(for bridge: JXBridge, in context: JXContext) throws {
-        guard !definedTypeNames.contains(bridge.typeName) else {
+        let qualifiedTypeName = QualifiedTypeName(typeName: bridge.typeName, namespace: bridge.namespace)
+        guard !definedTypeNames.contains(qualifiedTypeName) else {
             return
         }
         let superclassBridge = bridge.superclassBridge(in: registry)
@@ -171,19 +172,19 @@ class JXBridgeContextSPI {
         let codeGenerator = JSCodeGenerator(bridge: bridge, superclassBridge: superclassBridge)
         let definition = codeGenerator.defineJSClass()
         try context.eval(definition)
-        definedTypeNames.insert(bridge.typeName)
+        definedTypeNames.insert(qualifiedTypeName)
     }
     private var definedTypeNames: Set<QualifiedTypeName> = []
 }
 
 extension JXBridgeContextSPI: JXContextSPI {
     func toJX(_ value: Any, in context: JXContext) throws -> JXValue? {
-        guard let bridge = registry.bridge(for: value, autobridging: true) else {
+        guard let bridge = try registry.bridge(for: value, autobridging: true) else {
             return nil
         }
 
         // Construct with a special argument to avoid creating a new native instance on construction, then inject our value instance
-        let obj = try context.new(bridge.typeName, withArguments: [JSCodeGenerator.nativePropertyName])
+        let obj = try context.new(bridge.qualifiedTypeName, withArguments: [JSCodeGenerator.nativePropertyName])
         let instanceBox = InstanceBox(value, bridge: bridge, registry: registry)
         let nativeBox = context.object(peer: instanceBox)
         try obj.setProperty(JSCodeGenerator.nativePropertyName, nativeBox)

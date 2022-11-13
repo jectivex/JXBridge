@@ -1,12 +1,27 @@
 /// Generates JavaScript code.
 struct JSCodeGenerator {
+    static let defineClassFunctionName = "_jxbDefineClass"
     static let createNativeFunctionName = "_jxbCreateNative"
     static let createStaticNativeFunctionName = "_jxbCreateStaticNative"
     static let nativePropertyName = "_jxbNative"
     static let getPropertyFunctionName = "_jxbGet"
     static let setPropertyFunctionName = "_jxbSet"
     static let callFunctionName = "_jxbCall"
-
+    
+    /// Create a namespace that performs a callback on any attempt to access its classes, giving us a chance to lazily define the requested class.
+    static func defineNamespace(_ namespace: String) -> String {
+        return """
+var \(namespace) = new Proxy({}, {
+    get(target, property) {
+        if (target[property] === undefined) {
+            _jxbDefineClass(property, '\(namespace)');
+        }
+        return target[property];
+    }
+});
+"""
+    }
+    
     let bridge: JXBridge
     let superclassBridge: JXBridge?
 
@@ -14,23 +29,29 @@ struct JSCodeGenerator {
     func defineJSClass() -> String {
         var extendsClause = ""
         var nativeDeclaration = ""
-        var constructors = ""
         if let superclassBridge = self.superclassBridge {
-            extendsClause = " extends \(superclassBridge.typeName)"
+            extendsClause = " extends \(superclassBridge.qualifiedTypeName)"
         } else {
             nativeDeclaration = "_jxbNative;"
-            constructors = constructorJS
         }
+        
+        let declaration: String
+        if let namespace = bridge.namespace {
+            declaration = "\(namespace).\(bridge.typeName) = class"
+        } else {
+            declaration = "class \(bridge.typeName)"
+        }
+        
         let classJS = """
-class \(bridge.typeName)\(extendsClause) {
-    static _jxbStaticNative = _jxbCreateStaticNative('\(bridge.typeName)');
+\(declaration)\(extendsClause) {
+    static _jxbStaticNative = _jxbCreateStaticNative('\(bridge.typeName)', '\(bridge.namespace ?? "")');
     \(nativeDeclaration)
 \(staticPropertiesJS)
 \(staticFunctionsJS)
-\(constructors)
+\(constructorJS)
 \(propertiesJS)
 \(functionsJS)
-    }
+}
 """
         print(classJS) //~~~
         return classJS
@@ -80,12 +101,19 @@ class \(bridge.typeName)\(extendsClause) {
     }
 
     private var constructorJS: String {
+        var superCall = ""
+        if superclassBridge != nil {
+            // Call super with our special token arg telling it we'll inject _jxbNative ourselves,
+            // so that we can create it with our subclass type name and namespace
+            superCall = "super('_jxbNative');"
+        }
         return """
     constructor(...args) {
+        \(superCall)
         if (args.length === 1 && args[0] === '_jxbNative') {
             this._jxbNative = null; // Will be inserted
         } else {
-            this._jxbNative = _jxbCreateNative(this.constructor.name, args);
+            this._jxbNative = _jxbCreateNative('\(bridge.typeName)', '\(bridge.namespace ?? "")', args);
         }
     }
 """

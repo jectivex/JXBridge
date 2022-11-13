@@ -59,7 +59,9 @@ public class JXBridgeBuilder<T> {
 
     /// builder.constructor { Type() }
     @discardableResult public func constructor(_ cons: @escaping () throws -> T) -> JXBridgeBuilder<T> {
-        let constructorBridge = ConstructorBridge(cons)
+        let constructorBridge = ConstructorBridge(parameterCount: 0) { _, _ in
+            return try cons()
+        }
         return add(constructorBridge)
     }
 
@@ -70,7 +72,10 @@ public class JXBridgeBuilder<T> {
 
     /// builder.constructor { Type(p0: $1) }
     @discardableResult public func constructor<P0>(_ cons: @escaping (P0) throws -> T) -> JXBridgeBuilder<T> {
-        let constructorBridge = ConstructorBridge(cons)
+        let constructorBridge = ConstructorBridge(parameterCount: 1) { args, context in
+            let arg0 = try args[0].convey(to: P0.self)
+            return try cons(arg0)
+        }
         return add(constructorBridge)
     }
 
@@ -98,7 +103,23 @@ public struct JXBridgeBuilderVars<T> {
 
         // builder.var.xxx { \.xxx }
         @discardableResult public func callAsFunction<V>(_ accessor: () -> KeyPath<T, V>) -> JXBridgeBuilder<T> {
-            return add(PropertyBridge(name: self.name, keyPath: accessor()))
+            let keyPath = accessor()
+            let getter: (Any, JXContext) throws -> JXValue = { obj, context in
+                let ret = (obj as! T)[keyPath: keyPath]
+                return try context.convey(ret)
+            }
+            let setter: ((Any, JXValue, JXContext) throws -> Any)?
+            if let writeableKeyPath = keyPath as? WritableKeyPath<T, V> {
+                setter = { obj, value, context in
+                    var target = obj as! T
+                    let p0 = try value.convey(to: V.self)
+                    target[keyPath: writeableKeyPath] = p0
+                    return target
+                }
+            } else {
+                setter = nil
+            }
+            return add(PropertyBridge(name: name, getter: getter, setter: setter))
         }
 
         // builder.var.xxx { $0.xxx }
@@ -542,14 +563,6 @@ public struct JXBridgeBuilderClassFuncs<T> {
 private func validate(typeName: String, function: String, arguments: [Any?], count: Int) throws {
     if arguments.count != count {
         throw JXBridgeErrors.invalidArgumentCount(typeName, function)
-    }
-}
-
-extension JXBridgeBuilder where T: JXBridging {
-    func addInstanceInfo(_ instance: T) {
-        let builder = MirrorBuilder(Mirror(reflecting: instance), bridge: bridge)
-        builder.addReflectedMembers()
-        bridge = builder.bridge
     }
 }
 

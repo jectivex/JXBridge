@@ -2,10 +2,10 @@ import JXKit
 
 /// Boxes a native instance to access its properties and methods.
 class InstanceBox: NativeBox {
-    static func create(typeName: JXValue, arguments args: JXValue, registry: JXBridgeRegistry) throws -> InstanceBox {
-        //~~~ Add namespace
+    static func create(typeName: JXValue, namespace: JXValue, arguments args: JXValue, registry: JXBridgeRegistry) throws -> InstanceBox {
         let typeNameString = try typeName.string
-        guard let bridge = registry.bridge(for: typeNameString) else {
+        let namespaceString = try namespace.string
+        guard let bridge = registry.bridge(for: typeNameString, namespace: namespaceString) else {
             throw JXBridgeErrors.unknownType(typeNameString)
         }
         let argsArray = try args.array
