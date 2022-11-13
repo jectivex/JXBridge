@@ -6,18 +6,18 @@ import XCTest
 final class BridgedTypeTests: XCTestCase {
     func testBoxTypes() throws {
         let context = JXContext()
-        let builder = JXBridgeBuilder(type: JXBridgedStruct.self)
-            .constructor { JXBridgedStruct.init }
+        let builder = JXBridgeBuilder(type: TestStruct.self)
+            .constructor { TestStruct.init }
             .var.readWriteInt { \.readWriteInt }
             .var.readOnlyInt { \.readOnlyInt }
             .var.computedInt { \.computedInt }
             .var.string { \.string }
         try context.registry.add(builder.bridge)
-        guard let bridge = context.registry.bridge(for: JXBridgedStruct.self) else {
+        guard let bridge = context.registry.bridge(for: TestStruct.self) else {
             XCTFail()
             return
         }
-        let box = InstanceBox(JXBridgedStruct(), bridge: bridge, registry: context.registry)
+        let box = InstanceBox(TestStruct(), bridge: bridge, registry: context.registry)
         let readWriteInt = context.string("readWriteInt")
         let intReturn = try box.get(property: readWriteInt)
         XCTAssertTrue(intReturn.isNumber)
@@ -27,14 +27,14 @@ final class BridgedTypeTests: XCTestCase {
     
     func testStructVars() throws {
         let context = JXContext()
-        let builder = JXBridgeBuilder(type: JXBridgedStruct.self)
-            .constructor { JXBridgedStruct.init }
+        let builder = JXBridgeBuilder(type: TestStruct.self)
+            .constructor { TestStruct.init }
             .var.readWriteInt { \.readWriteInt }
             .var.readOnlyInt { \.readOnlyInt }
             .var.computedInt { \.computedInt }
         try context.registry.add(builder.bridge)
 
-        var result = try context.eval("const obj = new jx.JXBridgedStruct(); obj.readWriteInt;")
+        var result = try context.eval("const obj = new jx.TestStruct(); obj.readWriteInt;")
         XCTAssertEqual(try result.int, 1)
         result = try context.eval("obj.readWriteInt = 101; obj.readWriteInt;")
         XCTAssertEqual(try result.int, 101)
@@ -48,47 +48,47 @@ final class BridgedTypeTests: XCTestCase {
 
     func testScriptCanSetPrivateSetVar_UNDESIRED() throws {
         let context = JXContext()
-        let builder = JXBridgeBuilder(type: JXBridgedStruct.self)
-            .constructor { JXBridgedStruct.init }
+        let builder = JXBridgeBuilder(type: TestStruct.self)
+            .constructor { TestStruct.init }
             .var.readOnlyInt { \.readOnlyInt }
         try context.registry.add(builder.bridge)
 
         // We should not be able to set this private property
-        let result = try context.eval("const obj = new jx.JXBridgedStruct(); obj.readOnlyInt = 102; obj.readOnlyInt")
+        let result = try context.eval("const obj = new jx.TestStruct(); obj.readOnlyInt = 102; obj.readOnlyInt")
         XCTAssertEqual(try result.int, 102)
     }
 
     func testRelatedObject() throws {
         let context = JXContext()
-        let structBuilder = JXBridgeBuilder(type: JXBridgedStruct.self)
-            .constructor { JXBridgedStruct.init }
+        let structBuilder = JXBridgeBuilder(type: TestStruct.self)
+            .constructor { TestStruct.init }
             .var.related { \.related }
-        let relatedBuilder = JXBridgeBuilder(type: JXBridgedRelated.self)
-            .constructor { JXBridgedRelated.init }
+        let relatedBuilder = JXBridgeBuilder(type: TestRelated.self)
+            .constructor { TestRelated.init }
             .var.string { \.string }
         try context.registry.add(structBuilder.bridge)
         try context.registry.add(relatedBuilder.bridge)
 
-        var result = try context.eval("const bridged = new jx.JXBridgedStruct(); bridged.related.string")
+        var result = try context.eval("const bridged = new jx.TestStruct(); bridged.related.string")
         XCTAssertEqual(try result.string, "related")
 
-        result = try context.eval("const related = new jx.JXBridgedRelated(); related.string = 'updated'; bridged.related = related; bridged.related.string")
+        result = try context.eval("const related = new jx.TestRelated(); related.string = 'updated'; bridged.related = related; bridged.related.string")
         XCTAssertEqual(try result.string, "updated")
     }
 
     func testScriptCannotAutoSetMutatedRelatedStruct_UNDESIRED() throws {
         let context = JXContext()
-        let structBuilder = JXBridgeBuilder(type: JXBridgedStruct.self)
-            .constructor { JXBridgedStruct.init }
+        let structBuilder = JXBridgeBuilder(type: TestStruct.self)
+            .constructor { TestStruct.init }
             .var.related { \.related }
-        let relatedBuilder = JXBridgeBuilder(type: JXBridgedRelated.self)
-            .constructor { JXBridgedRelated.init }
+        let relatedBuilder = JXBridgeBuilder(type: TestRelated.self)
+            .constructor { TestRelated.init }
             .var.string { \.string }
         try context.registry.add(structBuilder.bridge)
         try context.registry.add(relatedBuilder.bridge)
 
         let result = try context.eval("""
-const bridged = new jx.JXBridgedStruct();
+const bridged = new jx.TestStruct();
 bridged.related.string = 'updated-ref';
 bridged.related.string;
 """)
@@ -98,13 +98,13 @@ bridged.related.string;
 
     func testNativeCodeThrowsException() throws {
         let context = JXContext()
-        let structBuilder = JXBridgeBuilder(type: JXBridgedStruct.self)
-            .constructor { JXBridgedStruct.init }
-            .func.exceptionFunc { JXBridgedStruct.exceptionFunc }
+        let structBuilder = JXBridgeBuilder(type: TestStruct.self)
+            .constructor { TestStruct.init }
+            .func.exceptionFunc { TestStruct.exceptionFunc }
         try context.registry.add(structBuilder.bridge)
 
         let result = try context.eval("""
-const bridged = new jx.JXBridgedStruct();
+const bridged = new jx.TestStruct();
 let caughtErr = '';
 try {
     bridged.exceptionFunc();
@@ -113,49 +113,49 @@ try {
 }
 caughtErr;
 """)
-        XCTAssertEqual(try result.string, "Error: JXBridgedError(message: \"exceptionFunc error\")")
+        XCTAssertEqual(try result.string, "Error: TestError(message: \"exceptionFunc error\")")
     }
 
     func testSubclass() throws {
         let context = JXContext()
-        let baseBuilder = JXBridgeBuilder(type: JXBridgedBaseClass.self)
-            .constructor { JXBridgedBaseClass.init }
+        let baseBuilder = JXBridgeBuilder(type: TestBaseClass.self)
+            .constructor { TestBaseClass.init }
             .var.computedString { \.computedString }
             .class.var.computedClassString { $0.computedClassString }
             .class.var.baseClassString { $0.baseClassString }
             .class.func.classFunc { $0.classFunc() }
-            .static.var.staticString { JXBridgedBaseClass.staticString }
-        let subclassBuilder = JXBridgeBuilder(type: JXBridgedSubClass.self)
-            .constructor { JXBridgedSubClass.init }
+            .static.var.staticString { TestBaseClass.staticString }
+        let subclassBuilder = JXBridgeBuilder(type: TestSubClass.self)
+            .constructor { TestSubClass.init }
             .var.readWriteInt { \.readWriteInt }
             .class.var.subClassString { $0.subClassString }
         try context.registry.add(baseBuilder.bridge)
         try context.registry.add(subclassBuilder.bridge)
 
-        var result = try context.eval("const bridged = new jx.JXBridgedSubClass(); bridged.computedString;")
+        var result = try context.eval("const bridged = new jx.TestSubClass(); bridged.computedString;")
         XCTAssertEqual(try result.string, "sub")
 
-        result = try context.eval("jx.JXBridgedSubClass.computedClassString;")
+        result = try context.eval("jx.TestSubClass.computedClassString;")
         XCTAssertEqual(try result.string, "subClass")
 
-        result = try context.eval("jx.JXBridgedSubClass.baseClassString;")
+        result = try context.eval("jx.TestSubClass.baseClassString;")
         XCTAssertEqual(try result.string, "baseOnlyClass")
 
-        result = try context.eval("jx.JXBridgedSubClass.classFunc();")
+        result = try context.eval("jx.TestSubClass.classFunc();")
         XCTAssertEqual(try result.string, "subFunc")
 
-        result = try context.eval("jx.JXBridgedBaseClass.staticString;")
+        result = try context.eval("jx.TestBaseClass.staticString;")
         XCTAssertEqual(try result.string, "baseStaticString")
     }
 
     func testPropertyWrapped() throws {
         let context = JXContext()
-        let bridge = JXBridgeBuilder(type: JXBridgedBaseClass.self)
-            .constructor { JXBridgedBaseClass.init }
+        let bridge = JXBridgeBuilder(type: TestBaseClass.self)
+            .constructor { TestBaseClass.init }
             .var.publishedInt { \.publishedInt }
             .bridge
 
-        let obj = JXBridgedBaseClass()
+        let obj = TestBaseClass()
         var updateCount = 0
         var token: Any? = obj.objectWillChange.sink { _ in updateCount += 1 }
 
@@ -171,28 +171,28 @@ caughtErr;
     }
 }
 
-private struct JXBridgedStruct {
+private struct TestStruct {
     var readWriteInt = 1
     private(set) var readOnlyInt = 2
     var computedInt: Int { return 3 }
 
     var string = ""
-    var related = JXBridgedRelated()
+    var related = TestRelated()
 
     func exceptionFunc() throws {
-        throw JXBridgedError(message: "exceptionFunc error")
+        throw TestError(message: "exceptionFunc error")
     }
 }
 
-private struct JXBridgedRelated {
+private struct TestRelated {
     var string = "related"
 }
 
-private struct JXBridgedError: Error {
+private struct TestError: Error {
     let message: String
 }
 
-private class JXBridgedBaseClass: ObservableObject {
+private class TestBaseClass: ObservableObject {
     static var staticString: String {
         return "baseStaticString"
     }
@@ -219,7 +219,7 @@ private class JXBridgedBaseClass: ObservableObject {
     }
 }
 
-private class JXBridgedSubClass: JXBridgedBaseClass {
+private class TestSubClass: TestBaseClass {
     override class var computedClassString: String {
         return "subClass"
     }
