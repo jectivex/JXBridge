@@ -69,8 +69,8 @@ class JXBridgeContextSPI {
         registry.modulesByNamespace.keys.forEach { defineNamespace($0) }
     }
     
-    private func defineNamespace(_ namespace: String) {
-        guard let context, !context.global.hasProperty(namespace) else {
+    private func defineNamespace(_ namespace: JXNamespace) {
+        guard let context, !context.global.hasProperty(namespace.value) else {
             return
         }
         do {
@@ -81,12 +81,12 @@ class JXBridgeContextSPI {
     }
     
     private func defineGlobalFunctions(in context: JXContext) throws {
-        defineNamespace(JXRegistry.defaultNamespace)
+        defineNamespace(.default)
         
         // jx.import(type)
         let importFunction = JXValue(newFunctionIn: context) { context, this, args in
             guard args.count == 1 else {
-                throw JXBridgeErrors.invalidArgumentCount(JXRegistry.defaultNamespace, "import")
+                throw JXBridgeErrors.invalidArgumentCount(JXNamespace.default.value, "import")
             }
             let typeName = try args[0][JSCodeGenerator.typeNamePropertyName].string
             if !context.global.hasProperty(typeName) {
@@ -94,7 +94,7 @@ class JXBridgeContextSPI {
             }
             return context.undefined()
         }
-        try context.global[JXRegistry.defaultNamespace].setProperty("import", importFunction)
+        try context.global[JXNamespace.default.value].setProperty("import", importFunction)
         
         // Define a type accessed through a namespace
         let defineClassFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
@@ -107,7 +107,7 @@ class JXBridgeContextSPI {
             }
             let typeName = try args[0].string
             let namespace = try args[1].string
-            guard let bridge = try self.registry.bridge(for: typeName, namespace: namespace, autobridging: true) else {
+            guard let bridge = try self.registry.bridge(for: typeName, namespace: JXNamespace(namespace), autobridging: true) else {
                 throw JXBridgeErrors.unknownType(namespace + "." + typeName)
             }
             try self.defineClass(for: bridge, in: context)

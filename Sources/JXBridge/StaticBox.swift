@@ -5,7 +5,7 @@ class StaticBox: NativeBox {
     static func create(_ typeName: JXValue, namespace: JXValue, registry: JXRegistry) throws -> StaticBox {
         let typeNameString = try typeName.string
         let namespaceString = try namespace.string
-        guard let bridge = registry.bridge(for: typeNameString, namespace: namespaceString) else {
+        guard let bridge = registry.bridge(for: typeNameString, namespace: JXNamespace(namespaceString)) else {
             throw JXBridgeErrors.unknownType(typeNameString)
         }
         return StaticBox(bridge: bridge, registry: registry)

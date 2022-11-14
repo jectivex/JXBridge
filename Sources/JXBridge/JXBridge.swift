@@ -6,7 +6,7 @@ import ObjectiveC
 /// Bridge a native type for use in scripting.
 public struct JXBridge {
     /// Supply the native type being bridged.
-    init(type: Any.Type, as typeName: String? = nil, namespace: String = JXRegistry.defaultNamespace) {
+    init(type: Any.Type, as typeName: String? = nil, namespace: JXNamespace = .default) {
         self.type = type
         self.typeName = typeName ?? JXTypeName(for: type)
         self.namespace = namespace
@@ -29,7 +29,7 @@ public struct JXBridge {
     }
     
     /// The namespace for this type.
-    public var namespace: String {
+    public var namespace: JXNamespace {
         didSet {
             updateQualifiedTypeName()
         }
@@ -39,7 +39,7 @@ public struct JXBridge {
     public private(set) var qualifiedTypeName = ""
     
     private mutating func updateQualifiedTypeName() {
-        qualifiedTypeName = namespace + "." + typeName
+        qualifiedTypeName = namespace.value + "." + typeName
     }
     
     /// Set the next mapped superclass.

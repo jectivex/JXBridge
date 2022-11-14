@@ -5,7 +5,7 @@ class InstanceBox: NativeBox {
     static func create(typeName: JXValue, namespace: JXValue, arguments args: JXValue, registry: JXRegistry) throws -> InstanceBox {
         let typeNameString = try typeName.string
         let namespaceString = try namespace.string
-        guard let bridge = registry.bridge(for: typeNameString, namespace: namespaceString) else {
+        guard let bridge = registry.bridge(for: typeNameString, namespace: JXNamespace(namespaceString)) else {
             throw JXBridgeErrors.unknownType(typeNameString)
         }
         let argsArray = try args.array

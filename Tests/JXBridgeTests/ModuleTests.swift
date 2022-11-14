@@ -52,7 +52,7 @@ private struct TestStruct {
 private struct LazyModule: JXModule {
     var throwError = false
     var addDependency: JXModule?
-    var namespace = "lazy"
+    var namespace = JXNamespace("lazy")
     
     func initialize(registry: JXRegistry) throws {
         if throwError {
@@ -63,7 +63,7 @@ private struct LazyModule: JXModule {
         }
     }
     
-    func addBridge(for typeName: String, namespace: String, to registry: JXRegistry) throws -> Bool {
+    func addBridge(for typeName: String, namespace: JXNamespace, to registry: JXRegistry) throws -> Bool {
         guard typeName == "TestStruct" else {
             return false
         }
@@ -81,7 +81,7 @@ private struct LazyModule: JXModule {
 
 private struct EagerModule: JXModule {
     var throwError = false
-    let namespace = "eager"
+    let namespace = JXNamespace("eager")
     
     func initialize(registry: JXRegistry) throws {
         if throwError {
@@ -93,7 +93,7 @@ private struct EagerModule: JXModule {
         try registry.add(builder.bridge)
     }
     
-    func addBridge(for typeName: String, namespace: String, to registry: JXRegistry) throws -> Bool {
+    func addBridge(for typeName: String, namespace: JXNamespace, to registry: JXRegistry) throws -> Bool {
         return false
     }
     

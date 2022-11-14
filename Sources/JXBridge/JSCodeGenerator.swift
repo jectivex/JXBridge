@@ -10,12 +10,12 @@ struct JSCodeGenerator {
     static let callFunctionName = "_jxbCall"
     
     /// Create a namespace that performs a callback on any attempt to access its classes, giving us a chance to lazily define the requested class.
-    static func defineNamespace(_ namespace: String) -> String {
+    static func defineNamespace(_ namespace: JXNamespace) -> String {
         return """
-var \(namespace) = new Proxy({}, {
+var \(namespace.value) = new Proxy({}, {
     get(target, property) {
         if (target[property] === undefined) {
-            _jxbDefineClass(property, '\(namespace)');
+            _jxbDefineClass(property, '\(namespace.value)');
         }
         return target[property];
     }
@@ -38,7 +38,7 @@ var \(namespace) = new Proxy({}, {
         
         let classJS = """
 \(bridge.qualifiedTypeName) = class\(extendsClause) {
-    static _jxbStaticNative = _jxbCreateStaticNative('\(bridge.typeName)', '\(bridge.namespace)');
+    static _jxbStaticNative = _jxbCreateStaticNative('\(bridge.typeName)', '\(bridge.namespace.value)');
     static _jxbTypeName = '\(bridge.typeName)';
     \(nativeDeclaration)
 \(staticPropertiesJS)
@@ -108,7 +108,7 @@ var \(namespace) = new Proxy({}, {
         if (args.length === 1 && args[0] === '_jxbNative') {
             this._jxbNative = null; // Will be inserted
         } else {
-            this._jxbNative = _jxbCreateNative('\(bridge.typeName)', '\(bridge.namespace)', args);
+            this._jxbNative = _jxbCreateNative('\(bridge.typeName)', '\(bridge.namespace.value)', args);
         }
     }
 """
