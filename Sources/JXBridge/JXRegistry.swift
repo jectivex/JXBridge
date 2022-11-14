@@ -3,13 +3,13 @@ import Combine
 import Foundation
 #endif
 
-// TODO: Current namespace model is very loose: we allow multiple modes and other bridge additions per namespace. Be more strict?
-
 /// Registry of bridged types.
 public class JXRegistry {
     private var bridgesByGivenTypeName: [TypeNameKey: JXBridge] = [:]
     private var bridgesByActualTypeName: [String: JXBridge] = [:]
-    private(set) var modulesByNamespace: [String: [JXModule]] = [:]
+    private(set) var modulesByNamespace: [String: [JXModule]] = [:] // 0 or 1 module per known namespace
+    private var universalModules: [JXModule] = []
+    
     let didAddNamespaceSubject = PassthroughSubject<String, Never>()
 
     /// The default namespace to which bridged types are added in JavaScript: `jx`.
@@ -19,34 +19,27 @@ public class JXRegistry {
         modulesByNamespace[Self.defaultNamespace] = []
     }
     
-    /// Register a module for use in JavaScript. Has no effect if the module has already been registered under its set namespace.
-    ///
-    /// - Parameters:
-    ///   - namespace: The namespace under which to add the module. If nil or excluded, defaults to the module's set namespace.
-    ///
-    @discardableResult public func add(_ module: JXModule, namespace: String? = nil) throws -> Bool {
-        let assignedNamespace = namespace ?? module.namespace
-        let existingModules = modulesByNamespace[assignedNamespace]
-        var modules = existingModules ?? []
-        if modules.contains(where: { module.isEquivalent(to: $0) }) {
-            return false
+    /// Register a module for use in JavaScript. Has no effect if the module has a namespace and has already been registered.
+    @discardableResult public func add(_ module: JXModule) throws -> Bool {
+        guard !module.namespace.isEmpty else {
+            try module.initialize(registry: self)
+            universalModules.append(module)
+            return true
         }
         
-        var preparedModule = module
-        preparedModule.namespace = assignedNamespace
-        modules.append(preparedModule)
-        modulesByNamespace[assignedNamespace] = modules // Assign before initializing to avoid recursion
+        let existingModules = modulesByNamespace[module.namespace]
+        guard (existingModules?.count ?? 0) == 0 else {
+            return false
+        }
+        modulesByNamespace[module.namespace] = [module] // Assign before initializing to avoid recursion on circular dependencies
         if existingModules == nil {
-            didAddNamespaceSubject.send(assignedNamespace)
+            didAddNamespaceSubject.send(module.namespace)
         }
         do {
             try module.initialize(registry: self)
         } catch {
-            // Remove bad module. Initialization may have added other modules, so re-fetch
-            if var modules = modulesByNamespace[assignedNamespace] {
-                modules.removeAll(where: { module.isEquivalent(to: $0) })
-                modulesByNamespace[assignedNamespace] = modules
-            }
+            // Remove bad module
+            modulesByNamespace[module.namespace] = []
             throw error
         }
         return true
@@ -54,36 +47,31 @@ public class JXRegistry {
 
     /// Register a bridge for use in JavaScript.
     ///
-    /// - Parameters:
-    ///   - namespace: The namespace under which to add the type. If nil or excluded, defaults to first any namespace set on the bridge, then the default namespace.
     /// - Throws `JXBrigeErrors.namespaceViolation` if you attempt to register the same type under multiple namespaces.
-    @discardableResult public func add(_ bridge: JXBridge, namespace: String? = nil) throws -> JXBridge {
+    public func add(_ bridge: JXBridge) throws {
         let actualTypeName = String(reflecting: bridge.type)
-        let assignedNamespace = namespace ?? bridge.namespace ?? Self.defaultNamespace
-        if let previousNamespace = bridgesByActualTypeName[actualTypeName]?.namespace, previousNamespace != assignedNamespace {
-            throw JXBridgeErrors.namespaceViolation(actualTypeName, previousNamespace, assignedNamespace)
+        if let previousNamespace = bridgesByActualTypeName[actualTypeName]?.namespace, previousNamespace != bridge.namespace {
+            throw JXBridgeErrors.namespaceViolation(actualTypeName, previousNamespace)
         }
             
         var preparedBridge = bridge
-        preparedBridge.namespace = assignedNamespace
         preparedBridge.prepareLookupCaches()
-        bridgesByGivenTypeName[TypeNameKey(typeName: bridge.typeName, namespace: assignedNamespace)] = preparedBridge
+        bridgesByGivenTypeName[TypeNameKey(typeName: preparedBridge.typeName, namespace: preparedBridge.namespace)] = preparedBridge
         bridgesByActualTypeName[actualTypeName] = preparedBridge
         
-        if modulesByNamespace[assignedNamespace] == nil {
-            modulesByNamespace[assignedNamespace] = []
-            didAddNamespaceSubject.send(assignedNamespace)
+        if modulesByNamespace[preparedBridge.namespace] == nil {
+            modulesByNamespace[preparedBridge.namespace] = []
+            didAddNamespaceSubject.send(preparedBridge.namespace)
         }
-        return preparedBridge
     }
 
     /// Register a bridge generated by a `JXBridging` type for use in JavaScript.
     ///
-    /// - Parameters:
-    ///   - namespace: The namespace under which to add the type. If nil or excluded, defaults to first any namespace set on the bridge, then the default namespace.
     /// - Throws `JXBrigeErrors.namespaceViolation` if you attempt to register the same type under multiple namespaces.
-    @discardableResult public func add<T: JXBridging>(for type: T.Type, namespace: String? = nil) throws -> JXBridge {
-        return try add(T.bridgeJX(), namespace: namespace)
+    @discardableResult public func add<T: JXBridging>(for type: T.Type) throws -> JXBridge {
+        let bridge = T.bridgeJX()
+        try add(bridge)
+        return bridge
     }
 
 #if canImport(ObjectiveC)
@@ -91,12 +79,13 @@ public class JXRegistry {
     /// Register a bridge populated using ObjectiveC reflection for use in JavaScript.
     ///
     /// - Parameters:
-    ///   - namespace: The namespace under which to add the type. If nil, the default namespace.
+    ///   - namespace: The namespace under which to add the type.
     /// - Throws `JXBrigeErrors.namespaceViolation` if you attempt to register the same type under multiple namespaces.
-    @discardableResult public func add<T: NSObject>(forObjectiveCType type: T.Type, namespace: String? = nil) throws -> JXBridge {
-        let builder = JXBridgeBuilder(type: type)
+    @discardableResult public func add<T: NSObject>(forObjectiveCType type: T.Type, namespace: String = JXRegistry.defaultNamespace) throws -> JXBridge {
+        let builder = JXBridgeBuilder(type: type, namespace: namespace)
         builder.addObjectiveCPropertiesAndMethods()
-        return try add(builder.bridge, namespace: namespace)
+        try add(builder.bridge)
+        return builder.bridge
     }
 
 #endif
@@ -138,23 +127,25 @@ public class JXRegistry {
     }
 
     private func addAutoBridge(for typeName: String, namespace: String) throws -> JXBridge? {
-        guard let modules = modulesByNamespace[namespace] else {
-            return nil
-        }
-        for module in modules {
-            if try module.addBridge(for: typeName, to: self) {
-                return bridge(for: typeName, namespace: namespace)
+        for module in (modulesByNamespace[namespace] ?? []) + universalModules {
+            if try module.addBridge(for: typeName, namespace: namespace, to: self) {
+                return try bridge(for: typeName, namespace: namespace, autobridging: false)
             }
         }
         return nil
     }
     
     private func addAutoBridge(for instance: Any) throws -> JXBridge? {
-        for module in modulesByNamespace.values.flatMap({ $0 }) {
+        for module in modulesByNamespace.values.flatMap({ $0 }) + universalModules {
             if try module.addBridge(for: instance, to: self) {
                 return try bridge(for: instance, autobridging: false)
             }
         }
         return nil
     }
+}
+
+private struct TypeNameKey: Hashable {
+    let typeName: String
+    let namespace: String
 }

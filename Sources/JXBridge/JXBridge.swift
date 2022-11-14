@@ -6,10 +6,12 @@ import ObjectiveC
 /// Bridge a native type for use in scripting.
 public struct JXBridge {
     /// Supply the native type being bridged.
-    init(type: Any.Type, as typeName: String? = nil, namespace: String? = nil) {
+    init(type: Any.Type, as typeName: String? = nil, namespace: String = JXRegistry.defaultNamespace) {
         self.type = type
         self.typeName = typeName ?? JXTypeName(for: type)
         self.namespace = namespace
+        updateQualifiedTypeName()
+        
 #if canImport(ObjectiveC)
         if let cls = type as? AnyClass {
             self.superclass = class_getSuperclass(cls)
@@ -20,17 +22,24 @@ public struct JXBridge {
     public let type: Any.Type
     
     /// It is possible to customize the name used for the type in scripts.
-    public var typeName: String
+    public var typeName: String {
+        didSet {
+            updateQualifiedTypeName()
+        }
+    }
     
-    /// The assigned namespace, if any.
-    public var namespace: String?
+    /// The namespace for this type.
+    public var namespace: String {
+        didSet {
+            updateQualifiedTypeName()
+        }
+    }
     
     /// The namespace + type name.
-    public var qualifiedTypeName: String {
-        guard let namespace = self.namespace, !namespace.isEmpty else {
-            return typeName
-        }
-        return namespace + "." + typeName
+    public private(set) var qualifiedTypeName = ""
+    
+    private mutating func updateQualifiedTypeName() {
+        qualifiedTypeName = namespace + "." + typeName
     }
     
     /// Set the next mapped superclass.

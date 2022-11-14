@@ -36,16 +36,9 @@ var \(namespace) = new Proxy({}, {
             nativeDeclaration = "_jxbNative;"
         }
         
-        let declaration: String
-        if let namespace = bridge.namespace {
-            declaration = "\(namespace).\(bridge.typeName) = class"
-        } else {
-            declaration = "class \(bridge.typeName)"
-        }
-        
         let classJS = """
-\(declaration)\(extendsClause) {
-    static _jxbStaticNative = _jxbCreateStaticNative('\(bridge.typeName)', '\(bridge.namespace ?? "")');
+\(bridge.qualifiedTypeName) = class\(extendsClause) {
+    static _jxbStaticNative = _jxbCreateStaticNative('\(bridge.typeName)', '\(bridge.namespace)');
     static _jxbTypeName = '\(bridge.typeName)';
     \(nativeDeclaration)
 \(staticPropertiesJS)
@@ -115,7 +108,7 @@ var \(namespace) = new Proxy({}, {
         if (args.length === 1 && args[0] === '_jxbNative') {
             this._jxbNative = null; // Will be inserted
         } else {
-            this._jxbNative = _jxbCreateNative('\(bridge.typeName)', '\(bridge.namespace ?? "")', args);
+            this._jxbNative = _jxbCreateNative('\(bridge.typeName)', '\(bridge.namespace)', args);
         }
     }
 """

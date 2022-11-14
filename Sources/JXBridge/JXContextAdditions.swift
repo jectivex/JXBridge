@@ -86,7 +86,7 @@ class JXBridgeContextSPI {
         // jx.import(type)
         let importFunction = JXValue(newFunctionIn: context) { context, this, args in
             guard args.count == 1 else {
-                throw JXBridgeErrors.invalidArgumentCount("jx", "import")
+                throw JXBridgeErrors.invalidArgumentCount(JXRegistry.defaultNamespace, "import")
             }
             let typeName = try args[0][JSCodeGenerator.typeNamePropertyName].string
             if !context.global.hasProperty(typeName) {
@@ -176,8 +176,7 @@ class JXBridgeContextSPI {
     }
 
     private func defineClass(for bridge: JXBridge, in context: JXContext) throws {
-        let key = TypeNameKey(typeName: bridge.typeName, namespace: bridge.namespace)
-        guard !definedTypeNames.contains(key) else {
+        guard !definedTypeNames.contains(bridge.qualifiedTypeName) else {
             return
         }
         let superclassBridge = bridge.superclassBridge(in: registry)
@@ -187,9 +186,9 @@ class JXBridgeContextSPI {
         let codeGenerator = JSCodeGenerator(bridge: bridge, superclassBridge: superclassBridge)
         let definition = codeGenerator.defineJSClass()
         try context.eval(definition)
-        definedTypeNames.insert(key)
+        definedTypeNames.insert(bridge.qualifiedTypeName)
     }
-    private var definedTypeNames: Set<TypeNameKey> = []
+    private var definedTypeNames: Set<String> = []
 }
 
 extension JXBridgeContextSPI: JXContextSPI {

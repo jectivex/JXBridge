@@ -31,8 +31,8 @@ public enum JXBridgeErrors: Error {
     case readOnlyProperty(String, String)
     
     /// Detected attempt to register the same type under multiple namespaces.
-    /// (Type name, existing namespace, new namespace)
-    case namespaceViolation(String, String, String)
+    /// (Type name, namespace)
+    case namespaceViolation(String, String)
 
     /// Script attempted to invoke an unknown function name.
     /// (Type name, function name.)

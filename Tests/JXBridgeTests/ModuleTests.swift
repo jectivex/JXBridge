@@ -63,7 +63,7 @@ private struct LazyModule: JXModule {
         }
     }
     
-    func addBridge(for typeName: String, to registry: JXRegistry) throws -> Bool {
+    func addBridge(for typeName: String, namespace: String, to registry: JXRegistry) throws -> Bool {
         guard typeName == "TestStruct" else {
             return false
         }
@@ -75,17 +75,13 @@ private struct LazyModule: JXModule {
     }
     
     func addBridge(for instance: Any, to registry: JXRegistry) throws -> Bool {
-        return try addBridge(for: String(describing: type(of: instance)), to: registry)
-    }
-    
-    func isEquivalent(to module: JXModule) -> Bool {
-        return module is LazyModule
+        return try addBridge(for: String(describing: type(of: instance)), namespace: namespace, to: registry)
     }
 }
 
 private struct EagerModule: JXModule {
     var throwError = false
-    var namespace = "eager"
+    let namespace = "eager"
     
     func initialize(registry: JXRegistry) throws {
         if throwError {
@@ -97,15 +93,11 @@ private struct EagerModule: JXModule {
         try registry.add(builder.bridge)
     }
     
-    func addBridge(for typeName: String, to registry: JXRegistry) throws -> Bool {
+    func addBridge(for typeName: String, namespace: String, to registry: JXRegistry) throws -> Bool {
         return false
     }
     
     func addBridge(for instance: Any, to registry: JXRegistry) throws -> Bool {
         return false
-    }
-    
-    func isEquivalent(to module: JXModule) -> Bool {
-        return module is EagerModule
     }
 }
