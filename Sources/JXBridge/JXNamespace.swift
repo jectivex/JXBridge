@@ -1,10 +1,10 @@
 /// A namespace used for JavaScript bridged types.
 public struct JXNamespace: ExpressibleByStringLiteral, Hashable {
-    /// The default namespace.
+    /// The default namespace: `jx`
     public static let `default` = JXNamespace("jx")
     
-    /// Special value used to represent any namespace in some API.
-    public static let any = JXNamespace("")
+    /// Special value used to represent the absence of a namespace.
+    public static let none = JXNamespace("")
     
     public let value: String
     

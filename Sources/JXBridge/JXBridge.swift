@@ -8,7 +8,7 @@ public struct JXBridge {
     /// Supply the native type being bridged.
     init(type: Any.Type, as typeName: String? = nil, namespace: JXNamespace = .default) {
         self.type = type
-        self.typeName = typeName ?? JXTypeName(for: type)
+        self.typeName = typeName ?? TypeName(for: type)
         self.namespace = namespace
         updateQualifiedTypeName()
         
@@ -39,7 +39,11 @@ public struct JXBridge {
     public private(set) var qualifiedTypeName = ""
     
     private mutating func updateQualifiedTypeName() {
-        qualifiedTypeName = namespace.value + "." + typeName
+        if namespace.value.isEmpty {
+            qualifiedTypeName = typeName
+        } else {
+            qualifiedTypeName = namespace.value + "." + typeName
+        }
     }
     
     /// Set the next mapped superclass.

@@ -1,5 +1,5 @@
 /// Return the default JavaScript name for the given type.
-public func JXTypeName(for type: Any.Type) -> String {
+public func TypeName(for type: Any.Type) -> String {
     return asJXTypeName(String(describing: type))
 }
 

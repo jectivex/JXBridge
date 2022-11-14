@@ -32,6 +32,7 @@ extension JXContext {
 class JXBridgeContextSPI {
     private weak var context: JXContext?
     private var namespaceSubscription: AnyCancellable?
+    private var unnamespacedBridgeSubscription: AnyCancellable?
     
     init(context: JXContext) {
         self.context = context
@@ -66,15 +67,32 @@ class JXBridgeContextSPI {
         namespaceSubscription = registry.didAddNamespaceSubject.sink { [weak self] namespace in
             self?.defineNamespace(namespace)
         }
-        registry.modulesByNamespace.keys.forEach { defineNamespace($0) }
+        registry.namespaces.forEach { defineNamespace($0) }
+        
+        unnamespacedBridgeSubscription?.cancel()
+        unnamespacedBridgeSubscription = registry.didAddUnnamespacedBridgeSubject.sink { [weak self] bridge in
+            self?.defineClass(for: bridge)
+        }
+        registry.unnamedspacedBridges.forEach { defineClass(for: $0) }
     }
     
     private func defineNamespace(_ namespace: JXNamespace) {
-        guard let context, !context.global.hasProperty(namespace.value) else {
+        guard namespace != .none, let context, !context.global.hasProperty(namespace.value) else {
             return
         }
         do {
             try context.eval(JSCodeGenerator.defineNamespace(namespace))
+        } catch {
+            // No real way to process the error
+        }
+    }
+    
+    private func defineClass(for bridge: JXBridge) {
+        guard let context else {
+            return
+        }
+        do {
+            try defineClass(for: bridge, in: context)
         } catch {
             // No real way to process the error
         }

@@ -7,9 +7,18 @@ import Foundation
 public class JXRegistry {
     private var bridgesByGivenTypeName: [TypeNameKey: JXBridge] = [:]
     private var bridgesByActualTypeName: [String: JXBridge] = [:]
-    private(set) var modulesByNamespace: [JXNamespace: [JXModule]] = [:] // 0 or 1 module per known namespace
-    private var universalModules: [JXModule] = [] // Use .any namespace
+    private(set) var modulesByNamespace: [JXNamespace: [JXModule]] = [:] // 0 or 1 module per known namespace. Internal for testing
+    private var unnamedspacedModules: [JXModule] = []
+    
+    // Allow us to detect additions that require immediate JS code generation
+    var namespaces: any Sequence<JXNamespace> {
+        return modulesByNamespace.keys
+    }
     let didAddNamespaceSubject = PassthroughSubject<JXNamespace, Never>()
+    var unnamedspacedBridges: any Sequence<JXBridge> {
+        return bridgesByActualTypeName.values.filter { $0.namespace == .none }
+    }
+    let didAddUnnamespacedBridgeSubject = PassthroughSubject<JXBridge, Never>()
 
     public init() {
         modulesByNamespace[.default] = []
@@ -17,9 +26,9 @@ public class JXRegistry {
     
     /// Register a module for use in JavaScript. Has no effect if the module has a namespace and has already been registered.
     @discardableResult public func add(_ module: JXModule) throws -> Bool {
-        guard module.namespace != .any else {
+        guard module.namespace != .none else {
             try module.initialize(registry: self)
-            universalModules.append(module)
+            unnamedspacedModules.append(module)
             return true
         }
         
@@ -45,9 +54,6 @@ public class JXRegistry {
     ///
     /// - Throws `JXBrigeErrors.namespaceViolation` if you attempt to use an invalid namespace or register the same type under multiple namespaces.
     public func add(_ bridge: JXBridge) throws {
-        guard bridge.namespace != .any else {
-            throw JXBridgeErrors.namespaceViolation(bridge.typeName, bridge.namespace.value)
-        }
         let actualTypeName = String(reflecting: bridge.type)
         if let previousNamespace = bridgesByActualTypeName[actualTypeName]?.namespace, previousNamespace != bridge.namespace {
             throw JXBridgeErrors.namespaceViolation(actualTypeName, previousNamespace.value)
@@ -58,7 +64,9 @@ public class JXRegistry {
         bridgesByGivenTypeName[TypeNameKey(typeName: preparedBridge.typeName, namespace: preparedBridge.namespace)] = preparedBridge
         bridgesByActualTypeName[actualTypeName] = preparedBridge
         
-        if modulesByNamespace[preparedBridge.namespace] == nil {
+        if preparedBridge.namespace == .none {
+            didAddUnnamespacedBridgeSubject.send(preparedBridge)
+        } else if modulesByNamespace[preparedBridge.namespace] == nil {
             modulesByNamespace[preparedBridge.namespace] = []
             didAddNamespaceSubject.send(preparedBridge.namespace)
         }
@@ -126,7 +134,7 @@ public class JXRegistry {
     }
 
     private func addAutoBridge(for typeName: String, namespace: JXNamespace) throws -> JXBridge? {
-        for module in (modulesByNamespace[namespace] ?? []) + universalModules {
+        for module in (modulesByNamespace[namespace] ?? []) + unnamedspacedModules {
             if try module.addBridge(for: typeName, namespace: namespace, to: self) {
                 return try bridge(for: typeName, namespace: namespace, autobridging: false)
             }
@@ -135,7 +143,7 @@ public class JXRegistry {
     }
     
     private func addAutoBridge(for instance: Any) throws -> JXBridge? {
-        for module in modulesByNamespace.values.flatMap({ $0 }) + universalModules {
+        for module in modulesByNamespace.values.flatMap({ $0 }) + unnamedspacedModules {
             if try module.addBridge(for: instance, to: self) {
                 return try bridge(for: instance, autobridging: false)
             }

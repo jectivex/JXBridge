@@ -14,6 +14,17 @@ final class NamespaceTests: XCTestCase {
         XCTAssertEqual(try result.int, 1)
     }
     
+    func testNoneNamespace() throws {
+        let context = JXContext()
+        let builder = JXBridgeBuilder(type: TestStruct.self, namespace: .none)
+            .constructor { TestStruct.init }
+            .var.intVar { \.intVar }
+        try context.registry.add(builder.bridge)
+
+        let result = try context.eval("const obj = new TestStruct(); obj.intVar;")
+        XCTAssertEqual(try result.int, 1)
+    }
+    
     func testImport() throws {
         let context = JXContext()
         let builder = JXBridgeBuilder(type: TestStruct.self, namespace: "test")

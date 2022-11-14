@@ -2,9 +2,9 @@
 
 import Foundation
 
-/// Module that auto-registers any `NSObject` type. If the type is not `JXBridging`, it must be in the default namespace.
+/// Module that auto-registers any `NSObject` type. If the type is not `JXBridging`, it must be in the default or none namespace.
 public struct AnyNSObjectModule: JXModule {
-    public let namespace: JXNamespace = .any
+    public let namespace: JXNamespace = .none
     
     public func initialize(registry: JXRegistry) throws {
     }

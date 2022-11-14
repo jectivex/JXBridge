@@ -6,7 +6,13 @@ public struct AnyJXBridgingModule: JXModule {
     
     /// To construct instances in JavaScript, supply a map of namespace-qualified type names to native types.
     public init(map: [String: JXBridging.Type]) {
-        self.init(map: { map[$1.value + "." + $0] })
+        func qualifiedTypeName(_ typeName: String, namespace: JXNamespace) -> String {
+            guard namespace != .none else {
+                return typeName
+            }
+            return namespace.value + "." + typeName
+        }
+        self.init(map: { map[qualifiedTypeName($0, namespace: $1)] })
     }
     
     /// To construct instances in JavaScript, supply a mapping function of `(typeName, namespace) -> JXBridging`.
@@ -14,7 +20,7 @@ public struct AnyJXBridgingModule: JXModule {
         self.map = map
     }
     
-    public let namespace: JXNamespace = .any
+    public let namespace: JXNamespace = .none
     
     public func initialize(registry: JXRegistry) throws {
     }
