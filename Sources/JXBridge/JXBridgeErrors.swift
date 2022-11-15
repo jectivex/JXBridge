@@ -21,6 +21,9 @@ public enum JXBridgeErrors: Error {
 
     /// The JXContext has been dealloc'd.
     case invalidContext
+    
+    /// An object backing this value has been dealloc'd.
+    case invalidInstance
 
     /// Script attempted to create an instance of a type without any bridged constructors.
     /// (Type name.)

@@ -67,10 +67,12 @@ private struct LazyModule: JXModule {
         guard typeName == "TestStruct" else {
             return false
         }
-        let builder = JXBridgeBuilder(type: TestStruct.self, namespace: namespace)
-            .constructor { TestStruct.init }
-            .var.intVar { \.intVar }
-        try registry.add(builder.bridge)
+        try registry.add {
+            JXBridgeBuilder(type: TestStruct.self, namespace: namespace)
+                .constructor { TestStruct.init }
+                .var.intVar { \.intVar }
+                .bridge
+        }
         return true
     }
     
@@ -87,10 +89,12 @@ private struct EagerModule: JXModule {
         if throwError {
             throw JXBridgeErrors.internalError("EagerModule.initialize")
         }
-        let builder = JXBridgeBuilder(type: TestStruct.self, namespace: namespace)
-            .constructor { TestStruct.init }
-            .var.intVar { \.intVar }
-        try registry.add(builder.bridge)
+        try registry.add {
+            JXBridgeBuilder(type: TestStruct.self, namespace: namespace)
+                .constructor { TestStruct.init }
+                .var.intVar { \.intVar }
+                .bridge
+        }
     }
     
     func addBridge(for typeName: String, namespace: JXNamespace, to registry: JXRegistry) throws -> Bool {

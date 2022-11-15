@@ -23,6 +23,7 @@ extension JXContext {
             return bridgeSPI
         }
 
+        // We setup our SPI lazily so that if a context is used directly and doesn't need it, it doesn't incur any overhead
         let bridgeSPI = JXBridgeContextSPI(context: self)
         self.spi = bridgeSPI
         return bridgeSPI
@@ -224,11 +225,13 @@ extension JXBridgeContextSPI: RegistryListener {
 }
 
 extension JXBridgeContextSPI: JXContextSPI {
+    func eval(_ script: String, this: JXValue?, in: JXContext) throws -> JXValue? {
+        try throwInitializationError()
+        return nil
+    }
+    
     func toJX(_ value: Any, in context: JXContext) throws -> JXValue? {
-        // If we didn't initialize cleanly, throw an error for all operations
-        if let initializationError {
-            throw initializationError
-        }
+        try throwInitializationError()
         guard let bridge = try registry.bridge(for: value, autobridging: true) else {
             return nil
         }
@@ -242,10 +245,7 @@ extension JXBridgeContextSPI: JXContextSPI {
     }
 
     func fromJX<T>(_ value: JXValue, to type: T.Type) throws -> T? {
-        // If we didn't initialize cleanly, throw an error for all operations
-        if let initializationError {
-            throw initializationError
-        }
+        try throwInitializationError()
         guard value.hasProperty(JSCodeGenerator.nativePropertyName) else {
             return nil
         }
@@ -254,5 +254,12 @@ extension JXBridgeContextSPI: JXContextSPI {
             return nil
         }
         return instance
+    }
+    
+    private func throwInitializationError() throws {
+        // If we didn't initialize cleanly, throw an error for all operations.
+        if let initializationError {
+            throw initializationError
+        }
     }
 }
