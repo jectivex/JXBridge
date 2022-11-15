@@ -54,7 +54,7 @@ private struct LazyModule: JXModule {
     var addDependency: JXModule?
     var namespace = JXNamespace("lazy")
     
-    func initialize(registry: JXRegistry) throws {
+    func register(with registry: JXRegistry) throws {
         if throwError {
             throw JXBridgeErrors.internalError("LazyModule.initialize")
         }
@@ -83,7 +83,7 @@ private struct EagerModule: JXModule {
     var throwError = false
     let namespace = JXNamespace("eager")
     
-    func initialize(registry: JXRegistry) throws {
+    func register(with registry: JXRegistry) throws {
         if throwError {
             throw JXBridgeErrors.internalError("EagerModule.initialize")
         }

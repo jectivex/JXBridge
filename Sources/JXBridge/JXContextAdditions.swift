@@ -7,6 +7,17 @@ import JXKit
 // TODO: What is the supported threading model? Currently we're assuming a given context is only used for a single thread or otherwise synchronized
 
 extension JXContext {
+    /// Register types bridged to JavaScript for use in this context.
+    public var registry: JXRegistry {
+        // Note: Accessing the registry causes us to access bridgeSPI, which sets our SPI on the context if needed
+        return bridgeSPI.registry
+    }
+    
+    /// Set a pre-configured or shared registry for this context.
+    public func setRegistry(_ registry: JXRegistry) throws {
+        try bridgeSPI.setRegistry(registry)
+    }
+    
     private var bridgeSPI: JXBridgeContextSPI {
         if let bridgeSPI = self.spi as? JXBridgeContextSPI {
             return bridgeSPI
@@ -16,90 +27,79 @@ extension JXContext {
         self.spi = bridgeSPI
         return bridgeSPI
     }
-
-    /// Register types bridged to JavaScript for use in this context.
-    public var registry: JXRegistry {
-        // Note: Accessing the registry causes us to access bridgeSPI, which sets our SPI on the context if needed
-        get {
-            return bridgeSPI.registry
-        }
-        set {
-            bridgeSPI.registry = newValue
-        }
-    }
 }
 
 class JXBridgeContextSPI {
     private weak var context: JXContext?
-    private var namespaceSubscription: AnyCancellable?
-    private var unnamespacedBridgeSubscription: AnyCancellable?
+    private var initializationError: Error?
     
     init(context: JXContext) {
         self.context = context
         do {
             try defineGlobalFunctions(in: context)
         } catch {
-            // No real way to process the error
+            initializationError = error
         }
     }
     
     var registry: JXRegistry {
-        get {
-            if let _registry {
-                return _registry
-            }
-            let registry = JXRegistry()
-            _registry = registry
-            initializeRegistry(registry)
-            return registry
+        if let _registry {
+            return _registry
         }
-        set {
-            if newValue !== _registry {
-                _registry = newValue
-                initializeRegistry(newValue)
+        let registry = JXRegistry()
+        _registry = registry
+        registry.listeners.addListener(self)
+        do {
+            try initializeRegistry(registry)
+        } catch {
+            if initializationError == nil {
+                initializationError = error
             }
         }
+        return registry
+    }
+    
+    func setRegistry(_ registry: JXRegistry) throws {
+        guard registry !== _registry else {
+            return
+        }
+        _registry?.listeners.removeListener(self)
+        _registry = registry
+        registry.listeners.addListener(self)
+        try initializeRegistry(registry)
     }
     private var _registry: JXRegistry?
 
-    private func initializeRegistry(_ registry: JXRegistry) {
-        namespaceSubscription?.cancel()
-        namespaceSubscription = registry.didAddNamespaceSubject.sink { [weak self] namespace in
-            self?.defineNamespace(namespace)
-        }
-        registry.namespaces.forEach { defineNamespace($0) }
-        
-        unnamespacedBridgeSubscription?.cancel()
-        unnamespacedBridgeSubscription = registry.didAddUnnamespacedBridgeSubject.sink { [weak self] bridge in
-            self?.defineClass(for: bridge)
-        }
-        registry.unnamedspacedBridges.forEach { defineClass(for: $0) }
+    private func initializeRegistry(_ registry: JXRegistry) throws {
+        try registry.namespaces.forEach { try defineNamespace($0) }
+        try registry.unnamespacedBridges.forEach { try defineClass(for: $0) }
+        try registry.modules.forEach { try initializeModule($0) }
     }
     
-    private func defineNamespace(_ namespace: JXNamespace) {
+    private func defineNamespace(_ namespace: JXNamespace) throws {
         guard namespace != .none, let context, !context.global.hasProperty(namespace.value) else {
             return
         }
-        do {
-            try context.eval(JSCodeGenerator.defineNamespace(namespace))
-        } catch {
-            // No real way to process the error
-        }
+        try context.eval(JSCodeGenerator.defineNamespaceJSProxy(namespace))
     }
     
-    private func defineClass(for bridge: JXBridge) {
+    private func defineClass(for bridge: JXBridge) throws {
         guard let context else {
             return
         }
-        do {
-            try defineClass(for: bridge, in: context)
-        } catch {
-            // No real way to process the error
+        try defineClass(for: bridge, in: context)
+    }
+    
+    private func initializeModule(_ module: JXModule) throws {
+        guard let context else {
+            return
         }
+        let namespaceObject = try context.global.addNamespace(module.namespace)
+        try module.initialize(namespaceObject: namespaceObject)
     }
     
     private func defineGlobalFunctions(in context: JXContext) throws {
-        defineNamespace(.default)
+        try defineNamespace(.default)
         
         // jx.import(type)
         let importFunction = JXValue(newFunctionIn: context) { context, this, args in
@@ -209,8 +209,26 @@ class JXBridgeContextSPI {
     private var definedTypeNames: Set<String> = []
 }
 
+extension JXBridgeContextSPI: RegistryListener {
+    func didAddNamespace(_ namespace: JXNamespace) throws {
+        try defineNamespace(namespace)
+    }
+    
+    func didAddModule(_ module: JXModule) throws {
+        try initializeModule(module)
+    }
+    
+    func didAddUnnamespacedBridge(_ bridge: JXBridge) throws {
+        try defineClass(for: bridge)
+    }
+}
+
 extension JXBridgeContextSPI: JXContextSPI {
     func toJX(_ value: Any, in context: JXContext) throws -> JXValue? {
+        // If we didn't initialize cleanly, throw an error for all operations
+        if let initializationError {
+            throw initializationError
+        }
         guard let bridge = try registry.bridge(for: value, autobridging: true) else {
             return nil
         }
@@ -224,6 +242,10 @@ extension JXBridgeContextSPI: JXContextSPI {
     }
 
     func fromJX<T>(_ value: JXValue, to type: T.Type) throws -> T? {
+        // If we didn't initialize cleanly, throw an error for all operations
+        if let initializationError {
+            throw initializationError
+        }
         guard value.hasProperty(JSCodeGenerator.nativePropertyName) else {
             return nil
         }

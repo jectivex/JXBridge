@@ -1,3 +1,5 @@
+import JXKit
+
 /// Module that auto-registers `JXBridging` types:
 /// 1. To support constructing instances from JavaScript, supply a map of qualified type name -> `JXBridging` native type.
 /// 2. Any `JXBridging` instance returne from bridged functions and properties will automatically be bridged.
@@ -21,9 +23,6 @@ public struct AnyJXBridgingModule: JXModule {
     }
     
     public let namespace: JXNamespace = .none
-    
-    public func initialize(registry: JXRegistry) throws {
-    }
     
     public func addBridge(for typeName: String, namespace: JXNamespace, to registry: JXRegistry) throws -> Bool {
         guard let bridgingType = map(typeName, namespace) else {

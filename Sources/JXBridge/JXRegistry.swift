@@ -1,4 +1,3 @@
-import Combine
 #if canImport(ObjectiveC)
 import Foundation
 #endif
@@ -8,17 +7,19 @@ public class JXRegistry {
     private var bridgesByGivenTypeName: [TypeNameKey: JXBridge] = [:]
     private var bridgesByActualTypeName: [String: JXBridge] = [:]
     private(set) var modulesByNamespace: [JXNamespace: [JXModule]] = [:] // 0 or 1 module per known namespace. Internal for testing
-    private var unnamedspacedModules: [JXModule] = []
+    private var unnamespacedModules: [JXModule] = []
     
-    // Allow us to detect additions that require immediate JS code generation
+    // Allow any context using this registry to listen for additions that require JS generation
+    let listeners = RegistryListeners()
     var namespaces: any Sequence<JXNamespace> {
         return modulesByNamespace.keys
     }
-    let didAddNamespaceSubject = PassthroughSubject<JXNamespace, Never>()
-    var unnamedspacedBridges: any Sequence<JXBridge> {
+    var modules: any Sequence<JXModule> {
+        return modulesByNamespace.values.flatMap({ $0 }) + unnamespacedModules
+    }
+    var unnamespacedBridges: any Sequence<JXBridge> {
         return bridgesByActualTypeName.values.filter { $0.namespace == .none }
     }
-    let didAddUnnamespacedBridgeSubject = PassthroughSubject<JXBridge, Never>()
 
     public init() {
         modulesByNamespace[.default] = []
@@ -27,8 +28,9 @@ public class JXRegistry {
     /// Register a module for use in JavaScript. Has no effect if the module has a namespace and has already been registered.
     @discardableResult public func add(_ module: JXModule) throws -> Bool {
         guard module.namespace != .none else {
-            try module.initialize(registry: self)
-            unnamedspacedModules.append(module)
+            try module.register(with: self)
+            unnamespacedModules.append(module)
+            try listeners.didAddModule(module)
             return true
         }
         
@@ -38,15 +40,16 @@ public class JXRegistry {
         }
         modulesByNamespace[module.namespace] = [module] // Assign before initializing to avoid recursion on circular dependencies
         if existingModules == nil {
-            didAddNamespaceSubject.send(module.namespace)
+            try listeners.didAddNamespace(module.namespace)
         }
         do {
-            try module.initialize(registry: self)
+            try module.register(with: self)
         } catch {
             // Remove bad module
             modulesByNamespace[module.namespace] = []
             throw error
         }
+        try listeners.didAddModule(module)
         return true
     }
 
@@ -65,10 +68,10 @@ public class JXRegistry {
         bridgesByActualTypeName[actualTypeName] = preparedBridge
         
         if preparedBridge.namespace == .none {
-            didAddUnnamespacedBridgeSubject.send(preparedBridge)
+            try listeners.didAddUnnamespacedBridge(preparedBridge)
         } else if modulesByNamespace[preparedBridge.namespace] == nil {
             modulesByNamespace[preparedBridge.namespace] = []
-            didAddNamespaceSubject.send(preparedBridge.namespace)
+            try listeners.didAddNamespace(preparedBridge.namespace)
         }
     }
 
@@ -134,7 +137,7 @@ public class JXRegistry {
     }
 
     private func addAutoBridge(for typeName: String, namespace: JXNamespace) throws -> JXBridge? {
-        for module in (modulesByNamespace[namespace] ?? []) + unnamedspacedModules {
+        for module in (modulesByNamespace[namespace] ?? []) + unnamespacedModules {
             if try module.addBridge(for: typeName, namespace: namespace, to: self) {
                 return try bridge(for: typeName, namespace: namespace, autobridging: false)
             }
@@ -143,7 +146,7 @@ public class JXRegistry {
     }
     
     private func addAutoBridge(for instance: Any) throws -> JXBridge? {
-        for module in modulesByNamespace.values.flatMap({ $0 }) + unnamedspacedModules {
+        for module in modulesByNamespace.values.flatMap({ $0 }) + unnamespacedModules {
             if try module.addBridge(for: instance, to: self) {
                 return try bridge(for: instance, autobridging: false)
             }
