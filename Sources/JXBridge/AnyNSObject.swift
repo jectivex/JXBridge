@@ -4,7 +4,7 @@ import Foundation
 import JXKit
 
 /// Module that auto-registers any `NSObject` type. If the type is not `JXBridging`, it must be in the default or none namespace.
-public struct AnyNSObjectModule: JXModule {
+public struct AnyNSObject: JXModule {
     public let namespace: JXNamespace = .none
     
     public func addBridge(for typeName: String, namespace: JXNamespace, to registry: JXRegistry) throws -> Bool {

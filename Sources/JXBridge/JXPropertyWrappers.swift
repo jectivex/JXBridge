@@ -1,6 +1,8 @@
 import JXKit
 
-/// Property wrapper bridging a stored property.
+/// Property wrapper bridging a stored property to JavaScript.
+///
+///     @JX var count = 1
 @propertyWrapper
 public class JX<T> {
     public init(wrappedValue: T) {
@@ -10,6 +12,32 @@ public class JX<T> {
     public var wrappedValue: T
 }
 
+/// Property wrapper bridging an instance function to JavaScript.
+///
+///     @JXFunc var jxincrement = increment
+///     func increment(by: Int) -> Int { ... }
+///
+/// - Note: Any `jx` prefix will be stripped in the bridged JavaScript function name.
+@propertyWrapper
+public struct JXFunc<T, R> {
+    private let functionBridge: (String) -> FunctionBridge
+
+    public init(wrappedValue: @escaping (T) -> () throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    public init<P0>(wrappedValue: @escaping (T) -> (P0) throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+
+    public var wrappedValue: (T) -> () throws -> R {
+        get {
+            return { _ in { throw JXBridgeErrors.internalError("Do not read or write @JXFunc values") }}
+        }
+        set {
+        }
+    }
+}
 
 protocol BridgingPropertyWrapper {
     func addMembers(for label: String, to bridge: inout JXBridge)
@@ -55,5 +83,15 @@ extension JX: BridgingPropertyWrapper {
             return obj
         }
         bridge.properties.append(PropertyBridge(name: memberName(for: label), getter: getter, setter: setter))
+    }
+}
+
+extension JXFunc: BridgingPropertyWrapper {
+    func addMembers(for label: String, to bridge: inout JXBridge) {
+        var name = label.dropFirst()
+        if name.hasPrefix("jx") {
+            name = name.dropFirst(2)
+        }
+        bridge.functions.append(functionBridge(String(name)))
     }
 }

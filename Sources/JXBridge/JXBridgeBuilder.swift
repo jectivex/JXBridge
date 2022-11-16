@@ -26,18 +26,6 @@ public class JXBridgeBuilder<T> {
 
     /// The bridge being created.
     public var bridge: JXBridge
-    
-    /// Update the brdige's type name.
-    public func setTypeName(_ typeName: String) -> JXBridgeBuilder {
-        bridge.typeName = typeName
-        return self
-    }
-    
-    /// Update the brdige's namesapce.
-    public func setNamespace(_ namespace: JXNamespace) -> JXBridgeBuilder {
-        bridge.namespace = namespace
-        return self
-    }
 
     /// Add bridged instance vars.
     public var `var`: JXBridgeBuilderVars<T> {
@@ -70,12 +58,12 @@ public class JXBridgeBuilder<T> {
         return self
     }
 
-    /// builder.constructor { Type.init }
+    // builder.constructor { Type.init }
     @discardableResult public func constructor(_ cons: @escaping () -> () throws -> T) -> JXBridgeBuilder<T> {
         return constructor(cons())
     }
 
-    /// builder.constructor { Type() }
+    // builder.constructor { Type() }
     @discardableResult public func constructor(_ cons: @escaping () throws -> T) -> JXBridgeBuilder<T> {
         let constructorBridge = ConstructorBridge(parameterCount: 0) { _, _ in
             return try cons()
@@ -83,12 +71,12 @@ public class JXBridgeBuilder<T> {
         return add(constructorBridge)
     }
 
-    /// builder.constructor { Type.init(p0:) }
+    // builder.constructor { Type.init(p0:) }
     @discardableResult public func constructor<P0>(_ cons: @escaping () -> (P0) throws -> T) -> JXBridgeBuilder<T> {
         return constructor(cons())
     }
 
-    /// builder.constructor { Type(p0: $1) }
+    // builder.constructor { Type(p0: $1) }
     @discardableResult public func constructor<P0>(_ cons: @escaping (P0) throws -> T) -> JXBridgeBuilder<T> {
         let constructorBridge = ConstructorBridge(parameterCount: 1) { args, context in
             let arg0 = try args[0].convey(to: P0.self)
@@ -213,53 +201,22 @@ public struct JXBridgeBuilderFuncs<T> {
 
         // builder.func.xxx { Type.xxx }
         @discardableResult public func callAsFunction<R>(_ f: @escaping () -> (T) -> () throws -> R) -> JXBridgeBuilder<T> {
-            let instanceFunc = f()
-            return callAsFunction { (obj: T) throws -> R in
-                let callFunc = instanceFunc(obj)
-                return try callFunc()
-            }
+            return add(FunctionBridge(name: name, function: f()))
         }
 
         // builder.func.xxx { $0.xxx() }
         @discardableResult public func callAsFunction<R>(_ f: @escaping (T) throws -> R) -> JXBridgeBuilder<T> {
-            let typeName = self.typeName
-            let name = self.name
-            let function: (Any, [JXValue], JXContext) throws -> (Any, JXValue) = { obj, args, context in
-                let target = obj as! T
-                try validate(typeName: typeName, function: name, arguments: args, count: 0)
-                let ret = try f(target)
-                let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
-                return (target, retjx)
-            }
-            return add(FunctionBridge(name: name, function: function))
+            return add(FunctionBridge(name: name, function: f))
         }
 
         // builder.func.xxx { Type.xxx(p0:) }
         @discardableResult public func callAsFunction<P0, R>(_ f: @escaping () -> (T) -> (P0) throws -> R) -> JXBridgeBuilder<T> {
-            let instanceFunc = f()
-            return callAsFunction { (obj: T, p0: P0) throws -> R in
-                let callFunc = instanceFunc(obj)
-                return try callFunc(p0)
-            }
+            return add(FunctionBridge(name: name, function: f()))
         }
 
         // builder.func.xxx { $0.xxx(p0: $1) }
         @discardableResult public func callAsFunction<P0, R>(_ f: @escaping (T, P0) throws -> R) -> JXBridgeBuilder<T> {
-            let typeName = self.typeName
-            let name = self.name
-            let function: (Any, [JXValue], JXContext) throws -> (Any, JXValue) = { obj, args, context in
-                let target = obj as! T
-                try validate(typeName: typeName, function: name, arguments: args, count: 1)
-                let p0 = try args[0].convey(to: P0.self)
-                let ret = try f(target, p0)
-                let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
-                return (target, retjx)
-            }
-            return add(FunctionBridge(name: name, function: function))
-        }
-
-        private var typeName: String {
-            return funcs.builder.bridge.typeName
+            return add(FunctionBridge(name: name, function: f))
         }
 
         private func add(_ functionBridge: FunctionBridge) -> JXBridgeBuilder<T> {
@@ -575,12 +532,6 @@ public struct JXBridgeBuilderClassFuncs<T> {
             funcs.builder.bridge.classFunctions.append(functionBridge)
             return funcs.builder
         }
-    }
-}
-
-private func validate(typeName: String, function: String, arguments: [Any?], count: Int) throws {
-    if arguments.count != count {
-        throw JXBridgeErrors.invalidArgumentCount(typeName, function)
     }
 }
 

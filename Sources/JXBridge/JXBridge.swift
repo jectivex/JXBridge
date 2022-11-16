@@ -344,7 +344,6 @@ struct PropertyBridge {
 struct FunctionBridge {
     let name: String
     let function: (Any, [JXValue], JXContext) throws -> (Any, JXValue) // Returns target instance (for value types)
-    let types: [Any.Type] = []
 
     /// Call the function, returning the target instance and function return. For value types, the target instance may be a different value.
     func call(for instance: Any, with args: [JXValue], in context: JXContext) throws -> (Any, JXValue) {

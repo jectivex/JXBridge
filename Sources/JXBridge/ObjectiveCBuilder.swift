@@ -131,12 +131,6 @@ private func functionName(forSelectorName name: String) -> String {
     return scriptName
 }
 
-private func validate(typeName: String, function: String, arguments: [Any?], count: Int) throws {
-    if arguments.count != count {
-        throw JXBridgeErrors.invalidArgumentCount(typeName, function)
-    }
-}
-
 /// Convert from a value we got from a script to a boxed ObjectiveC `id` value to use as a selector argument via `JXObjectiveCReflector`.
 private func conveyToObjectiveC(_ value: JXValue, toBoxed type: JXObjectiveCType, for typeName: String, member: String) throws -> AnyObject {
     guard !value.isNull else {
