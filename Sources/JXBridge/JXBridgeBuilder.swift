@@ -9,8 +9,14 @@ import JXKit
 /// Build the bridge for scripting a native type.
 public class JXBridgeBuilder<T> {
     /// Supply the type to bridge.
-    public init(type: T.Type, as typeName: String? = nil, namespace: JXNamespace = .default) {
-        self.bridge = JXBridge(type: T.self, as: typeName, namespace: namespace)
+    public convenience init(type: T.Type, as typeName: String? = nil, namespace: JXNamespace = .default) {
+        self.init(bridge: JXBridge(type: T.self, as: typeName, namespace: namespace))
+    }
+    
+    /// Supply an instance to reflect on to find bridging properties using our property wrappers.
+    public convenience init(reflecting instance: T, as typeName: String? = nil, namespace: JXNamespace = .default) {
+        self.init(bridge: JXBridge(type: T.self, as: typeName, namespace: namespace))
+        reflect(instance)
     }
 
     /// Supply an in-progress bridge to add to.
@@ -20,6 +26,18 @@ public class JXBridgeBuilder<T> {
 
     /// The bridge being created.
     public var bridge: JXBridge
+    
+    /// Update the brdige's type name.
+    public func setTypeName(_ typeName: String) -> JXBridgeBuilder {
+        bridge.typeName = typeName
+        return self
+    }
+    
+    /// Update the brdige's namesapce.
+    public func setNamespace(_ namespace: JXNamespace) -> JXBridgeBuilder {
+        bridge.namespace = namespace
+        return self
+    }
 
     /// Add bridged instance vars.
     public var `var`: JXBridgeBuilderVars<T> {
@@ -563,6 +581,12 @@ public struct JXBridgeBuilderClassFuncs<T> {
 private func validate(typeName: String, function: String, arguments: [Any?], count: Int) throws {
     if arguments.count != count {
         throw JXBridgeErrors.invalidArgumentCount(typeName, function)
+    }
+}
+
+extension JXBridgeBuilder {
+    private func reflect(_ instance: Any) {
+        //~~~
     }
 }
 

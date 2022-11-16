@@ -51,7 +51,7 @@ private class TestModule: JXModule {
     }
 }
 
-private struct TestStruct: JXBridging {
+private struct TestStruct: JXStaticBridging {
     var intVar = 1
     
     mutating func addFunc(_ value: Int) -> Int {
@@ -59,7 +59,7 @@ private struct TestStruct: JXBridging {
         return intVar
     }
     
-    static func bridgeJX() -> JXBridge {
+    static var jxBridge: JXBridge {
         return JXBridgeBuilder(type: self, namespace: "test")
             .var.intVar { \.intVar }
             .mutating.func.addFunc { $0.addFunc($1) }
@@ -67,7 +67,7 @@ private struct TestStruct: JXBridging {
     }
 }
 
-private class TestClass: JXBridging {
+private class TestClass: JXStaticBridging {
     var stringVar = "a"
     
     func appendFunc(_ value: String) -> String {
@@ -75,7 +75,7 @@ private class TestClass: JXBridging {
         return stringVar
     }
     
-    class func bridgeJX() -> JXBridge {
+    class var jxBridge: JXBridge {
         return JXBridgeBuilder(type: self, namespace: "test")
             .var.stringVar { \.stringVar }
             .func.appendFunc { $0.appendFunc($1) }
