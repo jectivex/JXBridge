@@ -586,7 +586,9 @@ private func validate(typeName: String, function: String, arguments: [Any?], cou
 
 extension JXBridgeBuilder {
     private func reflect(_ instance: Any) {
-        //~~~
+        let builder = MirrorBuilder(Mirror(reflecting: instance), bridge: bridge)
+        builder.addReflectedMembers()
+        bridge = builder.bridge
     }
 }
 

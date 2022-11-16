@@ -8,8 +8,8 @@ public protocol JXModule {
     /// Use this function to pre-register types or other required modules. It is called once when the module is added to the registry.
     func register(with registry: JXRegistry) throws
     
-    /// Use this function to prepare the given namespace for use with this module. It may be used to add values, `integrate` functionality, etc.
-    func initialize(namespaceObject: JXValue) throws
+    /// Use this function to prepare the context for use with this module. It may be used to add values, `integrate` functionality, etc.
+    func initialize(in context: JXContext) throws
     
     /// Add a bridge for the given type name used in JavaScript, or return `false` if it is an unknown type. This will not be called for pre-registered types.
     func addBridge(for typeName: String, namespace: JXNamespace, to registry: JXRegistry) throws -> Bool
@@ -22,7 +22,7 @@ extension JXModule {
     public func register(with registry: JXRegistry) {
     }
     
-    public func initialize(namespaceObject: JXValue) {
+    public func initialize(in context: JXContext) {
     }
     
     public func addBridge(for typeName: String, namespace: JXNamespace, to registry: JXRegistry) -> Bool {

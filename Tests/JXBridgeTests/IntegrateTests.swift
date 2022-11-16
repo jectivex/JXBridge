@@ -45,9 +45,9 @@ private class TestModule: JXModule {
         try registry.add(for: TestClass.self)
     }
     
-    func initialize(namespaceObject: JXValue) throws {
-        try namespaceObject.integrate(TestStruct())
-        try namespaceObject.integrate(testClass!)
+    func initialize(in context: JXContext) throws {
+        try context.global.integrate(TestStruct())
+        try context.global.integrate(testClass!)
     }
 }
 

@@ -1,13 +1,14 @@
 import JXKit
 
 extension JXValue {
-    /// Bind the bridged instance properties and functions of the given object to this value.
+    /// Bind the bridged instance properties and functions of the given object to the type's namespace on this value.
     ///
     /// - Warning: The given object is not retained.
     public func integrate(_ instance: Any) throws {
         guard let bridge = try context.registry.bridge(for: instance, autobridging: true) else {
             throw JXBridgeErrors.unknownType(String(describing: Swift.type(of: instance)))
         }
+        let namespaceValue = try addNamespace(bridge.namespace)
         
         // Use a weak ref to any object value
         var ref: Ref
@@ -30,7 +31,7 @@ extension JXValue {
                 setter = nil
             }
             let jxProperty = JXProperty(getter: getter, setter: setter)
-            try defineProperty(context.string(propertyBridge.name), jxProperty)
+            try namespaceValue.defineProperty(context.string(propertyBridge.name), jxProperty)
         }
         
         for functionBridge in bridge.functions {
@@ -39,18 +40,24 @@ extension JXValue {
                 ref.updateInstance(newInstance)
                 return ret
             }
-            try setProperty(functionBridge.name, jxFunction)
+            try namespaceValue.setProperty(functionBridge.name, jxFunction)
         }
     }
     
     /// Whether a property exists matching the value of the given namespace.
     public func hasNamespace(_ namespace: JXNamespace) -> Bool {
+        guard namespace != .none else {
+            return true
+        }
         return hasProperty(namespace.value)
     }
     
     /// The property value representing the given namespace.
     public subscript(namespace: JXNamespace) -> JXValue {
         get throws {
+            guard namespace != .none else {
+                return self
+            }
             return try self[namespace.value]
         }
     }
@@ -68,6 +75,9 @@ extension JXValue {
     
     /// Delete the property with the given namespace's value.
     @discardableResult public func deleteNamespace(_ namespace: JXNamespace) throws -> Bool {
+        guard namespace != .none else {
+            return false
+        }
         return try deleteProperty(namespace.value)
     }
 }

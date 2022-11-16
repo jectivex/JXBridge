@@ -1,7 +1,7 @@
 @testable import JXBridge
 import XCTest
 
-final class JXBridgeBuilderTests: XCTestCase {
+final class BridgeBuilderTests: XCTestCase {
     func testType() {
         let builder = JXBridgeBuilder(type: TestStruct.self)
         XCTAssertTrue(builder.bridge.type == TestStruct.self)

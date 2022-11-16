@@ -95,8 +95,8 @@ class JXBridgeContextSPI {
         guard let context else {
             return
         }
-        let namespaceObject = try context.global.addNamespace(module.namespace)
-        try module.initialize(namespaceObject: namespaceObject)
+        try context.global.addNamespace(module.namespace)
+        try module.initialize(in: context)
     }
     
     private func defineGlobalFunctions(in context: JXContext) throws {
