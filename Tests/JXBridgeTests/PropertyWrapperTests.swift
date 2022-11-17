@@ -51,24 +51,74 @@ final class PropertyWrapperTests: XCTestCase {
         let result = try context.eval("jx.increment(2); jx.computedVar")
         XCTAssertEqual(try result.int, 6)
     }
+    
+    func testJXStatic() throws {
+        let context = JXContext()
+        try context.registry.add(for: TestClass(intVar: 0))
+
+        let result = try context.eval("jx.TestClass.staticVar = 5; jx.TestClass.staticVar")
+        XCTAssertEqual(try result.int, 5)
+    }
+    
+    func testJXStaticFunc() throws {
+        let context = JXContext()
+        try context.registry.add(for: TestClass(intVar: 0))
+
+        let result = try context.eval("jx.TestClass.staticFunc()")
+        XCTAssertEqual(try result.int, 1)
+    }
+    
+    func testJXClass() throws {
+        let context = JXContext()
+        try context.registry.add(for: TestClass(intVar: 0))
+
+        let result = try context.eval("jx.TestClass.classVar")
+        XCTAssertEqual(try result.int, 1)
+    }
+    
+    func testJXClassFunc() throws {
+        let context = JXContext()
+        try context.registry.add(for: TestClass(intVar: 0))
+
+        let result = try context.eval("jx.TestClass.classFunc()")
+        XCTAssertEqual(try result.int, 1)
+    }
 }
 
 private class TestClass: JXBridging {
+    @JXInit var jxinit = TestClass.init
     init(intVar: Int) {
         self.intVar = intVar
     }
-    @JXInit var jxinit = TestClass.init
     
     @JX var intVar: Int
     
+    @JXKeyPath var jxcomputedVar = \TestClass.computedVar
     var computedVar: Int {
         return intVar * 2
     }
-    @JXKeyPath var jxcomputedVar = \TestClass.computedVar
     
+    @JXFunc var jxincrement = increment
     func increment(by: Int) -> Int {
         intVar += by
         return intVar
     }
-    @JXFunc var jxincrement = increment
+    
+    @JXStatic var jxstaticVar = (get: { TestClass.staticVar }, set: { TestClass.staticVar = $0 })
+    static var staticVar: Int?
+    
+    @JXStaticFunc var jxstaticFunc = staticFunc
+    static func staticFunc() -> Int {
+        return 1
+    }
+    
+    @JXClass var jxclassVar = (TestClass.self, { $0.classVar })
+    class var classVar: Int {
+        return 1
+    }
+    
+    @JXClassFunc var jxclassFunc = (TestClass.self, { $0.classFunc() })
+    class func classFunc() -> Int {
+        return 1
+    }
 }
