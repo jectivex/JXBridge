@@ -1,4 +1,6 @@
+#if canImport(Combine)
 import Combine
+#endif
 @testable import JXBridge
 import JXKit
 import XCTest
@@ -148,14 +150,15 @@ caughtErr;
         XCTAssertEqual(try result.string, "baseStaticString")
     }
 
+#if canImport(Combine)
     func testPropertyWrapped() throws {
         let context = JXContext()
-        let bridge = JXBridgeBuilder(type: TestBaseClass.self)
-            .constructor { TestBaseClass.init }
+        let bridge = JXBridgeBuilder(type: TestObservableClass.self)
+            .constructor { TestObservableClass.init }
             .var.publishedInt { \.publishedInt }
             .bridge
 
-        let obj = TestBaseClass()
+        let obj = TestObservableClass()
         var updateCount = 0
         var token: Any? = obj.objectWillChange.sink { _ in updateCount += 1 }
 
@@ -169,6 +172,7 @@ caughtErr;
             token = nil
         }
     }
+#endif
 }
 
 private struct TestStruct {
@@ -192,7 +196,7 @@ private struct TestError: Error {
     let message: String
 }
 
-private class TestBaseClass: ObservableObject {
+private class TestBaseClass {
     static var staticString: String {
         return "baseStaticString"
     }
@@ -212,8 +216,6 @@ private class TestBaseClass: ObservableObject {
     var computedString: String {
         return "base"
     }
-
-    @Published var publishedInt = 1
 
     init() {
     }
@@ -238,3 +240,12 @@ private class TestSubClass: TestBaseClass {
 
     var readWriteInt = 1
 }
+
+#if canImport(Combine)
+private class TestObservableClass: ObservableObject {
+    @Published var publishedInt = 1
+
+    init() {
+    }
+}
+#endif
