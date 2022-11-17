@@ -50,17 +50,18 @@ public class JXState {
     init(instance: Any) {
         let mirror = Mirror(reflecting: instance)
         if let superclassMirror = mirror.superclassMirror {
-            addPropertyWrappers(for: superclassMirror)
+            addPropertyWrapperObjects(for: superclassMirror)
         }
-        addPropertyWrappers(for: mirror)
+        addPropertyWrapperObjects(for: mirror)
     }
     
-    private(set) var bridgingPropertyWrappers: [String: BridgingPropertyWrapper] = [:]
+    /// Lookup property wrappers that we can access by reference to read their current value.
+    private(set) var propertyWrapperObjects: [String: BridgingPropertyWrapper & AnyObject] = [:]
     
-    private func addPropertyWrappers(for mirror: Mirror) {
+    private func addPropertyWrapperObjects(for mirror: Mirror) {
         for child in mirror.children {
-            if let bridgingPropertyWrapper = child.value as? BridgingPropertyWrapper {
-                bridgingPropertyWrappers[child.label ?? ""] = bridgingPropertyWrapper
+            if let propertyWrapperObject = child.value as? (BridgingPropertyWrapper & AnyObject) {
+                propertyWrapperObjects[child.label ?? ""] = propertyWrapperObject
             }
         }
     }

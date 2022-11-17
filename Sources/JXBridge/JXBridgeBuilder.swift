@@ -60,29 +60,22 @@ public class JXBridgeBuilder<T> {
 
     // builder.constructor { Type.init }
     @discardableResult public func constructor(_ cons: @escaping () -> () throws -> T) -> JXBridgeBuilder<T> {
-        return constructor(cons())
+        return add(ConstructorBridge(cons()))
     }
 
     // builder.constructor { Type() }
     @discardableResult public func constructor(_ cons: @escaping () throws -> T) -> JXBridgeBuilder<T> {
-        let constructorBridge = ConstructorBridge(parameterCount: 0) { _, _ in
-            return try cons()
-        }
-        return add(constructorBridge)
+        return add(ConstructorBridge(cons))
     }
 
     // builder.constructor { Type.init(p0:) }
     @discardableResult public func constructor<P0>(_ cons: @escaping () -> (P0) throws -> T) -> JXBridgeBuilder<T> {
-        return constructor(cons())
+        return add(ConstructorBridge(cons()))
     }
 
     // builder.constructor { Type(p0: $1) }
     @discardableResult public func constructor<P0>(_ cons: @escaping (P0) throws -> T) -> JXBridgeBuilder<T> {
-        let constructorBridge = ConstructorBridge(parameterCount: 1) { args, context in
-            let arg0 = try args[0].convey(to: P0.self)
-            return try cons(arg0)
-        }
-        return add(constructorBridge)
+        return add(ConstructorBridge(cons))
     }
 
     private func add(_ constructorBridge: ConstructorBridge) -> JXBridgeBuilder<T> {

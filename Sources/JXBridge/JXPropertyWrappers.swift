@@ -39,29 +39,44 @@ public struct JXFunc<T, R> {
     }
 }
 
+/// Property wrapper bridging a constructor to JavaScript.
+///
+///     @JXInit var jxinit = init
+///     init(value: Int) { ... }
+@propertyWrapper
+public struct JXInit<T> {
+    private let constructorBridge: ConstructorBridge
+
+    public init(wrappedValue: @escaping () throws -> T) {
+        constructorBridge = ConstructorBridge(wrappedValue)
+    }
+    
+    public init<P0>(wrappedValue: @escaping (P0) throws -> T) {
+        constructorBridge = ConstructorBridge(wrappedValue)
+    }
+    
+    public var wrappedValue: () throws -> T {
+        get {
+            return { throw JXBridgeErrors.internalError("Do not read or write @JXInit values") }
+        }
+        set {
+        }
+    }
+}
+
+// MARK: -
+
 protocol BridgingPropertyWrapper {
     func addMembers(for label: String, to bridge: inout JXBridge)
 }
 
 extension BridgingPropertyWrapper {
-    // Find the property wrapper with the given label for the given instance.
-    static func propertyWrapper(with label: String, for instance: Any) -> Self? {
-        guard let bridging = instance as? JXBridging else {
-            return nil
-        }
-        
-        let state: JXState
-        if let bridgingState = bridging.jxState {
-            state = bridgingState
-        } else {
-            state = JXState(instance: instance)
-            bridging.jxState = state
-        }
-        return state.bridgingPropertyWrappers[label] as? Self
-    }
-    
     func memberName(for label: String) -> String {
-        return String(label.dropFirst())
+        var name = label.dropFirst()
+        if name.hasPrefix("jx") {
+            name = name.dropFirst(2)
+        }
+        return String(name)
     }
 }
 
@@ -84,14 +99,32 @@ extension JX: BridgingPropertyWrapper {
         }
         bridge.properties.append(PropertyBridge(name: memberName(for: label), getter: getter, setter: setter))
     }
+    
+    // Find the property wrapper with the given label for the given instance.
+    private static func propertyWrapper(with label: String, for instance: Any) -> Self? {
+        guard let bridging = instance as? JXBridging else {
+            return nil
+        }
+        
+        let state: JXState
+        if let bridgingState = bridging.jxState {
+            state = bridgingState
+        } else {
+            state = JXState(instance: instance)
+            bridging.jxState = state
+        }
+        return state.propertyWrapperObjects[label] as? Self
+    }
 }
 
 extension JXFunc: BridgingPropertyWrapper {
     func addMembers(for label: String, to bridge: inout JXBridge) {
-        var name = label.dropFirst()
-        if name.hasPrefix("jx") {
-            name = name.dropFirst(2)
-        }
-        bridge.functions.append(functionBridge(String(name)))
+        bridge.functions.append(functionBridge(memberName(for: label)))
+    }
+}
+
+extension JXInit: BridgingPropertyWrapper {
+    func addMembers(for label: String, to bridge: inout JXBridge) {
+        bridge.constructors.append(constructorBridge)
     }
 }

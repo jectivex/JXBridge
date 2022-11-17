@@ -51,3 +51,20 @@ extension FunctionBridge {
         self = FunctionBridge(name: name, function: bridgeFunction)
     }
 }
+
+extension ConstructorBridge {
+    // Type.init
+    init<T>(_ cons: @escaping () throws -> T) {
+        self = ConstructorBridge(parameterCount: 0) { _, _ in
+            return try cons()
+        }
+    }
+
+    // Type.init(p0:)
+    init<T, P0>(_ cons: @escaping (P0) throws -> T) {
+        self = ConstructorBridge(parameterCount: 1) { args, context in
+            let arg0 = try args[0].convey(to: P0.self)
+            return try cons(arg0)
+        }
+    }
+}
