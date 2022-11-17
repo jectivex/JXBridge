@@ -10,6 +10,10 @@ public protocol JXStaticBridging {
     static var jxBridge: JXBridge { get throws }
 }
 
+// Note: We only support JXBridging and our bridging property wrappers on classes. It would be a poor API for structs for two reasons:
+// 1. We can't support @JX on structs. So only @JXKeyPath would be available for stored properties.
+// 2. Using our property wrappers on structs bloats their size and interferes with their automatic implementations of protocols that depend on all members being Hashable, Codeable, whatever.
+
 /// An instance that defines its own JavaScript bridging, typically using property wrappers.
 public protocol JXBridging: AnyObject {
     /// Return the JavaScript bridge for the type of this instance. If not implemented, defaults to using this class's JX property wrappers.
