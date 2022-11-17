@@ -3,6 +3,8 @@ import JXKit
 /// Property wrapper bridging a stored property to JavaScript.
 ///
 ///     @JX var count = 1
+///
+/// - Note: Any `jx` prefix will be stripped in the bridged JavaScript property name.
 @propertyWrapper
 public class JX<T> {
     public init(wrappedValue: T) {
@@ -62,6 +64,22 @@ public struct JXInit<T> {
         set {
         }
     }
+}
+
+/// Property wrapper bridging a key path value to a JavaScript property.
+///
+///     @JXKeyPath var jxcomputedTotal = \Computer.computedTotal
+///     var computedTotal: Int { return ... }
+@propertyWrapper
+public struct JXKeyPath<T, V> {
+    private let propertyBridge: (String) -> PropertyBridge
+
+    public init(wrappedValue: KeyPath<T, V>) {
+        propertyBridge = { PropertyBridge(name: $0, keyPath: wrappedValue) }
+        self.wrappedValue = wrappedValue
+    }
+    
+    public var wrappedValue: KeyPath<T, V>
 }
 
 // MARK: -
@@ -126,5 +144,11 @@ extension JXFunc: BridgingPropertyWrapper {
 extension JXInit: BridgingPropertyWrapper {
     func addMembers(for label: String, to bridge: inout JXBridge) {
         bridge.constructors.append(constructorBridge)
+    }
+}
+
+extension JXKeyPath: BridgingPropertyWrapper {
+    func addMembers(for label: String, to bridge: inout JXBridge) {
+        bridge.properties.append(propertyBridge(memberName(for: label)))
     }
 }

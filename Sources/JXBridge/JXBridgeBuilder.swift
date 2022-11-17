@@ -102,23 +102,7 @@ public struct JXBridgeBuilderVars<T> {
 
         // builder.var.xxx { \.xxx }
         @discardableResult public func callAsFunction<V>(_ accessor: () -> KeyPath<T, V>) -> JXBridgeBuilder<T> {
-            let keyPath = accessor()
-            let getter: (Any, JXContext) throws -> JXValue = { obj, context in
-                let ret = (obj as! T)[keyPath: keyPath]
-                return try context.convey(ret)
-            }
-            let setter: ((Any, JXValue, JXContext) throws -> Any)?
-            if let writeableKeyPath = keyPath as? WritableKeyPath<T, V> {
-                setter = { obj, value, context in
-                    var target = obj as! T
-                    let p0 = try value.convey(to: V.self)
-                    target[keyPath: writeableKeyPath] = p0
-                    return target
-                }
-            } else {
-                setter = nil
-            }
-            return add(PropertyBridge(name: name, getter: getter, setter: setter))
+            return add(PropertyBridge(name: name, keyPath: accessor()))
         }
 
         // builder.var.xxx { $0.xxx }
@@ -126,7 +110,7 @@ public struct JXBridgeBuilderVars<T> {
             return callAsFunction(get: getter, set: nil)
         }
 
-        // builder.var.xxx { $0.xxx ) setter: { ... }
+        // builder.var.xxx { $0.xxx ) set: { ... }
         @discardableResult public func callAsFunction<V>(get getterFunc: @escaping (T) throws -> V, set setterFunc: ((T, V) -> Void)?) -> JXBridgeBuilder<T> {
             let name = self.name
             let getter: (Any, JXContext) throws -> JXValue = { obj, context in
@@ -148,7 +132,7 @@ public struct JXBridgeBuilderVars<T> {
             return add(PropertyBridge(name: name, getter: getter, setter: setter))
         }
 
-        // builder.var.xxx { $0.xxx ) setter: { ... }
+        // builder.var.xxx { $0.xxx ) set: { ... }
         @discardableResult public func callAsFunction<V>(get getterFunc: @escaping (T) throws -> V, set setterFunc: @escaping (T, V) -> T) -> JXBridgeBuilder<T> {
             let name = self.name
             let getter: (Any, JXContext) throws -> JXValue = { obj, context in

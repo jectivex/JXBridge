@@ -41,24 +41,34 @@ final class PropertyWrapperTests: XCTestCase {
         let result = try context.eval("const test = new jx.TestClass(1); test.increment(2); test.intVar")
         XCTAssertEqual(try result.int, 3)
     }
+    
+    func testJXKeyPath() throws {
+        let context = JXContext()
+        try context.registry.add(AnyJXBridging())
+
+        let test = TestClass(intVar: 1)
+        try context.global.integrate(test)
+        let result = try context.eval("jx.increment(2); jx.computedVar")
+        XCTAssertEqual(try result.int, 6)
+    }
 }
 
 private class TestClass: JXBridging {
-    @JX var intVar: Int
-    
-    @JXInit var jxinit = TestClass.init
     init(intVar: Int) {
         self.intVar = intVar
     }
+    @JXInit var jxinit = TestClass.init
     
-    @JXFunc var jxincrement = increment
+    @JX var intVar: Int
+    
+    var computedVar: Int {
+        return intVar * 2
+    }
+    @JXKeyPath var jxcomputedVar = \TestClass.computedVar
+    
     func increment(by: Int) -> Int {
         intVar += by
         return intVar
     }
-    
-//    @JXFunc var jxclassName = typeName
-//    static func typeName() -> String {
-//        return "TestClass"
-//    }
+    @JXFunc var jxincrement = increment
 }
