@@ -14,7 +14,7 @@ final class BridgedTypeTests: XCTestCase {
             .var.readOnlyInt { \.readOnlyInt }
             .var.computedInt { \.computedInt }
             .var.string { \.string }
-        try context.registry.add(builder.bridge)
+        try context.registry.register(builder.bridge)
         guard let bridge = context.registry.bridge(for: TestStruct.self) else {
             XCTFail()
             return
@@ -34,7 +34,7 @@ final class BridgedTypeTests: XCTestCase {
             .var.readWriteInt { \.readWriteInt }
             .var.readOnlyInt { \.readOnlyInt }
             .var.computedInt { \.computedInt }
-        try context.registry.add(builder.bridge)
+        try context.registry.register(builder.bridge)
 
         var result = try context.eval("const obj = new jx.TestStruct(); obj.readWriteInt;")
         XCTAssertEqual(try result.int, 1)
@@ -53,7 +53,7 @@ final class BridgedTypeTests: XCTestCase {
         let builder = JXBridgeBuilder(type: TestStruct.self)
             .constructor { TestStruct.init }
             .var.readOnlyInt { \.readOnlyInt }
-        try context.registry.add(builder.bridge)
+        try context.registry.register(builder.bridge)
 
         // We should not be able to set this private property
         let result = try context.eval("const obj = new jx.TestStruct(); obj.readOnlyInt = 102; obj.readOnlyInt")
@@ -68,8 +68,8 @@ final class BridgedTypeTests: XCTestCase {
         let relatedBuilder = JXBridgeBuilder(type: TestRelated.self)
             .constructor { TestRelated.init }
             .var.string { \.string }
-        try context.registry.add(structBuilder.bridge)
-        try context.registry.add(relatedBuilder.bridge)
+        try context.registry.register(structBuilder.bridge)
+        try context.registry.register(relatedBuilder.bridge)
 
         var result = try context.eval("const bridged = new jx.TestStruct(); bridged.related.string")
         XCTAssertEqual(try result.string, "related")
@@ -86,8 +86,8 @@ final class BridgedTypeTests: XCTestCase {
         let relatedBuilder = JXBridgeBuilder(type: TestRelated.self)
             .constructor { TestRelated.init }
             .var.string { \.string }
-        try context.registry.add(structBuilder.bridge)
-        try context.registry.add(relatedBuilder.bridge)
+        try context.registry.register(structBuilder.bridge)
+        try context.registry.register(relatedBuilder.bridge)
 
         let result = try context.eval("""
 const bridged = new jx.TestStruct();
@@ -103,7 +103,7 @@ bridged.related.string;
         let structBuilder = JXBridgeBuilder(type: TestStruct.self)
             .constructor { TestStruct.init }
             .func.exceptionFunc { TestStruct.exceptionFunc }
-        try context.registry.add(structBuilder.bridge)
+        try context.registry.register(structBuilder.bridge)
 
         let result = try context.eval("""
 const bridged = new jx.TestStruct();
@@ -131,8 +131,8 @@ caughtErr;
             .constructor { TestSubClass.init }
             .var.readWriteInt { \.readWriteInt }
             .class.var.subClassString { $0.subClassString }
-        try context.registry.add(baseBuilder.bridge)
-        try context.registry.add(subclassBuilder.bridge)
+        try context.registry.register(baseBuilder.bridge)
+        try context.registry.register(subclassBuilder.bridge)
 
         var result = try context.eval("const bridged = new jx.TestSubClass(); bridged.computedString;")
         XCTAssertEqual(try result.string, "sub")

@@ -5,7 +5,7 @@ import XCTest
 final class ModuleTests: XCTestCase {
     func testLazyModule() throws {
         let context = JXContext()
-        try context.registry.add(LazyModule())
+        try context.registry.register(LazyModule())
 
         let result = try context.eval("const obj = new lazy.TestStruct(); obj.intVar;")
         XCTAssertEqual(try result.int, 1)
@@ -13,7 +13,7 @@ final class ModuleTests: XCTestCase {
     
     func testEagerModule() throws {
         let context = JXContext()
-        try context.registry.add(EagerModule())
+        try context.registry.register(EagerModule())
 
         let result = try context.eval("const obj = new eager.TestStruct(); obj.intVar;")
         XCTAssertEqual(try result.int, 1)
@@ -24,7 +24,7 @@ final class ModuleTests: XCTestCase {
         module.throwError = true
         let context = JXContext()
         do {
-            try context.registry.add(module)
+            try context.registry.register(module)
             XCTFail()
         } catch {
             XCTAssertTrue(context.registry.modulesByNamespace["lazy"]?.count == 0)
@@ -36,7 +36,7 @@ final class ModuleTests: XCTestCase {
         dependency.throwError = true
         module.addDependency = dependency
         do {
-            try context.registry.add(module)
+            try context.registry.register(module)
             XCTFail()
         } catch {
             XCTAssertTrue(context.registry.modulesByNamespace["eager"]?.count == 0)
@@ -59,15 +59,15 @@ private struct LazyModule: JXModule {
             throw JXBridgeErrors.internalError("LazyModule.initialize")
         }
         if let addDependency = self.addDependency {
-            try registry.add(addDependency)
+            try registry.register(addDependency)
         }
     }
     
-    func addBridge(for typeName: String, namespace: JXNamespace, to registry: JXRegistry) throws -> Bool {
+    func registerBridge(for typeName: String, namespace: JXNamespace, in registry: JXRegistry) throws -> Bool {
         guard typeName == "TestStruct" else {
             return false
         }
-        try registry.add {
+        try registry.register {
             JXBridgeBuilder(type: TestStruct.self, namespace: namespace)
                 .constructor { TestStruct.init }
                 .var.intVar { \.intVar }
@@ -76,8 +76,8 @@ private struct LazyModule: JXModule {
         return true
     }
     
-    func addBridge(for instance: Any, to registry: JXRegistry) throws -> Bool {
-        return try addBridge(for: String(describing: type(of: instance)), namespace: namespace, to: registry)
+    func registerBridge(for instance: Any, in registry: JXRegistry) throws -> Bool {
+        return try registerBridge(for: String(describing: type(of: instance)), namespace: namespace, in: registry)
     }
 }
 
@@ -89,19 +89,11 @@ private struct EagerModule: JXModule {
         if throwError {
             throw JXBridgeErrors.internalError("EagerModule.initialize")
         }
-        try registry.add {
+        try registry.register {
             JXBridgeBuilder(type: TestStruct.self, namespace: namespace)
                 .constructor { TestStruct.init }
                 .var.intVar { \.intVar }
                 .bridge
         }
-    }
-    
-    func addBridge(for typeName: String, namespace: JXNamespace, to registry: JXRegistry) throws -> Bool {
-        return false
-    }
-    
-    func addBridge(for instance: Any, to registry: JXRegistry) throws -> Bool {
-        return false
     }
 }

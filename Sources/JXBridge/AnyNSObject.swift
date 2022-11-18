@@ -7,30 +7,30 @@ import JXKit
 public struct AnyNSObject: JXModule {
     public let namespace: JXNamespace = .none
     
-    public func addBridge(for typeName: String, namespace: JXNamespace, to registry: JXRegistry) throws -> Bool {
+    public func registerBridge(for typeName: String, namespace: JXNamespace, in registry: JXRegistry) throws -> Bool {
         guard let cls = NSClassFromString(typeName), let nsobjectType = cls as? NSObject.Type else {
             return false
         }
         // Still allow NSObjects to customize bridging
         if let bridgingType = cls as? JXStaticBridging.Type {
-            try registry.add(for: bridgingType)
+            try registry.registerBridge(for: bridgingType)
         } else if namespace == .default {
-            try registry.add(forObjectiveCType: nsobjectType)
+            try registry.registerBridge(forObjectiveC: nsobjectType)
         } else {
             return false
         }
         return true
     }
 
-    public func addBridge(for instance: Any, to registry: JXRegistry) throws -> Bool {
+    public func registerBridge(for instance: Any, in registry: JXRegistry) throws -> Bool {
         guard let obj = instance as? NSObject else {
             return false
         }
         // Still allow NSObjects to customize bridging
         if let bridgingType = type(of: instance) as? JXStaticBridging.Type {
-            try registry.add(for: bridgingType)
+            try registry.registerBridge(for: bridgingType)
         } else {
-            try registry.add(forObjectiveCType: type(of: obj))
+            try registry.registerBridge(forObjectiveC: type(of: obj))
         }
         return true
     }

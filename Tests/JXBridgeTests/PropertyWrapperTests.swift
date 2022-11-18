@@ -5,7 +5,7 @@ import XCTest
 final class PropertyWrapperTests: XCTestCase {
     func testJX() throws {
         let context = JXContext()
-        try context.registry.add(AnyJXBridging())
+        try context.registry.register(AnyJXBridging())
 
         let test = TestClass(intVar: 1)
         try context.global.integrate(test)
@@ -23,7 +23,7 @@ final class PropertyWrapperTests: XCTestCase {
     
     func testJXFunc() throws {
         let context = JXContext()
-        try context.registry.add(AnyJXBridging())
+        try context.registry.register(AnyJXBridging())
 
         let test = TestClass(intVar: 1)
         try context.global.integrate(test)
@@ -36,7 +36,7 @@ final class PropertyWrapperTests: XCTestCase {
     
     func testJXInit() throws {
         let context = JXContext()
-        try context.registry.add(for: TestClass(intVar: 0))
+        try context.registry.registerBridge(for: TestClass(intVar: 0))
 
         let result = try context.eval("const test = new jx.TestClass(1); test.increment(2); test.intVar")
         XCTAssertEqual(try result.int, 3)
@@ -44,7 +44,7 @@ final class PropertyWrapperTests: XCTestCase {
     
     func testJXKeyPath() throws {
         let context = JXContext()
-        try context.registry.add(AnyJXBridging())
+        try context.registry.register(AnyJXBridging())
 
         let test = TestClass(intVar: 1)
         try context.global.integrate(test)
@@ -54,7 +54,7 @@ final class PropertyWrapperTests: XCTestCase {
     
     func testJXStatic() throws {
         let context = JXContext()
-        try context.registry.add(for: TestClass(intVar: 0))
+        try context.registry.registerBridge(for: TestClass(intVar: 0))
 
         let result = try context.eval("jx.TestClass.staticVar = 5; jx.TestClass.staticVar")
         XCTAssertEqual(try result.int, 5)
@@ -62,7 +62,7 @@ final class PropertyWrapperTests: XCTestCase {
     
     func testJXStaticFunc() throws {
         let context = JXContext()
-        try context.registry.add(for: TestClass(intVar: 0))
+        try context.registry.registerBridge(for: TestClass(intVar: 0))
 
         let result = try context.eval("jx.TestClass.staticFunc()")
         XCTAssertEqual(try result.int, 1)
@@ -70,7 +70,7 @@ final class PropertyWrapperTests: XCTestCase {
     
     func testJXClass() throws {
         let context = JXContext()
-        try context.registry.add(for: TestClass(intVar: 0))
+        try context.registry.registerBridge(for: TestClass(intVar: 0))
 
         let result = try context.eval("jx.TestClass.classVar")
         XCTAssertEqual(try result.int, 1)
@@ -78,7 +78,7 @@ final class PropertyWrapperTests: XCTestCase {
     
     func testJXClassFunc() throws {
         let context = JXContext()
-        try context.registry.add(for: TestClass(intVar: 0))
+        try context.registry.registerBridge(for: TestClass(intVar: 0))
 
         let result = try context.eval("jx.TestClass.classFunc()")
         XCTAssertEqual(try result.int, 1)
@@ -86,7 +86,7 @@ final class PropertyWrapperTests: XCTestCase {
     
     func testSubclass() throws {
         let context = JXContext()
-        try context.registry.add(for: TestSubClass(intVar: 0))
+        try context.registry.registerBridge(for: TestSubClass(intVar: 0))
 
         var result = try context.eval("const sub = new jx.TestSubClass(2); sub.increment(3); sub.intVar")
         XCTAssertEqual(try result.int, -1) // increment is overridden to decrement

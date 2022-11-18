@@ -1,8 +1,8 @@
 /// Listen for registry additions.
 protocol RegistryListener: AnyObject {
     func didAddNamespace(_ namespace: JXNamespace) throws
-    func didAddModule(_ module: JXModule) throws
-    func didAddUnnamespacedBridge(_ bridge: JXBridge) throws
+    func didRegisterModule(_ module: JXModule) throws
+    func didRegisterUnnamespacedBridge(_ bridge: JXBridge) throws
 }
 
 class RegistryListeners {
@@ -23,12 +23,12 @@ class RegistryListeners {
         try listeners.forEach { try $0.listener?.didAddNamespace(namespace) }
     }
     
-    func didAddModule(_ module: JXModule) throws {
-        try listeners.forEach { try $0.listener?.didAddModule(module) }
+    func didRegisterModule(_ module: JXModule) throws {
+        try listeners.forEach { try $0.listener?.didRegisterModule(module) }
     }
     
-    func didAddUnnamespacedBridge(_ bridge: JXBridge) throws {
-        try listeners.forEach { try $0.listener?.didAddUnnamespacedBridge(bridge) }
+    func didRegisterUnnamespacedBridge(_ bridge: JXBridge) throws {
+        try listeners.forEach { try $0.listener?.didRegisterUnnamespacedBridge(bridge) }
     }
 }
 

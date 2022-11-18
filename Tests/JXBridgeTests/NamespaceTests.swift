@@ -5,7 +5,7 @@ import XCTest
 final class NamespaceTests: XCTestCase {
     func testNonDefaultNamespace() throws {
         let context = JXContext()
-        try context.registry.add {
+        try context.registry.register {
             JXBridgeBuilder(type: TestStruct.self, namespace: "test")
                 .constructor { TestStruct.init }
                 .var.intVar { \.intVar }
@@ -18,7 +18,7 @@ final class NamespaceTests: XCTestCase {
     
     func testNoneNamespace() throws {
         let context = JXContext()
-        try context.registry.add {
+        try context.registry.register {
             JXBridgeBuilder(type: TestStruct.self, namespace: .none)
                 .constructor { TestStruct.init }
                 .var.intVar { \.intVar }
@@ -31,7 +31,7 @@ final class NamespaceTests: XCTestCase {
     
     func testImport() throws {
         let context = JXContext()
-        try context.registry.add {
+        try context.registry.register {
             JXBridgeBuilder(type: TestStruct.self, namespace: "test")
                 .constructor { TestStruct.init }
                 .var.intVar { \.intVar }

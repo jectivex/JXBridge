@@ -5,7 +5,7 @@ import XCTest
 final class IntegrateTests: XCTestCase {
     func testStruct() throws {
         let context = JXContext()
-        try context.registry.add(TestModule())
+        try context.registry.register(TestModule())
 
         var result = try context.eval("test.intVar")
         XCTAssertEqual(try result.int, 1)
@@ -17,7 +17,7 @@ final class IntegrateTests: XCTestCase {
     func testClass() throws {
         let context = JXContext()
         let module = TestModule()
-        try context.registry.add(module)
+        try context.registry.register(module)
 
         var result = try context.eval("test.stringVar")
         XCTAssertEqual(try result.string, "a")
@@ -41,8 +41,8 @@ private class TestModule: JXModule {
     var namespace = JXNamespace("test")
     
     func register(with registry: JXRegistry) throws {
-        try registry.add(for: TestStruct.self)
-        try registry.add(for: TestClass.self)
+        try registry.registerBridge(for: TestStruct.self)
+        try registry.registerBridge(for: TestClass.self)
     }
     
     func initialize(in context: JXContext) throws {

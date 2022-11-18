@@ -214,11 +214,11 @@ extension JXBridgeContextSPI: RegistryListener {
         try defineNamespace(namespace)
     }
     
-    func didAddModule(_ module: JXModule) throws {
+    func didRegisterModule(_ module: JXModule) throws {
         try initializeModule(module)
     }
     
-    func didAddUnnamespacedBridge(_ bridge: JXBridge) throws {
+    func didRegisterUnnamespacedBridge(_ bridge: JXBridge) throws {
         try defineClass(for: bridge)
     }
 }
