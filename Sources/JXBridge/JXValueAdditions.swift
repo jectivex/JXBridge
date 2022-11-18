@@ -3,12 +3,14 @@ import JXKit
 extension JXValue {
     /// Bind the bridged instance properties and functions of the given object to the type's namespace on this value.
     ///
+    /// - Parameters:
+    ///   - namespace: Override the type bridge's namespace.
     /// - Warning: The given object is not retained.
-    public func integrate(_ instance: Any) throws {
+    public func integrate(_ instance: Any, namespace: JXNamespace? = nil) throws {
         guard let bridge = try context.registry.bridge(for: instance, autobridging: true) else {
             throw JXBridgeErrors.unknownType(String(describing: Swift.type(of: instance)))
         }
-        let namespaceValue = try addNamespace(bridge.namespace)
+        let namespaceValue = try addNamespace(namespace ?? bridge.namespace)
         
         // Use a weak ref to any object value
         var ref: Ref

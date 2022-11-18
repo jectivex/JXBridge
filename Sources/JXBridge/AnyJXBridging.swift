@@ -29,9 +29,9 @@ public struct AnyJXBridging: JXModule {
             return false
         }
         if let bridging = value as? JXBridging {
-            try registry.registerBridge(for: bridging)
+            try registry.registerBridge(for: bridging, namespace: namespace)
         } else if let bridgingType = value as? JXStaticBridging.Type {
-            try registry.registerBridge(for: bridgingType)
+            try registry.registerBridge(for: bridgingType, namespace: namespace)
         } else {
             return false
         }

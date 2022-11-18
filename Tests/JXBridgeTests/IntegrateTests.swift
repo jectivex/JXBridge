@@ -41,13 +41,13 @@ private class TestModule: JXModule {
     var namespace = JXNamespace("test")
     
     func register(with registry: JXRegistry) throws {
-        try registry.registerBridge(for: TestStruct.self)
-        try registry.registerBridge(for: TestClass.self)
+        try registry.registerBridge(for: TestStruct.self, namespace: namespace)
+        try registry.registerBridge(for: TestClass.self, namespace: namespace)
     }
     
     func initialize(in context: JXContext) throws {
-        try context.global.integrate(TestStruct())
-        try context.global.integrate(testClass!)
+        try context.global.integrate(TestStruct(), namespace: namespace)
+        try context.global.integrate(testClass!, namespace: namespace)
     }
 }
 
@@ -60,7 +60,7 @@ private struct TestStruct: JXStaticBridging {
     }
     
     static func jxBridge() -> JXBridge {
-        return JXBridgeBuilder(type: self, namespace: "test")
+        return JXBridgeBuilder(type: self)
             .var.intVar { \.intVar }
             .mutating.func.addFunc { $0.addFunc($1) }
             .bridge
@@ -76,7 +76,7 @@ private class TestClass: JXStaticBridging {
     }
     
     class func jxBridge() -> JXBridge {
-        return JXBridgeBuilder(type: self, namespace: "test")
+        return JXBridgeBuilder(type: self)
             .var.stringVar { \.stringVar }
             .func.appendFunc { $0.appendFunc($1) }
             .bridge

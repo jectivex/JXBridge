@@ -13,7 +13,7 @@ public struct AnyNSObject: JXModule {
         }
         // Still allow NSObjects to customize bridging
         if let bridgingType = cls as? JXStaticBridging.Type {
-            try registry.registerBridge(for: bridgingType)
+            try registry.registerBridge(for: bridgingType, namespace: namespace)
         } else if namespace == .default {
             try registry.registerBridge(forObjectiveC: nsobjectType)
         } else {
