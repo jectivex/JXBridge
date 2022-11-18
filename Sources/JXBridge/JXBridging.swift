@@ -5,6 +5,23 @@ var kJXStateKey = 0
 #endif
 
 /// A type that defines its own JavaScript bridging.
+///
+///     struct Counter: JXStaticBridging {
+///         var count = 0
+///
+///         func increment(by: amount) -> Int {
+///             count += amount
+///             return count
+///         }
+///
+///         static func jxBridge() -> JXBridge {
+///             return JXBridgeBuilder(Counter.self) // In non-final classes use explicit type. In structs and final classes can use 'self'
+///                 .constructor { Counter.init }
+///                 .var.count { \.count }
+///                 .func.increment { Counter.increment }
+///                 .bridge
+///         }
+///     }
 public protocol JXStaticBridging {
     /// Create the JavaScript bridge for this type.
     static func jxBridge() throws -> JXBridge
@@ -14,7 +31,26 @@ public protocol JXStaticBridging {
 // 1. We can't support @JX on structs. So only @JXKeyPath would be available for stored properties.
 // 2. Using our property wrappers on structs bloats their size and interferes with their automatic implementations of protocols that depend on all members being Hashable, Codeable, whatever.
 
-/// An instance that defines its own JavaScript bridging, typically using property wrappers.
+/// A class that defines its own JavaScript bridging, typically using property wrappers.
+///
+///     class Counter: JXBridging {
+///         @JX var count = 0
+///
+///         @JXFunc var jxincrement = Counter.increment // Any 'jx' prefix is stripped from JS function name
+///         func increment(by: amount) -> Int {
+///             count += amount
+///             return count
+///         }
+///
+///         @JXInit var jxinit = Counter.init // Always specify at least one @JXInit if you want to instantiate this type from JavaScript
+///
+///         // Only implement this function if you want to customize the bridge created by your property wrappers
+///         class func jxBridge(mirror: Mirror) -> JXBridge {
+///             return JXBridgeBuilder(Counter.self) // Use explicit type in any non-final class, not self
+///                 .typeName("MyCounter")
+///                 .bridge
+///         }
+///     }
 public protocol JXBridging: AnyObject {
     /// Create the JavaScript bridge for this type. If not implemented, returns a bridge using the JX property wrappers reflected in the given mirror.
     ///
