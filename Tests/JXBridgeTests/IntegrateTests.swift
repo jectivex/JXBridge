@@ -59,7 +59,7 @@ private struct TestStruct: JXStaticBridging {
         return intVar
     }
     
-    static var jxBridge: JXBridge {
+    static func jxBridge() -> JXBridge {
         return JXBridgeBuilder(type: self, namespace: "test")
             .var.intVar { \.intVar }
             .mutating.func.addFunc { $0.addFunc($1) }
@@ -75,7 +75,7 @@ private class TestClass: JXStaticBridging {
         return stringVar
     }
     
-    class var jxBridge: JXBridge {
+    class func jxBridge() -> JXBridge {
         return JXBridgeBuilder(type: self, namespace: "test")
             .var.stringVar { \.stringVar }
             .func.appendFunc { $0.appendFunc($1) }

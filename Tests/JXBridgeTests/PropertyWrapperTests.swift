@@ -83,6 +83,22 @@ final class PropertyWrapperTests: XCTestCase {
         let result = try context.eval("jx.TestClass.classFunc()")
         XCTAssertEqual(try result.int, 1)
     }
+    
+    func testSubclass() throws {
+        let context = JXContext()
+        try context.registry.add(for: TestSubClass(intVar: 0))
+
+        var result = try context.eval("const sub = new jx.TestSubClass(2); sub.increment(3); sub.intVar")
+        XCTAssertEqual(try result.int, -1) // increment is overridden to decrement
+        result = try context.eval("sub.stringVar")
+        XCTAssertEqual(try result.string, "a")
+        
+        result = try context.eval("jx.TestSubClass.classVar")
+        XCTAssertEqual(try result.int, 2)
+        
+        result = try context.eval("jx.TestSubClass.classFunc()")
+        XCTAssertEqual(try result.int, 2)
+    }
 }
 
 private class TestClass: JXBridging {
@@ -120,5 +136,24 @@ private class TestClass: JXBridging {
     @JXClassFunc var jxclassFunc = (TestClass.self, { $0.classFunc() })
     class func classFunc() -> Int {
         return 1
+    }
+}
+
+private class TestSubClass: TestClass {
+    @JXInit var subinit = TestSubClass.init
+    
+    @JX var stringVar = "a"
+    
+    override func increment(by: Int) -> Int {
+        intVar -= by
+        return intVar
+    }
+    
+    override class var classVar: Int {
+        return 2
+    }
+    
+    override class func classFunc() -> Int {
+        return 2
     }
 }

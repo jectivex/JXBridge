@@ -78,7 +78,7 @@ final class BridgeBuilderTests: XCTestCase {
 
     func testObjC() {
         let builder = JXBridgeBuilder(type: TestObjCClass.self)
-        builder.addObjectiveCPropertiesAndMethods()
+        builder.reflectObjectiveCMembers()
         // TODO
     }
 

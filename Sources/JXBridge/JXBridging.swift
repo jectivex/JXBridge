@@ -6,8 +6,8 @@ var kJXStateKey = 0
 
 /// A type that defines its own JavaScript bridging.
 public protocol JXStaticBridging {
-    /// Return the JavaScript bridge for this type.
-    static var jxBridge: JXBridge { get throws }
+    /// Create the JavaScript bridge for this type.
+    static func jxBridge() throws -> JXBridge
 }
 
 // Note: We only support JXBridging and our bridging property wrappers on classes. It would be a poor API for structs for two reasons:
@@ -16,24 +16,28 @@ public protocol JXStaticBridging {
 
 /// An instance that defines its own JavaScript bridging, typically using property wrappers.
 public protocol JXBridging: AnyObject {
-    /// Return the JavaScript bridge for the type of this instance. If not implemented, defaults to using this class's JX property wrappers.
+    /// Create the JavaScript bridge for this type. If not implemented, returns a bridge using the JX property wrappers reflected in the given mirror.
     ///
-    /// - Note: If you want to accept the default bridge but want a custom namespace, return the desired namespace from your `jxNamespace` property.
-    var jxBridge: JXBridge { get throws }
+    /// - Parameters:
+    ///   - mirror: Use `JXBridgeBuilder.reflect(mirror:)` with the given mirror to include reflected JX property wrappers.
+    static func jxBridge(mirror: Mirror) throws -> JXBridge
     
-    /// Bridging state managed by the JX runtime. Do not modify.
+    /// If you do not implement `jxBridge`, implement this property to specify a custom namespace for the default generated bridge.
+    static var jxNamespace: JXNamespace { get }
+    
+    /// Bridging state managed by the JX runtime.
     ///
+    /// - Warning: Do not modify.
     /// - Note: You do not have to implement this on iOS, iPadOS, tvOS, Mac.
     var jxState: JXState? { get set }
 }
 
 extension JXBridging {
-    public var jxBridge: JXBridge {
-        return JXBridgeBuilder(reflecting: self, namespace: jxNamespace).bridge
+    public static func jxBridge(mirror: Mirror) -> JXBridge {
+        return JXBridgeBuilder(type: self, namespace: jxNamespace).reflect(mirror).bridge
     }
     
-    /// If you do not implement `jxBridge`, use this property to provide a namespace for the auto-generated bridge.
-    public var jxNamespace: JXNamespace {
+    public static var jxNamespace: JXNamespace {
         return .default
     }
     

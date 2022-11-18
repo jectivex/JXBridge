@@ -60,7 +60,6 @@ public struct JXBridge {
     var constructors: [ConstructorBridge] = []
 
     /// Return the bridged constructor with the given parameter count.
-    /// - Note: Constructors are not inherited from base classes.
     func constructor(forParameterCount count: Int, superclassRegistry: JXRegistry? = nil) throws -> ConstructorBridge {
         if let constructor = findConstructor(forParameterCount: count, superclassRegistry: superclassRegistry) {
             return constructor

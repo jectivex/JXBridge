@@ -218,7 +218,7 @@ extension JX: BridgingPropertyWrapper {
     
     // Find the property wrapper with the given label for the given instance.
     private static func propertyWrapper(with label: String, for instance: Any) -> Self? {
-        guard let bridging = instance as? JXBridging else {
+        guard let bridging = instance as? any JXBridging else {
             return nil
         }
         

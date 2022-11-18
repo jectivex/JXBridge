@@ -13,12 +13,6 @@ public class JXBridgeBuilder<T> {
         self.init(bridge: JXBridge(type: T.self, as: typeName, namespace: namespace))
     }
     
-    /// Supply an instance to reflect on to find bridging properties using our property wrappers.
-    public convenience init(reflecting instance: T, as typeName: String? = nil, namespace: JXNamespace = .default) {
-        self.init(bridge: JXBridge(type: T.self, as: typeName, namespace: namespace))
-        reflect(instance)
-    }
-
     /// Supply an in-progress bridge to add to.
     public init(bridge: JXBridge) {
         self.bridge = bridge
@@ -26,6 +20,18 @@ public class JXBridgeBuilder<T> {
 
     /// The bridge being created.
     public var bridge: JXBridge
+    
+    /// Set the bridge's namespace.
+    public func namespace(_ namespace: JXNamespace) -> JXBridgeBuilder<T> {
+        bridge.namespace = namespace
+        return self
+    }
+    
+    /// Set the bridge's type name.
+    public func typeName(_ typeName: String) -> JXBridgeBuilder<T> {
+        bridge.typeName = typeName
+        return self
+    }
 
     /// Add bridged instance vars.
     public var `var`: JXBridgeBuilderVars<T> {
@@ -374,20 +380,24 @@ public struct JXBridgeBuilderClassFuncs<T> {
 }
 
 extension JXBridgeBuilder {
-    private func reflect(_ instance: Any) {
-        let builder = MirrorBuilder(Mirror(reflecting: instance), bridge: bridge)
+    /// Add properties and methods discovered via `JX*` property wrappers.
+    @discardableResult public func reflect(_ mirror: Mirror) -> JXBridgeBuilder<T> {
+        let builder = MirrorBuilder(mirror, bridge: bridge)
         builder.addReflectedMembers()
         bridge = builder.bridge
+        return self
     }
 }
 
 #if canImport(ObjectiveC)
 
 extension JXBridgeBuilder where T: NSObject {
-    func addObjectiveCPropertiesAndMethods() {
+    /// Add properties and methods discovered via ObjectiveC reflection.
+    @discardableResult public func reflectObjectiveCMembers() -> JXBridgeBuilder<T> {
         let builder = ObjectiveCBuilder(T.self, bridge: bridge)
         builder.addObjectiveCPropertiesAndMethods()
         bridge = builder.bridge
+        return self
     }
 }
 
