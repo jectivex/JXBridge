@@ -1,3 +1,6 @@
+#if canImport(Combine)
+import Combine
+#endif
 import JXKit
 
 /// Property wrapper bridging a stored property to JavaScript.
@@ -13,6 +16,58 @@ public class JX<T> {
     
     public var wrappedValue: T
 }
+
+#if canImport(Combine)
+
+/// Property wrapper bridging a `@Published` stored property to JavaScript.
+///
+///     @JXPublished var count = 1
+///
+/// - Note: Any `jx` prefix will be stripped in the bridged JavaScript property name.
+@propertyWrapper
+public class JXPublished<T> {
+    private var value: T
+    private let valueSubject: CurrentValueSubject<T, Never>
+    
+    public init(wrappedValue: T) {
+        value = wrappedValue
+        valueSubject = CurrentValueSubject(wrappedValue)
+        projectedValue = valueSubject.eraseToAnyPublisher()
+    }
+    
+    // WARNING: This is an UNOFFICIAL alternate mechanism for property wrappers.
+    public static subscript<O: ObservableObject>(_enclosingInstance owner: O, wrapped wrappedKeyPath: ReferenceWritableKeyPath<O, T>, storage storageKeyPath: ReferenceWritableKeyPath<O, JXPublished<T>>) -> T {
+        get {
+            owner[keyPath: storageKeyPath].value
+        }
+        set {
+            let published = owner[keyPath: storageKeyPath]
+            published.updateValue(newValue, owner: owner)
+        }
+    }
+    
+    private func updateValue<O: ObservableObject>(_ value: T, owner: O) {
+        valueSubject.send(value)
+        if let publisher = owner.objectWillChange as? ObservableObjectPublisher {
+            publisher.send()
+        }
+        self.value = value
+    }
+
+    @available(*, unavailable, message: "@JXPublished can only be applied to classes")
+    public var wrappedValue: T {
+        get {
+            fatalError()
+        }
+        set {
+            fatalError()
+        }
+    }
+    
+    public var projectedValue: AnyPublisher<T, Never>
+}
+
+#endif
 
 /// Property wrapper bridging a static property to JavaScript.
 ///
@@ -194,30 +249,9 @@ extension BridgingPropertyWrapper {
         }
         return String(name)
     }
-}
-
-extension JX: BridgingPropertyWrapper {
-    func addMembers(for label: String, to bridge: inout JXBridge) {
-        let typeName = bridge.typeName
-        let getter: (Any, JXContext) throws -> JXValue = { obj, context in
-            guard let propertyWrapper = Self.propertyWrapper(with: label, for: obj) else {
-                throw JXBridgeErrors.unknownPropertyName(typeName, label)
-            }
-            return try context.convey(propertyWrapper.wrappedValue)
-        }
-        let setter: (Any, JXValue, JXContext) throws -> Any = { obj, value, context in
-            guard let propertyWrapper = Self.propertyWrapper(with: label, for: obj) else {
-                throw JXBridgeErrors.unknownPropertyName(typeName, label)
-            }
-            let p0 = try value.convey(to: T.self)
-            propertyWrapper.wrappedValue = p0
-            return obj
-        }
-        bridge.properties.append(PropertyBridge(name: memberName(for: label), getter: getter, setter: setter))
-    }
     
-    // Find the property wrapper with the given label for the given instance.
-    private static func propertyWrapper(with label: String, for instance: Any) -> Self? {
+    // Find the property wrapper with the given label for the given instance. The property wrapper type must be an object type.
+    static func propertyWrapperObject(with label: String, for instance: Any) -> Self? {
         guard let bridging = instance as? any JXBridging else {
             return nil
         }
@@ -230,6 +264,52 @@ extension JX: BridgingPropertyWrapper {
             bridging.jxState = state
         }
         return state.propertyWrapperObjects[label] as? Self
+    }
+}
+
+extension JX: BridgingPropertyWrapper {
+    func addMembers(for label: String, to bridge: inout JXBridge) {
+        let typeName = bridge.typeName
+        let getter: (Any, JXContext) throws -> JXValue = { obj, context in
+            guard let propertyWrapper = Self.propertyWrapperObject(with: label, for: obj) else {
+                throw JXBridgeErrors.unknownPropertyName(typeName, label)
+            }
+            return try context.convey(propertyWrapper.wrappedValue)
+        }
+        let setter: (Any, JXValue, JXContext) throws -> Any = { obj, value, context in
+            guard let propertyWrapper = Self.propertyWrapperObject(with: label, for: obj) else {
+                throw JXBridgeErrors.unknownPropertyName(typeName, label)
+            }
+            let p0 = try value.convey(to: T.self)
+            propertyWrapper.wrappedValue = p0
+            return obj
+        }
+        bridge.properties.append(PropertyBridge(name: memberName(for: label), getter: getter, setter: setter))
+    }
+}
+
+extension JXPublished: BridgingPropertyWrapper {
+    func addMembers(for label: String, to bridge: inout JXBridge) {
+        let typeName = bridge.typeName
+        let getter: (Any, JXContext) throws -> JXValue = { obj, context in
+            guard let propertyWrapper = Self.propertyWrapperObject(with: label, for: obj) else {
+                throw JXBridgeErrors.unknownPropertyName(typeName, label)
+            }
+            return try context.convey(propertyWrapper.value)
+        }
+        let setter: (Any, JXValue, JXContext) throws -> Any = { obj, value, context in
+            guard let propertyWrapper = Self.propertyWrapperObject(with: label, for: obj) else {
+                throw JXBridgeErrors.unknownPropertyName(typeName, label)
+            }
+            let p0 = try value.convey(to: T.self)
+            if let owner = obj as? (any ObservableObject) {
+                propertyWrapper.updateValue(p0, owner: owner)
+            } else {
+                propertyWrapper.value = p0
+            }
+            return obj
+        }
+        bridge.properties.append(PropertyBridge(name: memberName(for: label), getter: getter, setter: setter))
     }
 }
 

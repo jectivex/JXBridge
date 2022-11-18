@@ -99,6 +99,70 @@ final class PropertyWrapperTests: XCTestCase {
         result = try context.eval("jx.TestSubClass.classFunc()")
         XCTAssertEqual(try result.int, 2)
     }
+    
+#if canImport(Combine)
+    func testJXPublished() throws {
+        let context = JXContext()
+        try context.registry.registerBridge(for: TestObservable(intVar: 0))
+        
+        let obj = TestObservable(intVar: 1)
+        var objectUpdateCount = 0
+        var jxPublishedUpdateCount = 0
+        var jxPublishedValue = 0
+        var publishedUpdateCount = 0
+        var publishedValue = 0.0
+        var objectWillChangeToken: Any? = obj.objectWillChange.sink { _ in objectUpdateCount += 1 }
+        var jxPublishedWillChangeToken: Any? = obj.$intVar.sink { value in
+            jxPublishedUpdateCount += 1
+            jxPublishedValue = value
+        }
+        var publishedWillChangeToken: Any? = obj.$publishedVar.sink { value in
+            publishedUpdateCount += 1
+            publishedValue = value
+        }
+        
+        XCTAssertEqual(jxPublishedUpdateCount, 1)
+        XCTAssertEqual(jxPublishedValue, 1)
+        XCTAssertEqual(publishedUpdateCount, 1)
+        XCTAssertEqual(publishedValue, 1.0)
+
+        obj.intVar += 1
+        XCTAssertEqual(obj.intVar, 2)
+        XCTAssertEqual(objectUpdateCount, 1)
+        XCTAssertEqual(jxPublishedUpdateCount, 2)
+        XCTAssertEqual(jxPublishedValue, 2)
+        XCTAssertEqual(publishedUpdateCount, 1)
+        XCTAssertEqual(publishedValue, 1.0)
+        
+        try context.withValues(obj) {
+            try context.eval("$0.intVar += 1")
+        }
+        XCTAssertEqual(obj.intVar, 3)
+        XCTAssertEqual(objectUpdateCount, 2)
+        XCTAssertEqual(jxPublishedUpdateCount, 3)
+        XCTAssertEqual(jxPublishedValue, 3)
+        XCTAssertEqual(publishedUpdateCount, 1)
+        XCTAssertEqual(publishedValue, 1.0)
+        
+        obj.publishedVar += 1.0
+        XCTAssertEqual(obj.intVar, 3)
+        XCTAssertEqual(objectUpdateCount, 3)
+        XCTAssertEqual(jxPublishedUpdateCount, 3)
+        XCTAssertEqual(jxPublishedValue, 3)
+        XCTAssertEqual(publishedUpdateCount, 2)
+        XCTAssertEqual(publishedValue, 2.0)
+
+        if objectWillChangeToken != nil { // Satisfy compiler by reading value
+            objectWillChangeToken = nil
+        }
+        if jxPublishedWillChangeToken != nil {
+            jxPublishedWillChangeToken = nil
+        }
+        if publishedWillChangeToken != nil {
+            publishedWillChangeToken = nil
+        }
+    }
+#endif
 }
 
 private class TestClass: JXBridging {
@@ -108,7 +172,7 @@ private class TestClass: JXBridging {
     }
     
     @JX var intVar: Int
-    
+
     @JXKeyPath var jxcomputedVar = \TestClass.computedVar
     var computedVar: Int {
         return intVar * 2
@@ -157,3 +221,14 @@ private class TestSubClass: TestClass {
         return 2
     }
 }
+
+#if canImport(Combine)
+private class TestObservable: ObservableObject, JXBridging {
+    init(intVar: Int) {
+        self.intVar = intVar
+    }
+    
+    @JXPublished var intVar: Int
+    @Published var publishedVar = 1.0
+}
+#endif
