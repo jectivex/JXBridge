@@ -163,6 +163,13 @@ final class PropertyWrapperTests: XCTestCase {
         }
     }
 #endif
+    
+    func testAsync() async throws {
+        let context = JXContext()
+        try context.registry.registerBridge(for: TestAsync())
+        let result = try await context.eval("const obj = new jx.TestAsync(); obj.compute()", priority: .low)
+        XCTAssertEqual(try result.int, 1000)
+    }
 }
 
 private class TestClass: JXBridging {
@@ -232,3 +239,11 @@ private class TestObservable: ObservableObject, JXBridging {
     @Published var publishedVar = 1.0
 }
 #endif
+
+private class TestAsync: JXBridging {
+    @JXInit var jxinit = { TestAsync() }
+    @JXFunc var jxcompute = compute
+    func compute() async -> Int {
+        return 1000
+    }
+}

@@ -85,6 +85,25 @@ extension PropertyBridge {
         }
         self = PropertyBridge(name: name, getter: getter, setter: setter)
     }
+    
+    // { await $0.xxx )
+    init<T, V>(name: String, getter getterFunc: @escaping (T) async throws -> V) {
+        let getter: (Any, JXContext) throws -> JXValue = { obj, context in
+            let target = obj as! T
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let ret = try await getterFunc(target)
+                    let retjx = try context.convey(ret)
+                    try promise.resolveFunction.call(withArguments: [retjx])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return  JXValue(context: context, value: promise.promise)
+        }
+        self = PropertyBridge(name: name, getter: getter, setter: nil)
+    }
 }
 
 extension StaticPropertyBridge {
@@ -122,6 +141,25 @@ extension ConstructorBridge {
             return try cons(arg0)
         }
     }
+    
+    // Type.init(p0:p1:)
+    init<T, P0, P1>(_ cons: @escaping (P0, P1) throws -> T) {
+        self = ConstructorBridge(parameterCount: 2) { args, context in
+            let arg0 = try args[0].convey(to: P0.self)
+            let arg1 = try args[1].convey(to: P1.self)
+            return try cons(arg0, arg1)
+        }
+    }
+    
+    // Type.init(p0:p1:p2)
+    init<T, P0, P1, P2>(_ cons: @escaping (P0, P1, P2) throws -> T) {
+        self = ConstructorBridge(parameterCount: 2) { args, context in
+            let arg0 = try args[0].convey(to: P0.self)
+            let arg1 = try args[1].convey(to: P1.self)
+            let arg2 = try args[2].convey(to: P2.self)
+            return try cons(arg0, arg1, arg2)
+        }
+    }
 }
 
 extension FunctionBridge {
@@ -133,17 +171,12 @@ extension FunctionBridge {
         }
     }
     
-    // { $0.xxx() }
-    init<T, R>(name: String, function: @escaping (T) throws -> R) {
-        let typeName = String(describing: T.self)
-        let bridgeFunction: (Any, [JXValue], JXContext) throws -> (Any, JXValue) = { obj, args, context in
-            let target = obj as! T
-            try validate(typeName: typeName, function: name, arguments: args, count: 0)
-            let ret = try function(target)
-            let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
-            return (target, retjx)
+    // Type.xxx
+    init<T, R>(name: String, function: @escaping (T) -> () async throws -> R) {
+        self = FunctionBridge(name: name) { (obj: T) throws -> R in
+            let callFunc = function(obj)
+            return try await callFunc()
         }
-        self = FunctionBridge(name: name, function: bridgeFunction)
     }
     
     // { $0.xxx() }
@@ -155,6 +188,28 @@ extension FunctionBridge {
             let ret = try mutatingFunction(&target)
             let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
             return (target, retjx)
+        }
+        self = FunctionBridge(name: name, function: bridgeFunction)
+    }
+    
+    // { await $0.xxx() }
+    init<T, R>(name: String, function: @escaping (T) async throws -> R) {
+        let typeName = String(describing: T.self)
+        let bridgeFunction: (Any, [JXValue], JXContext) throws -> (Any, JXValue) = { obj, args, context in
+            let target = obj as! T
+            try validate(typeName: typeName, function: name, arguments: args, count: 0)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let ret = try await function(target)
+                    let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
+                    try promise.resolveFunction.call(withArguments: [retjx])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
         }
         self = FunctionBridge(name: name, function: bridgeFunction)
     }

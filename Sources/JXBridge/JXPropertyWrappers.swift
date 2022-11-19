@@ -168,6 +168,10 @@ public struct JXFunc<T, R> {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
+    public init(wrappedValue: @escaping (T) -> () async throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
     public init<P0>(wrappedValue: @escaping (T) -> (P0) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }

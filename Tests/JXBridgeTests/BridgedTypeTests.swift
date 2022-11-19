@@ -173,6 +173,22 @@ caughtErr;
         }
     }
 #endif
+    
+    func testAsync() async throws {
+        let context = JXContext()
+        try context.registry.register {
+            JXBridgeBuilder(type: TestBaseClass.self)
+                .constructor { TestBaseClass.init }
+                .var.asyncVar { await $0.asyncVar }
+                .func.asyncFunc { TestBaseClass.asyncFunc }
+                .bridge
+        }
+        var result = try await context.eval("const obj = new jx.TestBaseClass(); obj.asyncVar", priority: .low)
+        XCTAssertEqual(try result.string, "async")
+        
+        result = try await context.eval("obj.asyncFunc()", priority: .low)
+        XCTAssertEqual(try result.string, "asyncFunc")
+    }
 }
 
 private struct TestStruct {
@@ -215,6 +231,16 @@ private class TestBaseClass {
 
     var computedString: String {
         return "base"
+    }
+    
+    var asyncVar: String {
+        get async {
+            return "async"
+        }
+    }
+    
+    func asyncFunc() async -> String {
+        return "asyncFunc"
     }
 
     init() {

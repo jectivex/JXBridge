@@ -125,6 +125,11 @@ public struct JXBridgeBuilderVars<T> {
         @discardableResult public func callAsFunction<V>(get getterFunc: @escaping (T) throws -> V, set setterFunc: @escaping (T, V) -> T) -> JXBridgeBuilder<T> {
             return add(PropertyBridge(name: name, getter: getterFunc, setter: setterFunc))
         }
+        
+        // builder.var.xxx { await $0.xxx }
+        @discardableResult public func callAsFunction<V>(_ getter: @escaping (T) async throws -> V) -> JXBridgeBuilder<T> {
+            return add(PropertyBridge(name: name, getter: getter))
+        }
 
         private func add(_ propertyBridge: PropertyBridge) -> JXBridgeBuilder<T> {
             vars.builder.bridge.properties.append(propertyBridge)
@@ -153,9 +158,19 @@ public struct JXBridgeBuilderFuncs<T> {
         @discardableResult public func callAsFunction<R>(_ f: @escaping () -> (T) -> () throws -> R) -> JXBridgeBuilder<T> {
             return add(FunctionBridge(name: name, function: f()))
         }
+        
+        // builder.func.xxx { Type.xxx }
+        @discardableResult public func callAsFunction<R>(_ f: @escaping () -> (T) -> () async throws -> R) -> JXBridgeBuilder<T> {
+            return add(FunctionBridge(name: name, function: f()))
+        }
 
         // builder.func.xxx { $0.xxx() }
         @discardableResult public func callAsFunction<R>(_ f: @escaping (T) throws -> R) -> JXBridgeBuilder<T> {
+            return add(FunctionBridge(name: name, function: f))
+        }
+        
+        // builder.func.xxx { await $0.xxx() }
+        @discardableResult public func callAsFunction<R>(_ f: @escaping (T) async throws -> R) -> JXBridgeBuilder<T> {
             return add(FunctionBridge(name: name, function: f))
         }
 
