@@ -104,6 +104,25 @@ extension PropertyBridge {
         }
         self = PropertyBridge(name: name, getter: getter, setter: nil)
     }
+    
+    // { await $0.xxx )
+    init<T, V>(name: String, classGetter getterFunc: @escaping (T.Type) async throws -> V) {
+        let getter: (Any, JXContext) throws -> JXValue = { obj, context in
+            let target = obj as! T.Type
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let ret = try await getterFunc(target)
+                    let retjx = try context.convey(ret)
+                    try promise.resolveFunction.call(withArguments: [retjx])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return  JXValue(context: context, value: promise.promise)
+        }
+        self = PropertyBridge(name: name, getter: getter, setter: nil)
+    }
 }
 
 extension StaticPropertyBridge {
@@ -123,6 +142,24 @@ extension StaticPropertyBridge {
             setter = nil
         }
         self = StaticPropertyBridge(owningTypeName: typeName, name: name, getter: getter, setter: setter)
+    }
+    
+    // { await Type.xxx )
+    init<V>(name: String, type: Any.Type, getter getterFunc: @escaping () async throws -> V) {
+        let getter: (JXContext) throws -> JXValue = { context in
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let ret = try await getterFunc()
+                    let retjx = try context.convey(ret)
+                    try promise.resolveFunction.call(withArguments: [retjx])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return  JXValue(context: context, value: promise.promise)
+        }
+        self = StaticPropertyBridge(owningTypeName: String(describing: type), name: name, getter: getter, setter: nil)
     }
 }
 

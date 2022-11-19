@@ -69,48 +69,98 @@ public class JXPublished<T> {
 
 #endif
 
+/// Property wrapper bridging an instance property to JavaScript.
+///
+///     @JXVar var jxcount = (get: { $0.count }, set: { $0.count = $0 })
+///     var count = 1
+///
+/// - Note: Any `jx` prefix will be stripped in the bridged JavaScript property name.
+/// - Seealso: `JXKeyPath`
+@propertyWrapper
+public struct JXVar<T, V> {
+    private let propertyBridge: (String) -> PropertyBridge
+    
+    public init(wrappedValue: (get: (T) throws -> V, set: ((T, V) -> Void)?), _ type: T.Type) {
+        propertyBridge = { PropertyBridge(name: $0, getter: wrappedValue.get, setter: wrappedValue.set) }
+    }
+    
+    public init(wrappedValue: @escaping (T) throws -> V, _ type: T.Type) {
+        self = JXVar(wrappedValue: (get: wrappedValue, set: nil), type)
+    }
+    
+    public init(wrappedValue: @escaping (T) async throws -> V, _ type: T.Type) {
+        propertyBridge = { PropertyBridge(name: $0, getter: wrappedValue) }
+    }
+    
+    public var wrappedValue: (get: (T) throws -> V, set: ((T, V) -> Void)?) {
+        get {
+            return (get: { _ in throw JXBridgeErrors.internalError("Do not read or write @JXVar values") }, set: nil)
+        }
+        set {
+        }
+    }
+}
+
 /// Property wrapper bridging a static property to JavaScript.
 ///
-///     @JXStatic var jxcount = (get: { Counter.count }, set: { Counter.count = $0 })
+///     @JXStaticVar var jxcount = (get: { Counter.count }, set: { Counter.count = $0 })
 ///     static var count = 1
 ///
 /// - Note: Any `jx` prefix will be stripped in the bridged JavaScript property name.
 @propertyWrapper
-public struct JXStatic<V> {
+public struct JXStaticVar<V> {
     private let propertyBridge: (String) -> StaticPropertyBridge
     
-    public init(wrappedValue: (get: () -> V, set: ((V) -> Void)?)) {
+    public init(wrappedValue: (get: () throws -> V, set: ((V) -> Void)?)) {
         propertyBridge = { StaticPropertyBridge(name: $0, type: Any.self, getter: wrappedValue.get, setter: wrappedValue.set) }
-        self.wrappedValue = wrappedValue
     }
     
-    public init(wrappedValue: @escaping () -> V) {
-        self = JXStatic(wrappedValue: (get: wrappedValue, set: nil))
+    public init(wrappedValue: @escaping () throws -> V) {
+        self = JXStaticVar(wrappedValue: (get: wrappedValue, set: nil))
     }
     
-    public var wrappedValue: (get: () -> V, set: ((V) -> Void)?)
+    public init(wrappedValue: @escaping () async throws -> V) {
+        propertyBridge = { StaticPropertyBridge(name: $0, type: Any.self, getter: wrappedValue) }
+    }
+    
+    public var wrappedValue: (get: () throws -> V, set: ((V) -> Void)?) {
+        get {
+            return (get: { throw JXBridgeErrors.internalError("Do not read or write @JXStaticVar values") }, set: nil)
+        }
+        set {
+        }
+    }
 }
 
 /// Property wrapper bridging a class property to JavaScript.
 ///
-///     @JXClass class var jxcount = (Counter.self, { $0.count })
+///     @JXClassVar class var jxcount = (Counter.self, { $0.count })
 ///     class var count: Int { return ... }
 ///
 /// - Note: Any `jx` prefix will be stripped in the bridged JavaScript property name.
 @propertyWrapper
-public struct JXClass<T, V> {
+public struct JXClassVar<T, V> {
     private let propertyBridge: (String) -> PropertyBridge
     
-    public init(wrappedValue: (T.Type, get: (T.Type) -> V, set: ((T.Type, V) -> Void)?)) {
+    public init(wrappedValue: (get: (T.Type) throws -> V, set: ((T.Type, V) -> Void)?), _ type: T.Type) {
         propertyBridge = { PropertyBridge(name: $0, classGetter: wrappedValue.get, setter: wrappedValue.set) }
-        self.wrappedValue = wrappedValue
     }
     
-    public init(wrappedValue: (T.Type, (T.Type) -> V)) {
-        self = JXClass(wrappedValue: (wrappedValue.0, get: wrappedValue.1, set: nil))
+    public init(wrappedValue: @escaping (T.Type) throws -> V, _ type: T.Type) {
+        self = JXClassVar(wrappedValue: (get: wrappedValue, set: nil), type)
     }
     
-    public var wrappedValue: (T.Type, get: (T.Type) -> V, set: ((T.Type, V) -> Void)?)
+    public init(wrappedValue: @escaping (T.Type) async throws -> V, _ type: T.Type) {
+        propertyBridge = { PropertyBridge(name: $0, classGetter: wrappedValue) }
+    }
+    
+    public var wrappedValue: (get: (T.Type) throws -> V, set: ((T.Type, V) -> Void)?) {
+        get {
+            return (get: { _ in throw JXBridgeErrors.internalError("Do not read or write @JXClassVar values") }, set: nil)
+        }
+        set {
+        }
+    }
 }
 
 /// Property wrapper bridging a key path value to a JavaScript property.
@@ -222,12 +272,12 @@ public struct JXStaticFunc<R> {
 public struct JXClassFunc<T, R> {
     private let functionBridge: (String) -> FunctionBridge
 
-    public init(wrappedValue: (T.Type, (T.Type) throws -> R)) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue.1) }
+    public init(wrappedValue: @escaping (T.Type) throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
     
-    public init<P0>(wrappedValue: (T.Type, (T.Type, P0) throws -> R)) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue.1) }
+    public init<P0>(wrappedValue: @escaping (T.Type, P0) throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
 
     public var wrappedValue: (T.Type, (T.Type) throws -> R) {
@@ -317,13 +367,19 @@ extension JXPublished: BridgingPropertyWrapper {
     }
 }
 
-extension JXStatic: BridgingPropertyWrapper {
+extension JXVar: BridgingPropertyWrapper {
+    func addMembers(for label: String, to bridge: inout JXBridge) {
+        bridge.properties.append(propertyBridge(memberName(for: label)))
+    }
+}
+
+extension JXStaticVar: BridgingPropertyWrapper {
     func addMembers(for label: String, to bridge: inout JXBridge) {
         bridge.staticProperties.append(propertyBridge(memberName(for: label)))
     }
 }
 
-extension JXClass: BridgingPropertyWrapper {
+extension JXClassVar: BridgingPropertyWrapper {
     func addMembers(for label: String, to bridge: inout JXBridge) {
         bridge.classProperties.append(propertyBridge(memberName(for: label)))
     }

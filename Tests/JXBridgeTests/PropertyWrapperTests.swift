@@ -167,7 +167,9 @@ final class PropertyWrapperTests: XCTestCase {
     func testAsync() async throws {
         let context = JXContext()
         try context.registry.registerBridge(for: TestAsync())
-        let result = try await context.eval("const obj = new jx.TestAsync(); obj.compute()", priority: .low)
+        var result = try await context.eval("const obj = new jx.TestAsync(); obj.asyncVar", priority: .low)
+        XCTAssertEqual(try result.int, 100)
+        result = try await context.eval("obj.compute()", priority: .low)
         XCTAssertEqual(try result.int, 1000)
     }
 }
@@ -191,7 +193,7 @@ private class TestClass: JXBridging {
         return intVar
     }
     
-    @JXStatic var jxstaticVar = (get: { TestClass.staticVar }, set: { TestClass.staticVar = $0 })
+    @JXStaticVar var jxstaticVar = (get: { TestClass.staticVar }, set: { TestClass.staticVar = $0 })
     static var staticVar: Int?
     
     @JXStaticFunc var jxstaticFunc = staticFunc
@@ -199,12 +201,12 @@ private class TestClass: JXBridging {
         return 1
     }
     
-    @JXClass var jxclassVar = (TestClass.self, { $0.classVar })
+    @JXClassVar(TestClass.self) var jxclassVar = { $0.classVar }
     class var classVar: Int {
         return 1
     }
     
-    @JXClassFunc var jxclassFunc = (TestClass.self, { $0.classFunc() })
+    @JXClassFunc(TestClass.self) var jxclassFunc = { $0.classFunc() }
     class func classFunc() -> Int {
         return 1
     }
@@ -242,6 +244,14 @@ private class TestObservable: ObservableObject, JXBridging {
 
 private class TestAsync: JXBridging {
     @JXInit var jxinit = { TestAsync() }
+    
+    @JXVar(TestAsync.self) var jxasyncVar = { await $0.asyncVar }
+    var asyncVar: Int {
+        get async {
+            return 100
+        }
+    }
+    
     @JXFunc var jxcompute = compute
     func compute() async -> Int {
         return 1000
