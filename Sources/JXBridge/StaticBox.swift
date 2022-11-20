@@ -1,7 +1,7 @@
 import JXKit
 
 /// Boxes a native type to access its static and class properties and methods.
-class StaticBox: NativeBox {
+final class StaticBox: NativeBox {
     static func create(_ typeName: JXValue, namespace: JXValue, registry: JXRegistry) throws -> StaticBox {
         let typeNameString = try typeName.string
         let namespaceString = try namespace.string

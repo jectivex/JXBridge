@@ -5,7 +5,7 @@ protocol RegistryListener: AnyObject {
     func didRegisterUnnamespacedBridge(_ bridge: JXBridge) throws
 }
 
-class RegistryListeners {
+final class RegistryListeners {
     // Note: it would have been nice to use publishers for these events, but we want to be able to synchronously throw any listener errors
     private var listeners: [WeakListenerRef] = []
     
@@ -37,7 +37,7 @@ private struct WeakListenerRef {
 }
 
 extension Array where Element == WeakListenerRef {
-    mutating func compact() {
+    fileprivate mutating func compact() {
         removeAll { $0.listener == nil }
     }
 }

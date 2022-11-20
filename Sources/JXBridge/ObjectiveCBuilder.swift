@@ -4,7 +4,7 @@ import JXBridgeObjC
 import JXKit
 
 // TODO: Test and debug
-class ObjectiveCBuilder {
+final class ObjectiveCBuilder {
     init(_ cls: AnyClass, bridge: JXBridge) {
         self.class = cls
         self.bridge = bridge

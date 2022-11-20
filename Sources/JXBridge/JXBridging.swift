@@ -90,7 +90,7 @@ extension JXBridging {
 }
 
 /// Opaque reference to JX runtime state.
-public class JXState {
+public final class JXState {
     init(instance: Any) {
         let mirror = Mirror(reflecting: instance)
         if let superclassMirror = mirror.superclassMirror {

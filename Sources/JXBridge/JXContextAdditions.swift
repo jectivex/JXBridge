@@ -29,7 +29,7 @@ extension JXContext {
     }
 }
 
-class JXBridgeContextSPI {
+final class JXBridgeContextSPI {
     private weak var context: JXContext?
     private var initializationError: Error?
     

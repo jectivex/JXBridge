@@ -9,7 +9,7 @@ import JXKit
 ///
 /// - Note: Any `jx` prefix will be stripped in the bridged JavaScript property name.
 @propertyWrapper
-public class JX<T> {
+public final class JX<T> {
     public init(wrappedValue: T) {
         self.wrappedValue = wrappedValue
     }
@@ -25,7 +25,7 @@ public class JX<T> {
 ///
 /// - Note: Any `jx` prefix will be stripped in the bridged JavaScript property name.
 @propertyWrapper
-public class JXPublished<T> {
+public final class JXPublished<T> {
     private var value: T
     private let valueSubject: CurrentValueSubject<T, Never>
     

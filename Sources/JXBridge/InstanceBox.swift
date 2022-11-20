@@ -1,7 +1,7 @@
 import JXKit
 
 /// Boxes a native instance to access its properties and methods.
-class InstanceBox: NativeBox {
+final class InstanceBox: NativeBox {
     static func create(typeName: JXValue, namespace: JXValue, arguments args: JXValue, registry: JXRegistry) throws -> InstanceBox {
         let typeNameString = try typeName.string
         let namespaceString = try namespace.string

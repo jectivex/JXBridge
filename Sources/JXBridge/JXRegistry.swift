@@ -3,7 +3,7 @@ import Foundation
 #endif
 
 /// Registry of bridged types.
-public class JXRegistry {
+public final class JXRegistry {
     private var bridgesByGivenTypeName: [TypeNameKey: JXBridge] = [:]
     private var bridgesByActualTypeName: [String: JXBridge] = [:]
     private(set) var modulesByNamespace: [JXNamespace: [JXModule]] = [:] // 0 or 1 module per known namespace. Internal for testing

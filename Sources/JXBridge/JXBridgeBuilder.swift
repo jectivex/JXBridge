@@ -7,7 +7,7 @@ import JXKit
 // TODO: Expand builder to handle async funcs.
 
 /// Build the bridge for scripting a native type.
-public class JXBridgeBuilder<T> {
+public final class JXBridgeBuilder<T> {
     /// Supply the type to bridge.
     public convenience init(type: T.Type, as typeName: String? = nil, namespace: JXNamespace = .default) {
         self.init(bridge: JXBridge(type: T.self, as: typeName, namespace: namespace))

@@ -1,5 +1,5 @@
 /// Use reflection to detect our property wrappers and add the corresponding members to a bridge.
-class MirrorBuilder {
+final class MirrorBuilder {
     init(_ mirror: Mirror, bridge: JXBridge) {
         self.mirror = mirror
         self.bridge = bridge
