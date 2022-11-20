@@ -199,6 +199,30 @@ public struct JXInit<T> {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
     
+    public init<P0, P1, P2>(wrappedValue: @escaping (P0, P1, P2) throws -> T) {
+        constructorBridge = ConstructorBridge(wrappedValue)
+    }
+    
+    public init<P0, P1, P2, P3>(wrappedValue: @escaping (P0, P1, P2, P3) throws -> T) {
+        constructorBridge = ConstructorBridge(wrappedValue)
+    }
+    
+    public init<P0, P1, P2, P3, P4>(wrappedValue: @escaping (P0, P1, P2, P3, P4) throws -> T) {
+        constructorBridge = ConstructorBridge(wrappedValue)
+    }
+    
+    public init<P0, P1, P2, P3, P4, P5>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5) throws -> T) {
+        constructorBridge = ConstructorBridge(wrappedValue)
+    }
+    
+    public init<P0, P1, P2, P3, P4, P5, P6>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> T) {
+        constructorBridge = ConstructorBridge(wrappedValue)
+    }
+    
+    public init<P0, P1, P2, P3, P4, P5, P6, P7>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> T) {
+        constructorBridge = ConstructorBridge(wrappedValue)
+    }
+    
     public var wrappedValue: () throws -> T {
         get {
             return { throw JXBridgeErrors.internalError("Do not read or write @JXInit values") }
@@ -218,6 +242,8 @@ public struct JXInit<T> {
 public struct JXFunc<T, R> {
     private let functionBridge: (String) -> FunctionBridge
 
+    // MARK: 0 parameters
+    
     public init(wrappedValue: @escaping (T) -> () throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
@@ -225,6 +251,8 @@ public struct JXFunc<T, R> {
     public init(wrappedValue: @escaping (T) -> () async throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
+    
+    // MARK: 1 parameter
     
     public init<P0>(wrappedValue: @escaping (T) -> (P0) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
@@ -234,11 +262,73 @@ public struct JXFunc<T, R> {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
+    // MARK: 2 parameters
+    
     public init<P0, P1>(wrappedValue: @escaping (T) -> (P0, P1) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
     public init<P0, P1>(wrappedValue: @escaping (T) -> (P0, P1) async throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    // MARK: 3 parameters
+    
+    public init<P0, P1, P2>(wrappedValue: @escaping (T) -> (P0, P1, P2) throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2>(wrappedValue: @escaping (T) -> (P0, P1, P2) async throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    // MARK: 4 parameters
+    
+    public init<P0, P1, P2, P3>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3) throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3) async throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    // MARK: 5 parameters
+    
+    public init<P0, P1, P2, P3, P4>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4) throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3, P4>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4) async throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    // MARK: 6 parameters
+    
+    public init<P0, P1, P2, P3, P4, P5>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5) throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3, P4, P5>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5) async throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    // MARK: 7 parameters
+    
+    public init<P0, P1, P2, P3, P4, P5, P6>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6) throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3, P4, P5, P6>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6) async throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    // MARK: 8 parameters
+    
+    public init<P0, P1, P2, P3, P4, P5, P6, P7>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3, P4, P5, P6, P7>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
 
@@ -261,6 +351,8 @@ public struct JXFunc<T, R> {
 public struct JXStaticFunc<R> {
     private let functionBridge: (String) -> StaticFunctionBridge
 
+    // MARK: 0 parameters
+    
     public init(wrappedValue: @escaping () throws -> R) {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
     }
@@ -268,6 +360,8 @@ public struct JXStaticFunc<R> {
     public init(wrappedValue: @escaping () async throws -> R) {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
     }
+    
+    // MARK: 1 parameter
     
     public init<P0>(wrappedValue: @escaping (P0) throws -> R) {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
@@ -277,11 +371,73 @@ public struct JXStaticFunc<R> {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
     }
     
+    // MARK: 2 parameters
+    
     public init<P0, P1>(wrappedValue: @escaping (P0, P1) throws -> R) {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
     }
     
     public init<P0, P1>(wrappedValue: @escaping (P0, P1) async throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    // MARK: 3 parameters
+    
+    public init<P0, P1, P2>(wrappedValue: @escaping (P0, P1, P2) throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2>(wrappedValue: @escaping (P0, P1, P2) async throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    // MARK: 4 parameters
+    
+    public init<P0, P1, P2, P3>(wrappedValue: @escaping (P0, P1, P2, P3) throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3>(wrappedValue: @escaping (P0, P1, P2, P3) async throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    // MARK: 5 parameters
+    
+    public init<P0, P1, P2, P3, P4>(wrappedValue: @escaping (P0, P1, P2, P3, P4) throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3, P4>(wrappedValue: @escaping (P0, P1, P2, P3, P4) async throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    // MARK: 6 parameters
+    
+    public init<P0, P1, P2, P3, P4, P5>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5) throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3, P4, P5>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5) async throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    // MARK: 7 parameters
+    
+    public init<P0, P1, P2, P3, P4, P5, P6>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3, P4, P5, P6>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6) async throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    // MARK: 8 parameters
+    
+    public init<P0, P1, P2, P3, P4, P5, P6, P7>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3, P4, P5, P6, P7>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
     }
 
@@ -303,6 +459,8 @@ public struct JXStaticFunc<R> {
 @propertyWrapper
 public struct JXClassFunc<T, R> {
     private let functionBridge: (String) -> FunctionBridge
+    
+    // MARK: 0 parameters
 
     public init(wrappedValue: @escaping (T.Type) throws -> R, _ type: T.Type) {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
@@ -312,6 +470,8 @@ public struct JXClassFunc<T, R> {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
     
+    // MARK: 1 parameter
+    
     public init<P0>(wrappedValue: @escaping (T.Type, P0) throws -> R, _ type: T.Type) {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
@@ -320,11 +480,73 @@ public struct JXClassFunc<T, R> {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
     
+    // MARK: 2 parameters
+    
     public init<P0, P1>(wrappedValue: @escaping (T.Type, P0, P1) throws -> R, _ type: T.Type) {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
     
     public init<P0, P1>(wrappedValue: @escaping (T.Type, P0, P1) async throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    // MARK: 3 parameters
+    
+    public init<P0, P1, P2>(wrappedValue: @escaping (T.Type, P0, P1, P2) throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2>(wrappedValue: @escaping (T.Type, P0, P1, P2) async throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    // MARK: 4 parameters
+    
+    public init<P0, P1, P2, P3>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3) throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3) async throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    // MARK: 5 parameters
+    
+    public init<P0, P1, P2, P3, P4>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4) throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3, P4>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4) async throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    // MARK: 6 parameters
+    
+    public init<P0, P1, P2, P3, P4, P5>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5) throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3, P4, P5>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5) async throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    // MARK: 7 parameters
+    
+    public init<P0, P1, P2, P3, P4, P5, P6>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6) throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3, P4, P5, P6>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6) async throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    // MARK: 8 parameters
+    
+    public init<P0, P1, P2, P3, P4, P5, P6, P7>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, P7) throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    public init<P0, P1, P2, P3, P4, P5, P6, P7>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R, _ type: T.Type) {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
 
