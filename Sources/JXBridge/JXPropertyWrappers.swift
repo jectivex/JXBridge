@@ -195,6 +195,10 @@ public struct JXInit<T> {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
     
+    public init<P0, P1>(wrappedValue: @escaping (P0, P1) throws -> T) {
+        constructorBridge = ConstructorBridge(wrappedValue)
+    }
+    
     public var wrappedValue: () throws -> T {
         get {
             return { throw JXBridgeErrors.internalError("Do not read or write @JXInit values") }
@@ -225,6 +229,18 @@ public struct JXFunc<T, R> {
     public init<P0>(wrappedValue: @escaping (T) -> (P0) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
+    
+    public init<P0>(wrappedValue: @escaping (T) -> (P0) async throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    public init<P0, P1>(wrappedValue: @escaping (T) -> (P0, P1) throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
+    
+    public init<P0, P1>(wrappedValue: @escaping (T) -> (P0, P1) async throws -> R) {
+        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
+    }
 
     public var wrappedValue: (T) -> () throws -> R {
         get {
@@ -249,7 +265,23 @@ public struct JXStaticFunc<R> {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
     }
     
+    public init(wrappedValue: @escaping () async throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
     public init<P0>(wrappedValue: @escaping (P0) throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    public init<P0>(wrappedValue: @escaping (P0) async throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    public init<P0, P1>(wrappedValue: @escaping (P0, P1) throws -> R) {
+        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
+    }
+    
+    public init<P0, P1>(wrappedValue: @escaping (P0, P1) async throws -> R) {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
     }
 
@@ -276,7 +308,23 @@ public struct JXClassFunc<T, R> {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
     
+    public init(wrappedValue: @escaping (T.Type) async throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
     public init<P0>(wrappedValue: @escaping (T.Type, P0) throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    public init<P0>(wrappedValue: @escaping (T.Type, P0) async throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    public init<P0, P1>(wrappedValue: @escaping (T.Type, P0, P1) throws -> R, _ type: T.Type) {
+        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
+    }
+    
+    public init<P0, P1>(wrappedValue: @escaping (T.Type, P0, P1) async throws -> R, _ type: T.Type) {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
 

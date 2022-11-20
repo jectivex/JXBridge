@@ -7,6 +7,12 @@ func validate(typeName: String, function: String, arguments: [Any?], count: Int)
     }
 }
 
+extension JXContext {
+    fileprivate func conveyReturn<R>(_ ret: R) throws -> JXValue {
+        return try R.self == Void.self ? undefined() : convey(ret)
+    }
+}
+
 extension PropertyBridge {
     // \Type.var
     init<T, V>(name: String, keyPath: KeyPath<T, V>) {
@@ -49,7 +55,7 @@ extension PropertyBridge {
         self = PropertyBridge(name: name, getter: getter, setter: setter)
     }
     
-    // get: { $0.xxx ) set: { ... }
+    // get: { $0.xxx ) set: { ... } // struct
     init<T, V>(name: String, getter getterFunc: @escaping (T) throws -> V, setter setterFunc: @escaping (T, V) -> T) {
         let getter: (Any, JXContext) throws -> JXValue = { obj, context in
             let target = obj as! T
@@ -86,7 +92,7 @@ extension PropertyBridge {
         self = PropertyBridge(name: name, getter: getter, setter: setter)
     }
     
-    // { await $0.xxx )
+    // { await $0.xxx }
     init<T, V>(name: String, getter getterFunc: @escaping (T) async throws -> V) {
         let getter: (Any, JXContext) throws -> JXValue = { obj, context in
             let target = obj as! T
@@ -94,8 +100,7 @@ extension PropertyBridge {
             Task {
                 do {
                     let ret = try await getterFunc(target)
-                    let retjx = try context.convey(ret)
-                    try promise.resolveFunction.call(withArguments: [retjx])
+                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -113,8 +118,7 @@ extension PropertyBridge {
             Task {
                 do {
                     let ret = try await getterFunc(target)
-                    let retjx = try context.convey(ret)
-                    try promise.resolveFunction.call(withArguments: [retjx])
+                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -151,8 +155,7 @@ extension StaticPropertyBridge {
             Task {
                 do {
                     let ret = try await getterFunc()
-                    let retjx = try context.convey(ret)
-                    try promise.resolveFunction.call(withArguments: [retjx])
+                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -200,6 +203,11 @@ extension ConstructorBridge {
 }
 
 extension FunctionBridge {
+    
+    // NOTE: Due to technical limitations, we do not support async mutable functions.
+    
+    // MARK: 0 parameters
+    
     // Type.xxx
     init<T, R>(name: String, function: @escaping (T) -> () throws -> R) {
         self = FunctionBridge(name: name) { (obj: T) throws -> R in
@@ -208,39 +216,36 @@ extension FunctionBridge {
         }
     }
     
-    // Type.xxx
+    // Type.xxx async
     init<T, R>(name: String, function: @escaping (T) -> () async throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T) throws -> R in
+        self = FunctionBridge(name: name) { (obj: T) async throws -> R in
             let callFunc = function(obj)
             return try await callFunc()
         }
     }
     
     // { $0.xxx() }
-    init<T, R>(name: String, mutatingFunction: @escaping (inout T) throws -> R) {
+    init<T, R>(name: String, function: @escaping (T) throws -> R) {
         let typeName = String(describing: T.self)
-        let bridgeFunction: (Any, [JXValue], JXContext) throws -> (Any, JXValue) = { obj, args, context in
-            var target = obj as! T
+        self = FunctionBridge(name: name) { obj, args, context in
+            let target = obj as! T
             try validate(typeName: typeName, function: name, arguments: args, count: 0)
-            let ret = try mutatingFunction(&target)
-            let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
-            return (target, retjx)
+            let ret = try function(target)
+            return (target, try context.conveyReturn(ret))
         }
-        self = FunctionBridge(name: name, function: bridgeFunction)
     }
     
     // { await $0.xxx() }
     init<T, R>(name: String, function: @escaping (T) async throws -> R) {
         let typeName = String(describing: T.self)
-        let bridgeFunction: (Any, [JXValue], JXContext) throws -> (Any, JXValue) = { obj, args, context in
+        self = FunctionBridge(name: name) { obj, args, context in
             let target = obj as! T
             try validate(typeName: typeName, function: name, arguments: args, count: 0)
             let promise = try JXValue.createPromise(in: context)
             Task {
                 do {
                     let ret = try await function(target)
-                    let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
-                    try promise.resolveFunction.call(withArguments: [retjx])
+                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -248,21 +253,51 @@ extension FunctionBridge {
             let promiseValue = JXValue(context: context, value: promise.promise)
             return (target, promiseValue)
         }
-        self = FunctionBridge(name: name, function: bridgeFunction)
+    }
+    
+    // { $0.xxx() }
+    init<T, R>(name: String, mutatingFunction: @escaping (inout T) throws -> R) {
+        let typeName = String(describing: T.self)
+        self = FunctionBridge(name: name) { obj, args, context in
+            var target = obj as! T
+            try validate(typeName: typeName, function: name, arguments: args, count: 0)
+            let ret = try mutatingFunction(&target)
+            return (target, try context.conveyReturn(ret))
+        }
     }
     
     // { $0.xxx() }
     init<T, R>(name: String, classFunction: @escaping (T.Type) throws -> R) {
         let typeName = String(describing: T.self)
-        let bridgeFunction: (Any, [JXValue], JXContext) throws -> (Any, JXValue) = { obj, args, context in
+        self = FunctionBridge(name: name) { obj, args, context in
             let target = obj as! T.Type
             try validate(typeName: typeName, function: name, arguments: args, count: 0)
             let ret = try classFunction(target)
-            let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
-            return (target, retjx)
+            return (target, try context.conveyReturn(ret))
         }
-        self = FunctionBridge(name: name, function: bridgeFunction)
     }
+    
+    // { await $0.xxx() }
+    init<T, R>(name: String, classFunction: @escaping (T.Type) async throws -> R) {
+        let typeName = String(describing: T.self)
+        self = FunctionBridge(name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(typeName: typeName, function: name, arguments: args, count: 0)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let ret = try await classFunction(target)
+                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+    
+    // MARK: 1 parameter
 
     // Type.xxx(p0:)
     init<T, P0, R>(name: String, function: @escaping (T) -> (P0) throws -> R) {
@@ -271,47 +306,192 @@ extension FunctionBridge {
             return try callFunc(p0)
         }
     }
+    
+    // Type.xxx(p0:) async
+    init<T, P0, R>(name: String, function: @escaping (T) -> (P0) async throws -> R) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0) async throws -> R in
+            let callFunc = function(obj)
+            return try await callFunc(p0)
+        }
+    }
 
     // { $0.xxx(p0: $1) }
     init<T, P0, R>(name: String, function: @escaping (T, P0) throws -> R) {
         let typeName = String(describing: T.self)
-        let bridgeFunction: (Any, [JXValue], JXContext) throws -> (Any, JXValue) = { obj, args, context in
+        self = FunctionBridge(name: name) { obj, args, context in
             let target = obj as! T
             try validate(typeName: typeName, function: name, arguments: args, count: 1)
             let p0 = try args[0].convey(to: P0.self)
             let ret = try function(target, p0)
-            let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
-            return (target, retjx)
+            return (target, try context.conveyReturn(ret))
         }
-        self = FunctionBridge(name: name, function: bridgeFunction)
+    }
+    
+    // { await $0.xxx(p0: $1) }
+    init<T, P0, R>(name: String, function: @escaping (T, P0) async throws -> R) {
+        let typeName = String(describing: T.self)
+        self = FunctionBridge(name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(typeName: typeName, function: name, arguments: args, count: 1)
+            let p0 = try args[0].convey(to: P0.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let ret = try await function(target, p0)
+                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
     }
 
     // { $0.xxx(p0: $1) }
     init<T, P0, R>(name: String, mutatingFunction: @escaping (inout T, P0) throws -> R) {
         let typeName = String(describing: T.self)
-        let bridgeFunction: (Any, [JXValue], JXContext) throws -> (Any, JXValue) = { obj, args, context in
+        self = FunctionBridge(name: name) { obj, args, context in
             var target = obj as! T
             try validate(typeName: typeName, function: name, arguments: args, count: 1)
             let p0 = try args[0].convey(to: P0.self)
             let ret = try mutatingFunction(&target, p0)
-            let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
-            return (target, retjx)
+            return (target, try context.conveyReturn(ret))
         }
-        self = FunctionBridge(name: name, function: bridgeFunction)
     }
     
     // { $0.xxx(p0: $1) }
     init<T, P0, R>(name: String, classFunction: @escaping (T.Type, P0) throws -> R) {
         let typeName = String(describing: T.self)
-        let bridgeFunction: (Any, [JXValue], JXContext) throws -> (Any, JXValue) = { obj, args, context in
+        self = FunctionBridge(name: name) { obj, args, context in
             let target = obj as! T.Type
             try validate(typeName: typeName, function: name, arguments: args, count: 1)
             let p0 = try args[0].convey(to: P0.self)
             let ret = try classFunction(target, p0)
-            let retjx = R.self == Void.self ? context.undefined() : try context.convey(ret)
-            return (target, retjx)
+            return (target, try context.conveyReturn(ret))
         }
-        self = FunctionBridge(name: name, function: bridgeFunction)
+    }
+    
+    // { await $0.xxx(p0: $1) }
+    init<T, P0, R>(name: String, classFunction: @escaping (T.Type, P0) async throws -> R) {
+        let typeName = String(describing: T.self)
+        self = FunctionBridge(name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(typeName: typeName, function: name, arguments: args, count: 1)
+            let p0 = try args[0].convey(to: P0.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let ret = try await classFunction(target, p0)
+                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+    
+    // MARK: 2 parameters
+
+    // Type.xxx(p0:p1:)
+    init<T, P0, P1, R>(name: String, function: @escaping (T) -> (P0, P1) throws -> R) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1) throws -> R in
+            let callFunc = function(obj)
+            return try callFunc(p0, p1)
+        }
+    }
+    
+    // Type.xxx(p0:p1:) async
+    init<T, P0, P1, R>(name: String, function: @escaping (T) -> (P0, P1) async throws -> R) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1) async throws -> R in
+            let callFunc = function(obj)
+            return try await callFunc(p0, p1)
+        }
+    }
+
+    // { $0.xxx(p0: $1, p1: $2) }
+    init<T, P0, P1, R>(name: String, function: @escaping (T, P0, P1) throws -> R) {
+        let typeName = String(describing: T.self)
+        self = FunctionBridge(name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(typeName: typeName, function: name, arguments: args, count: 2)
+            let p0 = try args[0].convey(to: P0.self)
+            let p1 = try args[1].convey(to: P1.self)
+            let ret = try function(target, p0, p1)
+            return (target, try context.conveyReturn(ret))
+        }
+    }
+    
+    // { await $0.xxx(p0: $1, p1: $2) }
+    init<T, P0, P1, R>(name: String, function: @escaping (T, P0, P1) async throws -> R) {
+        let typeName = String(describing: T.self)
+        self = FunctionBridge(name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(typeName: typeName, function: name, arguments: args, count: 2)
+            let p0 = try args[0].convey(to: P0.self)
+            let p1 = try args[1].convey(to: P1.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let ret = try await function(target, p0, p1)
+                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+
+    // { $0.xxx(p0: $1, p1: $2) }
+    init<T, P0, P1, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1) throws -> R) {
+        let typeName = String(describing: T.self)
+        self = FunctionBridge(name: name) { obj, args, context in
+            var target = obj as! T
+            try validate(typeName: typeName, function: name, arguments: args, count: 2)
+            let p0 = try args[0].convey(to: P0.self)
+            let p1 = try args[1].convey(to: P1.self)
+            let ret = try mutatingFunction(&target, p0, p1)
+            return (target, try context.conveyReturn(ret))
+        }
+    }
+    
+    // { $0.xxx(p0: $1, p1: $2) }
+    init<T, P0, P1, R>(name: String, classFunction: @escaping (T.Type, P0, P1) throws -> R) {
+        let typeName = String(describing: T.self)
+        self = FunctionBridge(name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(typeName: typeName, function: name, arguments: args, count: 2)
+            let p0 = try args[0].convey(to: P0.self)
+            let p1 = try args[1].convey(to: P1.self)
+            let ret = try classFunction(target, p0, p1)
+            return (target, try context.conveyReturn(ret))
+        }
+    }
+    
+    // { await $0.xxx(p0: $1, p1: $2) }
+    init<T, P0, P1, R>(name: String, classFunction: @escaping (T.Type, P0, P1) async throws -> R) {
+        let typeName = String(describing: T.self)
+        self = FunctionBridge(name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(typeName: typeName, function: name, arguments: args, count: 2)
+            let p0 = try args[0].convey(to: P0.self)
+            let p1 = try args[1].convey(to: P1.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let ret = try await classFunction(target, p0, p1)
+                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
     }
 }
 
@@ -322,7 +502,25 @@ extension StaticFunctionBridge {
         self = StaticFunctionBridge(name: name) { args, context in
             try validate(typeName: typeName, function: name, arguments: args, count: 0)
             let ret = try function()
-            return R.self == Void.self ? context.undefined() : try context.convey(ret)
+            return try context.conveyReturn(ret)
+        }
+    }
+    
+    // { await Type.xxx() }
+    init<R>(name: String, type: Any.Type, function: @escaping () async throws -> R) {
+        let typeName = String(describing: type)
+        self = StaticFunctionBridge(name: name) { args, context in
+            try validate(typeName: typeName, function: name, arguments: args, count: 0)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let ret = try await function()
+                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return JXValue(context: context, value: promise.promise)
         }
     }
 
@@ -333,7 +531,58 @@ extension StaticFunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 1)
             let p0 = try args[0].convey(to: P0.self)
             let ret = try function(p0)
-            return R.self == Void.self ? context.undefined() : try context.convey(ret)
+            return try context.conveyReturn(ret)
+        }
+    }
+    
+    // { await Type.xxx(p0: $0) }
+    init<P0, R>(name: String, type: Any.Type, function: @escaping (P0) async throws -> R) {
+        let typeName = String(describing: type)
+        self = StaticFunctionBridge(name: name) { args, context in
+            try validate(typeName: typeName, function: name, arguments: args, count: 1)
+            let p0 = try args[0].convey(to: P0.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let ret = try await function(p0)
+                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return JXValue(context: context, value: promise.promise)
+        }
+    }
+    
+    // { Type.xxx(p0: $0, p1: $1) }
+    init<P0, P1, R>(name: String, type: Any.Type, function: @escaping (P0, P1) throws -> R) {
+        let typeName = String(describing: type)
+        self = StaticFunctionBridge(name: name) { args, context in
+            try validate(typeName: typeName, function: name, arguments: args, count: 1)
+            let p0 = try args[0].convey(to: P0.self)
+            let p1 = try args[1].convey(to: P1.self)
+            let ret = try function(p0, p1)
+            return try context.conveyReturn(ret)
+        }
+    }
+    
+    // { await Type.xxx(p0: $1) }
+    init<P0, P1, R>(name: String, type: Any.Type, function: @escaping (P0, P1) async throws -> R) {
+        let typeName = String(describing: type)
+        self = StaticFunctionBridge(name: name) { args, context in
+            try validate(typeName: typeName, function: name, arguments: args, count: 2)
+            let p0 = try args[0].convey(to: P0.self)
+            let p1 = try args[1].convey(to: P1.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let ret = try await function(p0, p1)
+                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return JXValue(context: context, value: promise.promise)
         }
     }
 }

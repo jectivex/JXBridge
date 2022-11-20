@@ -188,6 +188,15 @@ caughtErr;
         
         result = try await context.eval("obj.asyncFunc()", priority: .low)
         XCTAssertEqual(try result.string, "asyncFunc")
+        
+        result = try await context.eval("""
+async function invokeAsync(obj) {
+    const result = await obj.asyncFunc();
+    return result + "Success";
+}
+invokeAsync(obj);
+""", priority: .low)
+        XCTAssertEqual(try result.string, "asyncFuncSuccess")
     }
 }
 
