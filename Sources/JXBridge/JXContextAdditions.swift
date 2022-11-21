@@ -117,7 +117,7 @@ final class JXBridgeContextSPI {
         // Define a type accessed through a namespace
         let defineClassFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
-                throw JXBridgeErrors.invalidContext
+                throw JXBridgeErrors.invalidContext("Context has been deallocated")
             }
             // Type name, namespace name
             guard args.count == 2 else {
@@ -136,7 +136,7 @@ final class JXBridgeContextSPI {
         // Create a native instance box
         let createNativeFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
-                throw JXBridgeErrors.invalidContext
+                throw JXBridgeErrors.invalidContext("Context has been deallocated")
             }
             // Type name, namespace name, args array
             guard args.count == 3 else {
@@ -151,7 +151,7 @@ final class JXBridgeContextSPI {
         // Create a native static box
         let createStaticNativeFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
-                throw JXBridgeErrors.invalidContext
+                throw JXBridgeErrors.invalidContext("Context has been deallocated")
             }
             // Type name, namespace name
             guard args.count == 2 else {

@@ -29,6 +29,9 @@ public struct AnyJXBridging: JXModule {
             return false
         }
         if let bridging = value as? JXBridging {
+            guard !(value is JXBridging.Type) else {
+                throw JXBridgeErrors.invalidInstance("Register a JXBridging instance, not a class")
+            }
             try registry.registerBridge(for: bridging, namespace: namespace)
         } else if let bridgingType = value as? JXStaticBridging.Type {
             try registry.registerBridge(for: bridgingType, namespace: namespace)

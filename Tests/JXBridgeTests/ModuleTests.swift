@@ -43,10 +43,68 @@ final class ModuleTests: XCTestCase {
             XCTAssertTrue(context.registry.modulesByNamespace["lazy"]?.count == 0)
         }
     }
+    
+    func testAnyJXBridgingModule() throws {
+        let context = JXContext()
+        try context.registry.register(AnyJXBridging(map: [
+            "jx.TestStaticBridgingSubclass": TestStaticBridgingSubclass.self,
+            "jx.TestBridgingSubclass": TestBridgingSubclass()
+        ]))
+
+        var result = try context.eval("var obj = new jx.TestStaticBridgingSubclass(); obj.stringVar + obj.intVar;")
+        XCTAssertEqual(try result.string, "a1")
+        
+        result = try context.eval("var obj = new jx.TestBridgingSubclass(); obj.stringVar + obj.intVar;")
+        XCTAssertEqual(try result.string, "b2")
+    }
 }
 
 private struct TestStruct {
     var intVar = 1
+}
+
+private class TestStaticBridgingBaseClass: JXStaticBridging {
+    var intVar = 1
+    
+    class func jxBridge() throws -> JXBridge {
+        return JXBridgeBuilder(type: TestStaticBridgingBaseClass.self)
+            .constructor { TestStaticBridgingBaseClass.init }
+            .var.intVar { \.intVar }
+            .bridge
+    }
+}
+
+private class TestStaticBridgingSubclass: TestStaticBridgingBaseClass {
+    var stringVar = "a"
+    
+    override class func jxBridge() throws -> JXBridge {
+        return JXBridgeBuilder(type: TestStaticBridgingSubclass.self)
+            .constructor { TestStaticBridgingSubclass.init }
+            .var.stringVar { \.stringVar }
+            .bridge
+    }
+}
+
+private class TestBridgingBaseClass: JXBridging {
+    var intVar = 2
+    
+    class func jxBridge(mirror: Mirror) throws -> JXBridge {
+        return JXBridgeBuilder(type: TestBridgingBaseClass.self)
+            .constructor { TestBridgingBaseClass.init }
+            .var.intVar { \.intVar }
+            .bridge
+    }
+}
+
+private class TestBridgingSubclass: TestBridgingBaseClass {
+    var stringVar = "b"
+    
+    override class func jxBridge(mirror: Mirror) throws -> JXBridge {
+        return JXBridgeBuilder(type: TestBridgingSubclass.self)
+            .constructor { TestBridgingSubclass.init }
+            .var.stringVar { \.stringVar }
+            .bridge
+    }
 }
 
 private struct LazyModule: JXModule {

@@ -96,8 +96,8 @@ public final class JXRegistry {
     /// - Throws `JXBrigeErrors.namespaceViolation` if you attempt to use an invalid namespace or register the same type under multiple namespaces.
     /// - Note: This method automatically registers the superclass bridge if it also conforms to `JXStaticBridging`.
     @discardableResult public func registerBridge<T: JXStaticBridging>(for type: T.Type, namespace: JXNamespace? = nil) throws -> JXBridge {
-        var bridge = try T.jxBridge()
-        if let bridgingSuperclass = bridge.superclass as? any JXStaticBridging.Type, self.bridge(for: bridgingSuperclass) == nil {
+        var bridge = try type.jxBridge()
+        if let bridgingSuperclass = bridge.superclass as? JXStaticBridging.Type, self.bridge(for: bridgingSuperclass) == nil {
             try registerBridge(for: bridgingSuperclass)
         }
         if let namespace {
@@ -115,11 +115,11 @@ public final class JXRegistry {
     /// - Note: This method automatically registers the superclass bridge if it also conforms to `JXStaticBridging` or `JXBridging`.
     @discardableResult public func registerBridge<T: JXBridging>(for instance: T, namespace: JXNamespace? = nil) throws -> JXBridge {
         let mirror = Mirror(reflecting: instance)
-        return try registerBridge(for: T.self, mirror: mirror, namespace: namespace)
+        return try registerBridge(for: type(of: instance), mirror: mirror, namespace: namespace)
     }
     
     @discardableResult private func registerBridge<T: JXBridging>(for type: T.Type, mirror: Mirror, namespace: JXNamespace?) throws -> JXBridge {
-        var bridge = try T.jxBridge(mirror: mirror)
+        var bridge = try type.jxBridge(mirror: mirror)
         // Deal with the following scenario:
         // - Base class implements jxBridge(mirror:)
         // - Subclass does not implement the method because it wants to rely on the default of reflecting on property wrappers.
@@ -130,9 +130,9 @@ public final class JXRegistry {
             bridge = JXBridgeBuilder(type: type, namespace: type.jxNamespace).reflect(mirror).bridge
         }
         if let superclass = bridge.superclass, self.bridge(for: superclass) == nil {
-            if let bridgingSuperclass = superclass as? any JXStaticBridging.Type {
+            if let bridgingSuperclass = superclass as? JXStaticBridging.Type {
                 try registerBridge(for: bridgingSuperclass)
-            } else if let bridgingSuperclass = superclass as? any JXBridging.Type, let superclassMirror = mirror.superclassMirror {
+            } else if let bridgingSuperclass = superclass as? JXBridging.Type, let superclassMirror = mirror.superclassMirror {
                 try registerBridge(for: bridgingSuperclass, mirror: superclassMirror, namespace: nil)
             }
         }
@@ -149,11 +149,18 @@ public final class JXRegistry {
     ///
     /// - Parameters:
     ///   - namespace: The namespace under which to add the type.
+    /// - Note: This method automatically registers any superclass bridge under the same namespace.
     /// - Throws `JXBrigeErrors.namespaceViolation` if you attempt to use an invalid namespace or register the same type under multiple namespaces.
     @discardableResult public func registerBridge<T: NSObject>(forObjectiveC type: T.Type, namespace: JXNamespace = .default) throws -> JXBridge {
         let builder = JXBridgeBuilder(type: type, namespace: namespace)
         builder.reflectObjectiveCMembers()
-        try register(builder.bridge)
+        let bridge = builder.bridge
+        if let bridgingSuperclassType = bridge.superclass as? JXStaticBridging.Type {
+            try registerBridge(for: bridgingSuperclassType, namespace: namespace)
+        } else if let nsobjectSuperclassType = bridge.superclass as? NSObject.Type {
+            try registerBridge(forObjectiveC: nsobjectSuperclassType, namespace: namespace)
+        }
+        try register(bridge)
         return builder.bridge
     }
 

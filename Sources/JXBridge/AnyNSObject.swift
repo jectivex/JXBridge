@@ -3,7 +3,7 @@
 import Foundation
 import JXKit
 
-/// Module that auto-registers any `NSObject` type. If the type is not `JXBridging`, it must be in the default or none namespace.
+/// Module that auto-registers any `NSObject` type. If the type is not `JXStaticBridging`, it must be in the default or none namespace.
 public struct AnyNSObject: JXModule {
     public let namespace: JXNamespace = .none
     

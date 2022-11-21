@@ -10,7 +10,7 @@ import JXKit
 public final class JXBridgeBuilder<T> {
     /// Supply the type to bridge.
     public convenience init(type: T.Type, as typeName: String? = nil, namespace: JXNamespace = .default) {
-        self.init(bridge: JXBridge(type: T.self, as: typeName, namespace: namespace))
+        self.init(bridge: JXBridge(type: type, as: typeName, namespace: namespace))
     }
     
     /// Supply an in-progress bridge to add to.
@@ -991,7 +991,7 @@ extension JXBridgeBuilder {
 extension JXBridgeBuilder where T: NSObject {
     /// Add properties and methods discovered via ObjectiveC reflection.
     @discardableResult public func reflectObjectiveCMembers() -> JXBridgeBuilder<T> {
-        let builder = ObjectiveCBuilder(T.self, bridge: bridge)
+        let builder = ObjectiveCBuilder(bridge: bridge)
         builder.addObjectiveCPropertiesAndMethods()
         bridge = builder.bridge
         return self

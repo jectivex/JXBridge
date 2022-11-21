@@ -19,11 +19,13 @@ public enum JXBridgeErrors: Error {
      /// (Type name, function name.)
     case invalidArgumentCount(String, String)
 
-    /// The JXContext has been dealloc'd.
-    case invalidContext
+    /// Expected a context but got an invalid value.
+    /// (Message)
+    case invalidContext(String)
     
-    /// An object backing this value has been dealloc'd.
-    case invalidInstance
+    /// Expected an instance but got an invalid value.
+    /// (Message)
+    case invalidInstance(String)
 
     /// Script attempted to create an instance of a type without any bridged constructors.
     /// (Type name.)

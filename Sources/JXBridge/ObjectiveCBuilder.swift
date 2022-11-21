@@ -5,24 +5,25 @@ import JXKit
 
 // TODO: Test and debug
 final class ObjectiveCBuilder {
-    init(_ cls: AnyClass, bridge: JXBridge) {
-        self.class = cls
+    init(bridge: JXBridge) {
         self.bridge = bridge
     }
 
-    let `class`: AnyClass
     var bridge: JXBridge
 
     func addObjectiveCPropertiesAndMethods() {
-        let reflector = JXObjectiveCReflector(with: self.class)
-        reflector.constructors.forEach { addConstructor($0) }
+        guard let cls = bridge.type as? AnyClass else {
+            return
+        }
+        let reflector = JXObjectiveCReflector(with: cls)
+        reflector.constructors.forEach { addConstructor(cls, $0) }
         reflector.properties.forEach { addProperty($0) }
         reflector.methods.forEach { addMethod($0) }
         reflector.classProperties.forEach { addClassProperty($0) }
         reflector.classMethods.forEach { addClassMethod($0) }
     }
 
-    private func addConstructor(_ method: JXObjectiveCMethod) {
+    private func addConstructor(_ cls: AnyClass, _ method: JXObjectiveCMethod) {
         let typeName = bridge.typeName
         let constructorBridge = ConstructorBridge(parameterCount: method.parameterCount) { args, context in
             try validate(typeName: typeName, function: "init", arguments: args, count: method.parameterCount)
@@ -31,7 +32,7 @@ final class ObjectiveCBuilder {
                 let convertedArg = try conveyToObjectiveC(args[i], toBoxed: method.parameterTypes[i], for: typeName, member: "init")
                 convertedArgs.append(convertedArg)
             }
-            let obj = self.class.alloc()
+            let obj = cls.alloc()
             // TODO: Handle optional constructors in ObjC and Swift
             return method.invoke(onTarget: obj, arguments: convertedArgs) ?? obj
         }

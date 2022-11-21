@@ -103,7 +103,7 @@ private struct WeakRef: Ref {
     var instance: Any {
         get throws {
             guard let object else {
-                throw JXBridgeErrors.invalidInstance
+                throw JXBridgeErrors.invalidInstance("Instance has been deallocated")
             }
             return object
         }

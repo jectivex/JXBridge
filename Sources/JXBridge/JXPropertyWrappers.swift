@@ -576,7 +576,7 @@ extension BridgingPropertyWrapper {
     
     // Find the property wrapper with the given label for the given instance. The property wrapper type must be an object type.
     static func propertyWrapperObject(with label: String, for instance: Any) -> Self? {
-        guard let bridging = instance as? any JXBridging else {
+        guard let bridging = instance as? JXBridging else {
             return nil
         }
         
