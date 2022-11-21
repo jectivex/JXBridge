@@ -260,10 +260,6 @@ private func conveyFromObjectiveC(_ object: Any?, into context: JXContext, fromB
     case .void:
         return context.undefined()
     case .object:
-        // Although Swift.String is JXConvertible, the NSString class cluster is not
-        if let string = object as? String {
-            return context.string(string)
-        }
         return try context.convey(object)
     case .class:
         if let cls = object as? AnyClass {

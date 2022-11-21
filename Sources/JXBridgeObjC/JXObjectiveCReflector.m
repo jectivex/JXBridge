@@ -22,10 +22,11 @@
     // Only include core NSObject methods. If we reflect on all members, we pick up a ton of category methods that result in hundreds of selectors.
     // TODO: Allow explicit bridging of additional NSObject API
     JXObjectiveCMethod *descriptionMethod = [[JXObjectiveCMethod alloc] initWithName:@"description" selector:@selector(description) signature:[NSMethodSignature methodSignatureForSelector:@selector(description)]];
+    JXObjectiveCProperty *descriptionProperty = [[JXObjectiveCProperty alloc] initWithName:@"description" getter:descriptionMethod setter:nil];
     JXObjectiveCMethod *hashMethod = [[JXObjectiveCMethod alloc] initWithName:@"hash" selector:@selector(hash) signature:[NSMethodSignature methodSignatureForSelector:@selector(hash)]];
     JXObjectiveCMethod *isEqualMethod = [[JXObjectiveCMethod alloc] initWithName:@"isEqual:" selector:@selector(isEqual:) signature:[NSMethodSignature methodSignatureForSelector:@selector(isEqual:)]];
-    _properties = @[];
-    _methods = @[descriptionMethod, hashMethod, isEqualMethod];
+    _properties = @[descriptionProperty];
+    _methods = @[hashMethod, isEqualMethod];
     _classProperties = @[];
     _classMethods = @[];
 
@@ -78,10 +79,13 @@
             continue;
         }
         const char *typeEncoding = method_getTypeEncoding(method);
-        NSMethodSignature *signature = [NSMethodSignature signatureWithObjCTypes:typeEncoding];
-
-        JXObjectiveCMethod *methodObj = [[JXObjectiveCMethod alloc] initWithName:name selector:selector signature:signature];
-        nameToMethod[name] = methodObj;
+        @try {
+            NSMethodSignature *signature = [NSMethodSignature signatureWithObjCTypes:typeEncoding];
+            JXObjectiveCMethod *methodObj = [[JXObjectiveCMethod alloc] initWithName:name selector:selector signature:signature];
+            nameToMethod[name] = methodObj;
+        } @catch(NSException *ex) {
+            NSLog(@"Unsupported type encoding %s: %@", typeEncoding, ex);
+        }
     }
     free(methods);
 

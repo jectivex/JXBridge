@@ -231,6 +231,17 @@ extension JXBridgeContextSPI: JXContextSPI {
     
     func toJX(_ value: Any, in context: JXContext) throws -> JXValue? {
         try throwInitializationError()
+#if canImport(ObjectiveC)
+        // Although String is JXConvertible, the NSString class cluster is not
+        if let string = value as? NSString {
+            return context.string(string as String)
+        }
+        // Same with NSNumber
+        if let number = value as? NSNumber {
+            return context.number(number.doubleValue)
+        }
+#endif
+        
         guard let bridge = try registry.bridge(for: value, autobridging: true) else {
             return nil
         }
