@@ -352,9 +352,10 @@
         case JXObjectiveCTypeVoid:
             return nil;
         case JXObjectiveCTypeObject: {
-            id obj;
-            [invocation getReturnValue:&obj];
-            return obj;
+            // The __bridge is necessary. Attempting to pass &<id> to getReturnValue: directly results in a crash later in execution.
+            CFTypeRef ret = NULL;
+            [invocation getReturnValue:&ret];
+            id obj = (__bridge id)ret;
         }
         case JXObjectiveCTypeClass: {
             Class cls;
