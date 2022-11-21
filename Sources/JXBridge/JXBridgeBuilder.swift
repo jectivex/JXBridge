@@ -990,9 +990,12 @@ extension JXBridgeBuilder {
 
 extension JXBridgeBuilder where T: NSObject {
     /// Add properties and methods discovered via ObjectiveC reflection.
-    @discardableResult public func reflectObjectiveCMembers() -> JXBridgeBuilder<T> {
+    ///
+    /// - Parameters:
+    ///   - prefixes: The ObjectiveC reflector excludes members that use underscores in their name. It is common, however, to prefix category API with a short string followed by an underscore. Pass any category prefixes you'd like to allow. Include the underscore in each prefix.
+    @discardableResult public func reflectObjectiveCMembers(prefixes: [String] = []) -> JXBridgeBuilder<T> {
         let builder = ObjectiveCBuilder(bridge: bridge)
-        builder.addObjectiveCPropertiesAndMethods()
+        builder.addObjectiveCPropertiesAndMethods(prefixes: prefixes)
         bridge = builder.bridge
         return self
     }

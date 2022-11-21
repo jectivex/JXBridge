@@ -9,9 +9,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface JXObjectiveCReflector : NSObject
 
 /// Reflect on the given class.
-- (instancetype)initWithClass:(Class)cls;
+- (instancetype)initWithClass:(Class)cls prefixes:(nullable NSArray<NSString *> *)prefixes;
 - (instancetype)init NS_UNAVAILABLE;
 @property (nonatomic, readonly) Class reflectedClass;
+@property (nonatomic, copy, readonly) NSArray<NSString *> *prefixes;
 @property (nonatomic, readonly) NSArray<JXObjectiveCMethod *> *constructors;
 @property (nonatomic, readonly) NSArray<JXObjectiveCProperty *> *properties;
 @property (nonatomic, readonly) NSArray<JXObjectiveCMethod *> *methods;

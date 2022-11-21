@@ -26,7 +26,7 @@
 
 - (void)testReflector
 {
-    JXObjectiveCReflector *reflector = [[JXObjectiveCReflector alloc] initWithClass:[JXObjectiveCReflectorTestClass class]];
+    JXObjectiveCReflector *reflector = [[JXObjectiveCReflector alloc] initWithClass:[JXObjectiveCReflectorTestClass class] prefixes:nil];
     XCTAssertEqual(reflector.constructors.count, 0);
 
     XCTAssertEqual(reflector.properties.count, 2);

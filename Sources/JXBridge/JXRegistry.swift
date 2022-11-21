@@ -144,6 +144,9 @@ public final class JXRegistry {
     }
 
 #if canImport(ObjectiveC)
+    
+    /// - Seealso: `JXBridgeBuilder.reflectObjectiveCMembers`
+    public var objectiveCMemberPrefixes: [String] = []
 
     /// Register a bridge populated using ObjectiveC reflection for use in JavaScript.
     ///
@@ -151,13 +154,17 @@ public final class JXRegistry {
     ///   - namespace: The namespace under which to add the type.
     /// - Note: This method automatically registers any superclass bridge under the same namespace.
     /// - Throws `JXBrigeErrors.namespaceViolation` if you attempt to use an invalid namespace or register the same type under multiple namespaces.
-    @discardableResult public func registerBridge<T: NSObject>(forObjectiveC type: T.Type, namespace: JXNamespace = .default) throws -> JXBridge {
-        let builder = JXBridgeBuilder(type: type, namespace: namespace)
-        builder.reflectObjectiveCMembers()
+    @discardableResult public func registerBridge<T: NSObject>(forObjectiveC type: T.Type, namespace: JXNamespace? = nil) throws -> JXBridge {
+        // Still allow customization
+        if let bridgingType = type as? JXStaticBridging.Type {
+            return try registerBridge(for: bridgingType, namespace: namespace)
+        }
+        
+        // For fully ObjectiveC types, use proxy bridging
+        let builder = JXBridgeBuilder(type: type, namespace: namespace ?? .default)
+        builder.reflectObjectiveCMembers(prefixes: objectiveCMemberPrefixes)
         let bridge = builder.bridge
-        if let bridgingSuperclassType = bridge.superclass as? JXStaticBridging.Type {
-            try registerBridge(for: bridgingSuperclassType, namespace: namespace)
-        } else if let nsobjectSuperclassType = bridge.superclass as? NSObject.Type {
+        if let nsobjectSuperclassType = bridge.superclass as? NSObject.Type {
             try registerBridge(forObjectiveC: nsobjectSuperclassType, namespace: namespace)
         }
         try register(bridge)

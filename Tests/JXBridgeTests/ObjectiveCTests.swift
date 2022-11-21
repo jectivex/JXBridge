@@ -8,16 +8,15 @@ final class ObjectiveCTests: XCTestCase {
         let context = JXContext()
         try context.registry.register(AnyNSObject())
         let result = try context.eval("""
-const view = new jx.UIView();
-view.tag = 100;
-view.tag;
+//const view = new jx.UIView();
+//view.tag = 100;
+//view.tag;
 //const url = jx.NSURL.URLWithString("http://www.abc.com:8080");
 //url.port;
-//const fm = jx.NSFileManager.defaultManager;
-//const tmpDir = fm.temporaryDirectory;
-//tmpDir.port;
-//const files = fm.subpathsAtPath(tmpDir.path);
-//files.length;
+const fm = jx.NSFileManager.defaultManager;
+const tmpDir = fm.temporaryDirectory;
+const files = fm.subpathsAtPath(tmpDir.path);
+files.length;
 """)
         try print("RESULT: \(result.int)")
     }

@@ -11,11 +11,11 @@ final class ObjectiveCBuilder {
 
     var bridge: JXBridge
 
-    func addObjectiveCPropertiesAndMethods() {
+    func addObjectiveCPropertiesAndMethods(prefixes: [String] = []) {
         guard let cls = bridge.type as? AnyClass else {
             return
         }
-        let reflector = JXObjectiveCReflector(with: cls)
+        let reflector = JXObjectiveCReflector(with: cls, prefixes: prefixes)
         reflector.constructors.forEach { addConstructor(cls, $0) }
         reflector.properties.forEach { addProperty($0) }
         reflector.methods.forEach { addMethod($0) }

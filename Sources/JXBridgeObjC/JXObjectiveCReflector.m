@@ -4,10 +4,11 @@
 
 @implementation JXObjectiveCReflector
 
-- (instancetype)initWithClass:(Class)cls
+- (instancetype)initWithClass:(Class)cls prefixes:(NSArray<NSString *> *)prefixes
 {
     if (self = [super init]) {
         _reflectedClass = cls;
+        _prefixes = [prefixes copy] ?: @[];
         if (cls == NSObject.class) {
             [self _buildNSObject];
         } else {
@@ -19,27 +20,33 @@
 
 - (void)_buildNSObject
 {
+    [self _buildAllowingOnlyPrefixes:YES];
+    
     // Only include core NSObject methods. If we reflect on all members, we pick up a ton of category methods that result in hundreds of selectors.
     // TODO: Allow explicit bridging of additional NSObject API
     JXObjectiveCMethod *descriptionMethod = [[JXObjectiveCMethod alloc] initWithName:@"description" selector:@selector(description) signature:[NSMethodSignature methodSignatureForSelector:@selector(description)]];
     JXObjectiveCProperty *descriptionProperty = [[JXObjectiveCProperty alloc] initWithName:@"description" getter:descriptionMethod setter:nil];
     JXObjectiveCMethod *hashMethod = [[JXObjectiveCMethod alloc] initWithName:@"hash" selector:@selector(hash) signature:[NSMethodSignature methodSignatureForSelector:@selector(hash)]];
+    JXObjectiveCProperty *hashProperty = [[JXObjectiveCProperty alloc] initWithName:@"hash" getter:hashMethod setter:nil];
     JXObjectiveCMethod *isEqualMethod = [[JXObjectiveCMethod alloc] initWithName:@"isEqual:" selector:@selector(isEqual:) signature:[NSMethodSignature methodSignatureForSelector:@selector(isEqual:)]];
-    _properties = @[descriptionProperty];
-    _methods = @[hashMethod, isEqualMethod];
-    _classProperties = @[];
-    _classMethods = @[];
+    
+    _properties = [_properties arrayByAddingObjectsFromArray:@[descriptionProperty, hashProperty]];
+    _methods = [_methods arrayByAddingObject:isEqualMethod];
 
     JXObjectiveCMethod *initMethod = [[JXObjectiveCMethod alloc] initWithName:@"init" selector:@selector(init) signature:[NSMethodSignature methodSignatureForSelector:@selector(init)]];
-    _constructors = @[initMethod];
-
+    _constructors = [_constructors arrayByAddingObject:initMethod];
 }
 
 - (void)_build
 {
+    [self _buildAllowingOnlyPrefixes:NO];
+}
+
+- (void)_buildAllowingOnlyPrefixes:(BOOL)isOnlyPrefixes
+{
     NSMutableArray<JXObjectiveCProperty *> *propertyObjs = [[NSMutableArray alloc] init];
     NSMutableDictionary<NSString *, JXObjectiveCMethod *> *nameToMethod = [[NSMutableDictionary alloc] init];
-    [self _buildClass:_reflectedClass propertyObjects:propertyObjs nameToMethodDictionary:nameToMethod];
+    [self _buildClass:_reflectedClass allowingOnlyPrefixes:isOnlyPrefixes propertyObjects:propertyObjs nameToMethodDictionary:nameToMethod];
 
     NSMutableArray<JXObjectiveCMethod *> *constructorObjs = [[NSMutableArray alloc] init];
     NSMutableArray<JXObjectiveCMethod *> *methodObjs = [[NSMutableArray alloc] init];
@@ -58,7 +65,7 @@
     if (metaClass) {
         [propertyObjs removeAllObjects];
         [nameToMethod removeAllObjects];
-        [self _buildClass:metaClass propertyObjects:propertyObjs nameToMethodDictionary:nameToMethod];
+        [self _buildClass:metaClass allowingOnlyPrefixes:isOnlyPrefixes propertyObjects:propertyObjs nameToMethodDictionary:nameToMethod];
         _classProperties = [propertyObjs copy];
         _classMethods = nameToMethod.allValues;
     } else {
@@ -67,7 +74,7 @@
     }
 }
 
-- (void)_buildClass:(Class)cls propertyObjects:(NSMutableArray<JXObjectiveCProperty *> *)propertyObjs nameToMethodDictionary:(NSMutableDictionary<NSString *, JXObjectiveCMethod *> *)nameToMethod
+- (void)_buildClass:(Class)cls allowingOnlyPrefixes:(BOOL)isOnlyPrefixes propertyObjects:(NSMutableArray<JXObjectiveCProperty *> *)propertyObjs nameToMethodDictionary:(NSMutableDictionary<NSString *, JXObjectiveCMethod *> *)nameToMethod
 {
     unsigned int methodCount;
     Method *methods = class_copyMethodList(cls, &methodCount);
@@ -75,6 +82,9 @@
         Method method = methods[i];
         SEL selector = method_getName(method);
         NSString *name = NSStringFromSelector(selector);
+        if (![self _isMemberName:name includedAllowingOnlyPrefixes:isOnlyPrefixes]) {
+            continue;
+        }
         if ([name isEqualToString:@".cxx_destruct"]) {
             continue;
         }
@@ -94,8 +104,11 @@
     for (NSInteger i = 0; i < propertyCount; i++) {
         objc_property_t property = properties[i];
         const char *name = property_getName(property);
-        const char *attrs = property_getAttributes(property);
         NSString *nameString = [[NSString alloc] initWithCString:name encoding:NSUTF8StringEncoding];
+        if (![self _isMemberName:nameString includedAllowingOnlyPrefixes:isOnlyPrefixes]) {
+            continue;
+        }
+        const char *attrs = property_getAttributes(property);
         NSString *attrsString = [[NSString alloc] initWithCString:attrs encoding:NSUTF8StringEncoding];
 
         JXObjectiveCProperty *propertyObj = [self _propertyObjectWithName:nameString attributes:attrsString withCandidateMethods:nameToMethod];
@@ -126,6 +139,16 @@
     [methods removeObjectForKey:setterName];
     
     return [[JXObjectiveCProperty alloc] initWithName:name getter:getter setter:setter];
+}
+
+- (BOOL)_isMemberName:(NSString *)name includedAllowingOnlyPrefixes:(BOOL)isOnlyPrefixes
+{
+    for (NSString *prefix in _prefixes) {
+        if ([name hasPrefix:prefix]) {
+            return YES;
+        }
+    }
+    return !isOnlyPrefixes && [name rangeOfString:@"_"].location == NSNotFound;
 }
 
 - (NSString *)_customNameWithStartToken:(NSString *)token inAttributes:(NSString *)attrs

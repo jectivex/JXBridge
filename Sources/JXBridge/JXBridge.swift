@@ -72,7 +72,8 @@ public struct JXBridge {
     }
 
     private func findConstructor(forParameterCount count: Int, superclassRegistry: JXRegistry? = nil) -> ConstructorBridge? {
-        if let constructor = constructors.first(where: { $0.parameterCount == count }) {
+        // Look in reverse order so that later additions override earlier ones
+        if let constructor = constructors.last(where: { $0.parameterCount == count }) {
             return constructor
         }
         // Special case for constructors: we only inherit superclass constructors if we don't define any ourselves
@@ -275,6 +276,7 @@ public struct JXBridge {
 
     /// Call this method before using any funcs that lookup members by name or other criteria.
     mutating func prepareLookupCaches() {
+        // We cache such that later additions override previous additions
         if propertiesByName == nil {
             propertiesByName = properties.reduce(into: [String: PropertyBridge]()) { result, property in
                 result[property.name] = property
