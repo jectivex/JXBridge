@@ -1,0 +1,851 @@
+{
+  "abstract" : [
+    {
+      "text" : "Registry of bridged types.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/JXBridge\/documentation\/JXBridge"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:8JXBridge10JXRegistryC",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "class"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "JXRegistry"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "JXBridge"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "JXRegistry"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Class",
+    "symbolKind" : "class",
+    "title" : "JXRegistry"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "final"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "class"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "JXRegistry"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/init()"
+      ],
+      "title" : "Initializers"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/objectiveCMemberPrefixes"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/bridge(for:)-11rnj",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/bridge(for:)-3owdv",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/bridge(for:namespace:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/register(_:)-8a70h",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/register(_:)-8pd83",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/register(_:)-tn59",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerBridge(for:namespace:)-170lw",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerBridge(for:namespace:)-6id25",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerBridge(forObjectiveC:namespace:)"
+      ],
+      "title" : "Instance Methods"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/jxbridge\/jxregistry"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://JXBridge/documentation/JXBridge": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "JXBridge",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry": {
+  "abstract" : [
+    {
+      "text" : "Registry of bridged types.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "JXRegistry"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "JXRegistry"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXRegistry",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/bridge(for:)-11rnj": {
+  "abstract" : [
+    {
+      "text" : "Return the registered bridge for the given type, or nil if none has been registered.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "bridge"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "Any"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type) -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridgeAAV",
+      "text" : "JXBridge"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/bridge(for:)-11rnj",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "bridge(for:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/bridge(for:)-11rnj"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/bridge(for:)-3owdv": {
+  "abstract" : [
+    {
+      "text" : "Return the registered bridge for the type of the given instance, or nil if none has been registered.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "bridge"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "Any"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridgeAAV",
+      "text" : "JXBridge"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/bridge(for:)-3owdv",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "bridge(for:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/bridge(for:)-3owdv"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/bridge(for:namespace:)": {
+  "abstract" : [
+    {
+      "text" : "Return the registered bridge for the given type name, or nil if none has been registered.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "bridge"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "namespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
+      "text" : "JXNamespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridgeAAV",
+      "text" : "JXBridge"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/bridge(for:namespace:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "bridge(for:namespace:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/bridge(for:namespace:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/init()": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "()"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/init()",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init()",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/init()"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/objectiveCMemberPrefixes": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "objectiveCMemberPrefixes"
+    },
+    {
+      "kind" : "text",
+      "text" : ": ["
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "]"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/objectiveCMemberPrefixes",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "objectiveCMemberPrefixes",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/objectivecmemberprefixes"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/register(_:)-8a70h": {
+  "abstract" : [
+    {
+      "text" : "Register a module for use in JavaScript. Has no effect if the module has a namespace and has already been registered.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "register"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge8JXModuleP",
+      "text" : "JXModule"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/register(_:)-8a70h",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "register(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/register(_:)-8a70h"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/register(_:)-8pd83": {
+  "abstract" : [
+    {
+      "text" : "Register a bridge for use in JavaScript. Use this block-based method for trailing closure syntax:",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "register"
+    },
+    {
+      "kind" : "text",
+      "text" : "(() -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridgeAAV",
+      "text" : "JXBridge"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/register(_:)-8pd83",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "register(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/register(_:)-8pd83"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/register(_:)-tn59": {
+  "abstract" : [
+    {
+      "text" : "Register a bridge for use in JavaScript.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "register"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridgeAAV",
+      "text" : "JXBridge"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/register(_:)-tn59",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "register(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/register(_:)-tn59"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/registerBridge(for:namespace:)-170lw": {
+  "abstract" : [
+    {
+      "text" : "Register a bridge generated by a ",
+      "type" : "text"
+    },
+    {
+      "code" : "JXStaticBridging",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " type for use in JavaScript.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "registerBridge"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "namespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
+      "text" : "JXNamespace"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridgeAAV",
+      "text" : "JXBridge"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerBridge(for:namespace:)-170lw",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "registerBridge(for:namespace:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/registerbridge(for:namespace:)-170lw"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/registerBridge(for:namespace:)-6id25": {
+  "abstract" : [
+    {
+      "text" : "Register a bridge generated by a ",
+      "type" : "text"
+    },
+    {
+      "code" : "JXBridging",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " instance for use in JavaScript.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "registerBridge"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "namespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
+      "text" : "JXNamespace"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridgeAAV",
+      "text" : "JXBridge"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerBridge(for:namespace:)-6id25",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "registerBridge(for:namespace:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/registerbridge(for:namespace:)-6id25"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/registerBridge(forObjectiveC:namespace:)": {
+  "abstract" : [
+    {
+      "text" : "Register a bridge populated using ObjectiveC reflection for use in JavaScript.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "registerBridge"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "forObjectiveC"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ".Type, "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "namespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
+      "text" : "JXNamespace"
+    },
+    {
+      "kind" : "text",
+      "text" : "?) "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridgeAAV",
+      "text" : "JXBridge"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerBridge(forObjectiveC:namespace:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "registerBridge(forObjectiveC:namespace:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/registerbridge(forobjectivec:namespace:)"
+}
+}
+}

@@ -1,0 +1,866 @@
+{
+  "abstract" : [
+    {
+      "text" : "Error encountered when bridging types to JavaScript.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/JXBridge\/documentation\/JXBridge"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:8JXBridge0A6ErrorsO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "JXBridgeErrors"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "JXBridge"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "JXBridgeErrors"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "JXBridgeErrors"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "JXBridgeErrors"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/JXBridge\/s5ErrorP",
+        "doc:\/\/JXBridge\/s8SendableP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/cannotConvertFromObjectiveC(_:_:_:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/cannotConvertToObjectiveC(_:_:_:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/internalError(_:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/invalidArgumentCount(_:_:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/invalidContext(_:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/invalidInstance(_:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/namespaceViolation(_:_:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/noConstructors(_:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/readOnlyProperty(_:_:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/unknownFunctionName(_:_:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/unknownPropertyName(_:_:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/unknownType(_:)"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/Error-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/jxbridge\/jxbridgeerrors"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://JXBridge/documentation/JXBridge": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "JXBridge",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors": {
+  "abstract" : [
+    {
+      "text" : "Error encountered when bridging types to JavaScript.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "JXBridgeErrors"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "JXBridgeErrors"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeErrors",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/Error-Implementations": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/Error-Implementations",
+  "kind" : "article",
+  "role" : "collectionGroup",
+  "title" : "Error Implementations",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/error-implementations"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/cannotConvertFromObjectiveC(_:_:_:)": {
+  "abstract" : [
+    {
+      "text" : "We do not support converting the ObjectiveC function return or property value to a JS value.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "(Type name, member name, value.)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "cannotConvertFromObjectiveC"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "Any"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/cannotConvertFromObjectiveC(_:_:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "JXBridgeErrors.cannotConvertFromObjectiveC(_:_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/cannotconvertfromobjectivec(_:_:_:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/cannotConvertToObjectiveC(_:_:_:)": {
+  "abstract" : [
+    {
+      "text" : "We do not support converting the given argument to the corresponding ObjectiveC type.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "(Type name, member name, value.)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "cannotConvertToObjectiveC"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "Any"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/cannotConvertToObjectiveC(_:_:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "JXBridgeErrors.cannotConvertToObjectiveC(_:_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/cannotconverttoobjectivec(_:_:_:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/internalError(_:)": {
+  "abstract" : [
+    {
+      "text" : "An internal bridging error occurred.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "internalError"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/internalError(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "JXBridgeErrors.internalError(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/internalerror(_:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/invalidArgumentCount(_:_:)": {
+  "abstract" : [
+    {
+      "text" : "Script supplied incorrect number of arguments to a function.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "(Type name, function name.)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "invalidArgumentCount"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/invalidArgumentCount(_:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "JXBridgeErrors.invalidArgumentCount(_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/invalidargumentcount(_:_:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/invalidContext(_:)": {
+  "abstract" : [
+    {
+      "text" : "Expected a context but got an invalid value.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "(Message)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "invalidContext"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/invalidContext(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "JXBridgeErrors.invalidContext(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/invalidcontext(_:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/invalidInstance(_:)": {
+  "abstract" : [
+    {
+      "text" : "Expected an instance but got an invalid value.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "(Message)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "invalidInstance"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/invalidInstance(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "JXBridgeErrors.invalidInstance(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/invalidinstance(_:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/namespaceViolation(_:_:)": {
+  "abstract" : [
+    {
+      "text" : "Detected attempt to register the same type under multiple namespaces.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "(Type name, namespace)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "namespaceViolation"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/namespaceViolation(_:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "JXBridgeErrors.namespaceViolation(_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/namespaceviolation(_:_:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/noConstructors(_:)": {
+  "abstract" : [
+    {
+      "text" : "Script attempted to create an instance of a type without any bridged constructors.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "(Type name.)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "noConstructors"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/noConstructors(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "JXBridgeErrors.noConstructors(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/noconstructors(_:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/readOnlyProperty(_:_:)": {
+  "abstract" : [
+    {
+      "text" : "Script attempted to set a read-only property.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "(Type name, property name.)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "readOnlyProperty"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/readOnlyProperty(_:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "JXBridgeErrors.readOnlyProperty(_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/readonlyproperty(_:_:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/unknownFunctionName(_:_:)": {
+  "abstract" : [
+    {
+      "text" : "Script attempted to invoke an unknown function name.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "(Type name, function name.)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "unknownFunctionName"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/unknownFunctionName(_:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "JXBridgeErrors.unknownFunctionName(_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/unknownfunctionname(_:_:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/unknownPropertyName(_:_:)": {
+  "abstract" : [
+    {
+      "text" : "Script attempted to access an unknown property name.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "(Type name, property name.)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "unknownPropertyName"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/unknownPropertyName(_:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "JXBridgeErrors.unknownPropertyName(_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/unknownpropertyname(_:_:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/unknownType(_:)": {
+  "abstract" : [
+    {
+      "text" : "Script attempted to access an unknown type.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "(Type name.)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "unknownType"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/unknownType(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "JXBridgeErrors.unknownType(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/unknowntype(_:)"
+},
+"doc://JXBridge/s5ErrorP": {
+  "identifier" : "doc:\/\/JXBridge\/s5ErrorP",
+  "title" : "Swift.Error",
+  "type" : "unresolvable"
+},
+"doc://JXBridge/s8SendableP": {
+  "identifier" : "doc:\/\/JXBridge\/s8SendableP",
+  "title" : "Swift.Sendable",
+  "type" : "unresolvable"
+}
+}
+}
