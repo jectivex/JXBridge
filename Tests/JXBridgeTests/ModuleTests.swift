@@ -94,6 +94,10 @@ private class TestBridgingBaseClass: JXBridging {
             .var.intVar { \.intVar }
             .bridge
     }
+    
+#if !canImport(ObjectiveC)
+    var jxState: JXState?
+#endif
 }
 
 private class TestBridgingSubclass: TestBridgingBaseClass {

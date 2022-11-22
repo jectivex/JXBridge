@@ -210,6 +210,10 @@ private class TestClass: JXBridging {
     class func classFunc() -> Int {
         return 1
     }
+    
+#if !canImport(ObjectiveC)
+    var jxState: JXState?
+#endif
 }
 
 private class TestSubClass: TestClass {
@@ -239,6 +243,10 @@ private class TestObservable: ObservableObject, JXBridging {
     
     @JXPublished var intVar: Int
     @Published var publishedVar = 1.0
+    
+#if !canImport(ObjectiveC)
+    var jxState: JXState?
+#endif
 }
 #endif
 
@@ -256,4 +264,8 @@ private class TestAsync: JXBridging {
     func compute() async -> Int {
         return 1000
     }
+    
+#if !canImport(ObjectiveC)
+    var jxState: JXState?
+#endif
 }
