@@ -22,8 +22,7 @@
 {
     [self _buildAllowingOnlyPrefixes:YES];
     
-    // Only include core NSObject methods. If we reflect on all members, we pick up a ton of category methods that result in hundreds of selectors.
-    // TODO: Allow explicit bridging of additional NSObject API
+    // Only include core NSObject methods. If we reflect on all members, we pick up hundreds of selectors from categories
     JXObjectiveCMethod *descriptionMethod = [[JXObjectiveCMethod alloc] initWithName:@"description" selector:@selector(description) signature:[NSMethodSignature methodSignatureForSelector:@selector(description)]];
     JXObjectiveCProperty *descriptionProperty = [[JXObjectiveCProperty alloc] initWithName:@"description" getter:descriptionMethod setter:nil];
     JXObjectiveCMethod *hashMethod = [[JXObjectiveCMethod alloc] initWithName:@"hash" selector:@selector(hash) signature:[NSMethodSignature methodSignatureForSelector:@selector(hash)]];

@@ -19,7 +19,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:8JXBridge0A7BuilderC6staticAA0aB7StaticsVyxGvp",
+    "externalID" : "s:8JXBridge0A7BuilderC6staticAC7StaticsVyx_xGvp",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -39,8 +39,25 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:8JXBridge0A14BuilderStaticsV",
-        "text" : "JXBridgeBuilderStatics"
+        "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+        "text" : "JXBridgeBuilder"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "T"
+      },
+      {
+        "kind" : "text",
+        "text" : ">."
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:8JXBridge0A7BuilderC7StaticsV",
+        "text" : "Statics"
       },
       {
         "kind" : "text",
@@ -93,10 +110,28 @@
               "text" : ": "
             },
             {
-              "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilderStatics",
+              "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:8JXBridge0A14BuilderStaticsV",
-              "text" : "JXBridgeBuilderStatics"
+              "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+              "text" : "JXBridgeBuilder"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : ">."
+            },
+            {
+              "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Statics",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:8JXBridge0A7BuilderC7StaticsV",
+              "text" : "Statics"
             },
             {
               "kind" : "text",
@@ -191,6 +226,37 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridgebuilder"
 },
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/Statics": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Statics"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Statics",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Statics"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.Statics",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/statics"
+},
 "doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/static": {
   "abstract" : [
     {
@@ -217,8 +283,25 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge0A14BuilderStaticsV",
-      "text" : "JXBridgeBuilderStatics"
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+      "text" : "JXBridgeBuilder"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC7StaticsV",
+      "text" : "Statics"
     },
     {
       "kind" : "text",
@@ -239,37 +322,6 @@
   "title" : "static",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/static"
-},
-"doc://JXBridge/documentation/JXBridge/JXBridgeBuilderStatics": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "struct"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "JXBridgeBuilderStatics"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilderStatics",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "JXBridgeBuilderStatics"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "JXBridgeBuilderStatics",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxbridgebuilderstatics"
 }
 }
 }

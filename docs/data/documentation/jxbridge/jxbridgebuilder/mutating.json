@@ -19,7 +19,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:8JXBridge0A7BuilderC8mutatingAA0aB8MutatingVyxGvp",
+    "externalID" : "s:8JXBridge0A7BuilderC8mutatingAC0aB8MutatingVyx_xGvp",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -39,7 +39,24 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:8JXBridge0A15BuilderMutatingV",
+        "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+        "text" : "JXBridgeBuilder"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "T"
+      },
+      {
+        "kind" : "text",
+        "text" : ">."
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:8JXBridge0A7BuilderC0aB8MutatingV",
         "text" : "JXBridgeBuilderMutating"
       },
       {
@@ -93,9 +110,27 @@
               "text" : ": "
             },
             {
-              "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilderMutating",
+              "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:8JXBridge0A15BuilderMutatingV",
+              "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+              "text" : "JXBridgeBuilder"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : ">."
+            },
+            {
+              "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/JXBridgeBuilderMutating",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:8JXBridge0A7BuilderC0aB8MutatingV",
               "text" : "JXBridgeBuilderMutating"
             },
             {
@@ -191,6 +226,37 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridgebuilder"
 },
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/JXBridgeBuilderMutating": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "JXBridgeBuilderMutating"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/JXBridgeBuilderMutating",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "JXBridgeBuilderMutating"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.JXBridgeBuilderMutating",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/jxbridgebuildermutating"
+},
 "doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/mutating": {
   "abstract" : [
     {
@@ -217,7 +283,24 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge0A15BuilderMutatingV",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+      "text" : "JXBridgeBuilder"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC0aB8MutatingV",
       "text" : "JXBridgeBuilderMutating"
     },
     {
@@ -239,37 +322,6 @@
   "title" : "mutating",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutating"
-},
-"doc://JXBridge/documentation/JXBridge/JXBridgeBuilderMutating": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "struct"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "JXBridgeBuilderMutating"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilderMutating",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "JXBridgeBuilderMutating"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "JXBridgeBuilderMutating",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxbridgebuildermutating"
 }
 }
 }

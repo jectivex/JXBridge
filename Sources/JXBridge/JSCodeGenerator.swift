@@ -1,13 +1,13 @@
 /// Generates JavaScript code.
 struct JSCodeGenerator {
-    static let typeNamePropertyName = "_jxbTypeName"
-    static let defineClassFunctionName = "_jxbDefineClass"
-    static let createNativeFunctionName = "_jxbCreateNative"
-    static let createStaticNativeFunctionName = "_jxbCreateStaticNative"
-    static let nativePropertyName = "_jxbNative"
-    static let getPropertyFunctionName = "_jxbGet"
-    static let setPropertyFunctionName = "_jxbSet"
-    static let callFunctionName = "_jxbCall"
+    static let typeNamePropertyName = "_jxTypeName"
+    static let defineClassFunctionName = "_jxDefineClass"
+    static let createNativeFunctionName = "_jxCreateNative"
+    static let createStaticNativeFunctionName = "_jxCreateStaticNative"
+    static let nativePropertyName = "_jxNative"
+    static let getPropertyFunctionName = "_jxGet"
+    static let setPropertyFunctionName = "_jxSet"
+    static let callFunctionName = "_jxCall"
     
     /// Define a var with a value of the given namespace.
     static func defineNamespaceJSProxy(_ namespace: JXNamespace) -> String {
@@ -20,7 +20,7 @@ struct JSCodeGenerator {
 new Proxy({}, {
     get(target, property) {
         if (target[property] === undefined) {
-            _jxbDefineClass(property, '\(namespace.value)');
+            _jxDefineClass(property, '\(namespace.value)');
         }
         return target[property];
     }
@@ -38,13 +38,13 @@ new Proxy({}, {
         if let superclassBridge = self.superclassBridge {
             extendsClause = " extends \(superclassBridge.qualifiedTypeName)"
         } else {
-            nativeDeclaration = "_jxbNative;"
+            nativeDeclaration = "_jxNative;"
         }
         
         let classJS = """
 \(bridge.qualifiedTypeName) = class\(extendsClause) {
-    static _jxbStaticNative = _jxbCreateStaticNative('\(bridge.typeName)', '\(bridge.namespace.value)');
-    static _jxbTypeName = '\(bridge.typeName)';
+    static _jxStaticNative = _jxCreateStaticNative('\(bridge.typeName)', '\(bridge.namespace.value)');
+    static _jxTypeName = '\(bridge.typeName)';
     \(nativeDeclaration)
 \(staticPropertiesJS)
 \(staticFunctionsJS)
@@ -73,7 +73,7 @@ new Proxy({}, {
     private func staticPropertyGetterJS(_ propertyName: String) -> String {
         return """
     static get \(propertyName)() {
-        return _jxbGet(this._jxbStaticNative, '\(propertyName)');
+        return _jxGet(this._jxStaticNative, '\(propertyName)');
     }
 """
     }
@@ -81,7 +81,7 @@ new Proxy({}, {
     private func staticPropertySetterJS(_ propertyName: String) -> String {
         return """
     static set \(propertyName)(p0) {
-        _jxbSet(this._jxbStaticNative, '\(propertyName)', p0);
+        _jxSet(this._jxStaticNative, '\(propertyName)', p0);
     }
 """
     }
@@ -95,7 +95,7 @@ new Proxy({}, {
     private func staticFunctionJS(_ functionName: String) -> String {
         return """
     static \(functionName)(...args) {
-        return _jxbCall(this._jxbStaticNative, '\(functionName)', args);
+        return _jxCall(this._jxStaticNative, '\(functionName)', args);
     }
 """
     }
@@ -103,17 +103,17 @@ new Proxy({}, {
     private var constructorJS: String {
         var superCall = ""
         if superclassBridge != nil {
-            // Call super with our special token arg telling it we'll inject _jxbNative ourselves,
+            // Call super with our special token arg telling it we'll inject _jxNative ourselves,
             // so that we can create it with our subclass type name and namespace
-            superCall = "super('_jxbNative');"
+            superCall = "super('_jxNative');"
         }
         return """
     constructor(...args) {
         \(superCall)
-        if (args.length === 1 && args[0] === '_jxbNative') {
-            this._jxbNative = null; // Will be inserted
+        if (args.length === 1 && args[0] === '_jxNative') {
+            this._jxNative = null; // Will be inserted
         } else {
-            this._jxbNative = _jxbCreateNative('\(bridge.typeName)', '\(bridge.namespace.value)', args);
+            this._jxNative = _jxCreateNative('\(bridge.typeName)', '\(bridge.namespace.value)', args);
         }
     }
 """
@@ -133,7 +133,7 @@ new Proxy({}, {
     private func propertyGetterJS(_ propertyName: String) -> String {
         return """
     get \(propertyName)() {
-        return _jxbGet(this._jxbNative, '\(propertyName)');
+        return _jxGet(this._jxNative, '\(propertyName)');
     }
 """
     }
@@ -141,7 +141,7 @@ new Proxy({}, {
     private func propertySetterJS(_ propertyName: String) -> String {
         return """
     set \(propertyName)(p0) {
-        _jxbSet(this._jxbNative, '\(propertyName)', p0);
+        _jxSet(this._jxNative, '\(propertyName)', p0);
     }
 """
     }
@@ -153,7 +153,7 @@ new Proxy({}, {
     private func functionJS(_ functionName: String) -> String {
         return """
     \(functionName)(...args) {
-        return _jxbCall(this._jxbNative, '\(functionName)', args);
+        return _jxCall(this._jxNative, '\(functionName)', args);
     }
 """
     }

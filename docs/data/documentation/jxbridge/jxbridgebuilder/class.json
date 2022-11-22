@@ -19,7 +19,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:8JXBridge0A7BuilderC5classAA0aB12ClassMembersVyxGvp",
+    "externalID" : "s:8JXBridge0A7BuilderC5classAC12ClassMembersVyx_xGvp",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -39,8 +39,25 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:8JXBridge0A19BuilderClassMembersV",
-        "text" : "JXBridgeBuilderClassMembers"
+        "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+        "text" : "JXBridgeBuilder"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "T"
+      },
+      {
+        "kind" : "text",
+        "text" : ">."
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:8JXBridge0A7BuilderC12ClassMembersV",
+        "text" : "ClassMembers"
       },
       {
         "kind" : "text",
@@ -93,10 +110,28 @@
               "text" : ": "
             },
             {
-              "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilderClassMembers",
+              "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:8JXBridge0A19BuilderClassMembersV",
-              "text" : "JXBridgeBuilderClassMembers"
+              "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+              "text" : "JXBridgeBuilder"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : ">."
+            },
+            {
+              "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/ClassMembers",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:8JXBridge0A7BuilderC12ClassMembersV",
+              "text" : "ClassMembers"
             },
             {
               "kind" : "text",
@@ -191,6 +226,37 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridgebuilder"
 },
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/ClassMembers": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ClassMembers"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/ClassMembers",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ClassMembers"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.ClassMembers",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/classmembers"
+},
 "doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/class": {
   "abstract" : [
     {
@@ -217,8 +283,25 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge0A19BuilderClassMembersV",
-      "text" : "JXBridgeBuilderClassMembers"
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+      "text" : "JXBridgeBuilder"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC12ClassMembersV",
+      "text" : "ClassMembers"
     },
     {
       "kind" : "text",
@@ -239,37 +322,6 @@
   "title" : "class",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/class"
-},
-"doc://JXBridge/documentation/JXBridge/JXBridgeBuilderClassMembers": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "struct"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "JXBridgeBuilderClassMembers"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilderClassMembers",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "JXBridgeBuilderClassMembers"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "JXBridgeBuilderClassMembers",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxbridgebuilderclassmembers"
 }
 }
 }

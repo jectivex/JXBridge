@@ -5,11 +5,11 @@ import XCTest
 
 class TypeNameTests: XCTestCase {
     func testTypeNames() {
-        XCTAssertEqual(TypeName(for: Int.self), "Int")
+        XCTAssertEqual(JXTypeName(for: Int.self), "Int")
         XCTAssertEqual(asJXTypeName("biz.baz.Booz"), "Booz")
-        XCTAssertEqual(TypeName(for: Array<Int>.self), "ArrayOfInt")
-        XCTAssertEqual(TypeName(for: Dictionary<Int, String>.self), "DictionaryOfIntAndString")
-        XCTAssertEqual(TypeName(for: Array<Dictionary<Array<Int>, Array<String>>>.self), "ArrayOfDictionaryOfArrayOfIntAndArrayOfString")
+        XCTAssertEqual(JXTypeName(for: Array<Int>.self), "ArrayOfInt")
+        XCTAssertEqual(JXTypeName(for: Dictionary<Int, String>.self), "DictionaryOfIntAndString")
+        XCTAssertEqual(JXTypeName(for: Array<Dictionary<Array<Int>, Array<String>>>.self), "ArrayOfDictionaryOfArrayOfIntAndArrayOfString")
     }
 }
 #endif

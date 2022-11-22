@@ -1,0 +1,329 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/JXBridge\/documentation\/JXBridge",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Funcs"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:8JXBridge0A7BuilderC5FuncsV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "Funcs"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "JXBridge"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "Funcs"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "JXBridgeBuilder.Funcs"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "attribute",
+              "text" : "@dynamicMemberLookup"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "Funcs"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : ">"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Funcs\/Func"
+      ],
+      "title" : "Structures"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Funcs\/subscript(dynamicMember:)"
+      ],
+      "title" : "Subscripts"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/jxbridge\/jxbridgebuilder\/funcs"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://JXBridge/documentation/JXBridge": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "JXBridge",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder": {
+  "abstract" : [
+    {
+      "text" : "Build the bridge for scripting a native type.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "class"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "JXBridgeBuilder"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "JXBridgeBuilder"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/Funcs": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Funcs"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Funcs",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Funcs"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.Funcs",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/Funcs/Func": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Func"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Funcs\/Func",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Func"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.Funcs.Func",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/Funcs/subscript(dynamicMember:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "subscript"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "dynamicMember"
+    },
+    {
+      "kind" : "text",
+      "text" : " _: "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+      "text" : "JXBridgeBuilder"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC5FuncsV",
+      "text" : "Funcs"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC5FuncsV4FuncV",
+      "text" : "Func"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Funcs\/subscript(dynamicMember:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "subscript(dynamicMember:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/subscript(dynamicmember:)"
+}
+}
+}

@@ -35,6 +35,840 @@
           {
             "children" : [
               {
+                "title" : "Structures",
+                "type" : "groupMarker"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Structures",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Methods",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-2n5gq",
+                        "title" : "func callAsFunction<R>((T.Type) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-2zoyo",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>((T.Type, P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-4sp14",
+                        "title" : "func callAsFunction<R>((T.Type) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-4vgd9",
+                        "title" : "func callAsFunction<P0, P1, P2, R>((T.Type, P0, P1, P2) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-5fpf6",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, R>((T.Type, P0, P1, P2, P3) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-5lvdk",
+                        "title" : "func callAsFunction<P0, P1, R>((T.Type, P0, P1) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-6cwzf",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>((T.Type, P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-779qb",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>((T.Type, P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-77z2a",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, R>((T.Type, P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-7cant",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>((T.Type, P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-7t3bh",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>((T.Type, P0, P1, P2, P3, P4) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-7wbs6",
+                        "title" : "func callAsFunction<P0, R>((T.Type, P0) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-80uyy",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>((T.Type, P0, P1, P2, P3, P4, P5, P6) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-9brv9",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>((T.Type, P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-9ue1y",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>((T.Type, P0, P1, P2, P3, P4, P5) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-hmle",
+                        "title" : "func callAsFunction<P0, P1, R>((T.Type, P0, P1) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-i9iv",
+                        "title" : "func callAsFunction<P0, R>((T.Type, P0) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func\/callasfunction(_:)-t4y2",
+                        "title" : "func callAsFunction<P0, P1, P2, R>((T.Type, P0, P1, P2) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      }
+                    ],
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/func",
+                    "title" : "JXBridgeBuilder.ClassFuncs.Func",
+                    "type" : "struct"
+                  },
+                  {
+                    "title" : "Subscripts",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs\/subscript(dynamicmember:)",
+                    "title" : "subscript(dynamicMember _: String) -> JXBridgeBuilder<T>.ClassFuncs<T>.Func",
+                    "type" : "subscript"
+                  }
+                ],
+                "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs",
+                "title" : "JXBridgeBuilder.ClassFuncs",
+                "type" : "struct"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classmembers\/func",
+                    "title" : "let `func`: JXBridgeBuilder<T>.ClassFuncs<T>",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classmembers\/var",
+                    "title" : "let `var`: JXBridgeBuilder<T>.ClassVars<T>",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classmembers",
+                "title" : "JXBridgeBuilder.ClassMembers",
+                "type" : "struct"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Structures",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Methods",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classvars\/var\/callasfunction(_:)-1y000",
+                        "title" : "func callAsFunction<V>((T.Type) throws -> V) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classvars\/var\/callasfunction(_:)-rut",
+                        "title" : "func callAsFunction<V>((T.Type) async throws -> V) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classvars\/var\/callasfunction(get:set:)",
+                        "title" : "func callAsFunction<V>(get: (T.Type) throws -> V, set: ((T.Type, V) -> Void)?) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      }
+                    ],
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classvars\/var",
+                    "title" : "JXBridgeBuilder.ClassVars.Var",
+                    "type" : "struct"
+                  },
+                  {
+                    "title" : "Subscripts",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classvars\/subscript(dynamicmember:)",
+                    "title" : "subscript(dynamicMember _: String) -> JXBridgeBuilder<T>.ClassVars<T>.Var<T>",
+                    "type" : "subscript"
+                  }
+                ],
+                "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/classvars",
+                "title" : "JXBridgeBuilder.ClassVars",
+                "type" : "struct"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Structures",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Methods",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-108ks",
+                        "title" : "func callAsFunction<P0, R>(() -> (T) -> (P0) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-1aqrs",
+                        "title" : "func callAsFunction<P0, R>((T, P0) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-1rotf",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>((T, P0, P1, P2, P3, P4, P5) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-1zj55",
+                        "title" : "func callAsFunction<P0, P1, P2, R>((T, P0, P1, P2) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-27ueu",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, R>((T, P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-2ajle",
+                        "title" : "func callAsFunction<R>(() -> (T) -> () async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-2fg6n",
+                        "title" : "func callAsFunction<P0, P1, P2, R>(() -> (T) -> (P0, P1, P2) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-2h5uf",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(() -> (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-2mx7c",
+                        "title" : "func callAsFunction<P0, P1, P2, R>(() -> (T) -> (P0, P1, P2) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-31dtp",
+                        "title" : "func callAsFunction<P0, P1, R>((T, P0, P1) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-380lw",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, R>(() -> (T) -> (P0, P1, P2, P3) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-3fohg",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>(() -> (T) -> (P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-3ma58",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, R>((T, P0, P1, P2, P3) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-3v1w0",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(() -> (T) -> (P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-3vys1",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>((T, P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-3zqlq",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, R>(() -> (T) -> (P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-4ahyv",
+                        "title" : "func callAsFunction<R>((T) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-4ejo3",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>((T, P0, P1, P2, P3, P4) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-4odeb",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>((T, P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-4xa1m",
+                        "title" : "func callAsFunction<P0, P1, R>(() -> (T) -> (P0, P1) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-5vk08",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>((T, P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-61ocl",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(() -> (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-69ehb",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>((T, P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-6ukjs",
+                        "title" : "func callAsFunction<P0, P1, P2, R>((T, P0, P1, P2) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-76m4k",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>((T, P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-78x8g",
+                        "title" : "func callAsFunction<P0, P1, R>((T, P0, P1) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-7aoe3",
+                        "title" : "func callAsFunction<P0, P1, R>(() -> (T) -> (P0, P1) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-8bn6i",
+                        "title" : "func callAsFunction<R>(() -> (T) -> () throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-8c69j",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>(() -> (T) -> (P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-9gsw3",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>(() -> (T) -> (P0, P1, P2, P3, P4) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-9uuj9",
+                        "title" : "func callAsFunction<P0, R>(() -> (T) -> (P0) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-csi6",
+                        "title" : "func callAsFunction<P0, R>((T, P0) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-h1fq",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>((T, P0, P1, P2, P3, P4, P5, P6) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-mind",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>(() -> (T) -> (P0, P1, P2, P3, P4, P5) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-pqi5",
+                        "title" : "func callAsFunction<R>((T) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func\/callasfunction(_:)-tdra",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(() -> (T) -> (P0, P1, P2, P3, P4, P5, P6) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      }
+                    ],
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/func",
+                    "title" : "JXBridgeBuilder.Funcs.Func",
+                    "type" : "struct"
+                  },
+                  {
+                    "title" : "Subscripts",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs\/subscript(dynamicmember:)",
+                    "title" : "subscript(dynamicMember _: String) -> JXBridgeBuilder<T>.Funcs<T>.Func<T>",
+                    "type" : "subscript"
+                  }
+                ],
+                "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs",
+                "title" : "JXBridgeBuilder.Funcs",
+                "type" : "struct"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/jxbridgebuildermutating\/func",
+                    "title" : "let `func`: JXBridgeBuilder<T>.MutatingFuncs<T>",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/jxbridgebuildermutating",
+                "title" : "JXBridgeBuilder.JXBridgeBuilderMutating",
+                "type" : "struct"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Structures",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Methods",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutatingfuncs\/func\/callasfunction(_:)-16m7i",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>((inout T, P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutatingfuncs\/func\/callasfunction(_:)-2g81",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>((inout T, P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutatingfuncs\/func\/callasfunction(_:)-3jgtw",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, R>((inout T, P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutatingfuncs\/func\/callasfunction(_:)-4nkwf",
+                        "title" : "func callAsFunction<P0, R>((inout T, P0) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutatingfuncs\/func\/callasfunction(_:)-56xbc",
+                        "title" : "func callAsFunction<P0, P1, R>((inout T, P0, P1) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutatingfuncs\/func\/callasfunction(_:)-62g56",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>((inout T, P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutatingfuncs\/func\/callasfunction(_:)-6yz61",
+                        "title" : "func callAsFunction<R>((inout T) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutatingfuncs\/func\/callasfunction(_:)-8h166",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>((inout T, P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutatingfuncs\/func\/callasfunction(_:)-8xbai",
+                        "title" : "func callAsFunction<P0, P1, P2, R>((inout T, P0, P1, P2) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      }
+                    ],
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutatingfuncs\/func",
+                    "title" : "JXBridgeBuilder.MutatingFuncs.Func",
+                    "type" : "struct"
+                  },
+                  {
+                    "title" : "Subscripts",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutatingfuncs\/subscript(dynamicmember:)",
+                    "title" : "subscript(dynamicMember _: String) -> JXBridgeBuilder<T>.MutatingFuncs<T>.Func<T>",
+                    "type" : "subscript"
+                  }
+                ],
+                "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutatingfuncs",
+                "title" : "JXBridgeBuilder.MutatingFuncs",
+                "type" : "struct"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Structures",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Methods",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-134wk",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>((P0, P1, P2, P3, P4, P5, P6) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-15au6",
+                        "title" : "func callAsFunction<R>(() async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-2psuf",
+                        "title" : "func callAsFunction<P0, P1, R>(() -> (P0, P1) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-2xpqh",
+                        "title" : "func callAsFunction<P0, P1, P2, R>((P0, P1, P2) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-39qd5",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, R>(() -> (P0, P1, P2, P3) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-3j3he",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(() -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-3nimt",
+                        "title" : "func callAsFunction<P0, R>(() -> (P0) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-4b2v5",
+                        "title" : "func callAsFunction<P0, R>((P0) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-4crpt",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, R>((P0, P1, P2, P3) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-4gh3x",
+                        "title" : "func callAsFunction<P0, P1, P2, R>((P0, P1, P2) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-4hb07",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>((P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-51omb",
+                        "title" : "func callAsFunction<P0, P1, R>((P0, P1) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-57wg8",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(() -> (P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-5bgvy",
+                        "title" : "func callAsFunction<P0, P1, P2, R>(() -> (P0, P1, P2) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-5kkud",
+                        "title" : "func callAsFunction<R>(() -> () async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-5mv4r",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>((P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-5o9j5",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>(() -> (P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-5qs7v",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>(() -> (P0, P1, P2, P3, P4) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-5z8ad",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(() -> (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-66s9v",
+                        "title" : "func callAsFunction<P0, R>(() -> (P0) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-6swh4",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, R>((P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-75qva",
+                        "title" : "func callAsFunction<P0, P1, P2, R>(() -> (P0, P1, P2) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-7b5pv",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(() -> (P0, P1, P2, P3, P4, P5, P6) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-7lb3e",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>((P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-86wqv",
+                        "title" : "func callAsFunction<P0, R>((P0) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-8eyky",
+                        "title" : "func callAsFunction<R>(() throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-8gy0v",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>((P0, P1, P2, P3, P4) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-8lp7g",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>(() -> (P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-92mi8",
+                        "title" : "func callAsFunction<R>(() -> () throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-9ckv",
+                        "title" : "func callAsFunction<P0, P1, R>(() -> (P0, P1) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-9f8ja",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, R>(() -> (P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-9fu3u",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>(() -> (P0, P1, P2, P3, P4, P5) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-9jkiq",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>((P0, P1, P2, P3, P4, P5) async throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-9lcwl",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>((P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-9r3pl",
+                        "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>((P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func\/callasfunction(_:)-9rc8e",
+                        "title" : "func callAsFunction<P0, P1, R>((P0, P1) throws -> R) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      }
+                    ],
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/func",
+                    "title" : "JXBridgeBuilder.StaticFuncs.Func",
+                    "type" : "struct"
+                  },
+                  {
+                    "title" : "Subscripts",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs\/subscript(dynamicmember:)",
+                    "title" : "subscript(dynamicMember _: String) -> JXBridgeBuilder<T>.StaticFuncs<T>.Func",
+                    "type" : "subscript"
+                  }
+                ],
+                "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs",
+                "title" : "JXBridgeBuilder.StaticFuncs",
+                "type" : "struct"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Structures",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Methods",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticvars\/var\/callasfunction(_:)-3ki37",
+                        "title" : "func callAsFunction<V>(() throws -> V) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticvars\/var\/callasfunction(_:)-824et",
+                        "title" : "func callAsFunction<V>(() async throws -> V) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticvars\/var\/callasfunction(get:)",
+                        "title" : "func callAsFunction<V>(get: () async throws -> V) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticvars\/var\/callasfunction(get:set:)",
+                        "title" : "func callAsFunction<V>(get: () throws -> V, set: ((V) -> Void)?) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      }
+                    ],
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticvars\/var",
+                    "title" : "JXBridgeBuilder.StaticVars.Var",
+                    "type" : "struct"
+                  },
+                  {
+                    "title" : "Subscripts",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticvars\/subscript(dynamicmember:)",
+                    "title" : "subscript(dynamicMember _: String) -> JXBridgeBuilder<T>.StaticVars<T>.Var<T>",
+                    "type" : "subscript"
+                  }
+                ],
+                "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticvars",
+                "title" : "JXBridgeBuilder.StaticVars",
+                "type" : "struct"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Instance Properties",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/statics\/func",
+                    "title" : "let `func`: JXBridgeBuilder<T>.StaticFuncs<T>",
+                    "type" : "property"
+                  },
+                  {
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/statics\/var",
+                    "title" : "let `var`: JXBridgeBuilder<T>.StaticVars<T>",
+                    "type" : "property"
+                  }
+                ],
+                "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/statics",
+                "title" : "JXBridgeBuilder.Statics",
+                "type" : "struct"
+              },
+              {
+                "children" : [
+                  {
+                    "title" : "Structures",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "children" : [
+                      {
+                        "title" : "Instance Methods",
+                        "type" : "groupMarker"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/vars\/var\/callasfunction(_:)-1izel",
+                        "title" : "func callAsFunction<V>(() -> KeyPath<T, V>) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/vars\/var\/callasfunction(_:)-6woay",
+                        "title" : "func callAsFunction<V>((T) async throws -> V) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/vars\/var\/callasfunction(_:)-96f3f",
+                        "title" : "func callAsFunction<V>((T) throws -> V) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/vars\/var\/callasfunction(get:set:)-3qpwl",
+                        "title" : "func callAsFunction<V>(get: (T) throws -> V, set: (T, V) -> T) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      },
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/vars\/var\/callasfunction(get:set:)-4qhdb",
+                        "title" : "func callAsFunction<V>(get: (T) throws -> V, set: ((T, V) -> Void)?) -> JXBridgeBuilder<T>",
+                        "type" : "method"
+                      }
+                    ],
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/vars\/var",
+                    "title" : "JXBridgeBuilder.Vars.Var",
+                    "type" : "struct"
+                  },
+                  {
+                    "title" : "Subscripts",
+                    "type" : "groupMarker"
+                  },
+                  {
+                    "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/vars\/subscript(dynamicmember:)",
+                    "title" : "subscript(dynamicMember _: String) -> JXBridgeBuilder<T>.Vars<T>.Var<T>",
+                    "type" : "subscript"
+                  }
+                ],
+                "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/vars",
+                "title" : "JXBridgeBuilder.Vars",
+                "type" : "struct"
+              },
+              {
                 "title" : "Initializers",
                 "type" : "groupMarker"
               },
@@ -59,27 +893,27 @@
               },
               {
                 "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/class",
-                "title" : "var `class`: JXBridgeBuilderClassMembers<T>",
+                "title" : "var `class`: JXBridgeBuilder<T>.ClassMembers<T>",
                 "type" : "property"
               },
               {
                 "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/func",
-                "title" : "var `func`: JXBridgeBuilderFuncs<T>",
+                "title" : "var `func`: JXBridgeBuilder<T>.Funcs<T>",
                 "type" : "property"
               },
               {
                 "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutating",
-                "title" : "var mutating: JXBridgeBuilderMutating<T>",
+                "title" : "var mutating: JXBridgeBuilder<T>.JXBridgeBuilderMutating<T>",
                 "type" : "property"
               },
               {
                 "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/static",
-                "title" : "var `static`: JXBridgeBuilderStatics<T>",
+                "title" : "var `static`: JXBridgeBuilder<T>.Statics<T>",
                 "type" : "property"
               },
               {
                 "path" : "\/documentation\/jxbridge\/jxbridgebuilder\/var",
-                "title" : "var `var`: JXBridgeBuilderVars<T>",
+                "title" : "var `var`: JXBridgeBuilder<T>.Vars<T>",
                 "type" : "property"
               },
               {
@@ -657,836 +1491,6 @@
             ],
             "path" : "\/documentation\/jxbridge\/jxbridge",
             "title" : "JXBridge",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Structures",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-12d4j",
-                    "title" : "func callAsFunction<P0, P1, R>((T.Type, P0, P1) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-1cxpu",
-                    "title" : "func callAsFunction<P0, P1, P2, R>((T.Type, P0, P1, P2) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-1mpz7",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, R>((T.Type, P0, P1, P2, P3) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-2kp1u",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, R>((T.Type, P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-2msln",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>((T.Type, P0, P1, P2, P3, P4, P5, P6) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-3qky1",
-                    "title" : "func callAsFunction<R>((T.Type) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-3s0yk",
-                    "title" : "func callAsFunction<P0, R>((T.Type, P0) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-3sizh",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>((T.Type, P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-40z1s",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>((T.Type, P0, P1, P2, P3, P4) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-45xpb",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>((T.Type, P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-5x2da",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>((T.Type, P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-6hk3z",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>((T.Type, P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-6z21g",
-                    "title" : "func callAsFunction<P0, R>((T.Type, P0) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-81hp2",
-                    "title" : "func callAsFunction<P0, P1, R>((T.Type, P0, P1) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-88w8z",
-                    "title" : "func callAsFunction<R>((T.Type) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-8f7in",
-                    "title" : "func callAsFunction<P0, P1, P2, R>((T.Type, P0, P1, P2) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-9yc1i",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>((T.Type, P0, P1, P2, P3, P4, P5) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func\/callasfunction(_:)-9z88x",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>((T.Type, P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  }
-                ],
-                "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/func",
-                "title" : "JXBridgeBuilderClassFuncs.Func",
-                "type" : "struct"
-              },
-              {
-                "title" : "Subscripts",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs\/subscript(dynamicmember:)",
-                "title" : "subscript(dynamicMember _: String) -> JXBridgeBuilderClassFuncs<T>.Func",
-                "type" : "subscript"
-              }
-            ],
-            "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassfuncs",
-            "title" : "JXBridgeBuilderClassFuncs",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Instance Properties",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassmembers\/func",
-                "title" : "let `func`: JXBridgeBuilderClassFuncs<T>",
-                "type" : "property"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassmembers\/var",
-                "title" : "let `var`: JXBridgeBuilderClassVars<T>",
-                "type" : "property"
-              }
-            ],
-            "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassmembers",
-            "title" : "JXBridgeBuilderClassMembers",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Structures",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassvars\/var\/callasfunction(_:)-5zlux",
-                    "title" : "func callAsFunction<V>((T.Type) throws -> V) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassvars\/var\/callasfunction(_:)-7lq7t",
-                    "title" : "func callAsFunction<V>((T.Type) async throws -> V) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassvars\/var\/callasfunction(get:set:)",
-                    "title" : "func callAsFunction<V>(get: (T.Type) throws -> V, set: ((T.Type, V) -> Void)?) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  }
-                ],
-                "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassvars\/var",
-                "title" : "JXBridgeBuilderClassVars.Var",
-                "type" : "struct"
-              },
-              {
-                "title" : "Subscripts",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassvars\/subscript(dynamicmember:)",
-                "title" : "subscript(dynamicMember _: String) -> JXBridgeBuilderClassVars<T>.Var<T>",
-                "type" : "subscript"
-              }
-            ],
-            "path" : "\/documentation\/jxbridge\/jxbridgebuilderclassvars",
-            "title" : "JXBridgeBuilderClassVars",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Structures",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-13wog",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(() -> (T) -> (P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-198ub",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(() -> (T) -> (P0, P1, P2, P3, P4, P5, P6) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-1easx",
-                    "title" : "func callAsFunction<P0, P1, P2, R>(() -> (T) -> (P0, P1, P2) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-1we8t",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>(() -> (T) -> (P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-2cxkd",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>((T, P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-2mk8t",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>(() -> (T) -> (P0, P1, P2, P3, P4, P5) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-35gtw",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, R>(() -> (T) -> (P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-3dfly",
-                    "title" : "func callAsFunction<P0, R>(() -> (T) -> (P0) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-3fabv",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>(() -> (T) -> (P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-3v09",
-                    "title" : "func callAsFunction<R>((T) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-4bbvz",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(() -> (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-4d0a",
-                    "title" : "func callAsFunction<P0, R>((T, P0) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-4fayv",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, R>((T, P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-4zez5",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>((T, P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-51056",
-                    "title" : "func callAsFunction<P0, P1, P2, R>(() -> (T) -> (P0, P1, P2) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-59onr",
-                    "title" : "func callAsFunction<P0, R>((T, P0) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-5gzmk",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>((T, P0, P1, P2, P3, P4) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-6393t",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>(() -> (T) -> (P0, P1, P2, P3, P4) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-67yyu",
-                    "title" : "func callAsFunction<R>(() -> (T) -> () async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-6h5ns",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(() -> (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-6jd3q",
-                    "title" : "func callAsFunction<P0, R>(() -> (T) -> (P0) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-712ct",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, R>((T, P0, P1, P2, P3) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-73sqk",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>((T, P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-74ggy",
-                    "title" : "func callAsFunction<R>(() -> (T) -> () throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-7866y",
-                    "title" : "func callAsFunction<R>((T) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-7dqqg",
-                    "title" : "func callAsFunction<P0, P1, R>(() -> (T) -> (P0, P1) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-7vhps",
-                    "title" : "func callAsFunction<P0, P1, R>((T, P0, P1) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-8b32j",
-                    "title" : "func callAsFunction<P0, P1, R>(() -> (T) -> (P0, P1) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-9i19b",
-                    "title" : "func callAsFunction<P0, P1, R>((T, P0, P1) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-9t87b",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>((T, P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-cq1r",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, R>(() -> (T) -> (P0, P1, P2, P3) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-ggpe",
-                    "title" : "func callAsFunction<P0, P1, P2, R>((T, P0, P1, P2) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-i34f",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>((T, P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-ic8n",
-                    "title" : "func callAsFunction<P0, P1, P2, R>((T, P0, P1, P2) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-oii4",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>((T, P0, P1, P2, P3, P4, P5) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func\/callasfunction(_:)-y2hy",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>((T, P0, P1, P2, P3, P4, P5, P6) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  }
-                ],
-                "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/func",
-                "title" : "JXBridgeBuilderFuncs.Func",
-                "type" : "struct"
-              },
-              {
-                "title" : "Subscripts",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs\/subscript(dynamicmember:)",
-                "title" : "subscript(dynamicMember _: String) -> JXBridgeBuilderFuncs<T>.Func<T>",
-                "type" : "subscript"
-              }
-            ],
-            "path" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs",
-            "title" : "JXBridgeBuilderFuncs",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Instance Properties",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/jxbridgebuildermutating\/func",
-                "title" : "let `func`: JXBridgeBuilderMutatingFuncs<T>",
-                "type" : "property"
-              }
-            ],
-            "path" : "\/documentation\/jxbridge\/jxbridgebuildermutating",
-            "title" : "JXBridgeBuilderMutating",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Structures",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuildermutatingfuncs\/func\/callasfunction(_:)-28qat",
-                    "title" : "func callAsFunction<P0, P1, R>((inout T, P0, P1) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuildermutatingfuncs\/func\/callasfunction(_:)-2se4k",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, R>((inout T, P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuildermutatingfuncs\/func\/callasfunction(_:)-2vj8w",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>((inout T, P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuildermutatingfuncs\/func\/callasfunction(_:)-3pim0",
-                    "title" : "func callAsFunction<R>((inout T) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuildermutatingfuncs\/func\/callasfunction(_:)-63gcp",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>((inout T, P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuildermutatingfuncs\/func\/callasfunction(_:)-68gxv",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>((inout T, P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuildermutatingfuncs\/func\/callasfunction(_:)-8z3rq",
-                    "title" : "func callAsFunction<P0, R>((inout T, P0) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuildermutatingfuncs\/func\/callasfunction(_:)-9zaas",
-                    "title" : "func callAsFunction<P0, P1, P2, R>((inout T, P0, P1, P2) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuildermutatingfuncs\/func\/callasfunction(_:)-bm3s",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>((inout T, P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  }
-                ],
-                "path" : "\/documentation\/jxbridge\/jxbridgebuildermutatingfuncs\/func",
-                "title" : "JXBridgeBuilderMutatingFuncs.Func",
-                "type" : "struct"
-              },
-              {
-                "title" : "Subscripts",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/jxbridgebuildermutatingfuncs\/subscript(dynamicmember:)",
-                "title" : "subscript(dynamicMember _: String) -> JXBridgeBuilderMutatingFuncs<T>.Func<T>",
-                "type" : "subscript"
-              }
-            ],
-            "path" : "\/documentation\/jxbridge\/jxbridgebuildermutatingfuncs",
-            "title" : "JXBridgeBuilderMutatingFuncs",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Structures",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-12gei",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(() -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-15p2u",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>((P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-19gl",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>(() -> (P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-1m46y",
-                    "title" : "func callAsFunction<R>(() -> () async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-2fpyw",
-                    "title" : "func callAsFunction<P0, R>((P0) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-2po18",
-                    "title" : "func callAsFunction<P0, P1, P2, R>((P0, P1, P2) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-302qy",
-                    "title" : "func callAsFunction<P0, P1, P2, R>(() -> (P0, P1, P2) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-3amkm",
-                    "title" : "func callAsFunction<P0, P1, P2, R>(() -> (P0, P1, P2) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-3dk78",
-                    "title" : "func callAsFunction<R>(() async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-3fo19",
-                    "title" : "func callAsFunction<P0, P1, R>((P0, P1) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-4b1fm",
-                    "title" : "func callAsFunction<P0, P1, R>(() -> (P0, P1) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-4f6we",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>(() -> (P0, P1, P2, P3, P4, P5) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-4ix6r",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, R>(() -> (P0, P1, P2, P3) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-4nd1v",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, R>((P0, P1, P2, P3) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-4txqt",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, R>((P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-50b47",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, R>((P0, P1, P2, P3, P4, P5) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-63def",
-                    "title" : "func callAsFunction<P0, R>((P0) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-65fva",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(() -> (P0, P1, P2, P3, P4, P5, P6) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-6cbek",
-                    "title" : "func callAsFunction<R>(() throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-6vci3",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>((P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-75krg",
-                    "title" : "func callAsFunction<P0, R>(() -> (P0) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-7epi4",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>((P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-7ic94",
-                    "title" : "func callAsFunction<P0, P1, R>(() -> (P0, P1) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-80ic3",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(() -> (P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-89zy4",
-                    "title" : "func callAsFunction<P0, P1, R>((P0, P1) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-8f4kc",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, R>(() -> (P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-8hu73",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>((P0, P1, P2, P3, P4, P5, P6) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-8jkqt",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(() -> (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-8l3j3",
-                    "title" : "func callAsFunction<P0, P1, P2, R>((P0, P1, P2) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-94gjq",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>(() -> (P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-988jr",
-                    "title" : "func callAsFunction<P0, R>(() -> (P0) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-9fd4g",
-                    "title" : "func callAsFunction<R>(() -> () throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-9fvqf",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>((P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-9ge4o",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>((P0, P1, P2, P3, P4) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-9txr1",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>((P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func\/callasfunction(_:)-eqbh",
-                    "title" : "func callAsFunction<P0, P1, P2, P3, P4, R>(() -> (P0, P1, P2, P3, P4) async throws -> R) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  }
-                ],
-                "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/func",
-                "title" : "JXBridgeBuilderStaticFuncs.Func",
-                "type" : "struct"
-              },
-              {
-                "title" : "Subscripts",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs\/subscript(dynamicmember:)",
-                "title" : "subscript(dynamicMember _: String) -> JXBridgeBuilderStaticFuncs<T>.Func",
-                "type" : "subscript"
-              }
-            ],
-            "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticfuncs",
-            "title" : "JXBridgeBuilderStaticFuncs",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Structures",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticvars\/var\/callasfunction(_:)-50ii1",
-                    "title" : "func callAsFunction<V>(() async throws -> V) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticvars\/var\/callasfunction(_:)-5jwdp",
-                    "title" : "func callAsFunction<V>(() throws -> V) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticvars\/var\/callasfunction(get:)",
-                    "title" : "func callAsFunction<V>(get: () async throws -> V) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticvars\/var\/callasfunction(get:set:)",
-                    "title" : "func callAsFunction<V>(get: () throws -> V, set: ((V) -> Void)?) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  }
-                ],
-                "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticvars\/var",
-                "title" : "JXBridgeBuilderStaticVars.Var",
-                "type" : "struct"
-              },
-              {
-                "title" : "Subscripts",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticvars\/subscript(dynamicmember:)",
-                "title" : "subscript(dynamicMember _: String) -> JXBridgeBuilderStaticVars<T>.Var<T>",
-                "type" : "subscript"
-              }
-            ],
-            "path" : "\/documentation\/jxbridge\/jxbridgebuilderstaticvars",
-            "title" : "JXBridgeBuilderStaticVars",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Instance Properties",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/jxbridgebuilderstatics\/func",
-                "title" : "let `func`: JXBridgeBuilderStaticFuncs<T>",
-                "type" : "property"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/jxbridgebuilderstatics\/var",
-                "title" : "let `var`: JXBridgeBuilderStaticVars<T>",
-                "type" : "property"
-              }
-            ],
-            "path" : "\/documentation\/jxbridge\/jxbridgebuilderstatics",
-            "title" : "JXBridgeBuilderStatics",
-            "type" : "struct"
-          },
-          {
-            "children" : [
-              {
-                "title" : "Structures",
-                "type" : "groupMarker"
-              },
-              {
-                "children" : [
-                  {
-                    "title" : "Instance Methods",
-                    "type" : "groupMarker"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuildervars\/var\/callasfunction(_:)-5gxtl",
-                    "title" : "func callAsFunction<V>((T) throws -> V) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuildervars\/var\/callasfunction(_:)-79mm9",
-                    "title" : "func callAsFunction<V>(() -> KeyPath<T, V>) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuildervars\/var\/callasfunction(_:)-90j6q",
-                    "title" : "func callAsFunction<V>((T) async throws -> V) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuildervars\/var\/callasfunction(get:set:)-2ly3t",
-                    "title" : "func callAsFunction<V>(get: (T) throws -> V, set: (T, V) -> T) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  },
-                  {
-                    "path" : "\/documentation\/jxbridge\/jxbridgebuildervars\/var\/callasfunction(get:set:)-77g8i",
-                    "title" : "func callAsFunction<V>(get: (T) throws -> V, set: ((T, V) -> Void)?) -> JXBridgeBuilder<T>",
-                    "type" : "method"
-                  }
-                ],
-                "path" : "\/documentation\/jxbridge\/jxbridgebuildervars\/var",
-                "title" : "JXBridgeBuilderVars.Var",
-                "type" : "struct"
-              },
-              {
-                "title" : "Subscripts",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/jxbridgebuildervars\/subscript(dynamicmember:)",
-                "title" : "subscript(dynamicMember _: String) -> JXBridgeBuilderVars<T>.Var<T>",
-                "type" : "subscript"
-              }
-            ],
-            "path" : "\/documentation\/jxbridge\/jxbridgebuildervars",
-            "title" : "JXBridgeBuilderVars",
             "type" : "struct"
           },
           {
@@ -2115,8 +2119,8 @@
             "type" : "groupMarker"
           },
           {
-            "path" : "\/documentation\/jxbridge\/typename(for:)",
-            "title" : "func TypeName(for: Any.Type) -> String",
+            "path" : "\/documentation\/jxbridge\/jxtypename(for:)",
+            "title" : "func JXTypeName(for: Any.Type) -> String",
             "type" : "func"
           },
           {

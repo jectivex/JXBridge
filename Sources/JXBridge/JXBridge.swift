@@ -8,7 +8,7 @@ public struct JXBridge {
     /// Supply the native type being bridged.
     init(type: Any.Type, as typeName: String? = nil, namespace: JXNamespace = .default) {
         self.type = type
-        self.typeName = typeName ?? TypeName(for: type)
+        self.typeName = typeName ?? JXTypeName(for: type)
         self.namespace = namespace
         updateQualifiedTypeName()
         

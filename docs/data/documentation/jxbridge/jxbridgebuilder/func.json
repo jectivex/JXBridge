@@ -19,7 +19,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:8JXBridge0A7BuilderC4funcAA0aB5FuncsVyxGvp",
+    "externalID" : "s:8JXBridge0A7BuilderC4funcAC5FuncsVyx_xGvp",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -39,8 +39,25 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:8JXBridge0A12BuilderFuncsV",
-        "text" : "JXBridgeBuilderFuncs"
+        "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+        "text" : "JXBridgeBuilder"
+      },
+      {
+        "kind" : "text",
+        "text" : "<"
+      },
+      {
+        "kind" : "typeIdentifier",
+        "text" : "T"
+      },
+      {
+        "kind" : "text",
+        "text" : ">."
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:8JXBridge0A7BuilderC5FuncsV",
+        "text" : "Funcs"
       },
       {
         "kind" : "text",
@@ -93,10 +110,28 @@
               "text" : ": "
             },
             {
-              "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilderFuncs",
+              "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:8JXBridge0A12BuilderFuncsV",
-              "text" : "JXBridgeBuilderFuncs"
+              "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+              "text" : "JXBridgeBuilder"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "T"
+            },
+            {
+              "kind" : "text",
+              "text" : ">."
+            },
+            {
+              "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Funcs",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:8JXBridge0A7BuilderC5FuncsV",
+              "text" : "Funcs"
             },
             {
               "kind" : "text",
@@ -191,6 +226,37 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridgebuilder"
 },
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/Funcs": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Funcs"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Funcs",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Funcs"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.Funcs",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs"
+},
 "doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/func": {
   "abstract" : [
     {
@@ -217,8 +283,25 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge0A12BuilderFuncsV",
-      "text" : "JXBridgeBuilderFuncs"
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+      "text" : "JXBridgeBuilder"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC5FuncsV",
+      "text" : "Funcs"
     },
     {
       "kind" : "text",
@@ -239,37 +322,6 @@
   "title" : "func",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/func"
-},
-"doc://JXBridge/documentation/JXBridge/JXBridgeBuilderFuncs": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "struct"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "JXBridgeBuilderFuncs"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilderFuncs",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "JXBridgeBuilderFuncs"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "JXBridgeBuilderFuncs",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxbridgebuilderfuncs"
 }
 }
 }

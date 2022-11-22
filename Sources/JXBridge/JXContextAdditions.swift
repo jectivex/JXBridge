@@ -3,8 +3,6 @@ import Foundation
 #endif
 import JXKit
 
-// TODO: What is the supported threading model? Currently we're assuming a given context is only used for a single thread or otherwise synchronized
-
 extension JXContext {
     /// Register types bridged to JavaScript for use in this context.
     public var registry: JXRegistry {

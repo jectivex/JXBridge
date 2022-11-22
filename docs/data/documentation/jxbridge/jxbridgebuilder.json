@@ -109,6 +109,21 @@
   "topicSections" : [
     {
       "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/ClassFuncs",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/ClassMembers",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/ClassVars",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Funcs",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/JXBridgeBuilderMutating",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/MutatingFuncs",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/StaticFuncs",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/StaticVars",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Statics",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Vars"
+      ],
+      "title" : "Structures"
+    },
+    {
+      "identifiers" : [
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/init(bridge:)",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/init(type:as:namespace:)"
       ],
@@ -213,6 +228,316 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridgebuilder"
 },
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/ClassFuncs": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ClassFuncs"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/ClassFuncs",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ClassFuncs"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.ClassFuncs",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/classfuncs"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/ClassMembers": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ClassMembers"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/ClassMembers",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ClassMembers"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.ClassMembers",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/classmembers"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/ClassVars": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ClassVars"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/ClassVars",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ClassVars"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.ClassVars",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/classvars"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/Funcs": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Funcs"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Funcs",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Funcs"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.Funcs",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/funcs"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/JXBridgeBuilderMutating": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "JXBridgeBuilderMutating"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/JXBridgeBuilderMutating",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "JXBridgeBuilderMutating"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.JXBridgeBuilderMutating",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/jxbridgebuildermutating"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/MutatingFuncs": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "MutatingFuncs"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/MutatingFuncs",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "MutatingFuncs"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.MutatingFuncs",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/mutatingfuncs"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/StaticFuncs": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "StaticFuncs"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/StaticFuncs",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "StaticFuncs"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.StaticFuncs",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticfuncs"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/StaticVars": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "StaticVars"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/StaticVars",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "StaticVars"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.StaticVars",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/staticvars"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/Statics": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Statics"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Statics",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Statics"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.Statics",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/statics"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/Vars": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Vars"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Vars",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Vars"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridgeBuilder.Vars",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/vars"
+},
 "doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/bridge": {
   "abstract" : [
     {
@@ -276,8 +601,25 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge0A19BuilderClassMembersV",
-      "text" : "JXBridgeBuilderClassMembers"
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+      "text" : "JXBridgeBuilder"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC12ClassMembersV",
+      "text" : "ClassMembers"
     },
     {
       "kind" : "text",
@@ -2593,8 +2935,25 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge0A12BuilderFuncsV",
-      "text" : "JXBridgeBuilderFuncs"
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+      "text" : "JXBridgeBuilder"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC5FuncsV",
+      "text" : "Funcs"
     },
     {
       "kind" : "text",
@@ -2765,7 +3124,24 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge0A15BuilderMutatingV",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+      "text" : "JXBridgeBuilder"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC0aB8MutatingV",
       "text" : "JXBridgeBuilderMutating"
     },
     {
@@ -3036,8 +3412,25 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge0A14BuilderStaticsV",
-      "text" : "JXBridgeBuilderStatics"
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+      "text" : "JXBridgeBuilder"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC7StaticsV",
+      "text" : "Statics"
     },
     {
       "kind" : "text",
@@ -3200,8 +3593,25 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge0A11BuilderVarsV",
-      "text" : "JXBridgeBuilderVars"
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+      "text" : "JXBridgeBuilder"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC4VarsV",
+      "text" : "Vars"
     },
     {
       "kind" : "text",
