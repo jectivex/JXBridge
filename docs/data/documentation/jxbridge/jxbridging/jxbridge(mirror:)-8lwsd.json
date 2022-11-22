@@ -178,8 +178,9 @@
                   "type" : "text"
                 },
                 {
-                  "code" : "JXBridgeBuilder.reflect(mirror:)",
-                  "type" : "codeVoice"
+                  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/reflect(_:)",
+                  "isActive" : true,
+                  "type" : "reference"
                 },
                 {
                   "text" : " with the given mirror to include reflected JX property wrappers.",
@@ -260,6 +261,72 @@
   "title" : "JXBridge",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridge"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/reflect(_:)": {
+  "abstract" : [
+    {
+      "text" : "Add properties and methods discovered via ",
+      "type" : "text"
+    },
+    {
+      "code" : "JX*",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " property wrappers.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "reflect"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:s6MirrorV",
+      "text" : "Mirror"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+      "text" : "JXBridgeBuilder"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/reflect(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "reflect(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/reflect(_:)"
 },
 "doc://JXBridge/documentation/JXBridge/JXBridging": {
   "abstract" : [

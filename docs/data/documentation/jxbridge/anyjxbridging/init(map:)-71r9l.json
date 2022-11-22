@@ -13,16 +13,18 @@
       "type" : "text"
     },
     {
-      "code" : "JXBridging",
-      "type" : "codeVoice"
+      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridging",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
       "text" : " instances or ",
       "type" : "text"
     },
     {
-      "code" : "JXStaticBridging",
-      "type" : "codeVoice"
+      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXStaticBridging",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
       "text" : " types.",
@@ -206,16 +208,18 @@
       "type" : "text"
     },
     {
-      "code" : "JXBridging",
-      "type" : "codeVoice"
+      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridging",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
       "text" : " and ",
       "type" : "text"
     },
     {
-      "code" : "JXStaticBridging",
-      "type" : "codeVoice"
+      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXStaticBridging",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
       "text" : " types:",
@@ -264,16 +268,18 @@
       "type" : "text"
     },
     {
-      "code" : "JXBridging",
-      "type" : "codeVoice"
+      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridging",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
       "text" : " instances or ",
       "type" : "text"
     },
     {
-      "code" : "JXStaticBridging",
-      "type" : "codeVoice"
+      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXStaticBridging",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
       "text" : " types.",
@@ -331,6 +337,40 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/anyjxbridging\/init(map:)-71r9l"
 },
+"doc://JXBridge/documentation/JXBridge/JXBridging": {
+  "abstract" : [
+    {
+      "text" : "A class that defines its own JavaScript bridging, typically using property wrappers.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "JXBridging"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridging",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "JXBridging"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridging",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridging"
+},
 "doc://JXBridge/documentation/JXBridge/JXNamespace": {
   "abstract" : [
     {
@@ -364,6 +404,40 @@
   "title" : "JXNamespace",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxnamespace"
+},
+"doc://JXBridge/documentation/JXBridge/JXStaticBridging": {
+  "abstract" : [
+    {
+      "text" : "A type that defines its own JavaScript bridging.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "JXStaticBridging"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXStaticBridging",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "JXStaticBridging"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXStaticBridging",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxstaticbridging"
 }
 }
 }

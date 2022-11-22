@@ -5,8 +5,9 @@
       "type" : "text"
     },
     {
-      "code" : "none",
-      "type" : "codeVoice"
+      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/none",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
       "text" : " for modules that auto-register types in any namespace.",
@@ -187,8 +188,9 @@
       "type" : "text"
     },
     {
-      "code" : "none",
-      "type" : "codeVoice"
+      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/none",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
       "text" : " for modules that auto-register types in any namespace.",
@@ -259,6 +261,51 @@
   "title" : "JXNamespace",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxnamespace"
+},
+"doc://JXBridge/documentation/JXBridge/JXNamespace/none": {
+  "abstract" : [
+    {
+      "text" : "Special value used to represent the absence of a namespace.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "none"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
+      "text" : "JXNamespace"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/none",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "none",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxnamespace\/none"
 }
 }
 }

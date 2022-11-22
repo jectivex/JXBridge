@@ -75,7 +75,7 @@ public final class JXPublished<T> {
 ///     var count = 1
 ///
 /// - Note: Any `jx` prefix will be stripped in the bridged JavaScript property name.
-/// - Seealso: `JXKeyPath`
+/// - Seealso: ``JXKeyPath``
 @propertyWrapper
 public struct JXVar<T, V> {
     private let propertyBridge: (String) -> PropertyBridge

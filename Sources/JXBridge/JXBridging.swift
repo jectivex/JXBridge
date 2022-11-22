@@ -55,10 +55,10 @@ public protocol JXBridging: AnyObject {
     /// Create the JavaScript bridge for this type. If not implemented, returns a bridge using the JX property wrappers reflected in the given mirror.
     ///
     /// - Parameters:
-    ///   - mirror: Use `JXBridgeBuilder.reflect(mirror:)` with the given mirror to include reflected JX property wrappers.
+    ///   - mirror: Use ``JXBridgeBuilder/reflect(_:)`` with the given mirror to include reflected JX property wrappers.
     static func jxBridge(mirror: Mirror) throws -> JXBridge
     
-    /// If you do not implement `jxBridge`, implement this property to specify a custom namespace for the default generated bridge.
+    /// If you do not implement ``JXBridging/jxBridge(mirror:)``, implement this property to specify a custom namespace for the default generated bridge.
     static var jxNamespace: JXNamespace { get }
     
     /// Bridging state managed by the JX runtime.

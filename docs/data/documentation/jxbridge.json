@@ -112,16 +112,18 @@
       "type" : "text"
     },
     {
-      "code" : "JXBridging",
-      "type" : "codeVoice"
+      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridging",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
       "text" : " and ",
       "type" : "text"
     },
     {
-      "code" : "JXStaticBridging",
-      "type" : "codeVoice"
+      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXStaticBridging",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
       "text" : " types:",

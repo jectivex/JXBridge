@@ -5,8 +5,9 @@
       "type" : "text"
     },
     {
-      "code" : "JXBridging",
-      "type" : "codeVoice"
+      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridging",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
       "text" : " instance for use in JavaScript.",
@@ -278,8 +279,9 @@
                       "type" : "text"
                     },
                     {
-                      "code" : "JXBrigeErrors.namespaceViolation",
-                      "type" : "codeVoice"
+                      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/namespaceViolation(_:_:)",
+                      "isActive" : true,
+                      "type" : "reference"
                     },
                     {
                       "text" : " if you attempt to use an invalid namespace or register the same type under multiple namespaces.",
@@ -302,16 +304,18 @@
                   "type" : "text"
                 },
                 {
-                  "code" : "JXStaticBridging",
-                  "type" : "codeVoice"
+                  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXStaticBridging",
+                  "isActive" : true,
+                  "type" : "reference"
                 },
                 {
                   "text" : " or ",
                   "type" : "text"
                 },
                 {
-                  "code" : "JXBridging",
-                  "type" : "codeVoice"
+                  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridging",
+                  "isActive" : true,
+                  "type" : "reference"
                 },
                 {
                   "text" : ".",
@@ -395,6 +399,64 @@
   "title" : "JXBridge",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridge"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/namespaceViolation(_:_:)": {
+  "abstract" : [
+    {
+      "text" : "Detected attempt to register the same type under multiple namespaces.",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "(Type name, namespace)",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "case"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "namespaceViolation"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/namespaceViolation(_:_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "JXBridgeErrors.namespaceViolation(_:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/namespaceviolation(_:_:)"
 },
 "doc://JXBridge/documentation/JXBridge/JXBridging": {
   "abstract" : [
@@ -505,8 +567,9 @@
       "type" : "text"
     },
     {
-      "code" : "JXBridging",
-      "type" : "codeVoice"
+      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridging",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
       "text" : " instance for use in JavaScript.",
@@ -591,6 +654,40 @@
   "title" : "registerBridge(for:namespace:)",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxregistry\/registerbridge(for:namespace:)-6id25"
+},
+"doc://JXBridge/documentation/JXBridge/JXStaticBridging": {
+  "abstract" : [
+    {
+      "text" : "A type that defines its own JavaScript bridging.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "JXStaticBridging"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXStaticBridging",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "JXStaticBridging"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXStaticBridging",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxstaticbridging"
 }
 }
 }
