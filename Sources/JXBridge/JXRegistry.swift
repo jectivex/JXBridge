@@ -11,14 +11,14 @@ public final class JXRegistry {
     
     // Allow any context using this registry to listen for additions that require JS generation
     let listeners = RegistryListeners()
-    var namespaces: any Sequence<JXNamespace> {
-        return modulesByNamespace.keys
+    var namespaces: AnyCollection<JXNamespace> {
+        return AnyCollection(modulesByNamespace.keys)
     }
-    var modules: any Sequence<JXModule> {
-        return modulesByNamespace.values.flatMap({ $0 }) + unnamespacedModules
+    var modules: AnyCollection<JXModule> {
+        return AnyCollection(modulesByNamespace.values.flatMap({ $0 }) + unnamespacedModules)
     }
-    var unnamespacedBridges: any Sequence<JXBridge> {
-        return bridgesByActualTypeName.values.filter { $0.namespace == .none }
+    var unnamespacedBridges: AnyCollection<JXBridge> {
+        return AnyCollection(bridgesByActualTypeName.values.filter { $0.namespace == .none })
     }
 
     public init() {
