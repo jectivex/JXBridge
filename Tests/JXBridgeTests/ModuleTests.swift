@@ -79,6 +79,7 @@ private class TestStaticBridgingSubclass: TestStaticBridgingBaseClass {
     
     override class func jxBridge() throws -> JXBridge {
         return JXBridgeBuilder(type: TestStaticBridgingSubclass.self)
+            .superclass(TestStaticBridgingBaseClass.self)
             .constructor { TestStaticBridgingSubclass.init }
             .var.stringVar { \.stringVar }
             .bridge
@@ -105,6 +106,7 @@ private class TestBridgingSubclass: TestBridgingBaseClass {
     
     override class func jxBridge(mirror: Mirror) throws -> JXBridge {
         return JXBridgeBuilder(type: TestBridgingSubclass.self)
+            .superclass(TestBridgingBaseClass.self)
             .constructor { TestBridgingSubclass.init }
             .var.stringVar { \.stringVar }
             .bridge
