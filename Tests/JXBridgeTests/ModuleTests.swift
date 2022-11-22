@@ -1,6 +1,8 @@
-@testable import JXBridge
 import JXKit
 import XCTest
+
+#if DEBUG
+@testable import JXBridge
 
 final class ModuleTests: XCTestCase {
     func testLazyModule() throws {
@@ -161,3 +163,5 @@ private struct EagerModule: JXModule {
         }
     }
 }
+#endif // DEBUG
+

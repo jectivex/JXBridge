@@ -1,4 +1,4 @@
-@testable import JXBridge
+import JXBridge
 import JXKit
 import XCTest
 

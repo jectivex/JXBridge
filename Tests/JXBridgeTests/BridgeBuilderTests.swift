@@ -1,4 +1,4 @@
-@testable import JXBridge
+import JXBridge
 import XCTest
 
 final class BridgeBuilderTests: XCTestCase {

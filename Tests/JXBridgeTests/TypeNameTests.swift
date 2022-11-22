@@ -1,5 +1,7 @@
-@testable import JXBridge
 import XCTest
+
+#if DEBUG
+@testable import JXBridge
 
 class TypeNameTests: XCTestCase {
     func testTypeNames() {
@@ -10,3 +12,4 @@ class TypeNameTests: XCTestCase {
         XCTAssertEqual(TypeName(for: Array<Dictionary<Array<Int>, Array<String>>>.self), "ArrayOfDictionaryOfArrayOfIntAndArrayOfString")
     }
 }
+#endif
