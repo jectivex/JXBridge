@@ -1,3 +1,5 @@
+#if canImport(ObjectiveC)
+
 @testable import JXBridge
 import JXKit
 import XCTest
@@ -16,3 +18,5 @@ files.length;
         XCTAssertTrue(try result.int > 0)
     }
 }
+
+#endif
