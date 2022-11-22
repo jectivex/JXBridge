@@ -612,6 +612,8 @@ extension JX: BridgingPropertyWrapper {
     }
 }
 
+#if canImport(Combine)
+
 extension JXPublished: BridgingPropertyWrapper {
     func addMembers(for label: String, to bridge: inout JXBridge) {
         let typeName = bridge.typeName
@@ -636,6 +638,8 @@ extension JXPublished: BridgingPropertyWrapper {
         bridge.properties.append(PropertyBridge(name: memberName(for: label), getter: getter, setter: setter))
     }
 }
+
+#endif
 
 extension JXVar: BridgingPropertyWrapper {
     func addMembers(for label: String, to bridge: inout JXBridge) {
