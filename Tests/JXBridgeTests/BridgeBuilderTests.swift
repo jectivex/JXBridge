@@ -73,16 +73,6 @@ final class BridgeBuilderTests: XCTestCase {
         let _ = JXBridgeBuilder(type: TestClass.self)
             .class.func.classFunc { $0.classFunc() }
     }
-
-#if canImport(ObjectiveC)
-
-    func testObjC() {
-        let builder = JXBridgeBuilder(type: TestObjCClass.self)
-        builder.reflectObjectiveCMembers()
-        // TODO
-    }
-
-#endif
 }
 
 private struct TestStruct {

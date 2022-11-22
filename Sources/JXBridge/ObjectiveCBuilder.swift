@@ -3,12 +3,6 @@
 import JXBridgeObjC
 import JXKit
 
-// TODO: Solutions for:
-// - NSError ** should convert to throws. We may be able to use heuristics to detect this (error: name with ^@ encoding).
-// - Be able to create any delegate using an NSProxy that invokes the corresponding method on the JS object. We also need to figure out our Swift delegate story.
-// - Supporting block callbacks is difficult, because reflection doesn't give you any information on the expected block parameters. We also need to figure out our Swift callback story.
-// - Also consider creating a proxy insetad of writing out the complete JS class. ObjectiveC API tends to be large. But statics are an issue when using a proxy.
-
 final class ObjectiveCBuilder {
     init(bridge: JXBridge) {
         self.bridge = bridge
@@ -38,7 +32,6 @@ final class ObjectiveCBuilder {
                 convertedArgs.append(convertedArg)
             }
             let obj = cls.alloc()
-            // TODO: Handle optional constructors in ObjC and Swift
             return method.invoke(onTarget: obj, arguments: convertedArgs) ?? obj
         }
         bridge.constructors.append(constructorBridge)
