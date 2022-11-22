@@ -128,6 +128,7 @@ caughtErr;
             .class.func.classFunc { $0.classFunc() }
             .static.var.staticString { TestBaseClass.staticString }
         let subclassBuilder = JXBridgeBuilder(type: TestSubClass.self)
+            .superclass(TestBaseClass.self)
             .constructor { TestSubClass.init }
             .var.readWriteInt { \.readWriteInt }
             .class.var.subClassString { $0.subClassString }
