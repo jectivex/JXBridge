@@ -22,6 +22,19 @@ extension Selector: JXConvertible {
 
 #if canImport(Foundation)
 
+extension URL: JXConvertible {
+    public static func fromJX(_ value: JXValue) throws -> Self {
+        guard let url = try URL(string: value.string) else {
+            throw JXErrors.cannotConvey(URL.self)
+        }
+        return url
+    }
+
+    public func toJX(in context: JXContext) throws -> JXValue {
+        return context.string(absoluteString)
+    }
+}
+
 extension NSRange: JXConvertible {
     public static func fromJX(_ value: JXValue) throws -> Self {
         return try NSMakeRange(value["location"].int, value["length"].int)
