@@ -1,8 +1,10 @@
 #if canImport(ObjectiveC)
 
-@testable import JXBridge
 import JXKit
 import XCTest
+
+#if DEBUG
+@testable import JXBridge
 
 final class ObjectiveCTests: XCTestCase {
     // TODO: Flesh out tests
@@ -19,4 +21,5 @@ files.length;
     }
 }
 
+#endif
 #endif
