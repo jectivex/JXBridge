@@ -8,7 +8,7 @@ let products: [Product] = [
     .library(name: "JXBridge", targets: ["JXBridge"]),
     .library(name: "JXBridgeObjC", targets: ["JXBridgeObjC"]),
 ]
-let targets: [Target] = [
+var targets: [Target] = [
     .target(name: "JXBridge", dependencies: ["JXKit", "JXBridgeObjC"]),
     .testTarget(name: "JXBridgeTests", dependencies: ["JXBridge"]),
     .target(name: "JXBridgeObjC", dependencies: []),
@@ -18,18 +18,25 @@ let targets: [Target] = [
 let products: [Product] = [
     .library(name: "JXBridge", targets: ["JXBridge"])
 ]
-let targets: [Target] = [
+var targets: [Target] = [
     .target(name: "JXBridge", dependencies: ["JXKit"]),
     .testTarget(name: "JXBridgeTests", dependencies: ["JXBridge"]),
 ]
+#endif
+
+var dependencies: [Package.Dependency] = [
+    .package(url: "https://github.com/jectivex/JXKit.git", from: "3.2.0"),
+]
+
+#if !canImport(Combine)
+dependencies += [.package(url: "https://github.com/OpenCombine/OpenCombine.git", from: "0.13.0")]
+targets[0].dependencies += [.product(name: "OpenCombineShim", package: "OpenCombine")]
 #endif
 
 let package = Package(
     name: "JXBridge",
     platforms: [ .macOS(.v12), .iOS(.v15), .tvOS(.v15) ],
     products: products,
-    dependencies: [
-        .package(url: "https://github.com/jectivex/JXKit.git", from: "3.2.0"),
-    ],
+    dependencies: dependencies,
     targets: targets
 )

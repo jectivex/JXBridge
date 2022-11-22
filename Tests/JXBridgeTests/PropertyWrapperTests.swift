@@ -1,6 +1,11 @@
 import JXBridge
 import JXKit
 import XCTest
+#if canImport(Combine)
+import Combine
+#else
+import OpenCombine
+#endif
 
 final class PropertyWrapperTests: XCTestCase {
     func testJX() throws {
@@ -100,7 +105,6 @@ final class PropertyWrapperTests: XCTestCase {
         XCTAssertEqual(try result.int, 2)
     }
     
-#if canImport(Combine)
     func testJXPublished() throws {
         let context = JXContext()
         try context.registry.registerBridge(for: TestObservable(intVar: 0))
@@ -162,8 +166,7 @@ final class PropertyWrapperTests: XCTestCase {
             publishedWillChangeToken = nil
         }
     }
-#endif
-    
+
     func testAsync() async throws {
         let context = JXContext()
         try context.registry.registerBridge(for: TestAsync())
@@ -235,7 +238,6 @@ private class TestSubClass: TestClass {
     }
 }
 
-#if canImport(Combine)
 private class TestObservable: ObservableObject, JXBridging {
     init(intVar: Int) {
         self.intVar = intVar
@@ -248,7 +250,6 @@ private class TestObservable: ObservableObject, JXBridging {
     var jxState: JXState?
 #endif
 }
-#endif
 
 private class TestAsync: JXBridging {
     @JXInit var jxinit = { TestAsync() }
