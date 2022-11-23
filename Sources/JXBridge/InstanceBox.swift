@@ -6,7 +6,7 @@ final class InstanceBox: NativeBox {
         let typeNameString = try typeName.string
         let namespaceString = try namespace.string
         guard let bridge = registry.bridge(for: typeNameString, namespace: JXNamespace(namespaceString)) else {
-            throw JXBridgeErrors.unknownType(typeNameString)
+            throw JXBridgeErrors.unknownSymbol(namespaceString, typeNameString)
         }
         let argsArray = try args.array
         let constructor = try bridge.constructor(forParameterCount: argsArray.count, superclassRegistry: registry)

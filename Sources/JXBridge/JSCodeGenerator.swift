@@ -1,7 +1,8 @@
 /// Generates JavaScript code.
 struct JSCodeGenerator {
     static let typeNamePropertyName = "_jxTypeName"
-    static let defineClassFunctionName = "_jxDefineClass"
+    static let namespacePropertyName = "_jxNamespace"
+    static let defineFunctionName = "_jxDefine"
     static let createNativeFunctionName = "_jxCreateNative"
     static let createStaticNativeFunctionName = "_jxCreateStaticNative"
     static let nativePropertyName = "_jxNative"
@@ -17,10 +18,10 @@ struct JSCodeGenerator {
     /// Return a new namespace that performs a callback on any attempt to access its classes, giving us a chance to lazily define the requested class.
     static func newNamespaceJSProxy(_ namespace: JXNamespace) -> String {
         return """
-new Proxy({}, {
+new Proxy({ _jxNamespace: '\(namespace.value)' }, {
     get(target, property) {
         if (target[property] === undefined) {
-            _jxDefineClass(property, '\(namespace.value)');
+            _jxDefine(property, '\(namespace.value)');
         }
         return target[property];
     }

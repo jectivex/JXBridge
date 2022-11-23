@@ -34,7 +34,7 @@ final class JXBridgeContextSPI {
     init(context: JXContext) {
         self.context = context
         do {
-            try defineGlobalFunctions(in: context)
+            try defineGlobalFunctions()
         } catch {
             initializationError = error
         }
@@ -96,40 +96,53 @@ final class JXBridgeContextSPI {
         try module.initialize(in: context)
     }
     
-    private func defineGlobalFunctions(in context: JXContext) throws {
+    private func defineGlobalFunctions() throws {
+        guard let context else {
+            return
+        }
         try defineNamespace(.default)
         
-        // jx.import(type)
-        let importFunction = JXValue(newFunctionIn: context) { context, this, args in
-            guard args.count == 1 else {
-                throw JXBridgeErrors.invalidArgumentCount(JXNamespace.default.value, "import")
+        // jx.import(namespace.symbol) or jx.import(namespace)
+        let importFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
+            guard let self else {
+                throw JXBridgeErrors.invalidContext("Context has been deallocated")
             }
-            let typeName = try args[0][JSCodeGenerator.typeNamePropertyName].string
-            if !context.global.hasProperty(typeName) {
-                try context.global.setProperty(typeName, args[0])
+            for arg in args {
+                let typeName = try arg[JSCodeGenerator.typeNamePropertyName]
+                if typeName.isUndefined {
+                    let namespace = try arg[JSCodeGenerator.namespacePropertyName]
+                    guard !namespace.isUndefined else {
+                        throw JXBridgeErrors.unknownSymbol(try arg.string, "")
+                    }
+                    try self.importNamespace(JXNamespace(namespace.string), value: arg)
+                } else {
+                    if !(try context.global.hasProperty(typeName)) {
+                        try context.global.setProperty(typeName.string, arg)
+                    }
+                }
             }
             return context.undefined()
         }
         try context.global[JXNamespace.default.value].setProperty("import", importFunction)
         
-        // Define a type accessed through a namespace
-        let defineClassFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
+        // Define a symbol accessed through a namespace
+        let defineFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
                 throw JXBridgeErrors.invalidContext("Context has been deallocated")
             }
-            // Type name, namespace name
+            // Symbol name, namespace name
             guard args.count == 2 else {
-                throw JXBridgeErrors.internalError("defineClass")
+                throw JXBridgeErrors.internalError("define")
             }
-            let typeName = try args[0].string
+            let symbolName = try args[0].string
             let namespace = try args[1].string
-            guard let bridge = try self.registry.bridge(for: typeName, namespace: JXNamespace(namespace), autobridging: true) else {
-                throw JXBridgeErrors.unknownType(namespace + "." + typeName)
+            
+            if let bridge = try self.registry.bridge(for: symbolName, namespace: JXNamespace(namespace), definingIn: context) {
+                try self.defineClass(for: bridge, in: context)
             }
-            try self.defineClass(for: bridge, in: context)
             return context.undefined()
         }
-        try context.global.setProperty(JSCodeGenerator.defineClassFunctionName, defineClassFunction)
+        try context.global.setProperty(JSCodeGenerator.defineFunctionName, defineFunction)
         
         // Create a native instance box
         let createNativeFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
@@ -205,6 +218,35 @@ final class JXBridgeContextSPI {
         definedTypeNames.insert(bridge.qualifiedTypeName)
     }
     private var definedTypeNames: Set<String> = []
+    
+    private func importNamespace(_ namespace: JXNamespace, value: JXValue) throws {
+        guard let context else {
+            return
+        }
+        guard namespace != .none && namespace != .default else {
+            throw JXBridgeErrors.unsupported("\(namespace.value) does not support importing all symbols")
+        }
+        guard let module = context.registry.module(for: namespace) else {
+            throw JXBridgeErrors.internalError("Module not found in registry: \(namespace.value)")
+        }
+        guard try module.defineAll(namespace: namespace, in: context) else {
+            throw JXBridgeErrors.unsupported("\(namespace.value) does not support importing all symbols")
+        }
+
+        // Now that all namespace symbols are defined, move them into the global namespace.
+        // First define all registered types
+        for bridge in context.registry.bridges(in: namespace) {
+            if !value.hasProperty(bridge.typeName) {
+                try defineClass(for: bridge, in: context)
+            }
+        }
+        // Now move all namespace properties to global
+        for entry in try context.global[namespace].dictionary {
+            if !context.global.hasProperty(entry.key) {
+                try context.global.setProperty(entry.key, entry.value)
+            }
+        }
+    }
 }
 
 extension JXBridgeContextSPI: RegistryListener {
@@ -241,7 +283,7 @@ extension JXBridgeContextSPI: JXContextSPI {
         }
 #endif
         
-        guard let bridge = try registry.bridge(for: value, autobridging: true) else {
+        guard let bridge = try registry.bridge(for: value, definingIn: context) else {
             return nil
         }
 

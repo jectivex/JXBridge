@@ -129,11 +129,11 @@ private struct LazyModule: JXModule {
         }
     }
     
-    func registerBridge(for typeName: String, namespace: JXNamespace, in registry: JXRegistry) throws -> Bool {
-        guard typeName == "TestStruct" else {
+    func define(symbol: String, namespace: JXNamespace, in context: JXContext) throws -> Bool {
+        guard symbol == "TestStruct" else {
             return false
         }
-        try registry.register {
+        try context.registry.register {
             JXBridgeBuilder(type: TestStruct.self, namespace: namespace)
                 .constructor { TestStruct.init }
                 .var.intVar { \.intVar }
@@ -142,8 +142,8 @@ private struct LazyModule: JXModule {
         return true
     }
     
-    func registerBridge(for instance: Any, in registry: JXRegistry) throws -> Bool {
-        return try registerBridge(for: String(describing: type(of: instance)), namespace: namespace, in: registry)
+    func define(for instance: Any, in context: JXContext) throws -> Bool {
+        return try define(symbol: String(describing: type(of: instance)), namespace: namespace, in: context)
     }
 }
 

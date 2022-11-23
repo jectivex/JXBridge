@@ -7,8 +7,8 @@ extension JXValue {
     ///   - namespace: Override the type bridge's namespace.
     /// - Warning: The given object is not retained.
     public func integrate(_ instance: Any, namespace: JXNamespace? = nil) throws {
-        guard let bridge = try context.registry.bridge(for: instance, autobridging: true) else {
-            throw JXBridgeErrors.unknownType(String(describing: Swift.type(of: instance)))
+        guard let bridge = try context.registry.bridge(for: instance, definingIn: context) else {
+            throw JXBridgeErrors.unknownSymbol(String(describing: Swift.type(of: instance)), "")
         }
         let namespaceValue = try addNamespace(namespace ?? bridge.namespace)
         

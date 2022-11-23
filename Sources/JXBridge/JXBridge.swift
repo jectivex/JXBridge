@@ -103,7 +103,7 @@ public struct JXBridge {
         if let property = findProperty(for: name, superclassRegistry: superclassRegistry) {
             return property
         }
-        throw JXBridgeErrors.unknownPropertyName(String(describing: type), name)
+        throw JXBridgeErrors.unknownSymbol(String(describing: type), name)
     }
 
     private func findProperty(for name: String, superclassRegistry: JXRegistry?) -> PropertyBridge? {
@@ -135,7 +135,7 @@ public struct JXBridge {
         if let function = findFunction(for: name, superclassRegistry: superclassRegistry) {
             return function
         }
-        throw JXBridgeErrors.unknownFunctionName(String(describing: type), name)
+        throw JXBridgeErrors.unknownSymbol(String(describing: type), name)
     }
 
     private func findFunction(for name: String, superclassRegistry: JXRegistry? = nil) -> FunctionBridge? {
@@ -166,7 +166,7 @@ public struct JXBridge {
         if let property = findStaticProperty(for: name, superclassRegistry: superclassRegistry) {
             return property
         }
-        throw JXBridgeErrors.unknownPropertyName(String(describing: type), name)
+        throw JXBridgeErrors.unknownSymbol(String(describing: type), name)
     }
 
     private func findStaticProperty(for name: String, superclassRegistry: JXRegistry? = nil) -> StaticPropertyBridge? {
@@ -197,7 +197,7 @@ public struct JXBridge {
         if let function = findStaticFunction(for: name, superclassRegistry: superclassRegistry) {
             return function
         }
-        throw JXBridgeErrors.unknownFunctionName(String(describing: type), name)
+        throw JXBridgeErrors.unknownSymbol(String(describing: type), name)
     }
 
     private func findStaticFunction(for name: String, superclassRegistry: JXRegistry?) -> StaticFunctionBridge? {
@@ -228,7 +228,7 @@ public struct JXBridge {
         if let property = findClassProperty(for: name, superclassRegistry: superclassRegistry) {
             return property
         }
-        throw JXBridgeErrors.unknownPropertyName(String(describing: type), name)
+        throw JXBridgeErrors.unknownSymbol(String(describing: type), name)
     }
 
     private func findClassProperty(for name: String, superclassRegistry: JXRegistry?) -> PropertyBridge? {
@@ -260,7 +260,7 @@ public struct JXBridge {
         if let function = findClassFunction(for: name, superclassRegistry: superclassRegistry) {
             return function
         }
-        throw JXBridgeErrors.unknownFunctionName(String(describing: type), name)
+        throw JXBridgeErrors.unknownSymbol(String(describing: type), name)
     }
 
     private func findClassFunction(for name: String, superclassRegistry: JXRegistry? = nil) -> FunctionBridge? {

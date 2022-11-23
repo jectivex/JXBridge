@@ -16,7 +16,7 @@ public enum JXBridgeErrors: Error {
     case internalError(String)
 
      /// Script supplied incorrect number of arguments to a function.
-     /// (Type name, function name.)
+     /// (Type name, function name)
     case invalidArgumentCount(String, String)
 
     /// Expected a context but got an invalid value.
@@ -28,26 +28,21 @@ public enum JXBridgeErrors: Error {
     case invalidInstance(String)
 
     /// Script attempted to create an instance of a type without any bridged constructors.
-    /// (Type name.)
+    /// (Type name)
     case noConstructors(String)
 
     /// Script attempted to set a read-only property.
-    /// (Type name, property name.)
+    /// (Type name, property name)
     case readOnlyProperty(String, String)
     
     /// Detected attempt to register the same type under multiple namespaces.
     /// (Type name, namespace)
     case namespaceViolation(String, String)
 
-    /// Script attempted to invoke an unknown function name.
-    /// (Type name, function name.)
-    case unknownFunctionName(String, String)
-
-    /// Script attempted to access an unknown property name.
-    /// (Type name, property name.)
-    case unknownPropertyName(String, String)
-
-    /// Script attempted to access an unknown type.
-    /// (Type name.)
-    case unknownType(String)
+    /// Script attempted to access an unknown symbol.
+    /// (Type/namespace name, symbol name)
+    case unknownSymbol(String, String)
+    
+    /// Attempt to perform an unsupported operation.
+    case unsupported(String)
 }

@@ -1,6 +1,7 @@
 #if canImport(ObjectiveC)
 import Foundation
 #endif
+import JXKit
 
 /// Registry of bridged types.
 public final class JXRegistry {
@@ -16,6 +17,9 @@ public final class JXRegistry {
     }
     var modules: AnyCollection<JXModule> {
         return AnyCollection(modulesByNamespace.values.flatMap({ $0 }) + unnamespacedModules)
+    }
+    func bridges(in namespace: JXNamespace) -> AnyCollection<JXBridge> {
+        return AnyCollection(bridgesByGivenTypeName.compactMap { $0.key.namespace == namespace ? $0.value : nil })
     }
     var unnamespacedBridges: AnyCollection<JXBridge> {
         return AnyCollection(bridgesByActualTypeName.values.filter { $0.namespace == .none })
@@ -51,6 +55,11 @@ public final class JXRegistry {
         }
         try listeners.didRegisterModule(module)
         return true
+    }
+    
+    /// Return the module registered under the given namespace, or nil if none has been registered. Modules registered under ``JXNamespace/none`` are not returned.
+    public func module(for namespace: JXNamespace) -> JXModule? {
+        return modulesByNamespace[namespace]?.first
     }
 
     /// Register a bridge for use in JavaScript.
@@ -180,19 +189,19 @@ public final class JXRegistry {
     ///   - namespace: The type's namespace.
     public func bridge(for typeName: String, namespace: JXNamespace = .default) -> JXBridge? {
         do {
-            return try bridge(for: typeName, namespace: namespace, autobridging: false)
+            return try bridge(for: typeName, namespace: namespace, definingIn: nil)
         } catch {
             // Call should not have been to throw when autobridging is false
             return nil
         }
     }
 
-    func bridge(for typeName: String, namespace: JXNamespace, autobridging: Bool) throws -> JXBridge? {
+    func bridge(for typeName: String, namespace: JXNamespace, definingIn context: JXContext?) throws -> JXBridge? {
         let key = TypeNameKey(typeName: typeName, namespace: namespace)
         if let bridge = bridgesByGivenTypeName[key] {
             return bridge
         }
-        if autobridging, let bridge = try addAutoBridge(for: typeName, namespace: namespace) {
+        if let context, let bridge = try define(for: typeName, namespace: namespace, in: context) {
             return bridge
         }
         return nil
@@ -207,31 +216,37 @@ public final class JXRegistry {
     /// Return the registered bridge for the type of the given instance, or nil if none has been registered.
     public func bridge(for instance: Any) -> JXBridge? {
         do {
-            return try bridge(for: instance, autobridging: false)
+            return try bridge(for: instance, definingIn: nil)
         } catch {
             // Call should not have been to throw when autobridging is false
             return nil
         }
     }
     
-    func bridge(for instance: Any, autobridging: Bool) throws -> JXBridge? {
+    func bridge(for instance: Any, definingIn context: JXContext?) throws -> JXBridge? {
         let type = type(of: instance)
-        return try bridge(for: type) ?? (autobridging ? addAutoBridge(for: instance) : nil)
+        if let bridge = bridge(for: type) {
+            return bridge
+        }
+        guard let context else {
+            return nil
+        }
+        return try define(for: instance, in: context)
     }
 
-    private func addAutoBridge(for typeName: String, namespace: JXNamespace) throws -> JXBridge? {
+    private func define(for typeName: String, namespace: JXNamespace, in context: JXContext) throws -> JXBridge? {
         for module in (modulesByNamespace[namespace] ?? []) + unnamespacedModules {
-            if try module.registerBridge(for: typeName, namespace: namespace, in: self) {
-                return try bridge(for: typeName, namespace: namespace, autobridging: false)
+            if try module.define(symbol: typeName, namespace: namespace, in: context) {
+                return try bridge(for: typeName, namespace: namespace, definingIn: nil)
             }
         }
         return nil
     }
     
-    private func addAutoBridge(for instance: Any) throws -> JXBridge? {
+    private func define(for instance: Any, in context: JXContext) throws -> JXBridge? {
         for module in modulesByNamespace.values.flatMap({ $0 }) + unnamespacedModules {
-            if try module.registerBridge(for: instance, in: self) {
-                return try bridge(for: instance, autobridging: false)
+            if try module.define(for: instance, in: context) {
+                return try bridge(for: instance, definingIn: nil)
             }
         }
         return nil

@@ -594,13 +594,13 @@ extension JX: BridgingPropertyWrapper {
         let typeName = bridge.typeName
         let getter: (Any, JXContext) throws -> JXValue = { obj, context in
             guard let propertyWrapper = Self.propertyWrapperObject(with: label, for: obj) else {
-                throw JXBridgeErrors.unknownPropertyName(typeName, label)
+                throw JXBridgeErrors.unknownSymbol(typeName, label)
             }
             return try context.convey(propertyWrapper.wrappedValue)
         }
         let setter: (Any, JXValue, JXContext) throws -> Any = { obj, value, context in
             guard let propertyWrapper = Self.propertyWrapperObject(with: label, for: obj) else {
-                throw JXBridgeErrors.unknownPropertyName(typeName, label)
+                throw JXBridgeErrors.unknownSymbol(typeName, label)
             }
             let p0 = try value.convey(to: T.self)
             propertyWrapper.wrappedValue = p0
@@ -615,13 +615,13 @@ extension JXPublished: BridgingPropertyWrapper {
         let typeName = bridge.typeName
         let getter: (Any, JXContext) throws -> JXValue = { obj, context in
             guard let propertyWrapper = Self.propertyWrapperObject(with: label, for: obj) else {
-                throw JXBridgeErrors.unknownPropertyName(typeName, label)
+                throw JXBridgeErrors.unknownSymbol(typeName, label)
             }
             return try context.convey(propertyWrapper.value)
         }
         let setter: (Any, JXValue, JXContext) throws -> Any = { obj, value, context in
             guard let propertyWrapper = Self.propertyWrapperObject(with: label, for: obj) else {
-                throw JXBridgeErrors.unknownPropertyName(typeName, label)
+                throw JXBridgeErrors.unknownSymbol(typeName, label)
             }
             let p0 = try value.convey(to: T.self)
             if let owner = obj as? (any ObservableObject) {
