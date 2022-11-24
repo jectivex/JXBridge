@@ -102,4 +102,6 @@ private class TestModule: JXModule, JXBridging {
     private func testFunc() -> String {
         return "testFunc"
     }
+    
+    var jxState: JXState?
 }
