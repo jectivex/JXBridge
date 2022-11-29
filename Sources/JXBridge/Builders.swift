@@ -94,7 +94,7 @@ extension PropertyBridge {
             Task {
                 do {
                     let ret = try await getterFunc(target)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -112,7 +112,7 @@ extension PropertyBridge {
             Task {
                 do {
                     let ret = try await getterFunc(target)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -149,7 +149,7 @@ extension StaticPropertyBridge {
             Task {
                 do {
                     let ret = try await getterFunc()
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -262,7 +262,7 @@ extension FunctionBridge {
             let target = obj as! T
             try validate(typeName: typeName, function: name, arguments: args, count: 0)
             let ret = try function(target)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -276,7 +276,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await function(target)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -293,7 +293,7 @@ extension FunctionBridge {
             var target = obj as! T
             try validate(typeName: typeName, function: name, arguments: args, count: 0)
             let ret = try mutatingFunction(&target)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -304,7 +304,7 @@ extension FunctionBridge {
             let target = obj as! T.Type
             try validate(typeName: typeName, function: name, arguments: args, count: 0)
             let ret = try classFunction(target)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -318,7 +318,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await classFunction(target)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -354,7 +354,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 1)
             let p = try conveyParameters(args, P0.self)
             let ret = try function(target, p)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -369,7 +369,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await function(target, p)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -387,7 +387,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 1)
             let p = try conveyParameters(args, P0.self)
             let ret = try mutatingFunction(&target, p)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -399,7 +399,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 1)
             let p = try conveyParameters(args, P0.self)
             let ret = try classFunction(target, p)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -414,7 +414,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await classFunction(target, p)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -450,7 +450,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 2)
             let p = try conveyParameters(args, P0.self, P1.self)
             let ret = try function(target, p.0, p.1)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -465,7 +465,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await function(target, p.0, p.1)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -483,7 +483,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 2)
             let p = try conveyParameters(args, P0.self, P1.self)
             let ret = try mutatingFunction(&target, p.0, p.1)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -495,7 +495,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 2)
             let p = try conveyParameters(args, P0.self, P1.self)
             let ret = try classFunction(target, p.0, p.1)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -510,7 +510,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await classFunction(target, p.0, p.1)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -546,7 +546,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 3)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self)
             let ret = try function(target, p.0, p.1, p.2)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -561,7 +561,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await function(target, p.0, p.1, p.2)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -579,7 +579,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 3)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self)
             let ret = try mutatingFunction(&target, p.0, p.1, p.2)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -591,7 +591,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 3)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self)
             let ret = try classFunction(target, p.0, p.1, p.2)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -606,7 +606,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await classFunction(target, p.0, p.1, p.2)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -642,7 +642,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 4)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
             let ret = try function(target, p.0, p.1, p.2, p.3)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -657,7 +657,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await function(target, p.0, p.1, p.2, p.3)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -675,7 +675,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 4)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
             let ret = try mutatingFunction(&target, p.0, p.1, p.2, p.3)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -687,7 +687,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 4)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
             let ret = try classFunction(target, p.0, p.1, p.2, p.3)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -702,7 +702,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await classFunction(target, p.0, p.1, p.2, p.3)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -738,7 +738,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 5)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
             let ret = try function(target, p.0, p.1, p.2, p.3, p.4)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -753,7 +753,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await function(target, p.0, p.1, p.2, p.3, p.4)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -771,7 +771,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 5)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
             let ret = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -783,7 +783,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 5)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
             let ret = try classFunction(target, p.0, p.1, p.2, p.3, p.4)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -798,7 +798,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await classFunction(target, p.0, p.1, p.2, p.3, p.4)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -834,7 +834,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 6)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
             let ret = try function(target, p.0, p.1, p.2, p.3, p.4, p.5)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -849,7 +849,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await function(target, p.0, p.1, p.2, p.3, p.4, p.5)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -867,7 +867,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 6)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
             let ret = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -879,7 +879,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 6)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
             let ret = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -894,7 +894,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -930,7 +930,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 7)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
             let ret = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -945,7 +945,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -963,7 +963,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 7)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
             let ret = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -975,7 +975,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 7)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
             let ret = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -990,7 +990,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -1026,7 +1026,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 8)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
             let ret = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -1041,7 +1041,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -1059,7 +1059,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 8)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
             let ret = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -1071,7 +1071,7 @@ extension FunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 8)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
             let ret = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
-            return (target, try context.conveyReturn(ret))
+            return (target, try context.convey(ret))
         }
     }
     
@@ -1086,7 +1086,7 @@ extension FunctionBridge {
             Task {
                 do {
                     let ret = try await classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -1107,7 +1107,7 @@ extension StaticFunctionBridge {
         self = StaticFunctionBridge(name: name) { args, context in
             try validate(typeName: typeName, function: name, arguments: args, count: 0)
             let ret = try function()
-            return try context.conveyReturn(ret)
+            return try context.convey(ret)
         }
     }
     
@@ -1120,7 +1120,7 @@ extension StaticFunctionBridge {
             Task {
                 do {
                     let ret = try await function()
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -1138,7 +1138,7 @@ extension StaticFunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 1)
             let p = try conveyParameters(args, P0.self)
             let ret = try function(p)
-            return try context.conveyReturn(ret)
+            return try context.convey(ret)
         }
     }
     
@@ -1152,7 +1152,7 @@ extension StaticFunctionBridge {
             Task {
                 do {
                     let ret = try await function(p)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -1170,7 +1170,7 @@ extension StaticFunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 2)
             let p = try conveyParameters(args, P0.self, P1.self)
             let ret = try function(p.0, p.1)
-            return try context.conveyReturn(ret)
+            return try context.convey(ret)
         }
     }
     
@@ -1184,7 +1184,7 @@ extension StaticFunctionBridge {
             Task {
                 do {
                     let ret = try await function(p.0, p.1)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -1202,7 +1202,7 @@ extension StaticFunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 3)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self)
             let ret = try function(p.0, p.1, p.2)
-            return try context.conveyReturn(ret)
+            return try context.convey(ret)
         }
     }
     
@@ -1216,7 +1216,7 @@ extension StaticFunctionBridge {
             Task {
                 do {
                     let ret = try await function(p.0, p.1, p.2)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -1234,7 +1234,7 @@ extension StaticFunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 4)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
             let ret = try function(p.0, p.1, p.2, p.3)
-            return try context.conveyReturn(ret)
+            return try context.convey(ret)
         }
     }
     
@@ -1248,7 +1248,7 @@ extension StaticFunctionBridge {
             Task {
                 do {
                     let ret = try await function(p.0, p.1, p.2, p.3)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -1266,7 +1266,7 @@ extension StaticFunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 5)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
             let ret = try function(p.0, p.1, p.2, p.3, p.4)
-            return try context.conveyReturn(ret)
+            return try context.convey(ret)
         }
     }
     
@@ -1280,7 +1280,7 @@ extension StaticFunctionBridge {
             Task {
                 do {
                     let ret = try await function(p.0, p.1, p.2, p.3, p.4)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -1298,7 +1298,7 @@ extension StaticFunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 6)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
             let ret = try function(p.0, p.1, p.2, p.3, p.4, p.5)
-            return try context.conveyReturn(ret)
+            return try context.convey(ret)
         }
     }
     
@@ -1312,7 +1312,7 @@ extension StaticFunctionBridge {
             Task {
                 do {
                     let ret = try await function(p.0, p.1, p.2, p.3, p.4, p.5)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -1330,7 +1330,7 @@ extension StaticFunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 7)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
             let ret = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6)
-            return try context.conveyReturn(ret)
+            return try context.convey(ret)
         }
     }
     
@@ -1344,7 +1344,7 @@ extension StaticFunctionBridge {
             Task {
                 do {
                     let ret = try await function(p.0, p.1, p.2, p.3, p.4, p.5, p.6)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -1362,7 +1362,7 @@ extension StaticFunctionBridge {
             try validate(typeName: typeName, function: name, arguments: args, count: 8)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
             let ret = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
-            return try context.conveyReturn(ret)
+            return try context.convey(ret)
         }
     }
     
@@ -1376,7 +1376,7 @@ extension StaticFunctionBridge {
             Task {
                 do {
                     let ret = try await function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
-                    try promise.resolveFunction.call(withArguments: [context.conveyReturn(ret)])
+                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -1386,35 +1386,29 @@ extension StaticFunctionBridge {
     }
 }
 
-extension JXContext {
-    fileprivate func conveyReturn<R>(_ ret: R) throws -> JXValue {
-        return try R.self == Void.self ? undefined() : convey(ret)
-    }
-}
-
-private func conveyParameters<P0>(_ args: [JXValue], _ p0: P0.Type) throws -> (P0) {
+func conveyParameters<P0>(_ args: [JXValue], _ p0: P0.Type) throws -> (P0) {
     return try (args[0].convey(to: p0))
 }
 
-private func conveyParameters<P0, P1>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type) throws -> (P0, P1) {
+func conveyParameters<P0, P1>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type) throws -> (P0, P1) {
     return try (args[0].convey(to: p0),
                 args[1].convey(to: p1))
 }
 
-private func conveyParameters<P0, P1, P2>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type) throws -> (P0, P1, P2) {
+func conveyParameters<P0, P1, P2>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type) throws -> (P0, P1, P2) {
     return try (args[0].convey(to: p0),
                 args[1].convey(to: p1),
                 args[2].convey(to: p2))
 }
 
-private func conveyParameters<P0, P1, P2, P3>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type) throws -> (P0, P1, P2, P3) {
+func conveyParameters<P0, P1, P2, P3>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type) throws -> (P0, P1, P2, P3) {
     return try (args[0].convey(to: p0),
                 args[1].convey(to: p1),
                 args[2].convey(to: p2),
                 args[3].convey(to: p3))
 }
 
-private func conveyParameters<P0, P1, P2, P3, P4>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type, _ p4: P4.Type) throws -> (P0, P1, P2, P3, P4) {
+func conveyParameters<P0, P1, P2, P3, P4>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type, _ p4: P4.Type) throws -> (P0, P1, P2, P3, P4) {
     return try (args[0].convey(to: p0),
                 args[1].convey(to: p1),
                 args[2].convey(to: p2),
@@ -1422,7 +1416,7 @@ private func conveyParameters<P0, P1, P2, P3, P4>(_ args: [JXValue], _ p0: P0.Ty
                 args[4].convey(to: p4))
 }
 
-private func conveyParameters<P0, P1, P2, P3, P4, P5>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type, _ p4: P4.Type, _ p5: P5.Type) throws -> (P0, P1, P2, P3, P4, P5) {
+func conveyParameters<P0, P1, P2, P3, P4, P5>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type, _ p4: P4.Type, _ p5: P5.Type) throws -> (P0, P1, P2, P3, P4, P5) {
     return try (args[0].convey(to: p0),
                 args[1].convey(to: p1),
                 args[2].convey(to: p2),
@@ -1431,7 +1425,7 @@ private func conveyParameters<P0, P1, P2, P3, P4, P5>(_ args: [JXValue], _ p0: P
                 args[5].convey(to: p5))
 }
 
-private func conveyParameters<P0, P1, P2, P3, P4, P5, P6>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type, _ p4: P4.Type, _ p5: P5.Type, _ p6: P6.Type) throws -> (P0, P1, P2, P3, P4, P5, P6) {
+func conveyParameters<P0, P1, P2, P3, P4, P5, P6>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type, _ p4: P4.Type, _ p5: P5.Type, _ p6: P6.Type) throws -> (P0, P1, P2, P3, P4, P5, P6) {
     return try (args[0].convey(to: p0),
                 args[1].convey(to: p1),
                 args[2].convey(to: p2),
@@ -1441,7 +1435,7 @@ private func conveyParameters<P0, P1, P2, P3, P4, P5, P6>(_ args: [JXValue], _ p
                 args[6].convey(to: p6))
 }
 
-private func conveyParameters<P0, P1, P2, P3, P4, P5, P6, P7>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type, _ p4: P4.Type, _ p5: P5.Type, _ p6: P6.Type, _ p7: P7.Type) throws -> (P0, P1, P2, P3, P4, P5, P6, P7) {
+func conveyParameters<P0, P1, P2, P3, P4, P5, P6, P7>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type, _ p4: P4.Type, _ p5: P5.Type, _ p6: P6.Type, _ p7: P7.Type) throws -> (P0, P1, P2, P3, P4, P5, P6, P7) {
     return try (args[0].convey(to: p0),
                 args[1].convey(to: p1),
                 args[2].convey(to: p2),

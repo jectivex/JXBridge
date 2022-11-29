@@ -39,6 +39,23 @@ final class PropertyWrapperTests: XCTestCase {
         XCTAssertEqual(test.intVar, 3)
     }
     
+    func testJXFuncWithCallback() throws {
+        let context = JXContext()
+        try context.registry.register(AnyJXBridging())
+
+        let test = TestClass(intVar: 1)
+        try context.global.integrate(test)
+        var callbackCalled = false
+        let callback: (Int) -> Void = { sum in
+            callbackCalled = true
+            XCTAssertEqual(sum, 3)
+        }
+        try context.withValues([JXClosure.Arity1(callback)]) {
+            try context.eval("jx.sum(2, $0)")
+        }
+        XCTAssertTrue(callbackCalled)
+    }
+    
     func testJXInit() throws {
         let context = JXContext()
         try context.registry.registerBridge(for: TestClass(intVar: 0))
@@ -194,6 +211,14 @@ private class TestClass: JXBridging {
     func increment(by: Int) -> Int {
         intVar += by
         return intVar
+    }
+    
+    @JXFunc var jxsum = jx_sum
+    func sum(with value: Int, result: (Int) -> Void) {
+        result(intVar + value)
+    }
+    private func jx_sum(with value: Int, result: JXClosure.Arity1<Int, Void>) {
+        sum(with: value, result: result.closure)
     }
     
     @JXStaticVar var jxstaticVar = (get: { TestClass.staticVar }, set: { TestClass.staticVar = $0 })

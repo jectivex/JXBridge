@@ -201,6 +201,44 @@ invokeAsync(obj);
 """, priority: .low)
         XCTAssertEqual(try result.string, "asyncFuncSuccess")
     }
+    
+    func testCallbacks() throws {
+        let context = JXContext()
+        try context.registry.register {
+            JXBridgeBuilder(type: TestStruct.self)
+                .constructor { TestStruct.init }
+                .var.readWriteInt { \.readWriteInt }
+                .var.callbackVar { (s: TestStruct) in
+                    JXClosure.Arity0(s.callbackVar)
+                } set: { (s: TestStruct, v: JXClosure.Arity0<Int>?) in
+                    var s = s
+                    s.callbackVar = v?.closure
+                    return s
+                }
+                .func.callbackFunc { (s: TestStruct, add: Int, result: JXClosure.Arity1<Int, Void>) in
+                    s.callbackFunc(add: add, result: result.closure)
+                }
+                .bridge
+        }
+        var result = try context.eval("""
+const s = new jx.TestStruct();
+s.readWriteInt = 2;
+s.callbackVar = () => { return 3; }
+
+let result = 0
+let add = s.callbackVar();
+s.callbackFunc(add, (r) => { result = r; });
+result;
+""")
+        XCTAssertEqual(try result.int, 5)
+        
+        var s = TestStruct()
+        s.callbackVar = { return 3 }
+        result = try context.withValues(s) {
+            try context.eval("$0.callbackVar();")
+        }
+        XCTAssertEqual(try result.int, 3)
+    }
 }
 
 private struct TestStruct {
@@ -213,6 +251,12 @@ private struct TestStruct {
 
     func exceptionFunc() throws {
         throw TestError(message: "exceptionFunc error")
+    }
+    
+    var callbackVar: (() -> Int)?
+    
+    func callbackFunc(add: Int, result: (Int) -> Void) {
+        result(readWriteInt + add)
     }
 }
 

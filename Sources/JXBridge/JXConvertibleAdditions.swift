@@ -6,6 +6,28 @@ import UIKit
 #endif
 import JXKit
 
+extension Result: JXConvertible {
+    public static func fromJX(_ value: JXValue) throws -> Result<Success, Failure> {
+        guard value.hasProperty("success") else {
+            return try .failure(value["failure"].convey(to: Failure.self))
+        }
+        return try .success(value["success"].convey(to: Success.self))
+    }
+    
+    public func toJX(in context: JXContext) throws -> JXValue {
+        switch self {
+        case .success(let value):
+            let success = context.object()
+            try success.setProperty("success", context.convey(value))
+            return success
+        case .failure(let value):
+            let failure = context.object()
+            try failure.setProperty("failure", context.convey(value))
+            return failure
+        }
+    }
+}
+
 #if canImport(ObjectiveC)
 
 extension Selector: JXConvertible {

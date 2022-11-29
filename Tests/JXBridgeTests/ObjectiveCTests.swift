@@ -17,7 +17,7 @@ const tmpDir = fm.temporaryDirectory;
 const files = fm.subpathsAtPath(tmpDir.path);
 files.length;
 """)
-        XCTAssertTrue(try result.int > 0)
+        XCTAssertGreaterThanOrEqual(try result.int, 0)
     }
 }
 

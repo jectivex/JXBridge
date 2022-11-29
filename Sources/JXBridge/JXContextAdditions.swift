@@ -25,6 +25,56 @@ extension JXContext {
         self.spi = bridgeSPI
         return bridgeSPI
     }
+    
+    /// Attempts to convey the given closure or function into this JavaScript context as a function.
+    ///
+    /// - Throws: `JXErrors.cannotConvey` if the return type cannot be conveyed to JavaScript.
+    /// - Seealso: `JXValue.convey` to convey back from JavaScript.
+    public func conveyClosure<R>(_ f: (() throws -> R)?) throws -> JXValue {
+        guard let f else {
+            return null()
+        }
+        return JXValue(newFunctionIn: self) { context, _, args in
+            let ret = try f()
+            return try context.convey(ret)
+        }
+    }
+    
+    /// Attempts to convey the given closure or function into this JavaScript context as a function.
+    ///
+    /// - Throws: `JXErrors.cannotConvey` if the parameter or return types cannot be conveyed to JavaScript.
+    /// - Seealso: `JXValue.convey` to convey back from JavaScript.
+    public func conveyClosure<P0, R>(_ f: ((P0) throws -> R)?) throws -> JXValue {
+        guard let f else {
+            return null()
+        }
+        return JXValue(newFunctionIn: self) { context, _, args in
+            guard args.count == 1 else {
+                throw JXErrors.invalidArgumentCount
+            }
+            let p0 = try conveyParameters(args, P0.self)
+            let ret = try f(p0)
+            return try context.convey(ret)
+        }
+    }
+    
+    /// Attempts to convey the given closure or function into this JavaScript context as a function.
+    ///
+    /// - Throws: `JXErrors.cannotConvey` if the parameter or return types cannot be conveyed to JavaScript.
+    /// - Seealso: `JXValue.convey` to convey back from JavaScript.
+    public func conveyClosure<P0, P1, R>(_ f: ((P0, P1) throws -> R)?) throws -> JXValue {
+        guard let f else {
+            return null()
+        }
+        return JXValue(newFunctionIn: self) { context, _, args in
+            guard args.count == 1 else {
+                throw JXErrors.invalidArgumentCount
+            }
+            let p = try conveyParameters(args, P0.self, P1.self)
+            let ret = try f(p.0, p.1)
+            return try context.convey(ret)
+        }
+    }
 }
 
 final class JXBridgeContextSPI {
@@ -273,13 +323,23 @@ extension JXBridgeContextSPI: JXContextSPI {
         try throwInitializationError()
         
 #if canImport(ObjectiveC)
-        // Although String is JXConvertible, the NSString class cluster is not
-        if let string = value as? NSString {
-            return context.string(string as String)
+        // Although String, Int, Array, Dictionary, etc are JXConvertible, the NS* equivalents are not
+        if let nsstring = value as? NSString {
+            return context.string(nsstring as String)
         }
-        // Same with NSNumber
-        if let number = value as? NSNumber {
-            return context.number(number.doubleValue)
+        if let nsnumber = value as? NSNumber {
+            return context.number(nsnumber.doubleValue)
+        }
+        if let nsarray = value as? NSArray {
+            return try context.array(nsarray as [AnyObject])
+        }
+        if let nsdict = value as? NSDictionary {
+            let dict = nsdict.reduce(into: [String: Any]()) { result, entry in
+                if let stringKey = entry.key as? String {
+                    result[stringKey] = entry.value
+                }
+            }
+            return try context.object(fromDictionary: dict)
         }
 #endif
         

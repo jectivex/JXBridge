@@ -37,18 +37,14 @@ new Proxy({ _jxNamespace: '\(namespace.value)' }, {
     /// Define a JavaScript class for the given type. The JavaScript class uses an objec internally to invoke native API.
     func defineJSClass() -> String {
         var extendsClause = ""
-        var nativeDeclaration = ""
         if let superclassBridge = self.superclassBridge {
             extendsClause = " extends \(superclassBridge.qualifiedTypeName)"
-        } else {
-            nativeDeclaration = "_jxNative;"
         }
         
         let classJS = """
 \(bridge.qualifiedTypeName) = class\(extendsClause) {
     static _jxStaticNative = _jxCreateStaticNative('\(bridge.typeName)', '\(bridge.namespace.value)');
     static _jxTypeName = '\(bridge.typeName)';
-    \(nativeDeclaration)
 \(staticPropertiesJS)
 \(staticFunctionsJS)
 \(constructorJS)
