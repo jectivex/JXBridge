@@ -47,7 +47,7 @@ extension Selector: JXConvertible {
 extension URL: JXConvertible {
     public static func fromJX(_ value: JXValue) throws -> Self {
         guard let url = try URL(string: value.string) else {
-            throw JXErrors.cannotConvey(URL.self)
+            throw JXError(message: "Cannot convey '\(try value.string)' to a valid URL")
         }
         return url
     }

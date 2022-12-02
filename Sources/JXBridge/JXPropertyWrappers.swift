@@ -92,7 +92,7 @@ public struct JXVar<T, V> {
     
     public var wrappedValue: (get: (T) throws -> V, set: ((T, V) -> Void)?) {
         get {
-            return (get: { _ in throw JXBridgeErrors.internalError("Do not read or write @JXVar values") }, set: nil)
+            return (get: { _ in throw JXError(message: "Do not access @JXVar vars") }, set: nil)
         }
         set {
         }
@@ -123,7 +123,7 @@ public struct JXStaticVar<V> {
     
     public var wrappedValue: (get: () throws -> V, set: ((V) -> Void)?) {
         get {
-            return (get: { throw JXBridgeErrors.internalError("Do not read or write @JXStaticVar values") }, set: nil)
+            return (get: { throw JXError(message: "Do not access @JXStaticVar vars") }, set: nil)
         }
         set {
         }
@@ -154,7 +154,7 @@ public struct JXClassVar<T, V> {
     
     public var wrappedValue: (get: (T.Type) throws -> V, set: ((T.Type, V) -> Void)?) {
         get {
-            return (get: { _ in throw JXBridgeErrors.internalError("Do not read or write @JXClassVar values") }, set: nil)
+            return (get: { _ in throw JXError(message: "Do not access @JXClassVar vars") }, set: nil)
         }
         set {
         }
@@ -223,7 +223,7 @@ public struct JXInit<T> {
     
     public var wrappedValue: () throws -> T {
         get {
-            return { throw JXBridgeErrors.internalError("Do not read or write @JXInit values") }
+            return { throw JXError(message: "Do not access @JXInit vars") }
         }
         set {
         }
@@ -332,7 +332,7 @@ public struct JXFunc<T, R> {
 
     public var wrappedValue: (T) -> () throws -> R {
         get {
-            return { _ in { throw JXBridgeErrors.internalError("Do not read or write @JXFunc values") }}
+            return { _ in { throw JXError(message: "Do not access @JXFunc vars")}}
         }
         set {
         }
@@ -441,7 +441,7 @@ public struct JXStaticFunc<R> {
 
     public var wrappedValue: () throws -> R {
         get {
-            return { throw JXBridgeErrors.internalError("Do not read or write @JXStaticFunc values") }
+            return { throw JXError(message: "Do not access @JXStaticFunc vars") }
         }
         set {
         }
@@ -550,7 +550,7 @@ public struct JXClassFunc<T, R> {
 
     public var wrappedValue: (T.Type, (T.Type) throws -> R) {
         get {
-            return (T.self, { _ in throw JXBridgeErrors.internalError("Do not read or write @JXClassFunc values") })
+            return (T.self, { _ in throw JXError(message: "Do not access @JXClassFunc vars") })
         }
         set {
         }
@@ -594,19 +594,19 @@ extension JX: BridgingPropertyWrapper {
         let typeName = bridge.typeName
         let getter: (Any, JXContext) throws -> JXValue = { obj, context in
             guard let propertyWrapper = Self.propertyWrapperObject(with: label, for: obj) else {
-                throw JXBridgeErrors.unknownSymbol(typeName, label)
+                throw JXError(message: "Unable to access @JX property wrapper")
             }
             return try context.convey(propertyWrapper.wrappedValue)
         }
         let setter: (Any, JXValue, JXContext) throws -> Any = { obj, value, context in
             guard let propertyWrapper = Self.propertyWrapperObject(with: label, for: obj) else {
-                throw JXBridgeErrors.unknownSymbol(typeName, label)
+                throw JXError(message: "Unable to access @JX property wrapper")
             }
             let p0 = try value.convey(to: T.self)
             propertyWrapper.wrappedValue = p0
             return obj
         }
-        bridge.properties.append(PropertyBridge(name: memberName(for: label), getter: getter, setter: setter))
+        bridge.properties.append(PropertyBridge(owningTypeName: typeName, name: memberName(for: label), getter: getter, setter: setter))
     }
 }
 
@@ -615,13 +615,13 @@ extension JXPublished: BridgingPropertyWrapper {
         let typeName = bridge.typeName
         let getter: (Any, JXContext) throws -> JXValue = { obj, context in
             guard let propertyWrapper = Self.propertyWrapperObject(with: label, for: obj) else {
-                throw JXBridgeErrors.unknownSymbol(typeName, label)
+                throw JXError(message: "Unable to access @JXPublished property wrapper")
             }
             return try context.convey(propertyWrapper.value)
         }
         let setter: (Any, JXValue, JXContext) throws -> Any = { obj, value, context in
             guard let propertyWrapper = Self.propertyWrapperObject(with: label, for: obj) else {
-                throw JXBridgeErrors.unknownSymbol(typeName, label)
+                throw JXError(message: "Unable to access @JXPublished property wrapper")
             }
             let p0 = try value.convey(to: T.self)
             if let owner = obj as? (any ObservableObject) {
@@ -631,7 +631,7 @@ extension JXPublished: BridgingPropertyWrapper {
             }
             return obj
         }
-        bridge.properties.append(PropertyBridge(name: memberName(for: label), getter: getter, setter: setter))
+        bridge.properties.append(PropertyBridge(owningTypeName: typeName, name: memberName(for: label), getter: getter, setter: setter))
     }
 }
 

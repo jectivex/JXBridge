@@ -1,6 +1,20 @@
 import JXKit
 
 extension JXValue {
+    /// Return any bridged instance represented by this value.
+    public var bridged: Any? {
+        get throws {
+            guard hasProperty(JSCodeGenerator.nativePropertyName) else {
+                return nil
+            }
+            let nativeProperty = try self[JSCodeGenerator.nativePropertyName]
+            guard let instanceBox = nativeProperty.peer as? InstanceBox else {
+                return nil
+            }
+            return instanceBox.instance
+        }
+    }
+    
     /// Bind the bridged instance properties and functions of the given object to the type's namespace on this value.
     ///
     /// - Parameters:
@@ -8,7 +22,7 @@ extension JXValue {
     /// - Warning: The given object is not retained.
     public func integrate(_ instance: Any, namespace: JXNamespace? = nil) throws {
         guard let bridge = try context.registry.bridge(for: instance, definingIn: context) else {
-            throw JXBridgeErrors.unknownSymbol(String(describing: Swift.type(of: instance)), "")
+            throw JXError.missingBridge(for: String(describing: Swift.type(of: instance)), namespace: namespace?.value ?? JXNamespace.none.value)
         }
         let namespaceValue = try addNamespace(namespace ?? bridge.namespace)
         
@@ -86,7 +100,7 @@ extension JXValue {
     /// Attempts to convey this JavaScript value to a closure with 0 parameters. This value must be a function.
     public func convey<R>(to type: (() throws -> R).Type = (() throws -> R).self) throws -> () throws -> R {
         guard isFunction else {
-            throw JXErrors.cannotConvey(type)
+            throw JXError.valueNotFunction(self)
         }
         return {
             let r = try self.call()
@@ -97,7 +111,7 @@ extension JXValue {
     /// Attempts to convey this JavaScript value to a closure with 0 parameters. This value must be a function.
     public func convey<R>(to type: (() -> R).Type = (() -> R).self) throws -> () -> R {
         guard isFunction else {
-            throw JXErrors.cannotConvey(type)
+            throw JXError.valueNotFunction(self)
         }
         return {
             do {
@@ -105,7 +119,7 @@ extension JXValue {
                 return try r.convey(to: R.self)
             } catch {
                 // Is there anything else we could possibly do here?
-                fatalError(String(describing: error))
+                fatalError("Fatal: Caught an error invoking a JavaScript function conveyed to a native closure that does not throw. \(String(describing: error))")
             }
         }
     }
@@ -113,7 +127,7 @@ extension JXValue {
     /// Attempts to convey this JavaScript value to a closure with 1 parameter. This value must be a function.
     public func convey<P0, R>(to type: ((P0) throws -> R).Type = ((P0) throws -> R).self) throws -> (P0) throws -> R {
         guard isFunction else {
-            throw JXErrors.cannotConvey(type)
+            throw JXError.valueNotFunction(self)
         }
         return { p0 in
             let r = try self.call(withArguments: [p0])
@@ -124,7 +138,7 @@ extension JXValue {
     /// Attempts to convey this JavaScript value to a closure with 1 parameter. This value must be a function.
     public func convey<P0, R>(to type: ((P0) -> R).Type = ((P0) -> R).self) throws -> (P0) -> R {
         guard isFunction else {
-            throw JXErrors.cannotConvey(type)
+            throw JXError.valueNotFunction(self)
         }
         return { p0 in
             do {
@@ -132,7 +146,7 @@ extension JXValue {
                 return try r.convey(to: R.self)
             } catch {
                 // Is there anything else we could possibly do here?
-                fatalError(String(describing: error))
+                fatalError("Fatal: Caught an error invoking a JavaScript function conveyed to a native closure that does not throw. \(String(describing: error))")
             }
         }
     }
@@ -140,7 +154,7 @@ extension JXValue {
     /// Attempts to convey this JavaScript value to a closure with 2 parameters. This value must be a function.
     public func convey<P0, P1, R>(to type: ((P0, P1) throws -> R).Type = ((P0, P1) throws -> R).self) throws -> (P0, P1) throws -> R {
         guard isFunction else {
-            throw JXErrors.cannotConvey(type)
+            throw JXError.valueNotFunction(self)
         }
         return { p0, p1 in
             let r = try self.call(withArguments: [p0, p1])
@@ -151,7 +165,7 @@ extension JXValue {
     /// Attempts to convey this JavaScript value to a closure with 2 parameters. This value must be a function.
     public func convey<P0, P1, R>(to type: ((P0, P1) -> R).Type = ((P0, P1) -> R).self) throws -> (P0, P1) -> R {
         guard isFunction else {
-            throw JXErrors.cannotConvey(type)
+            throw JXError.valueNotFunction(self)
         }
         return { p0, p1 in
             do {
@@ -159,7 +173,7 @@ extension JXValue {
                 return try r.convey(to: R.self)
             } catch {
                 // Is there anything else we could possibly do here?
-                fatalError(String(describing: error))
+                fatalError("Fatal: Caught an error invoking a JavaScript function conveyed to a native closure that does not throw. \(String(describing: error))")
             }
         }
     }
@@ -184,7 +198,7 @@ private struct WeakRef: Ref {
     var instance: Any {
         get throws {
             guard let object else {
-                throw JXBridgeErrors.invalidInstance("Instance has been deallocated")
+                throw JXError.instanceDeallocated()
             }
             return object
         }

@@ -28,13 +28,13 @@ extension JXContext {
     
     /// Attempts to convey the given closure or function into this JavaScript context as a function.
     ///
-    /// - Throws: `JXErrors.cannotConvey` if the return type cannot be conveyed to JavaScript.
     /// - Seealso: `JXValue.convey` to convey back from JavaScript.
     public func conveyClosure<R>(_ f: (() throws -> R)?) throws -> JXValue {
         guard let f else {
             return null()
         }
         return JXValue(newFunctionIn: self) { context, _, args in
+            try validate(arguments: args, count: 0)
             let ret = try f()
             return try context.convey(ret)
         }
@@ -42,16 +42,13 @@ extension JXContext {
     
     /// Attempts to convey the given closure or function into this JavaScript context as a function.
     ///
-    /// - Throws: `JXErrors.cannotConvey` if the parameter or return types cannot be conveyed to JavaScript.
     /// - Seealso: `JXValue.convey` to convey back from JavaScript.
     public func conveyClosure<P0, R>(_ f: ((P0) throws -> R)?) throws -> JXValue {
         guard let f else {
             return null()
         }
         return JXValue(newFunctionIn: self) { context, _, args in
-            guard args.count == 1 else {
-                throw JXErrors.invalidArgumentCount
-            }
+            try validate(arguments: args, count: 1)
             let p0 = try conveyParameters(args, P0.self)
             let ret = try f(p0)
             return try context.convey(ret)
@@ -60,16 +57,13 @@ extension JXContext {
     
     /// Attempts to convey the given closure or function into this JavaScript context as a function.
     ///
-    /// - Throws: `JXErrors.cannotConvey` if the parameter or return types cannot be conveyed to JavaScript.
     /// - Seealso: `JXValue.convey` to convey back from JavaScript.
     public func conveyClosure<P0, P1, R>(_ f: ((P0, P1) throws -> R)?) throws -> JXValue {
         guard let f else {
             return null()
         }
         return JXValue(newFunctionIn: self) { context, _, args in
-            guard args.count == 1 else {
-                throw JXErrors.invalidArgumentCount
-            }
+            try validate(arguments: args, count: 2)
             let p = try conveyParameters(args, P0.self, P1.self)
             let ret = try f(p.0, p.1)
             return try context.convey(ret)
@@ -121,7 +115,7 @@ final class JXBridgeContextSPI {
     private func initializeRegistry(_ registry: JXRegistry) throws {
         try registry.namespaces.forEach { try defineNamespace($0) }
         try registry.unnamespacedBridges.forEach { try defineClass(for: $0) }
-        try registry.modules.forEach { try initializeModule($0) }
+        try registry.modules.forEach { try initializeModule($0, addErrorContext: true) }
     }
     
     private func defineNamespace(_ namespace: JXNamespace) throws {
@@ -138,12 +132,23 @@ final class JXBridgeContextSPI {
         try defineClass(for: bridge, in: context)
     }
     
-    private func initializeModule(_ module: JXModule) throws {
+    private func initializeModule(_ module: JXModule, addErrorContext: Bool = false) throws {
         guard let context else {
             return
         }
         try context.global.addNamespace(module.namespace)
-        try module.initialize(in: context)
+        do {
+            try module.initialize(in: context)
+        } catch {
+            // When initialization isn't an immediate result of the dev registering the module, add context to help them track down the problem
+            if addErrorContext {
+                var error = JXError(cause: error)
+                error.message = "Unable to initialize module '\(module.namespace.value)': \(error.message)"
+                throw error
+            } else {
+                throw error
+            }
+        }
     }
     
     private func defineGlobalFunctions() throws {
@@ -155,14 +160,14 @@ final class JXBridgeContextSPI {
         // jx.import(namespace.symbol) or jx.import(namespace)
         let importFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
-                throw JXBridgeErrors.invalidContext("Context has been deallocated")
+                throw JXError.contextDeallocated()
             }
             for arg in args {
                 let typeName = try arg[JSCodeGenerator.typeNamePropertyName]
                 if typeName.isUndefined {
                     let namespace = try arg[JSCodeGenerator.namespacePropertyName]
                     guard !namespace.isUndefined else {
-                        throw JXBridgeErrors.unknownSymbol(try arg.string, "")
+                        throw JXError(message: "Import error: '\(try arg.string)' is not a known type or namespace")
                     }
                     try self.importNamespace(JXNamespace(namespace.string), value: arg)
                 } else {
@@ -178,11 +183,11 @@ final class JXBridgeContextSPI {
         // Define a symbol accessed through a namespace
         let defineFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
-                throw JXBridgeErrors.invalidContext("Context has been deallocated")
+                throw JXError.contextDeallocated()
             }
             // Symbol name, namespace name
             guard args.count == 2 else {
-                throw JXBridgeErrors.internalError("define")
+                throw JXError.internalError("define")
             }
             let symbolName = try args[0].string
             let namespace = try args[1].string
@@ -197,11 +202,11 @@ final class JXBridgeContextSPI {
         // Create a native instance box
         let createNativeFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
-                throw JXBridgeErrors.invalidContext("Context has been deallocated")
+                throw JXError.contextDeallocated()
             }
             // Type name, namespace name, args array
             guard args.count == 3 else {
-                throw JXBridgeErrors.internalError("createNative")
+                throw JXError.internalError("createNative")
             }
             let instanceBox = try InstanceBox.create(typeName: args[0], namespace: args[1], arguments: args[2], registry: self.registry)
             let object = context.object(peer: instanceBox)
@@ -212,11 +217,11 @@ final class JXBridgeContextSPI {
         // Create a native static box
         let createStaticNativeFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
-                throw JXBridgeErrors.invalidContext("Context has been deallocated")
+                throw JXError.contextDeallocated()
             }
             // Type name, namespace name
             guard args.count == 2 else {
-                throw JXBridgeErrors.internalError("createStaticNative")
+                throw JXError.internalError("createStaticNative")
             }
             let staticBox = try StaticBox.create(args[0], namespace: args[1], registry: self.registry)
             let object = context.object(peer: staticBox)
@@ -228,7 +233,7 @@ final class JXBridgeContextSPI {
         let getPropertyFunction = JXValue(newFunctionIn: context) { context, this, args in
             // Instance, property name
             guard args.count == 2, let nativeBox = args[0].peer as? NativeBox else {
-                throw JXBridgeErrors.internalError("getProperty")
+                throw JXError.internalError("getProperty")
             }
             return try nativeBox.get(property: args[1])
         }
@@ -237,7 +242,7 @@ final class JXBridgeContextSPI {
         let setPropertyFunction = JXValue(newFunctionIn: context) { context, this, args in
             // Instance, property name, value
             guard args.count == 3, let nativeBox = args[0].peer as? NativeBox else {
-                throw JXBridgeErrors.internalError("setProperty")
+                throw JXError.internalError("setProperty")
             }
             try nativeBox.set(property: args[1], value: args[2])
             return context.undefined()
@@ -247,7 +252,7 @@ final class JXBridgeContextSPI {
         let callFunction = JXValue(newFunctionIn: context) { context, this, args in
             // Instance, function name, args array
             guard args.count == 3, let nativeBox = args[0].peer as? NativeBox else {
-                throw JXBridgeErrors.internalError("callFunction")
+                throw JXError.internalError("callFunction")
             }
             return try nativeBox.call(function: args[1], arguments: args[2])
         }
@@ -274,13 +279,13 @@ final class JXBridgeContextSPI {
             return
         }
         guard namespace != .none && namespace != .default else {
-            throw JXBridgeErrors.unsupported("\(namespace.value) does not support importing all symbols")
+            throw JXError(message: "Namespace '\(namespace.value)' does not support importing all symbols. Import specific symbols")
         }
         guard let module = context.registry.module(for: namespace) else {
-            throw JXBridgeErrors.internalError("Module not found in registry: \(namespace.value)")
+            throw JXError(message: "Module '\(namespace.value)' not found in registry")
         }
         guard try module.defineAll(namespace: namespace, in: context) else {
-            throw JXBridgeErrors.unsupported("\(namespace.value) does not support importing all symbols")
+            throw JXError(message: "Module for namespace '\(namespace.value)' does not support importing all symbols. Import specific symbols")
         }
 
         // Now that all namespace symbols are defined, move them into the global namespace.
@@ -357,20 +362,16 @@ extension JXBridgeContextSPI: JXContextSPI {
 
     func fromJX<T>(_ value: JXValue, to type: T.Type) throws -> T? {
         try throwInitializationError()
-        guard value.hasProperty(JSCodeGenerator.nativePropertyName) else {
-            return nil
-        }
-        let nativeProperty = try value[JSCodeGenerator.nativePropertyName]
-        guard let instanceBox = nativeProperty.peer as? InstanceBox, let instance = instanceBox.instance as? T else {
-            return nil
-        }
-        return instance
+        return try value.bridged as? T
     }
     
     private func throwInitializationError() throws {
         // If we didn't initialize cleanly, throw an error for all operations.
-        if let initializationError {
-            throw initializationError
+        guard let initializationError else {
+            return
         }
+        var error = JXError(cause: initializationError)
+        error.message = "Unable to initialize JXBridge for this JXContext: \(error.message)"
+        throw error
     }
 }

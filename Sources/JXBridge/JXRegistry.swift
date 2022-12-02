@@ -64,12 +64,12 @@ public final class JXRegistry {
 
     /// Register a bridge for use in JavaScript.
     ///
-    /// - Throws ``JXBridgeErrors/namespaceViolation(_:_:)`` if you attempt to use an invalid namespace or register the same type under multiple namespaces.
+    /// - Throws An error if you attempt to use an invalid namespace or register the same type under multiple namespaces.
     /// - Note: This method does **not** automatically register any superclass bridge.
     public func register(_ bridge: JXBridge) throws {
         let actualTypeName = String(reflecting: bridge.type)
         if let previousNamespace = bridgesByActualTypeName[actualTypeName]?.namespace, previousNamespace != bridge.namespace {
-            throw JXBridgeErrors.namespaceViolation(actualTypeName, previousNamespace.value)
+            throw JXError(message: "Attempt to register type '\(String(describing: bridge.type))' under second namespace '\(bridge.namespace.value)'. That type is already registered under namespace '\(previousNamespace.value)'")
         }
             
         var preparedBridge = bridge
@@ -93,7 +93,7 @@ public final class JXRegistry {
     ///             .bridge
     ///     }
     ///
-    /// - Throws ``JXBridgeErrors/namespaceViolation(_:_:)`` if you attempt to use an invalid namespace or register the same type under multiple namespaces.
+    /// - Throws An error if you attempt to use an invalid namespace or register the same type under multiple namespaces.
     public func register(_ bridge: () -> JXBridge) throws {
         try register(bridge())
     }
@@ -102,7 +102,7 @@ public final class JXRegistry {
     ///
     /// - Parameters:
     ///   - namespace: Override the generated bridge's namespace. This applies only to the bridge for the given type, not to any superclass bridge that may also be generated.
-    /// - Throws ``JXBridgeErrors/namespaceViolation(_:_:)`` if you attempt to use an invalid namespace or register the same type under multiple namespaces.
+    /// - Throws An error if you attempt to use an invalid namespace or register the same type under multiple namespaces.
     /// - Note: This method automatically registers the superclass bridge if it also conforms to ``JXStaticBridging``.
     @discardableResult public func registerBridge<T: JXStaticBridging>(for type: T.Type, namespace: JXNamespace? = nil) throws -> JXBridge {
         var bridge = try type.jxBridge()
@@ -120,7 +120,7 @@ public final class JXRegistry {
     ///
     /// - Parameters:
     ///   - namespace: Override the generated bridge's namespace. This applies only to the bridge for the given type, not to any superclass bridge that may also be generated.
-    /// - Throws ``JXBridgeErrors/namespaceViolation(_:_:)`` if you attempt to use an invalid namespace or register the same type under multiple namespaces.
+    /// - Throws An error if you attempt to use an invalid namespace or register the same type under multiple namespaces.
     /// - Note: This method automatically registers the superclass bridge if it also conforms to ``JXStaticBridging`` or ``JXBridging``.
     @discardableResult public func registerBridge<T: JXBridging>(for instance: T, namespace: JXNamespace? = nil) throws -> JXBridge {
         let mirror = Mirror(reflecting: instance)
@@ -161,8 +161,8 @@ public final class JXRegistry {
     ///
     /// - Parameters:
     ///   - namespace: The namespace under which to add the type.
+    /// - Throws An error if you attempt to use an invalid namespace or register the same type under multiple namespaces.
     /// - Note: This method automatically registers any superclass bridge under the same namespace.
-    /// - Throws ``JXBridgeErrors/namespaceViolation(_:_:)`` if you attempt to use an invalid namespace or register the same type under multiple namespaces.
     @discardableResult public func registerBridge<T: NSObject>(forObjectiveC type: T.Type, namespace: JXNamespace? = nil) throws -> JXBridge {
         // Still allow customization
         if let bridgingType = type as? JXStaticBridging.Type {
@@ -191,7 +191,7 @@ public final class JXRegistry {
         do {
             return try bridge(for: typeName, namespace: namespace, definingIn: nil)
         } catch {
-            // Call should not have been to throw when autobridging is false
+            // Call should not throw when autobridging is false
             return nil
         }
     }
@@ -218,7 +218,7 @@ public final class JXRegistry {
         do {
             return try bridge(for: instance, definingIn: nil)
         } catch {
-            // Call should not have been to throw when autobridging is false
+            // Call should not throw when autobridging is false
             return nil
         }
     }

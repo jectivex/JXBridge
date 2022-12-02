@@ -65,9 +65,9 @@ public struct JXBridge {
             return constructor
         }
         if constructors.isEmpty {
-            throw JXBridgeErrors.noConstructors(String(describing: type))
+            throw JXError(message: "Error calling \(String(describing: type)).init: No constructors registered")
         } else {
-            throw JXBridgeErrors.invalidArgumentCount(String(describing: type), "init")
+            throw JXError(message: "Error calling \(String(describing: type)).init: No registered constructor with \(count) parameters")
         }
     }
 
@@ -103,7 +103,7 @@ public struct JXBridge {
         if let property = findProperty(for: name, superclassRegistry: superclassRegistry) {
             return property
         }
-        throw JXBridgeErrors.unknownSymbol(String(describing: type), name)
+        throw JXError(message: "Error accessing \(String(describing: type)).\(name): No registered property with that name")
     }
 
     private func findProperty(for name: String, superclassRegistry: JXRegistry?) -> PropertyBridge? {
@@ -135,7 +135,7 @@ public struct JXBridge {
         if let function = findFunction(for: name, superclassRegistry: superclassRegistry) {
             return function
         }
-        throw JXBridgeErrors.unknownSymbol(String(describing: type), name)
+        throw JXError(message: "Error calling \(String(describing: type)).\(name): No registered function with that name")
     }
 
     private func findFunction(for name: String, superclassRegistry: JXRegistry? = nil) -> FunctionBridge? {
@@ -166,7 +166,7 @@ public struct JXBridge {
         if let property = findStaticProperty(for: name, superclassRegistry: superclassRegistry) {
             return property
         }
-        throw JXBridgeErrors.unknownSymbol(String(describing: type), name)
+        throw JXError(message: "Error accessing \(String(describing: type)).\(name): No registered static property with that name")
     }
 
     private func findStaticProperty(for name: String, superclassRegistry: JXRegistry? = nil) -> StaticPropertyBridge? {
@@ -197,7 +197,7 @@ public struct JXBridge {
         if let function = findStaticFunction(for: name, superclassRegistry: superclassRegistry) {
             return function
         }
-        throw JXBridgeErrors.unknownSymbol(String(describing: type), name)
+        throw JXError(message: "Error calling \(String(describing: type)).\(name): No registered static function with that name")
     }
 
     private func findStaticFunction(for name: String, superclassRegistry: JXRegistry?) -> StaticFunctionBridge? {
@@ -228,7 +228,7 @@ public struct JXBridge {
         if let property = findClassProperty(for: name, superclassRegistry: superclassRegistry) {
             return property
         }
-        throw JXBridgeErrors.unknownSymbol(String(describing: type), name)
+        throw JXError(message: "Error accessing \(String(describing: type)).\(name): No registered class property with that name")
     }
 
     private func findClassProperty(for name: String, superclassRegistry: JXRegistry?) -> PropertyBridge? {
@@ -260,7 +260,7 @@ public struct JXBridge {
         if let function = findClassFunction(for: name, superclassRegistry: superclassRegistry) {
             return function
         }
-        throw JXBridgeErrors.unknownSymbol(String(describing: type), name)
+        throw JXError(message: "Error calling \(String(describing: type)).\(name): No registered class function with that name")
     }
 
     private func findClassFunction(for name: String, superclassRegistry: JXRegistry? = nil) -> FunctionBridge? {
@@ -312,43 +312,70 @@ public struct JXBridge {
 
 /// Bridge a native constructor.
 struct ConstructorBridge {
+    let owningTypeName: String
     let parameterCount: Int
     let constructor: ([JXValue], JXContext) throws -> Any
 
     /// Call the constructor, returning the constructed instance.
     func call(_ args: [JXValue], in context: JXContext) throws -> Any {
-        return try constructor(args, context)
+        do {
+            return try constructor(args, context)
+        } catch {
+            var error = JXError(cause: error)
+            error.message = "Error invoking \(owningTypeName).init: \(error.message)"
+            throw error
+        }
     }
 }
 
 /// Bridge a native instance property.
 struct PropertyBridge {
+    let owningTypeName: String
     let name: String
     let getter: (Any, JXContext) throws -> JXValue
     let setter: ((Any, JXValue, JXContext) throws -> Any)? // Returns target instance (for value types)
 
     /// Call the getter, returning the value.
     func get(for instance: Any, in context: JXContext) throws -> JXValue {
-        return try getter(instance, context)
+        do {
+            return try getter(instance, context)
+        } catch {
+            var error = JXError(cause: error)
+            error.message = "Error getting \(owningTypeName).\(name): \(error.message)"
+            throw error
+        }
     }
 
     /// Call the setter, returning the target instance. For value types, this may be a different value.
     func set(for instance: Any, value: JXValue, in context: JXContext) throws -> Any {
         guard let setter = self.setter else {
-            throw JXBridgeErrors.readOnlyProperty(String(describing: Swift.type(of: instance)), name)
+            throw JXError(message: "Error setting \(owningTypeName).\(name): This property is read only")
         }
-        return try setter(instance, value, context)
+        do {
+            return try setter(instance, value, context)
+        } catch {
+            var error = JXError(cause: error)
+            error.message = "Error setting \(owningTypeName).\(name): \(error.message)"
+            throw error
+        }
     }
 }
 
 /// Bridge a native instance function.
 struct FunctionBridge {
+    let owningTypeName: String
     let name: String
     let function: (Any, [JXValue], JXContext) throws -> (Any, JXValue) // Returns target instance (for value types)
 
     /// Call the function, returning the target instance and function return. For value types, the target instance may be a different value.
     func call(for instance: Any, with args: [JXValue], in context: JXContext) throws -> (Any, JXValue) {
-        return try function(instance, args, context)
+        do {
+            return try function(instance, args, context)
+        } catch {
+            var error = JXError(cause: error)
+            error.message = "Error calling \(owningTypeName).\(name): \(error.message)"
+            throw error
+        }
     }
 }
 
@@ -361,25 +388,44 @@ struct StaticPropertyBridge {
 
     /// Call the getter, returning the value.
     func get(in context: JXContext) throws -> JXValue {
-        return try getter(context)
+        do {
+            return try getter(context)
+        } catch {
+            var error = JXError(cause: error)
+            error.message = "Error getting \(owningTypeName).\(name): \(error.message)"
+            throw error
+        }
     }
 
     /// Call the setter.
     func set(value: JXValue, in context: JXContext) throws {
         guard let setter = self.setter else {
-            throw JXBridgeErrors.readOnlyProperty(owningTypeName, name)
+            throw JXError(message: "Error setting \(owningTypeName).\(name): This property is read only")
         }
-        try setter(value, context)
+        do {
+            try setter(value, context)
+        } catch {
+            var error = JXError(cause: error)
+            error.message = "Error setting \(owningTypeName).\(name): \(error.message)"
+            throw error
+        }
     }
 }
 
 /// Bridge a native static function.
 struct StaticFunctionBridge {
+    let owningTypeName: String
     let name: String
     let function: ([JXValue], JXContext) throws -> JXValue
 
     /// Call the function, returning the function return.
     func call(with args: [JXValue], in context: JXContext) throws -> JXValue {
-        return try function(args, context)
+        do {
+            return try function(args, context)
+        } catch {
+            var error = JXError(cause: error)
+            error.message = "Error calling \(owningTypeName).\(name): \(error.message)"
+            throw error
+        }
     }
 }

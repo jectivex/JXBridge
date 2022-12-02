@@ -6,7 +6,7 @@ final class StaticBox: NativeBox {
         let typeNameString = try typeName.string
         let namespaceString = try namespace.string
         guard let bridge = registry.bridge(for: typeNameString, namespace: JXNamespace(namespaceString)) else {
-            throw JXBridgeErrors.unknownSymbol(namespaceString, typeNameString)
+            throw JXError.missingBridge(for: typeNameString, namespace: namespaceString)
         }
         return StaticBox(bridge: bridge, registry: registry)
     }

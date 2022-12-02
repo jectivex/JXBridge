@@ -44,6 +44,18 @@ final class ModuleTests: XCTestCase {
             XCTAssertTrue(context.registry.modulesByNamespace["eager"]?.count == 0)
             XCTAssertTrue(context.registry.modulesByNamespace["lazy"]?.count == 0)
         }
+        
+        module = LazyModule()
+        module.throwInitializeError = true
+        let delayedRegistry = JXRegistry()
+        try delayedRegistry.register(module)
+        let delayedContext = JXContext()
+        do {
+            try delayedContext.setRegistry(delayedRegistry)
+            XCTFail()
+        } catch _ as JXError {
+            // Expected
+        }
     }
     
     func testAnyJXBridgingModule() throws {
@@ -117,15 +129,22 @@ private class TestBridgingSubclass: TestBridgingBaseClass {
 
 private struct LazyModule: JXModule {
     var throwError = false
+    var throwInitializeError = false
     var addDependency: JXModule?
     var namespace = JXNamespace("lazy")
     
     func register(with registry: JXRegistry) throws {
         if throwError {
-            throw JXBridgeErrors.internalError("LazyModule.initialize")
+            throw ModuleError.some("LazyModule.register")
         }
         if let addDependency = self.addDependency {
             try registry.register(addDependency)
+        }
+    }
+    
+    func initialize(in context: JXContext) throws {
+        if throwInitializeError {
+            throw ModuleError.some("LazyModule.initialize")
         }
     }
     
@@ -153,7 +172,7 @@ private struct EagerModule: JXModule {
     
     func register(with registry: JXRegistry) throws {
         if throwError {
-            throw JXBridgeErrors.internalError("EagerModule.initialize")
+            throw ModuleError.some("EagerModule.register")
         }
         try registry.register {
             JXBridgeBuilder(type: TestStruct.self, namespace: namespace)
@@ -163,5 +182,9 @@ private struct EagerModule: JXModule {
         }
     }
 }
-#endif // DEBUG
 
+private enum ModuleError: Error {
+    case some(String)
+}
+
+#endif // DEBUG

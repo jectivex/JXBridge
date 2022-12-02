@@ -239,6 +239,49 @@ result;
         }
         XCTAssertEqual(try result.int, 3)
     }
+    
+    func testErrors() throws {
+        let context = JXContext()
+        try context.registry.register {
+            JXBridgeBuilder(type: TestStruct.self)
+                .constructor { TestStruct.init }
+                .var.readWriteInt { \.readWriteInt }
+                .func.exceptionFunc { TestStruct.exceptionFunc }
+                .bridge
+        }
+        try context.registry.register {
+            JXBridgeBuilder(type: TestBaseClass.self)
+                .bridge
+        }
+
+        do {
+            try context.eval("var obj = new jx.TestBaseClass();")
+            XCTFail("Missing constructor")
+        } catch {
+            XCTAssertEqual("\(error)", "Error calling TestBaseClass.init: No constructors registered <<script: var obj = new jx.TestBaseClass(); >>")
+        }
+        
+        do {
+            try context.eval("var obj = new jx.TestStruct(); obj.readWriteInt = 'a';")
+            XCTFail("Bad property type")
+        } catch {
+            XCTAssertEqual("\(error)", "Error setting TestStruct.readWriteInt: JavaScript value 'a' converted to invalid number 'nan' <<script: var obj = new jx.TestStruct(); obj.readWriteInt = 'a'; >>")
+        }
+        
+        do {
+            try context.eval("var obj = new jx.TestStruct(); obj.exceptionFunc(1);")
+            XCTFail("Wrong number of arguments")
+        } catch {
+            XCTAssertEqual("\(error)", "Error calling TestStruct.exceptionFunc: Expected 0 arguments. Received 1 <<script: var obj = new jx.TestStruct(); obj.exceptionFunc(1); >>")
+        }
+        
+        do {
+            try context.eval("var obj = new jx.TestStruct(); obj.exceptionFunc();")
+            XCTFail("exceptionFunc() should throw")
+        } catch {
+            XCTAssertEqual("\(error)", "Error calling TestStruct.exceptionFunc: TestError(message: \"exceptionFunc error\") <<script: var obj = new jx.TestStruct(); obj.exceptionFunc(); >>")
+        }
+    }
 }
 
 private struct TestStruct {

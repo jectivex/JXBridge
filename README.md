@@ -36,6 +36,9 @@ Browse the [API Documentation].
 - Formalize threading model.
     - We currently assume that there is never concurrent access to a `JXContext`.
     - We always evaluate JavaScript - including calling any bridged native code - on the context's calling thread.
+- Support mode in which all JS executes on a given background queue and hops to another queue for native code.
+- Support native Actors and perform async calls.
+- Add JXContext.current for native code called from JS.
 - Test performance of bridged code.
 - Support Swift tuples as return values?
     - This would require additional function builder overloads to maintain the tuple element types.
@@ -46,9 +49,8 @@ Browse the [API Documentation].
                 return jsDelegate.invoke('senderDidSomethingWithResult', [sender, result]).convey(to: Return.self)
             }
         
-- Support Swift trailing closures in JavaScript.
-    - This would require additional function builder overloads for all support block signatures. We could limit the overloads to non-async instance functions.
-    - Consider support for Void closures with no args, a single Bool arg, and a single Result arg.
+- Support Swift trailing closures without wrapping in JXClosure.
+    - Consider auto-generating all the necessary builder function signatures.
 - Consider a SourceKit plugin option to auto-generate Swift bridging code.
 - Test enhancing and overriding reflected ObjectiveC API with explicit bridging.
 - Support ObjectiveC trailing `error: NSError**` parameters.
