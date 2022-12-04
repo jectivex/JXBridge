@@ -12,7 +12,7 @@ public struct AnyJXBridging: JXModule {
             guard namespace != .none else {
                 return typeName
             }
-            return namespace.value + "." + typeName
+            return "\(namespace).\(typeName)"
         }
         self.init(map: { map[qualifiedTypeName($0, namespace: $1)] })
     }

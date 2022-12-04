@@ -12,7 +12,7 @@ struct JSCodeGenerator {
     
     /// Define a var with a value of the given namespace.
     static func defineNamespaceJSProxy(_ namespace: JXNamespace) -> String {
-        let js = "var \(namespace.value) = \(newNamespaceJSProxy(namespace))"
+        let js = "var \(namespace) = \(newNamespaceJSProxy(namespace))"
         print(js) //~~~
         return js
     }
@@ -20,10 +20,10 @@ struct JSCodeGenerator {
     /// Return a new namespace that performs a callback on any attempt to access its classes, giving us a chance to lazily define the requested class.
     static func newNamespaceJSProxy(_ namespace: JXNamespace) -> String {
         return """
-new Proxy({ _jxNamespace: '\(namespace.value)' }, {
+new Proxy({ _jxNamespace: '\(namespace)' }, {
     get(target, property) {
         if (target[property] === undefined) {
-            _jxDefine(property, '\(namespace.value)');
+            _jxDefine(property, '\(namespace)');
         }
         return target[property];
     }
@@ -43,7 +43,7 @@ new Proxy({ _jxNamespace: '\(namespace.value)' }, {
         
         let classJS = """
 \(bridge.qualifiedTypeName) = class\(extendsClause) {
-    static _jxStaticNative = _jxCreateStaticNative('\(bridge.typeName)', '\(bridge.namespace.value)');
+    static _jxStaticNative = _jxCreateStaticNative('\(bridge.typeName)', '\(bridge.namespace)');
     static _jxTypeName = '\(bridge.typeName)';
 \(staticPropertiesJS)
 \(staticFunctionsJS)
@@ -112,7 +112,7 @@ new Proxy({ _jxNamespace: '\(namespace.value)' }, {
         if (args.length === 1 && args[0] === '_jxNative') {
             this._jxNative = null; // Will be inserted
         } else {
-            this._jxNative = _jxCreateNative('\(bridge.typeName)', '\(bridge.namespace.value)', args);
+            this._jxNative = _jxCreateNative('\(bridge.typeName)', '\(bridge.namespace)', args);
         }
     }
 """

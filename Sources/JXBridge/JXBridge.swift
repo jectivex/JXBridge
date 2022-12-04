@@ -42,7 +42,7 @@ public struct JXBridge {
         if namespace.value.isEmpty {
             qualifiedTypeName = typeName
         } else {
-            qualifiedTypeName = namespace.value + "." + typeName
+            qualifiedTypeName = "\(namespace).\(typeName)"
         }
     }
     

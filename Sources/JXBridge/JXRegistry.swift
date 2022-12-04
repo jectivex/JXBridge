@@ -69,7 +69,7 @@ public final class JXRegistry {
     public func register(_ bridge: JXBridge) throws {
         let actualTypeName = String(reflecting: bridge.type)
         if let previousNamespace = bridgesByActualTypeName[actualTypeName]?.namespace, previousNamespace != bridge.namespace {
-            throw JXError(message: "Attempt to register type '\(String(describing: bridge.type))' under second namespace '\(bridge.namespace.value)'. That type is already registered under namespace '\(previousNamespace.value)'")
+            throw JXError(message: "Attempt to register type '\(String(describing: bridge.type))' under second namespace '\(bridge.namespace)'. That type is already registered under namespace '\(previousNamespace)'")
         }
             
         var preparedBridge = bridge

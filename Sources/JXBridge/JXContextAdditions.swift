@@ -143,7 +143,7 @@ final class JXBridgeContextSPI {
             // When initialization isn't an immediate result of the dev registering the module, add context to help them track down the problem
             if addErrorContext {
                 var error = JXError(cause: error)
-                error.message = "Unable to initialize module '\(module.namespace.value)': \(error.message)"
+                error.message = "Unable to initialize module '\(module.namespace)': \(error.message)"
                 throw error
             } else {
                 throw error
@@ -279,13 +279,13 @@ final class JXBridgeContextSPI {
             return
         }
         guard namespace != .none && namespace != .default else {
-            throw JXError(message: "Namespace '\(namespace.value)' does not support importing all symbols. Import specific symbols")
+            throw JXError(message: "Namespace '\(namespace)' does not support importing all symbols. Import specific symbols")
         }
         guard let module = context.registry.module(for: namespace) else {
-            throw JXError(message: "Module '\(namespace.value)' not found in registry")
+            throw JXError(message: "Module '\(namespace)' not found in registry")
         }
         guard try module.defineAll(namespace: namespace, in: context) else {
-            throw JXError(message: "Module for namespace '\(namespace.value)' does not support importing all symbols. Import specific symbols")
+            throw JXError(message: "Module for namespace '\(namespace)' does not support importing all symbols. Import specific symbols")
         }
 
         // Now that all namespace symbols are defined, move them into the global namespace.

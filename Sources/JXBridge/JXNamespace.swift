@@ -1,5 +1,5 @@
 /// A namespace used for JavaScript bridged types.
-public struct JXNamespace: ExpressibleByStringLiteral, Hashable {
+public struct JXNamespace: ExpressibleByStringLiteral, CustomStringConvertible, Hashable {
     /// The default namespace: `jx`
     public static let `default` = JXNamespace("jx")
     
@@ -14,5 +14,9 @@ public struct JXNamespace: ExpressibleByStringLiteral, Hashable {
     
     public init(stringLiteral: String) {
         self.value = stringLiteral
+    }
+    
+    public var description: String {
+        return value
     }
 }
