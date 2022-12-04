@@ -160,7 +160,7 @@ private func conveyToObjectiveC(_ value: JXValue, toBoxed type: JXObjectiveCType
     case .double:
         return try NSNumber(value: value.double)
     case .void:
-        throw JXError(message: "Cannot convey JavaScript value '\(value.description)' to ObjectiveC `void`")
+        throw JXError(message: "Cannot convey JavaScript value '\(value)' to ObjectiveC `void`")
     case .object:
         switch value.type {
         case .null:
@@ -214,7 +214,7 @@ private func conveyToObjectiveC(_ value: JXValue, toBoxed type: JXObjectiveCType
     @unknown default:
         break
     }
-    throw JXError(message: "Cannot convey JavaScript value '\(value.description)' to ObjectiveC. The ObjectiveC type is not supported")
+    throw JXError(message: "Cannot convey JavaScript value '\(value)' to ObjectiveC. The ObjectiveC type is not supported")
 }
 
 /// Convert a boxed ObjectiveC return value from `JXObjectiveCReflector` to a value that we can transfer to a script.
