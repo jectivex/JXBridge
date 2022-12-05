@@ -267,13 +267,6 @@ public final class JXBridgeBuilder<T> {
                 return add(FunctionBridge(name: name, function: f()))
             }
             
-            //~~~
-            // builder.func.xxx { Type.xxx(p0:) }
-            @discardableResult public func callAsFunction<CR, R>(_ f: @escaping () -> (T) -> (() -> CR) throws -> R) -> JXBridgeBuilder<T> {
-                return add(FunctionBridge(name: name, function: f()))
-            }
-            //~~~
-            
             // builder.func.xxx { Type.xxx(p0:) }
             @discardableResult public func callAsFunction<P0, R>(_ f: @escaping () -> (T) -> (P0) async throws -> R) -> JXBridgeBuilder<T> {
                 return add(FunctionBridge(name: name, function: f()))

@@ -38,5 +38,11 @@ let package = Package(
     platforms: [ .macOS(.v12), .iOS(.v15), .tvOS(.v15) ],
     products: products,
     dependencies: dependencies,
-    targets: targets
+    targets: targets + [
+        .plugin(name: "ArityGeneratorCommand",
+                capability: .command(intent: .custom(verb: "generate-arity", description: "Generate arity support"),
+                    permissions: [
+                        .writeToPackageDirectory(reason: "Write arity source files")
+                    ]), dependencies: [])
+    ]
 )
