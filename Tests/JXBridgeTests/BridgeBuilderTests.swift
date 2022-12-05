@@ -168,3 +168,14 @@ private class TestClass {
 }
 
 #endif
+
+private actor TestActor {
+    var intProperty = 1
+
+    func instanceParamFunc(param: Int) -> Int {
+        return param + 1;
+    }
+
+    init() {
+    }
+}
