@@ -175,6 +175,15 @@ extension ConstructorBridge {
         }
     }
     
+    //~~~
+    init<T, R>(_ cons: @escaping (() -> R) throws -> T) {
+        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 1) { args, context in
+            let p = try conveyParameters(args, JXClosure.Arity0<R>.self)
+            return try cons(p.closure)
+        }
+    }
+    //~~~
+    
     // Type.init(p0:p1:)
     init<T, P0, P1>(_ cons: @escaping (P0, P1) throws -> T) {
         self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 2) { args, context in
@@ -332,6 +341,15 @@ extension FunctionBridge {
         }
     }
     
+    //~~~
+    init<T, CR, R>(name: String, function: @escaping (T) -> (() -> CR) throws -> R) {
+        self = FunctionBridge(name: name) { (obj: T, p0: () -> CR) throws -> R in
+            let callFunc = function(obj)
+            return try callFunc(p0)
+        }
+    }
+    //~~~
+    
     // Type.xxx(p0:) async
     init<T, P0, R>(name: String, function: @escaping (T) -> (P0) async throws -> R) {
         self = FunctionBridge(name: name) { (obj: T, p0: P0) async throws -> R in
@@ -350,6 +368,18 @@ extension FunctionBridge {
             return (target, try context.convey(ret))
         }
     }
+    
+    //~~~
+    init<T, CR, R>(name: String, function: @escaping (T, () -> CR) throws -> R) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 1)
+            let p = try conveyParameters(args, JXClosure.Arity0<CR>.self)
+            let ret = try function(target, p.closure)
+            return (target, try context.convey(ret))
+        }
+    }
+    //~~~
     
     // { await $0.xxx(p0: $1) }
     init<T, P0, R>(name: String, function: @escaping (T, P0) async throws -> R) {
