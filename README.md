@@ -39,7 +39,6 @@ Browse the [API Documentation].
 - Support mode in which all JS executes on a given background queue and hops to another queue for native code.
 - Support native Actors and perform async calls.
 - Add JXContext.current for native code called from JS.
-- Test performance of bridged code.
 - Support Swift tuples as return values?
     - This would require additional function builder overloads to maintain the tuple element types.
 - Support Swift delegates in JavaScript.
