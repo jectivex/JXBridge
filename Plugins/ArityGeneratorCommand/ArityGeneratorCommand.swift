@@ -14,9 +14,10 @@ import System
         if #available(macOS 13.0, *) {
             for argument in arguments {
                 let inputPath = FilePath(argument)
-                print("Reading input file \(inputPath.lastComponent?.string ?? argument)...", terminator: "")
+                let inputFileName = inputPath.lastComponent?.string ?? argument
+                print("Reading input file \(inputFileName)...", terminator: "")
                 let input = try String(contentsOfFile: inputPath.string)
-                guard let generator = try ArityGenerator(input: input) else {
+                guard let generator = try ArityGenerator(source: inputFileName, input: input) else {
                     print(" No arity comments found")
                     continue
                 }

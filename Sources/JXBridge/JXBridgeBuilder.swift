@@ -190,32 +190,39 @@ public final class JXBridgeBuilder<T> {
             let name: String
             let vars: Vars<T>
             
-            // builder.var.xxx { \.xxx }
-            @discardableResult public func callAsFunction<V>(_ accessor: () -> KeyPath<T, V>) -> JXBridgeBuilder<T> {
-                return add(PropertyBridge(name: name, keyPath: accessor()))
-            }
-            
-            // builder.var.xxx { $0.xxx }
-            @discardableResult public func callAsFunction<V>(_ getter: @escaping (T) throws -> V) -> JXBridgeBuilder<T> {
-                return callAsFunction(get: getter, set: nil)
-            }
-            
-            // builder.var.xxx { $0.xxx ) set: { ... }
-            @discardableResult public func callAsFunction<V>(get getterFunc: @escaping (T) throws -> V, set setterFunc: ((T, V) -> Void)?) -> JXBridgeBuilder<T> {
-                return add(PropertyBridge(name: name, getter: getterFunc, setter: setterFunc))
-            }
-            
-            // builder.var.xxx { $0.xxx ) set: { ... }
-            @discardableResult public func callAsFunction<V>(get getterFunc: @escaping (T) throws -> V, set setterFunc: @escaping (T, V) -> T) -> JXBridgeBuilder<T> {
-                return add(PropertyBridge(name: name, getter: getterFunc, setter: setterFunc))
-            }
-            
-            // builder.var.xxx { await $0.xxx }
-            @discardableResult public func callAsFunction<V>(_ getter: @escaping (T) async throws -> V) -> JXBridgeBuilder<T> {
-                return add(PropertyBridge(name: name, getter: getter))
-            }
-            
-            private func add(_ propertyBridge: PropertyBridge) -> JXBridgeBuilder<T> {
+/*ARITY:PROPERTY
+extension JXBridgeBuilder.Vars.Var {
+    // builder.var.xxx { \.xxx }
+    @discardableResult public func callAsFunction<${VALUE_TYPES}>(_ accessor: () -> KeyPath<T, ${VALUE}>) -> JXBridgeBuilder<T> {
+        return add(PropertyBridge(name: name, keyPath: accessor()))
+    }
+             
+    // builder.var.xxx { $0.xxx }
+    @discardableResult public func callAsFunction<${VALUE_TYPES}>(_ getter: @escaping (T) throws -> ${VALUE}) -> JXBridgeBuilder<T> {
+        return callAsFunction(get: getter, set: nil)
+    }
+             
+    // builder.var.xxx { $0.xxx ) set: { ... }
+    @discardableResult public func callAsFunction<${VALUE_TYPES}>(get getterFunc: @escaping (T) throws -> ${VALUE}, set setterFunc: ((T, ${VALUE}) -> Void)?) -> JXBridgeBuilder<T> {
+        return add(PropertyBridge(name: name, getter: getterFunc, setter: setterFunc))
+    }
+             
+    // builder.var.xxx { $0.xxx ) set: { ... }
+    @discardableResult public func callAsFunction<${VALUE_TYPES}>(get getterFunc: @escaping (T) throws -> ${VALUE}, set setterFunc: @escaping (T, ${VALUE}) -> T) -> JXBridgeBuilder<T> {
+        return add(PropertyBridge(name: name, getter: getterFunc, setter: setterFunc))
+    }
+}
+ARITY*/
+
+/*ARITY:ASYNC_PROPERTY
+extension JXBridgeBuilder.Vars.Var {
+    // builder.var.xxx { await $0.xxx }
+    @discardableResult public func callAsFunction<${VALUE_TYPES}>(_ getter: @escaping (T) async throws -> ${VALUE}) -> JXBridgeBuilder<T> {
+        return add(PropertyBridge(name: name, getter: getter))
+    }
+}
+ARITY*/
+            func add(_ propertyBridge: PropertyBridge) -> JXBridgeBuilder<T> {
                 vars.builder.bridge.properties.append(propertyBridge)
                 return vars.builder
             }
