@@ -208,13 +208,7 @@ invokeAsync(obj);
             JXBridgeBuilder(type: TestStruct.self)
                 .constructor { TestStruct.init }
                 .var.readWriteInt { \.readWriteInt }
-                .var.callbackVar { (s: TestStruct) in
-                    JXClosure.Arity0(s.callbackVar)
-                } set: { (s: TestStruct, v: JXClosure.Arity0<Int>?) in
-                    var s = s
-                    s.callbackVar = v?.closure
-                    return s
-                }
+                .var.callbackVar { \.callbackVar }
                 .func.callbackFunc { (s: TestStruct, add: Int, result: JXClosure.Arity1<Int, Void>) in
                     s.callbackFunc(add: add, result: result.closure)
                 }

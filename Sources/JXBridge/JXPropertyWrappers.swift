@@ -75,16 +75,16 @@ public final class JXPublished<T> {
 /// - Note: Any `jx` prefix will be stripped in the bridged JavaScript property name.
 /// - Seealso: ``JXKeyPath``
 @propertyWrapper
-public struct JXVar<T> {
+public struct JXVar {
     let propertyBridge: (String) -> PropertyBridge
     
 /*ARITY:PROPERTY
 extension JXVar {
-    public init<${VALUE_TYPES}>(wrappedValue: (get: (T) throws -> ${VALUE}, set: ((T, ${VALUE}) -> Void)?), _ type: T.Type) {
+    public init<T, ${VALUE_TYPES}>(wrappedValue: (get: (T) throws -> ${VALUE}, set: ((T, ${VALUE}) -> Void)?), _ type: T.Type) {
         propertyBridge = { PropertyBridge(name: $0, getter: wrappedValue.get, setter: wrappedValue.set) }
     }
     
-    public init<${VALUE_TYPES}>(wrappedValue: @escaping (T) throws -> ${VALUE}, _ type: T.Type) {
+    public init<T, ${VALUE_TYPES}>(wrappedValue: @escaping (T) throws -> ${VALUE}, _ type: T.Type) {
         self = JXVar(wrappedValue: (get: wrappedValue, set: nil), type)
     }
 }
@@ -92,15 +92,15 @@ ARITY*/
     
 /*ARITY:ASYNC_PROPERTY
 extension JXVar {
-    public init<${VALUE_TYPES}>(wrappedValue: @escaping (T) async throws -> ${VALUE}, _ type: T.Type) {
+    public init<T, ${VALUE_TYPES}>(wrappedValue: @escaping (T) async throws -> ${VALUE}, _ type: T.Type) {
         propertyBridge = { PropertyBridge(name: $0, getter: wrappedValue) }
     }
 }
 ARITY*/
     
-    public var wrappedValue: (get: (T) throws -> Void, set: ((T) -> Void)?) {
+    public var wrappedValue: Any? {
         get {
-            return (get: { _ in throw JXError(message: "Do not access @JXVar vars") }, set: nil)
+            return nil
         }
         set {
         }
@@ -137,9 +137,9 @@ extension JXStaticVar {
 }
 ARITY*/
     
-    public var wrappedValue: (get: () throws -> Void, set: (() -> Void)?) {
+    public var wrappedValue: Any? {
         get {
-            return (get: { throw JXError(message: "Do not access @JXStaticVar vars") }, set: nil)
+            return nil
         }
         set {
         }
@@ -153,16 +153,16 @@ ARITY*/
 ///
 /// - Note: Any `jx` prefix will be stripped in the bridged JavaScript property name.
 @propertyWrapper
-public struct JXClassVar<T> {
+public struct JXClassVar {
     let propertyBridge: (String) -> PropertyBridge
     
 /*ARITY:PROPERTY
 extension JXClassVar {
-    public init<${VALUE_TYPES}>(wrappedValue: (get: (T.Type) throws -> ${VALUE}, set: ((T.Type, ${VALUE}) -> Void)?), _ type: T.Type) {
+    public init<T, ${VALUE_TYPES}>(wrappedValue: (get: (T.Type) throws -> ${VALUE}, set: ((T.Type, ${VALUE}) -> Void)?), _ type: T.Type) {
         propertyBridge = { PropertyBridge(name: $0, classGetter: wrappedValue.get, setter: wrappedValue.set) }
     }
     
-    public init<${VALUE_TYPES}>(wrappedValue: @escaping (T.Type) throws -> ${VALUE}, _ type: T.Type) {
+    public init<T, ${VALUE_TYPES}>(wrappedValue: @escaping (T.Type) throws -> ${VALUE}, _ type: T.Type) {
         self = JXClassVar(wrappedValue: (get: wrappedValue, set: nil), type)
     }
 }
@@ -170,15 +170,15 @@ ARITY*/
      
 /*ARITY:ASYNC_PROPERTY
 extension JXClassVar {
-    public init<${VALUE_TYPES}>(wrappedValue: @escaping (${VALUE}.Type) async throws -> ${VALUE}, _ type: T.Type) {
+    public init<T, ${VALUE_TYPES}>(wrappedValue: @escaping (${VALUE}.Type) async throws -> ${VALUE}, _ type: T.Type) {
         propertyBridge = { PropertyBridge(name: $0, classGetter: wrappedValue) }
     }
 }
 ARITY*/
     
-    public var wrappedValue: (get: (T.Type) throws -> Void, set: ((T.Type) -> Void)?) {
+    public var wrappedValue: Any? {
         get {
-            return (get: { _ in throw JXError(message: "Do not access @JXClassVar vars") }, set: nil)
+            return nil
         }
         set {
         }
@@ -190,15 +190,24 @@ ARITY*/
 ///     @JXKeyPath var jxcomputedTotal = \Counter.computedTotal
 ///     var total: Int { return ... }
 @propertyWrapper
-public struct JXKeyPath<T, V> {
-    private let propertyBridge: (String) -> PropertyBridge
+public struct JXKeyPath {
+    let propertyBridge: (String) -> PropertyBridge
 
-    public init(wrappedValue: KeyPath<T, V>) {
+/*ARITY:PROPERTY
+extension JXKeyPath {
+    public init<T, ${VALUE_TYPES}>(wrappedValue: KeyPath<T, ${VALUE}>) {
         propertyBridge = { PropertyBridge(name: $0, keyPath: wrappedValue) }
-        self.wrappedValue = wrappedValue
     }
+}
+ARITY*/
     
-    public var wrappedValue: KeyPath<T, V>
+    public var wrappedValue: Any? {
+        get {
+            return nil
+        }
+        set {
+        }
+    }
 }
 
 /// Property wrapper bridging a constructor to JavaScript.
@@ -206,48 +215,48 @@ public struct JXKeyPath<T, V> {
 ///     @JXInit var jxinit = init
 ///     init(value: Int) { ... }
 @propertyWrapper
-public struct JXInit<T> {
+public struct JXInit {
     private let constructorBridge: ConstructorBridge
 
-    public init(wrappedValue: @escaping () throws -> T) {
+    public init<T>(wrappedValue: @escaping () throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
     
-    public init<P0>(wrappedValue: @escaping (P0) throws -> T) {
+    public init<T, P0>(wrappedValue: @escaping (P0) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
     
-    public init<P0, P1>(wrappedValue: @escaping (P0, P1) throws -> T) {
+    public init<T, P0, P1>(wrappedValue: @escaping (P0, P1) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
     
-    public init<P0, P1, P2>(wrappedValue: @escaping (P0, P1, P2) throws -> T) {
+    public init<T, P0, P1, P2>(wrappedValue: @escaping (P0, P1, P2) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
     
-    public init<P0, P1, P2, P3>(wrappedValue: @escaping (P0, P1, P2, P3) throws -> T) {
+    public init<T, P0, P1, P2, P3>(wrappedValue: @escaping (P0, P1, P2, P3) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
     
-    public init<P0, P1, P2, P3, P4>(wrappedValue: @escaping (P0, P1, P2, P3, P4) throws -> T) {
+    public init<T, P0, P1, P2, P3, P4>(wrappedValue: @escaping (P0, P1, P2, P3, P4) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
     
-    public init<P0, P1, P2, P3, P4, P5>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5) throws -> T) {
+    public init<T, P0, P1, P2, P3, P4, P5>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
     
-    public init<P0, P1, P2, P3, P4, P5, P6>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> T) {
+    public init<T, P0, P1, P2, P3, P4, P5, P6>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
     
-    public init<P0, P1, P2, P3, P4, P5, P6, P7>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> T) {
+    public init<T, P0, P1, P2, P3, P4, P5, P6, P7>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
     
-    public var wrappedValue: () throws -> T {
+    public var wrappedValue: Any? {
         get {
-            return { throw JXError(message: "Do not access @JXInit vars") }
+            return nil
         }
         set {
         }
@@ -261,107 +270,109 @@ public struct JXInit<T> {
 ///
 /// - Note: Any `jx` prefix will be stripped in the bridged JavaScript function name.
 @propertyWrapper
-public struct JXFunc<T, R> {
+public struct JXFunc {
     private let functionBridge: (String) -> FunctionBridge
 
     // MARK: 0 parameters
     
-    public init(wrappedValue: @escaping (T) -> () throws -> R) {
+    public init<T, R>(wrappedValue: @escaping (T) -> () throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
-    public init(wrappedValue: @escaping (T) -> () async throws -> R) {
+    public init<T, R>(wrappedValue: @escaping (T) -> () async throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
     // MARK: 1 parameter
     
-    public init<P0>(wrappedValue: @escaping (T) -> (P0) throws -> R) {
+    public init<T, R, P0>(wrappedValue: @escaping (T) -> (P0) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
-    public init<P0>(wrappedValue: @escaping (T) -> (P0) async throws -> R) {
+    public init<T, R, P0>(wrappedValue: @escaping (T) -> (P0) async throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
     // MARK: 2 parameters
     
-    public init<P0, P1>(wrappedValue: @escaping (T) -> (P0, P1) throws -> R) {
+    public init<T, R, P0, P1>(wrappedValue: @escaping (T) -> (P0, P1) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
-    public init<P0, P1>(wrappedValue: @escaping (T) -> (P0, P1) async throws -> R) {
+    public init<T, R, P0, P1>(wrappedValue: @escaping (T) -> (P0, P1) async throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
     // MARK: 3 parameters
     
-    public init<P0, P1, P2>(wrappedValue: @escaping (T) -> (P0, P1, P2) throws -> R) {
+    public init<T, R, P0, P1, P2>(wrappedValue: @escaping (T) -> (P0, P1, P2) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
-    public init<P0, P1, P2>(wrappedValue: @escaping (T) -> (P0, P1, P2) async throws -> R) {
+    public init<T, R, P0, P1, P2>(wrappedValue: @escaping (T) -> (P0, P1, P2) async throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
     // MARK: 4 parameters
     
-    public init<P0, P1, P2, P3>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3) throws -> R) {
+    public init<T, R, P0, P1, P2, P3>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
-    public init<P0, P1, P2, P3>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3) async throws -> R) {
+    public init<T, R, P0, P1, P2, P3>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3) async throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
     // MARK: 5 parameters
     
-    public init<P0, P1, P2, P3, P4>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4) throws -> R) {
+    public init<T, R, P0, P1, P2, P3, P4>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
-    public init<P0, P1, P2, P3, P4>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4) async throws -> R) {
+    public init<T, R, P0, P1, P2, P3, P4>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4) async throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
     // MARK: 6 parameters
     
-    public init<P0, P1, P2, P3, P4, P5>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5) throws -> R) {
+    public init<T, R, P0, P1, P2, P3, P4, P5>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
-    public init<P0, P1, P2, P3, P4, P5>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5) async throws -> R) {
+    public init<T, R, P0, P1, P2, P3, P4, P5>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5) async throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
     // MARK: 7 parameters
     
-    public init<P0, P1, P2, P3, P4, P5, P6>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6) throws -> R) {
+    public init<T, R, P0, P1, P2, P3, P4, P5, P6>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
-    public init<P0, P1, P2, P3, P4, P5, P6>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6) async throws -> R) {
+    public init<T, R, P0, P1, P2, P3, P4, P5, P6>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6) async throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
     // MARK: 8 parameters
     
-    public init<P0, P1, P2, P3, P4, P5, P6, P7>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) {
+    public init<T, R, P0, P1, P2, P3, P4, P5, P6, P7>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
     
-    public init<P0, P1, P2, P3, P4, P5, P6, P7>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) {
+    public init<T, R, P0, P1, P2, P3, P4, P5, P6, P7>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
 
-    public var wrappedValue: (T) -> () throws -> R {
+    public var wrappedValue: Any? {
         get {
-            return { _ in { throw JXError(message: "Do not access @JXFunc vars")}}
+            return nil
         }
         set {
         }
     }
 }
+
+//~~~ Replace generics in type with generics in funcs, replace wrappedValue
 
 /// Property wrapper bridging a static function to JavaScript.
 ///

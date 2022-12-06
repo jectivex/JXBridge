@@ -60,7 +60,7 @@ final class PropertyWrapperTests: XCTestCase {
         let context = JXContext()
         try context.registry.registerBridge(for: TestClass(intVar: 0))
 
-        let result = try context.eval("const test = new jx.TestClass(1); test.increment(2); test.intVar")
+        let result = try context.eval("var test = new jx.TestClass(1); test.increment(2); test.intVar")
         XCTAssertEqual(try result.int, 3)
     }
     
@@ -70,8 +70,15 @@ final class PropertyWrapperTests: XCTestCase {
 
         let test = TestClass(intVar: 1)
         try context.global.integrate(test)
-        let result = try context.eval("jx.increment(2); jx.computedVar")
+        var result = try context.eval("jx.increment(2); jx.computedVar")
         XCTAssertEqual(try result.int, 6)
+        
+        result = try context.eval("""
+var test = new jx.TestClass(1);
+test.closureVar = () => { return 100; };
+test.closureVar();
+""")
+        XCTAssertEqual(try result.int, 100)
     }
     
     func testJXStatic() throws {
@@ -201,6 +208,9 @@ private class TestClass: JXBridging {
     }
     
     @JX var intVar: Int
+    
+    @JXKeyPath var jxclosureVar = \TestClass.closureVar
+    var closureVar: (() -> Int)?
 
     @JXKeyPath var jxcomputedVar = \TestClass.computedVar
     var computedVar: Int {

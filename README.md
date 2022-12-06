@@ -48,8 +48,6 @@ Browse the [API Documentation].
                 return jsDelegate.invoke('senderDidSomethingWithResult', [sender, result]).convey(to: Return.self)
             }
         
-- Support Swift trailing closures without wrapping in JXClosure.
-    - Consider auto-generating all the necessary builder function signatures.
 - Consider a SourceKit plugin option to auto-generate Swift bridging code.
 - Test enhancing and overriding reflected ObjectiveC API with explicit bridging.
 - Support ObjectiveC trailing `error: NSError**` parameters.
