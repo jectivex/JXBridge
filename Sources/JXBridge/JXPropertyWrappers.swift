@@ -75,22 +75,30 @@ public final class JXPublished<T> {
 /// - Note: Any `jx` prefix will be stripped in the bridged JavaScript property name.
 /// - Seealso: ``JXKeyPath``
 @propertyWrapper
-public struct JXVar<T, V> {
-    private let propertyBridge: (String) -> PropertyBridge
+public struct JXVar<T> {
+    let propertyBridge: (String) -> PropertyBridge
     
-    public init(wrappedValue: (get: (T) throws -> V, set: ((T, V) -> Void)?), _ type: T.Type) {
+/*ARITY:PROPERTY
+extension JXVar {
+    public init<${VALUE_TYPES}>(wrappedValue: (get: (T) throws -> ${VALUE}, set: ((T, ${VALUE}) -> Void)?), _ type: T.Type) {
         propertyBridge = { PropertyBridge(name: $0, getter: wrappedValue.get, setter: wrappedValue.set) }
     }
     
-    public init(wrappedValue: @escaping (T) throws -> V, _ type: T.Type) {
+    public init<${VALUE_TYPES}>(wrappedValue: @escaping (T) throws -> ${VALUE}, _ type: T.Type) {
         self = JXVar(wrappedValue: (get: wrappedValue, set: nil), type)
     }
+}
+ARITY*/
     
-    public init(wrappedValue: @escaping (T) async throws -> V, _ type: T.Type) {
+/*ARITY:ASYNC_PROPERTY
+extension JXVar {
+    public init<${VALUE_TYPES}>(wrappedValue: @escaping (T) async throws -> ${VALUE}, _ type: T.Type) {
         propertyBridge = { PropertyBridge(name: $0, getter: wrappedValue) }
     }
+}
+ARITY*/
     
-    public var wrappedValue: (get: (T) throws -> V, set: ((T, V) -> Void)?) {
+    public var wrappedValue: (get: (T) throws -> Void, set: ((T) -> Void)?) {
         get {
             return (get: { _ in throw JXError(message: "Do not access @JXVar vars") }, set: nil)
         }
@@ -106,22 +114,30 @@ public struct JXVar<T, V> {
 ///
 /// - Note: Any `jx` prefix will be stripped in the bridged JavaScript property name.
 @propertyWrapper
-public struct JXStaticVar<V> {
-    private let propertyBridge: (String) -> StaticPropertyBridge
+public struct JXStaticVar {
+    let propertyBridge: (String) -> StaticPropertyBridge
     
-    public init(wrappedValue: (get: () throws -> V, set: ((V) -> Void)?)) {
+/*ARITY:PROPERTY
+extension JXStaticVar {
+    public init<${VALUE_TYPES}>(wrappedValue: (get: () throws -> ${VALUE}, set: ((${VALUE}) -> Void)?)) {
         propertyBridge = { StaticPropertyBridge(name: $0, type: Any.self, getter: wrappedValue.get, setter: wrappedValue.set) }
     }
     
-    public init(wrappedValue: @escaping () throws -> V) {
+    public init<${VALUE_TYPES}>(wrappedValue: @escaping () throws -> ${VALUE}) {
         self = JXStaticVar(wrappedValue: (get: wrappedValue, set: nil))
     }
-    
-    public init(wrappedValue: @escaping () async throws -> V) {
+}
+ARITY*/
+     
+/*ARITY:ASYNC_PROPERTY
+extension JXStaticVar {
+    public init<${VALUE_TYPES}>(wrappedValue: @escaping () async throws -> ${VALUE}) {
         propertyBridge = { StaticPropertyBridge(name: $0, type: Any.self, getter: wrappedValue) }
     }
+}
+ARITY*/
     
-    public var wrappedValue: (get: () throws -> V, set: ((V) -> Void)?) {
+    public var wrappedValue: (get: () throws -> Void, set: (() -> Void)?) {
         get {
             return (get: { throw JXError(message: "Do not access @JXStaticVar vars") }, set: nil)
         }
@@ -137,22 +153,30 @@ public struct JXStaticVar<V> {
 ///
 /// - Note: Any `jx` prefix will be stripped in the bridged JavaScript property name.
 @propertyWrapper
-public struct JXClassVar<T, V> {
-    private let propertyBridge: (String) -> PropertyBridge
+public struct JXClassVar<T> {
+    let propertyBridge: (String) -> PropertyBridge
     
-    public init(wrappedValue: (get: (T.Type) throws -> V, set: ((T.Type, V) -> Void)?), _ type: T.Type) {
+/*ARITY:PROPERTY
+extension JXClassVar {
+    public init<${VALUE_TYPES}>(wrappedValue: (get: (T.Type) throws -> ${VALUE}, set: ((T.Type, ${VALUE}) -> Void)?), _ type: T.Type) {
         propertyBridge = { PropertyBridge(name: $0, classGetter: wrappedValue.get, setter: wrappedValue.set) }
     }
     
-    public init(wrappedValue: @escaping (T.Type) throws -> V, _ type: T.Type) {
+    public init<${VALUE_TYPES}>(wrappedValue: @escaping (T.Type) throws -> ${VALUE}, _ type: T.Type) {
         self = JXClassVar(wrappedValue: (get: wrappedValue, set: nil), type)
     }
-    
-    public init(wrappedValue: @escaping (T.Type) async throws -> V, _ type: T.Type) {
+}
+ARITY*/
+     
+/*ARITY:ASYNC_PROPERTY
+extension JXClassVar {
+    public init<${VALUE_TYPES}>(wrappedValue: @escaping (${VALUE}.Type) async throws -> ${VALUE}, _ type: T.Type) {
         propertyBridge = { PropertyBridge(name: $0, classGetter: wrappedValue) }
     }
+}
+ARITY*/
     
-    public var wrappedValue: (get: (T.Type) throws -> V, set: ((T.Type, V) -> Void)?) {
+    public var wrappedValue: (get: (T.Type) throws -> Void, set: ((T.Type) -> Void)?) {
         get {
             return (get: { _ in throw JXError(message: "Do not access @JXClassVar vars") }, set: nil)
         }

@@ -12,15 +12,15 @@ extension PropertyBridge {
     // \Type.var
     init<T, ${VALUE_TYPES}>(name: String, keyPath: KeyPath<T, ${VALUE}>) {
         let getter: (Any, JXContext) throws -> JXValue = { obj, context in
-            let ret = (obj as! T)[keyPath: keyPath]
-            return try context.convey(${VALUE_CONVEY:ret})
+            let v = (obj as! T)[keyPath: keyPath]
+            return try context.convey(${VALUE_CONVEY})
         }
         let setter: ((Any, JXValue, JXContext) throws -> Any)?
         if let writeableKeyPath = keyPath as? WritableKeyPath<T, ${VALUE}> {
             setter = { obj, value, context in
                 var target = obj as! T
-                let val = try value.convey(to: ${VALUE_CONVEY_TYPE})
-                target[keyPath: writeableKeyPath] = ${VALUE_FROMCONVEYED:val}
+                let v = try value.convey(to: ${VALUE_CONVEY_TYPE})
+                target[keyPath: writeableKeyPath] = ${VALUE_FROMCONVEYED}
                 return target
             }
         } else {
@@ -33,15 +33,15 @@ extension PropertyBridge {
     init<T, ${VALUE_TYPES}>(name: String, getter getterFunc: @escaping (T) throws -> ${VALUE}, setter setterFunc: ((T, ${VALUE}) -> Void)?) {
         let getter: (Any, JXContext) throws -> JXValue = { obj, context in
             let target = obj as! T
-            let ret = try getterFunc(target)
-            return try context.convey(${VALUE_CONVEY:ret})
+            let v = try getterFunc(target)
+            return try context.convey(${VALUE_CONVEY})
         }
         let setter: ((Any, JXValue, JXContext) throws -> Any)?
         if let setterFunc {
             setter = { obj, value, context in
                 let target = obj as! T
-                let val = try value.convey(to: ${VALUE_CONVEY_TYPE})
-                setterFunc(target, ${VALUE_FROMCONVEYED:val})
+                let v = try value.convey(to: ${VALUE_CONVEY_TYPE})
+                setterFunc(target, ${VALUE_FROMCONVEYED})
                 return target
             }
         } else {
@@ -54,13 +54,13 @@ extension PropertyBridge {
     init<T, ${VALUE_TYPES}>(name: String, getter getterFunc: @escaping (T) throws -> ${VALUE}, setter setterFunc: @escaping (T, ${VALUE}) -> T) {
         let getter: (Any, JXContext) throws -> JXValue = { obj, context in
             let target = obj as! T
-            let ret = try getterFunc(target)
-            return try context.convey(${VALUE_CONVEY:ret})
+            let v = try getterFunc(target)
+            return try context.convey(${VALUE_CONVEY})
         }
         let setter: (Any, JXValue, JXContext) throws -> Any = { obj, value, context in
             let target = obj as! T
-            let val = try value.convey(to: ${VALUE_CONVEY_TYPE})
-            let ret = setterFunc(target, ${VALUE_FROMCONVEYED:val})
+            let v = try value.convey(to: ${VALUE_CONVEY_TYPE})
+            let ret = setterFunc(target, ${VALUE_FROMCONVEYED})
             return ret
         }
         self = PropertyBridge(owningTypeName: String(describing: T.self), name: name, getter: getter, setter: setter)
@@ -70,15 +70,15 @@ extension PropertyBridge {
     init<T, ${VALUE_TYPES}>(name: String, classGetter getterFunc: @escaping (T.Type) throws -> ${VALUE}, setter setterFunc: ((T.Type, ${VALUE}) -> Void)?) {
         let getter: (Any, JXContext) throws -> JXValue = { cls, context in
             let target = cls as! T.Type
-            let ret = try getterFunc(target)
-            return try context.convey(${VALUE_CONVEY:ret})
+            let v = try getterFunc(target)
+            return try context.convey(${VALUE_CONVEY})
         }
         let setter: ((Any, JXValue, JXContext) throws -> Any)?
         if let setterFunc {
             setter = { cls, value, context in
                 let target = cls as! T.Type
-                let val = try value.convey(to: ${VALUE_CONVEY_TYPE})
-                setterFunc(target, ${VALUE_FROMCONVEYED:val})
+                let v = try value.convey(to: ${VALUE_CONVEY_TYPE})
+                setterFunc(target, ${VALUE_FROMCONVEYED})
                 return target
             }
         } else {
@@ -89,7 +89,7 @@ extension PropertyBridge {
 }
 ARITY*/
 
-/*ARITY:PROPERTY_ASYNC
+/*ARITY:ASYNC_PROPERTY
 extension PropertyBridge {
     // { await $0.xxx }
     init<T, ${VALUE_TYPES}>(name: String, getter getterFunc: @escaping (T) async throws -> ${VALUE}) {
@@ -98,8 +98,8 @@ extension PropertyBridge {
             let promise = try JXValue.createPromise(in: context)
             Task {
                 do {
-                    let ret = try await getterFunc(target)
-                    try promise.resolveFunction.call(withArguments: [context.convey(${VALUE_CONVEY:ret})])
+                    let v = try await getterFunc(target)
+                    try promise.resolveFunction.call(withArguments: [context.convey(${VALUE_CONVEY})])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -116,8 +116,8 @@ extension PropertyBridge {
             let promise = try JXValue.createPromise(in: context)
             Task {
                 do {
-                    let ret = try await getterFunc(target)
-                    try promise.resolveFunction.call(withArguments: [context.convey(${VALUE_CONVEY:ret})])
+                    let v = try await getterFunc(target)
+                    try promise.resolveFunction.call(withArguments: [context.convey(${VALUE_CONVEY})])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -129,157 +129,48 @@ extension PropertyBridge {
 }
 ARITY*/
 
-extension PropertyBridge {
-    // \Type.var
-    init<T, V>(name: String, keyPath: KeyPath<T, V>) {
-        let getter: (Any, JXContext) throws -> JXValue = { obj, context in
-            let ret = (obj as! T)[keyPath: keyPath]
-            return try context.convey(ret)
-        }
-        let setter: ((Any, JXValue, JXContext) throws -> Any)?
-        if let writeableKeyPath = keyPath as? WritableKeyPath<T, V> {
-            setter = { obj, value, context in
-                var target = obj as! T
-                let p0 = try value.convey(to: V.self)
-                target[keyPath: writeableKeyPath] = p0
-                return target
-            }
-        } else {
-            setter = nil
-        }
-        self = PropertyBridge(owningTypeName: String(describing: T.self), name: name, getter: getter, setter: setter)
-    }
-    
-    // get: { $0.xxx ) set: { ... }
-    init<T, V>(name: String, getter getterFunc: @escaping (T) throws -> V, setter setterFunc: ((T, V) -> Void)?) {
-        let getter: (Any, JXContext) throws -> JXValue = { obj, context in
-            let target = obj as! T
-            let ret = try getterFunc(target)
-            return try context.convey(ret)
-        }
-        let setter: ((Any, JXValue, JXContext) throws -> Any)?
-        if let setterFunc {
-            setter = { obj, value, context in
-                let target = obj as! T
-                let p0 = try value.convey(to: V.self)
-                setterFunc(target, p0)
-                return target
-            }
-        } else {
-            setter = nil
-        }
-        self = PropertyBridge(owningTypeName: String(describing: T.self), name: name, getter: getter, setter: setter)
-    }
-    
-    // get: { $0.xxx ) set: { ... } // struct
-    init<T, V>(name: String, getter getterFunc: @escaping (T) throws -> V, setter setterFunc: @escaping (T, V) -> T) {
-        let getter: (Any, JXContext) throws -> JXValue = { obj, context in
-            let target = obj as! T
-            let ret = try getterFunc(target)
-            return try context.convey(ret)
-        }
-        let setter: (Any, JXValue, JXContext) throws -> Any = { obj, value, context in
-            let target = obj as! T
-            let p0 = try value.convey(to: V.self)
-            let ret = setterFunc(target, p0)
-            return ret
-        }
-        self = PropertyBridge(owningTypeName: String(describing: T.self), name: name, getter: getter, setter: setter)
-    }
-    
-    // get: { $0.xxx ) set: { ... }
-    init<T, V>(name: String, classGetter getterFunc: @escaping (T.Type) throws -> V, setter setterFunc: ((T.Type, V) -> Void)?) {
-        let getter: (Any, JXContext) throws -> JXValue = { cls, context in
-            let target = cls as! T.Type
-            let ret = try getterFunc(target)
-            return try context.convey(ret)
-        }
-        let setter: ((Any, JXValue, JXContext) throws -> Any)?
-        if let setterFunc {
-            setter = { cls, value, context in
-                let target = cls as! T.Type
-                let p0 = try value.convey(to: V.self)
-                setterFunc(target, p0)
-                return target
-            }
-        } else {
-            setter = nil
-        }
-        self = PropertyBridge(owningTypeName: String(describing: T.self), name: name, getter: getter, setter: setter)
-    }
-    
-    // { await $0.xxx }
-    init<T, V>(name: String, getter getterFunc: @escaping (T) async throws -> V) {
-        let getter: (Any, JXContext) throws -> JXValue = { obj, context in
-            let target = obj as! T
-            let promise = try JXValue.createPromise(in: context)
-            Task {
-                do {
-                    let ret = try await getterFunc(target)
-                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
-                } catch {
-                    try promise.rejectFunction.call(withArguments: [context.error(error)])
-                }
-            }
-            return  JXValue(context: context, value: promise.promise)
-        }
-        self = PropertyBridge(owningTypeName: String(describing: T.self), name: name, getter: getter, setter: nil)
-    }
-    
-    // { await $0.xxx )
-    init<T, V>(name: String, classGetter getterFunc: @escaping (T.Type) async throws -> V) {
-        let getter: (Any, JXContext) throws -> JXValue = { obj, context in
-            let target = obj as! T.Type
-            let promise = try JXValue.createPromise(in: context)
-            Task {
-                do {
-                    let ret = try await getterFunc(target)
-                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
-                } catch {
-                    try promise.rejectFunction.call(withArguments: [context.error(error)])
-                }
-            }
-            return  JXValue(context: context, value: promise.promise)
-        }
-        self = PropertyBridge(owningTypeName: String(describing: T.self), name: name, getter: getter, setter: nil)
-    }
-}
-
+/*ARITY:PROPERTY
 extension StaticPropertyBridge {
     // get: { Type.xxx } set: { ... }
-    init<V>(name: String, type: Any.Type, getter getterFunc: @escaping () throws -> V, setter setterFunc: ((V) -> Void)?) {
+    init<${VALUE_TYPES}>(name: String, type: Any.Type, getter getterFunc: @escaping () throws -> ${VALUE}, setter setterFunc: ((${VALUE}) -> Void)?) {
         let getter: (JXContext) throws -> JXValue = { context in
-            return try context.convey(getterFunc())
+            let v = try getterFunc()
+            return try context.convey(${VALUE_CONVEY})
         }
         let setter: ((JXValue, JXContext) throws -> Void)?
         if let setterFunc {
             setter = { value, context in
-                let p0 = try value.convey(to: V.self)
-                setterFunc(p0)
+                let v = try value.convey(to: ${VALUE_CONVEY_TYPE})
+                setterFunc(${VALUE_FROMCONVEYED})
             }
         } else {
             setter = nil
         }
         self = StaticPropertyBridge(owningTypeName: String(describing: type), name: name, getter: getter, setter: setter)
     }
-    
+}
+ARITY*/
+
+/*ARITY:ASYNC_PROPERTY
+extension StaticPropertyBridge {
     // { await Type.xxx )
-    init<V>(name: String, type: Any.Type, getter getterFunc: @escaping () async throws -> V) {
+    init<${VALUE_TYPES}>(name: String, type: Any.Type, getter getterFunc: @escaping () async throws -> ${VALUE}) {
         let getter: (JXContext) throws -> JXValue = { context in
             let promise = try JXValue.createPromise(in: context)
             Task {
                 do {
-                    let ret = try await getterFunc()
-                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
+                    let v = try await getterFunc()
+                    try promise.resolveFunction.call(withArguments: [context.convey(${VALUE_CONVEY})])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
             }
-            return  JXValue(context: context, value: promise.promise)
+            return JXValue(context: context, value: promise.promise)
         }
         self = StaticPropertyBridge(owningTypeName: String(describing: type), name: name, getter: getter, setter: nil)
     }
 }
+ARITY*/
 
 extension ConstructorBridge {
     // Type.init
