@@ -141,49 +141,17 @@ class ArityGenerator {
     
     private func propertyAritySubstitutions(closureSupport: Bool) -> [[String: String]] {
         var subs: [[String: String]] = []
-        subs.append([
-            "${VALUE_TYPES}": "V",
-            "${VALUE}": "V",
-            "${VALUE_CONVEY}": "v",
-            "${VALUE_CONVEY_TYPE}": "V.self",
-            "${VALUE_FROMCONVEYED}": "v"
-        ])
+        subs.append(Self.propertySubstitution())
         if closureSupport {
             for cp in 0...maximumClosureParameters {
-                let closureTypesWithReturn = Self.parameterList(mode: .type, arity: cp, base: "C", includeReturn: true)
-                let closureTypes = Self.parameterList(mode: .type, arity: cp, base: "C")
-                subs.append([
-                    "${VALUE_TYPES}": closureTypesWithReturn,
-                    "${VALUE}": "((\(closureTypes)) -> CR)",
-                    "${VALUE_CONVEY}": "JXClosure.Arity\(cp)(v)",
-                    "${VALUE_CONVEY_TYPE}": "JXClosure.Arity\(cp)<\(closureTypesWithReturn)>.self",
-                    "${VALUE_FROMCONVEYED}": "v.closure"
-                ])
+                subs.append(Self.propertySubstitution(closureInfo: ClosureInfo(arity: cp)))
                 if optionalClosures {
-                    subs.append([
-                        "${VALUE_TYPES}": closureTypesWithReturn,
-                        "${VALUE}": "((\(closureTypes)) -> CR)?",
-                        "${VALUE_CONVEY}": "v == nil ? nil : JXClosure.Arity\(cp)(v!)",
-                        "${VALUE_CONVEY_TYPE}": "Optional<JXClosure.Arity\(cp)<\(closureTypesWithReturn)>>.self",
-                        "${VALUE_FROMCONVEYED}": "v?.closure"
-                    ])
+                    subs.append(Self.propertySubstitution(closureInfo: ClosureInfo(arity: cp, optional: true)))
                 }
                 if cp <= maximumThrowingClosureParameters {
-                    subs.append([
-                        "${VALUE_TYPES}": closureTypesWithReturn,
-                        "${VALUE}": "((\(closureTypes)) throws -> CR)",
-                        "${VALUE_CONVEY}": "JXClosure.Throwing\(cp)(v)",
-                        "${VALUE_CONVEY_TYPE}": "JXClosure.Throwing\(cp)<\(closureTypesWithReturn)>.self",
-                        "${VALUE_FROMCONVEYED}": "v.closure"
-                    ])
+                    subs.append(Self.propertySubstitution(closureInfo: ClosureInfo(arity: cp, throwing: true)))
                     if optionalClosures {
-                        subs.append([
-                            "${VALUE_TYPES}": closureTypesWithReturn,
-                            "${VALUE}": "((\(closureTypes)) throws -> CR)?",
-                            "${VALUE_CONVEY}": "v == nil ? nil : JXClosure.Throwing\(cp)(v!)",
-                            "${VALUE_CONVEY_TYPE}": "Optional<JXClosure.Throwing\(cp)<\(closureTypesWithReturn)>>.self",
-                            "${VALUE_FROMCONVEYED}": "v?.closure"
-                        ])
+                        subs.append(Self.propertySubstitution(closureInfo: ClosureInfo(arity: cp, throwing: true, optional: true)))
                     }
                 }
             }
@@ -194,82 +162,154 @@ class ArityGenerator {
     private func functionAritySubstitutions(closureSupport: Bool) -> [[String: String]] {
         var subs: [[String: String]] = []
         for p in 0...maximumFunctionParameters {
-            subs.append([
-                "${PARAM_TYPES_LIST}": Self.parameterList(mode: .type, arity: p),
-                "${PARAM_LIST}": Self.parameterList(mode: .type, arity: p),
-                "${PARAM_LABELED_LIST}": Self.parameterList(mode: .labeled, arity: p),
-                "${PARAM_LABEL_LIST}": Self.parameterList(mode: .label, arity: p),
-                "${PARAM_CONVEY_TYPE_LIST}": Self.parameterList(mode: .conveyType, arity: p),
-                "${PARAM_COUNT}": "\(p)",
-                "${PARAM_TUPLE_LIST}": Self.parameterList(mode: .tuple, arity: p),
-                "${PARAM_TUPLE}": p > 0 ? "p" : "_",
-                "${PARAM_COMMA}": p > 0 ? ", " : "",
-                "${RETURN_TYPES}": "R",
-                "${RETURN}": "R",
-                "${RETURN_CONVEY}": "r"
-            ])
-            /*
+            subs.append(Self.functionSubstitution(arity: p))
             if closureSupport && p > 0 {
-                let closureComma = (p > 1) ? ", " : ""
                 for cp in 0...maximumClosureParameters {
-                    let closureTypesWithReturn = Self.parameterTypes(cp, base: "C", includeReturn: true)
-                    let closureTypes = Self.parameterTypes(cp, base: "C")
-                    subs.append([
-                        "${PARAM_TYPES_LIST}": Self.parameterTypes(p - 1) + closureComma + closureTypesWithReturn,
-                        "${PARAM_LIST}": Self.parameterTypes(p),
-                        "${PARAM_LABELED_LIST}": Self.parameterTypes(p),
-                        "${PARAM_LABEL_LIST}": Self.parameterTypes(p),
-                        "${PARAM_CONVEY_TYPE_LIST}": Self.parameterTypes(p),
-                        "${PARAM_TUPLE_LIST}": Self.parameterTypes(p),
-                        "${PARAM_TUPLE}": p > 0 ? "p" : "_",
-                        "${PARAM_COMMA}": p > 0 ? ", " : "",
-                        "${RETURN_TYPES}": "R",
-                        "${RETURN}": "R",
-                        "${RETURN_CONVEY}": "r"
-                    ])
-                    
-                    
-                    let parameterTypesWithReturn = Self.parameterTypes(cp, base: "C", includeReturn: true)
-                    let parameterTypes = Self.parameterTypes(cp, base: "C")
-                    subs.append([
-                        "${VALUE_TYPES}": parameterTypesWithReturn,
-                        "${VALUE}": "((\(parameterTypes)) -> CR)",
-                        "${VALUE_CONVEY}": "JXClosure.Arity\(cp)(v)",
-                        "${VALUE_CONVEY_TYPE}": "JXClosure.Arity\(cp)<\(parameterTypesWithReturn)>.self",
-                        "${VALUE_FROMCONVEYED}": "v.closure"
-                    ])
+                    subs.append(Self.functionSubstitution(arity: p, closureInfo: ClosureInfo(arity: cp)))
                     if optionalClosures {
-                        subs.append([
-                            "${VALUE_TYPES}": parameterTypesWithReturn,
-                            "${VALUE}": "((\(parameterTypes)) -> CR)?",
-                            "${VALUE_CONVEY}": "v == nil ? nil : JXClosure.Arity\(cp)(v!)",
-                            "${VALUE_CONVEY_TYPE}": "Optional<JXClosure.Arity\(cp)<\(parameterTypesWithReturn)>>.self",
-                            "${VALUE_FROMCONVEYED}": "v?.closure"
-                        ])
+                        subs.append(Self.functionSubstitution(arity: p, closureInfo: ClosureInfo(arity: cp, optional: true)))
                     }
                     if cp <= maximumThrowingClosureParameters {
-                        subs.append([
-                            "${VALUE_TYPES}": parameterTypesWithReturn,
-                            "${VALUE}": "((\(parameterTypes)) throws -> CR)",
-                            "${VALUE_CONVEY}": "JXClosure.Throwing\(cp)(v)",
-                            "${VALUE_CONVEY_TYPE}": "JXClosure.Throwing\(cp)<\(parameterTypesWithReturn)>.self",
-                            "${VALUE_FROMCONVEYED}": "v.closure"
-                        ])
+                        subs.append(Self.functionSubstitution(arity: p, closureInfo: ClosureInfo(arity: cp, throwing: true)))
                         if optionalClosures {
-                            subs.append([
-                                "${VALUE_TYPES}": parameterTypesWithReturn,
-                                "${VALUE}": "((\(parameterTypes)) throws -> CR)?",
-                                "${VALUE_CONVEY}": "v == nil ? nil : JXClosure.Throwing\(cp)(v!)",
-                                "${VALUE_CONVEY_TYPE}": "Optional<JXClosure.Throwing\(cp)<\(parameterTypesWithReturn)>>.self",
-                                "${VALUE_FROMCONVEYED}": "v?.closure"
-                            ])
+                            subs.append(Self.functionSubstitution(arity: p, closureInfo: ClosureInfo(arity: cp, throwing: true, optional: true)))
                         }
                     }
                 }
             }
-             */
         }
         return subs
+    }
+    
+    private static func applySubstitutions(_ subs: [String: String], to input: String) -> String {
+        var subbed = input
+        for entry in subs {
+            subbed = subbed.replacingOccurrences(of: entry.key, with: entry.value)
+        }
+        return subbed
+    }
+    
+    private static func propertySubstitution(closureInfo: ClosureInfo? = nil) -> [String: String] {
+        guard let closureInfo else {
+            return [
+                "${VALUE_TYPES}": "V",
+                "${VALUE}": "V",
+                "${VALUE_CONVEY}": "v",
+                "${VALUE_CONVEY_TYPE}": "V.self",
+                "${VALUE_FROMCONVEYED}": "v"
+            ]
+        }
+        return [
+            "${VALUE_TYPES}": parameterList(mode: .type, arity: closureInfo.arity, base: "C", includeReturn: true),
+            "${VALUE}": closureInfo.type,
+            "${VALUE_CONVEY}": closureInfo.convey("v"),
+            "${VALUE_CONVEY_TYPE}": closureInfo.conveyType,
+            "${VALUE_FROMCONVEYED}": closureInfo.fromConveyed("v")
+        ]
+    }
+    
+    private static func functionSubstitution(arity: Int, closureInfo: ClosureInfo? = nil) -> [String: String] {
+        guard let closureInfo else {
+            return [
+                "${PARAM_TYPES_LIST}": parameterList(mode: .type, arity: arity),
+                "${PARAM_LIST}": parameterList(mode: .type, arity: arity),
+                "${PARAM_LABELED_LIST}": parameterList(mode: .labeled, arity: arity),
+                "${PARAM_LABEL_LIST}": parameterList(mode: .label, arity: arity),
+                "${PARAM_CONVEY_TYPE_LIST}": parameterList(mode: .conveyType, arity: arity),
+                "${PARAM_COUNT}": "\(arity)",
+                "${PARAM_TUPLE_LIST}": parameterList(mode: .tuple, arity: arity),
+                "${PARAM_TUPLE}": arity > 0 ? "p" : "_",
+                "${PARAM_COMMA}": arity > 0 ? ", " : "",
+                "${RETURN_TYPES}": "R",
+                "${RETURN}": "R",
+                "${RETURN_CONVEY}": "r"
+            ]
+        }
+        let closureComma = (arity > 1) ? ", " : ""
+        return [
+            "${PARAM_TYPES_LIST}": "\(parameterList(mode: .type, arity: arity, trimLast: true))\(closureComma)\(parameterList(mode: .type, arity: closureInfo.arity, base: "C", includeReturn: true))",
+            "${PARAM_LIST}": "\(parameterList(mode: .type, arity: arity, trimLast: true))\(closureComma)\(closureInfo.type)",
+            "${PARAM_LABELED_LIST}": "\(parameterList(mode: .labeled, arity: arity, trimLast: true))\(closureComma)p\(arity - 1): \(closureInfo.type)",
+            "${PARAM_LABEL_LIST}": parameterList(mode: .label, arity: arity),
+            "${PARAM_CONVEY_TYPE_LIST}": "\(parameterList(mode: .conveyType, arity: arity, trimLast: true))\(closureComma)\(closureInfo.conveyType)",
+            "${PARAM_COUNT}": "\(arity)",
+            "${PARAM_TUPLE_LIST}": "\(parameterList(mode: .tuple, arity: arity, trimLast: true))\(closureComma)\(closureInfo.fromConveyed("p", tupleArity: arity))",
+            "${PARAM_TUPLE}": arity > 0 ? "p" : "_",
+            "${PARAM_COMMA}": arity > 0 ? ", " : "",
+            "${RETURN_TYPES}": "R",
+            "${RETURN}": "R",
+            "${RETURN_CONVEY}": "r"
+        ]
+    }
+    
+    struct ClosureInfo {
+        var arity: Int
+        var throwing = false
+        var optional = false
+        
+        var type: String {
+            let closureTypes = parameterList(mode: .type, arity: arity, base: "C")
+            var type: String
+            if throwing {
+                type = "((\(closureTypes)) throws -> CR)"
+            } else {
+                type = "((\(closureTypes)) -> CR)"
+            }
+            if optional {
+                type += "?"
+            }
+            return type
+        }
+        
+        var conveyType: String {
+            let closureTypesWithReturn = parameterList(mode: .type, arity: arity, base: "C", includeReturn: true)
+            var type: String
+            if throwing {
+                type = "JXClosure.Throwing\(arity)<\(closureTypesWithReturn)>"
+            } else {
+                type = "JXClosure.Arity\(arity)<\(closureTypesWithReturn)>"
+            }
+            if optional {
+                type = "Optional<\(type)>.self"
+            } else {
+                type = "\(type).self"
+            }
+            return type
+        }
+        
+        func convey(_ name: String, tupleArity: Int = 0) -> String {
+            let p: String
+            if tupleArity <= 0 {
+                p = name
+            } else {
+                p = "\(name).\(tupleArity)"
+            }
+            let type: String
+            if throwing {
+                type = "JXClosure.Throwing\(arity)"
+            } else {
+                type = "JXClosure.Arity\(arity)"
+            }
+            if optional {
+                return "\(p) == nil ? nil : \(type)(\(p)!)"
+            } else {
+                return "\(type)(\(p))"
+            }
+        }
+        
+        func fromConveyed(_ name: String, tupleArity: Int = 0) -> String {
+            let p: String
+            if tupleArity <= 1 {
+                p = name
+            } else {
+                p = "\(name).\(tupleArity - 1)"
+            }
+            if optional {
+                return "\(p)?.closure"
+            } else {
+                return "\(p).closure"
+            }
+        }
     }
     
     enum ParameterListMode {
@@ -280,9 +320,10 @@ class ArityGenerator {
         case tuple
     }
     
-    private static func parameterList(mode: ParameterListMode, arity: Int, base: String = "P", includeReturn: Bool = false) -> String {
+    private static func parameterList(mode: ParameterListMode, arity: Int, base: String = "P", trimLast: Bool = false, includeReturn: Bool = false) -> String {
+        let toArity = trimLast ? arity - 1 : arity
         var string = ""
-        for i in 0..<arity {
+        for i in 0..<toArity {
             switch mode {
             case .type:
                 string.append("\(base)\(i)")
@@ -299,7 +340,7 @@ class ArityGenerator {
                     string.append(base.lowercased())
                 }
             }
-            if includeReturn || i < (arity - 1) {
+            if includeReturn || i < (toArity - 1) {
                 string.append(", ")
             }
         }
@@ -310,14 +351,6 @@ class ArityGenerator {
             string.append("R")
         }
         return string
-    }
-    
-    private static func applySubstitutions(_ subs: [String: String], to input: String) -> String {
-        var subbed = input
-        for entry in subs {
-            subbed = subbed.replacingOccurrences(of: entry.key, with: entry.value)
-        }
-        return subbed
     }
 }
 
