@@ -223,12 +223,9 @@ private class TestClass: JXBridging {
         return intVar
     }
     
-    @JXFunc var jxsum = jx_sum
+    @JXFunc var jxsum = sum
     func sum(with value: Int, result: (Int) -> Void) {
         result(intVar + value)
-    }
-    private func jx_sum(with value: Int, result: JXClosure.Arity1<Int, Void>) {
-        sum(with: value, result: result.closure)
     }
     
     @JXStaticVar var jxstaticVar = (get: { TestClass.staticVar }, set: { TestClass.staticVar = $0 })

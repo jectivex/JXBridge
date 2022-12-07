@@ -62,7 +62,37 @@ class ArityGenerator {
     static let arityCommentStart = "/*ARITY:"
     static let arityCommentEnd = "ARITY*/"
     
-    enum Member: Int, CaseIterable {
+    enum Option: String, CaseIterable {
+        /// The maximum function arity to generate.
+        case maximumFunctionParameters
+        /// The maximum number of parameters of the property closure variants and function trailing closure variants to generate.
+        case maximumClosureParameters
+        /// The maximum number of parameters of the property throwing closure and function trailing throwing closure variants to generate.
+        case maximumThrowingClosureParameters
+        /// Whether to support optional closures.
+        case optionalClosures
+        /// Whether to generate property closures and function trailing closure parameters for async vars and functions.
+        case asyncMemberClosures
+        /// The maximum `JXClosure` parameter arity to generate.
+        case maximumJXClosureParameters
+        
+        var `default`: Int {
+            switch self {
+            case .maximumFunctionParameters: return 8
+            case .maximumClosureParameters: return 2
+            case .maximumThrowingClosureParameters: return -1
+            case .optionalClosures: return 1
+            case .asyncMemberClosures: return 0
+            case .maximumJXClosureParameters: return 6
+            }
+        }
+        
+        func value(in options: [Option: Int]) -> Int {
+            return options[self] ?? self.default
+        }
+    }
+    
+    private enum Member: Int, CaseIterable {
         // List in desired output order
         case property
         case asyncProperty
@@ -90,37 +120,19 @@ class ArityGenerator {
         }
     }
     
-    /// The maximum function arity to generate. Deafults to 8.
-    var maximumFunctionParameters = 8
-    
-    /// The maximum number of parameters of the property closure variants and function trailing closure variants to generate. Defaults to 2.
-    var maximumClosureParameters = 2
-    
-    /// The maximum number of parameters of the property throwing closure and function trailing throwing closure variants to generate. Defaults to -1 to disable throwing closure support.
-    var maximumThrowingClosureParameters = 0 //~~~
-    
-    /// Whether to support optional closures. Defaults to true.
-    var optionalClosures = true
-    
-    /// Whether to generate property closures and function trailing closure parameters for async vars and functions. Defaults to false.
-    var asyncMemberClosures = false
-    
-    /// The maximum `JXClosure` parameter arity to generate. Defaults to 6.
-    var maximumJXClosureParameters = 6
-    
-    private let source: String
     private let input: String
+    private let options: [Option: Int]
     private var inputs: [Member: [String]] = [:]
     private var outputs: [Member: [String]] = [:]
     
     /// Construct the generator.
     ///
     /// - Parameters:
-    ///   - source: The name of the source file.
     ///   - input: The content of the source file.
-    init?(source: String, input: String) throws {
-        self.source = source
+    ///   - options: Any options overrides.
+    init?(input: String, options: [Option: Int] = [:]) throws {
         self.input = input
+        self.options = options
         for member in Member.allCases {
             let memberInputs = try inputs(for: member)
             if !memberInputs.isEmpty {
@@ -138,13 +150,15 @@ class ArityGenerator {
             outputs[.property] = generateArity(propertyInputs, substitutions: propertyAritySubstitutions(closureSupport: true))
         }
         if let asyncPropertyInputs = inputs[.asyncProperty] {
-            outputs[.asyncProperty] = generateArity(asyncPropertyInputs, substitutions: propertyAritySubstitutions(closureSupport: asyncMemberClosures))
+            let closureSupport = Option.asyncMemberClosures.value(in: options) > 0
+            outputs[.asyncProperty] = generateArity(asyncPropertyInputs, substitutions: propertyAritySubstitutions(closureSupport: closureSupport))
         }
         if let functionInputs = inputs[.function] {
             outputs[.function] = generateArity(functionInputs, substitutions: functionAritySubstitutions(closureSupport: true))
         }
         if let asyncFunctionInputs = inputs[.asyncFunction] {
-            outputs[.asyncFunction] = generateArity(asyncFunctionInputs, substitutions: functionAritySubstitutions(closureSupport: asyncMemberClosures))
+            let closureSupport = Option.asyncMemberClosures.value(in: options) > 0
+            outputs[.asyncFunction] = generateArity(asyncFunctionInputs, substitutions: functionAritySubstitutions(closureSupport: closureSupport))
         }
         if let parameterSupportInputs = inputs[.parameterSupport] {
             outputs[.parameterSupport] = generateArity(parameterSupportInputs, substitutions: parameterSupportAritySubstitutions())
@@ -156,10 +170,8 @@ class ArityGenerator {
     }
     
     private func output() -> String {
-        var output = "// THIS FILE IS AUTO GENERATED FROM \(source). DO NOT EDIT\n"
-        output.append("//\n//\t\tswift package plugin generate-arity \(source)\n")
-        output.append("\nimport JXKit\n")
         let sortedMembers = outputs.keys.sorted { $0.rawValue < $1.rawValue }
+        var output = ""
         for member in sortedMembers {
             output.append("\n// \(member.string)\n")
             output.append(outputs[member]!.joined(separator: "\n"))
@@ -195,15 +207,16 @@ class ArityGenerator {
     }
     
     private func propertyAritySubstitutions(closureSupport: Bool) -> [[String: String]] {
+        let optionalClosures = Option.optionalClosures.value(in: options) > 0
         var subs: [[String: String]] = []
         subs.append(Self.propertySubstitution())
         if closureSupport {
-            for cp in 0...maximumClosureParameters {
+            for cp in 0...Option.maximumClosureParameters.value(in: options) {
                 subs.append(Self.propertySubstitution(closureInfo: ClosureInfo(arity: cp)))
                 if optionalClosures {
                     subs.append(Self.propertySubstitution(closureInfo: ClosureInfo(arity: cp, optional: true)))
                 }
-                if cp <= maximumThrowingClosureParameters {
+                if cp <= Option.maximumThrowingClosureParameters.value(in: options) {
                     subs.append(Self.propertySubstitution(closureInfo: ClosureInfo(arity: cp, throwing: true)))
                     if optionalClosures {
                         subs.append(Self.propertySubstitution(closureInfo: ClosureInfo(arity: cp, throwing: true, optional: true)))
@@ -215,16 +228,17 @@ class ArityGenerator {
     }
     
     private func functionAritySubstitutions(closureSupport: Bool) -> [[String: String]] {
+        let optionalClosures = Option.optionalClosures.value(in: options) > 0
         var subs: [[String: String]] = []
-        for p in 0...maximumFunctionParameters {
+        for p in 0...Option.maximumFunctionParameters.value(in: options) {
             subs.append(Self.functionSubstitution(arity: p))
             if closureSupport && p > 0 {
-                for cp in 0...maximumClosureParameters {
+                for cp in 0...Option.maximumJXClosureParameters.value(in: options) {
                     subs.append(Self.functionSubstitution(arity: p, closureInfo: ClosureInfo(arity: cp)))
                     if optionalClosures {
                         subs.append(Self.functionSubstitution(arity: p, closureInfo: ClosureInfo(arity: cp, optional: true)))
                     }
-                    if cp <= maximumThrowingClosureParameters {
+                    if cp <= Option.maximumThrowingClosureParameters.value(in: options) {
                         subs.append(Self.functionSubstitution(arity: p, closureInfo: ClosureInfo(arity: cp, throwing: true)))
                         if optionalClosures {
                             subs.append(Self.functionSubstitution(arity: p, closureInfo: ClosureInfo(arity: cp, throwing: true, optional: true)))
@@ -237,13 +251,13 @@ class ArityGenerator {
     }
     
     private func parameterSupportAritySubstitutions() -> [[String: String]] {
-        return (0...max(maximumFunctionParameters, maximumJXClosureParameters)).map {
+        return (0...max(Option.maximumFunctionParameters.value(in: options), Option.maximumJXClosureParameters.value(in: options))).map {
             Self.parameterSupportSubstitution(arity: $0)
         }
     }
     
     private func closureSupportAritySubstitutions() -> [[String: String]] {
-        return (0...maximumJXClosureParameters).map {
+        return (0...Option.maximumJXClosureParameters.value(in: options)).map {
             Self.closureSupportSubstitution(arity: $0)
         }
     }
