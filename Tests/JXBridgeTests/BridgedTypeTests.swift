@@ -209,9 +209,7 @@ invokeAsync(obj);
                 .constructor { TestStruct.init }
                 .var.readWriteInt { \.readWriteInt }
                 .var.callbackVar { \.callbackVar }
-                .func.callbackFunc { (s: TestStruct, add: Int, result: JXClosure.Arity1<Int, Void>) in
-                    s.callbackFunc(add: add, result: result.closure)
-                }
+                .func.callbackFunc { TestStruct.callbackFunc }
                 .bridge
         }
         var result = try context.eval("""
@@ -232,6 +230,12 @@ result;
             try context.eval("$0.callbackVar();")
         }
         XCTAssertEqual(try result.int, 3)
+        
+        result = try context.eval("""
+var s = new jx.TestStruct();
+s.callbackFunc(2, null);
+""")
+        XCTAssertEqual(result.bool, false)
     }
     
     func testErrors() throws {
@@ -292,8 +296,9 @@ private struct TestStruct {
     
     var callbackVar: (() -> Int)?
     
-    func callbackFunc(add: Int, result: (Int) -> Void) {
-        result(readWriteInt + add)
+    func callbackFunc(add: Int, result: ((Int) -> Void)?) -> Bool {
+        result?(readWriteInt + add)
+        return result != nil
     }
 }
 

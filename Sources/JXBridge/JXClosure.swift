@@ -33,6 +33,13 @@ public enum JXClosure {
             self.closure = closure
         }
         
+        public init?(_ closure: (() throws -> R)?) {
+            guard let c = closure else {
+                return nil
+            }
+            self.init(c)
+        }
+        
         public static func fromJX(_ value: JXValue) throws -> Throwing0<R> {
             return try Throwing0(value.convey(to: (() throws -> R).self))
         }
@@ -72,6 +79,13 @@ public enum JXClosure {
         
         public init(_ closure: @escaping (P0) throws -> R) {
             self.closure = closure
+        }
+        
+        public init?(_ closure: ((P0) throws -> R)?) {
+            guard let c = closure else {
+                return nil
+            }
+            self.init(c)
         }
         
         public static func fromJX(_ value: JXValue) throws -> Throwing1<P0, R> {
@@ -115,6 +129,13 @@ public enum JXClosure {
             self.closure = closure
         }
         
+        public init?(_ closure: ((P0, P1) throws -> R)?) {
+            guard let c = closure else {
+                return nil
+            }
+            self.init(c)
+        }
+        
         public static func fromJX(_ value: JXValue) throws -> Throwing2<P0, P1, R> {
             return try Throwing2(value.convey(to: ((P0, P1) throws -> R).self))
         }
@@ -123,4 +144,6 @@ public enum JXClosure {
             return try context.conveyClosure(closure)
         }
     }
+    
+    //~~~ Need to auto-gen this support too
 }

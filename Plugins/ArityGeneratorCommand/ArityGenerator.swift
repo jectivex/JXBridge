@@ -18,6 +18,21 @@ import Foundation
 ///     ${VALUE_CONVEY}: The value supplied to JXContext.convey(). Assumes the local value name is 'v'
 ///     ${VALUE_CONVEY_TYPE}: The type to pass to JXValue.convey(to:) for the value
 ///     ${VALUE_FROMCONVEYED}: The value passed to the setter after being conveyed from the JXValue. Assumes the conveyed value is 'v'
+///
+/// `FUNCTION`, `ASYNC_FUNCTION`:
+///
+///     ${PARAM_TYPES_LIST}: The generic parameter type(s). Use this in the function's generics list <...>
+///     ${PARAM_LIST}: The parameters. For simple types, these are P0, P1, ...
+///     ${PARAM_LABELED_LIST}: The parameters with labels: p0: P0, p1: P1, ...
+///     ${PARAM_LABEL_LIST}: The parameter labels: p0, p1, ...
+///     ${PARAM_CONVEY_TYPE_LIST}: The parameter types supplied to JXValue.convey()
+///     ${PARAM_COUNT}: The number of paramters
+///     ${PARAM_TUPLE_LIST}: Conveyed parameters are returned as a tuple p. A list of the tuple values: p.0, p.1, ...
+///     ${PARAM_TUPLE}: Conveyed parameters are returned as a tuple p. This is either p or _ if there are no parameters
+///     ${PARAM_COMMA}: Empty string if there are no parameters, otherwise ', '
+///     ${RETURN_TYPES}: The generic return type(s). Use this in the member's generics list <...>
+///     ${RETURN}: The return value. For simple values, this is R
+///     ${RETURN_CONVEY}: The return value supplied to JXContext.convey(). Assumes the local value name is 'r'
 class ArityGenerator {
     static let arityCommentStart = "/*ARITY:"
     static let arityCommentEnd = "ARITY*/"
@@ -290,11 +305,7 @@ class ArityGenerator {
             } else {
                 type = "JXClosure.Arity\(arity)"
             }
-            if optional {
-                return "\(p) == nil ? nil : \(type)(\(p)!)"
-            } else {
-                return "\(type)(\(p))"
-            }
+            return "\(type)(\(p))"
         }
         
         func fromConveyed(_ name: String, tupleArity: Int = 0) -> String {

@@ -172,78 +172,17 @@ extension StaticPropertyBridge {
 }
 ARITY*/
 
+/*ARITY:FUNCTION
 extension ConstructorBridge {
-    // Type.init
-    init<T>(_ cons: @escaping () throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 0) { _, _ in
-            return try cons()
-        }
-    }
-
-    // Type.init(p0:)
-    init<T, P0>(_ cons: @escaping (P0) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 1) { args, context in
-            let p = try conveyParameters(args, P0.self)
-            return try cons(p)
-        }
-    }
-    
-    // Type.init(p0:p1:)
-    init<T, P0, P1>(_ cons: @escaping (P0, P1) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 2) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self)
-            return try cons(p.0, p.1)
-        }
-    }
-    
-    // Type.init(p0:p1:p2:)
-    init<T, P0, P1, P2>(_ cons: @escaping (P0, P1, P2) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 3) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self)
-            return try cons(p.0, p.1, p.2)
-        }
-    }
-    
-    // Type.init(p0:p1:p2:p3:)
-    init<T, P0, P1, P2, P3>(_ cons: @escaping (P0, P1, P2, P3) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 4) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
-            return try cons(p.0, p.1, p.2, p.3)
-        }
-    }
-    
-    // Type.init(p0:p1:p2:p3:p4:)
-    init<T, P0, P1, P2, P3, P4>(_ cons: @escaping (P0, P1, P2, P3, P4) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 5) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4)
-        }
-    }
-    
-    // Type.init(p0:p1:p2:p3:p4:p5:)
-    init<T, P0, P1, P2, P3, P4, P5>(_ cons: @escaping (P0, P1, P2, P3, P4, P5) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 6) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5)
-        }
-    }
-    
-    // Type.init(p0:p1:p2:p3:p4:p5:p6:)
-    init<T, P0, P1, P2, P3, P4, P5, P6>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 7) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6)
-        }
-    }
-    
-    // Type.init(p0:p1:p2:p3:p4:p5:p6:p7:)
-    init<T, P0, P1, P2, P3, P4, P5, P6, P7>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 8) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
+    // Type.init(p0:...)
+    init<T${PARAM_COMMA}${PARAM_TYPES_LIST}>(_ cons: @escaping (${PARAM_LIST}) throws -> T) {
+        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: ${PARAM_COUNT}) { args, context in
+            let ${PARAM_TUPLE} = try conveyParameters(args${PARAM_COMMA}${PARAM_CONVEY_TYPE_LIST})
+            return try cons(${PARAM_TUPLE_LIST})
         }
     }
 }
+ARITY*/
 
 /*ARITY:FUNCTION
 extension FunctionBridge {
@@ -342,268 +281,32 @@ extension FunctionBridge {
 }
 ARITY*/
 
+/*ARITY:FUNCTION
 extension StaticFunctionBridge {
-    
-    // MARK: 0 paramters
-    
-    // { Type.xxx() }
-    init<R>(name: String, type: Any.Type, function: @escaping () throws -> R) {
+    // { Type.xxx(p0: $0...) }
+    init<${PARAM_TYPES_LIST}${PARAM_COMMA}${RETURN_TYPES}>(name: String, type: Any.Type, function: @escaping (${PARAM_LIST}) throws -> ${RETURN}) {
         self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 0)
-            let ret = try function()
-            return try context.convey(ret)
+            try validate(arguments: args, count: ${PARAM_COUNT})
+            let ${PARAM_TUPLE} = try conveyParameters(args${PARAM_COMMA}${PARAM_CONVEY_TYPE_LIST})
+            let r = try function(${PARAM_TUPLE_LIST})
+            return try context.convey(${RETURN_CONVEY})
         }
     }
-    
-    // { await Type.xxx() }
-    init<R>(name: String, type: Any.Type, function: @escaping () async throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 0)
-            let promise = try JXValue.createPromise(in: context)
-            Task {
-                do {
-                    let ret = try await function()
-                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
-                } catch {
-                    try promise.rejectFunction.call(withArguments: [context.error(error)])
-                }
-            }
-            return JXValue(context: context, value: promise.promise)
-        }
-    }
-    
-    // MARK: 1 parameter
+}
+ARITY*/
 
-    // { Type.xxx(p0: $0) }
-    init<P0, R>(name: String, type: Any.Type, function: @escaping (P0) throws -> R) {
+/*ARITY:ASYNC_FUNCTION
+extension StaticFunctionBridge {
+    // { await Type.xxx(p0: $0...) }
+    init<${PARAM_TYPES_LIST}${PARAM_COMMA}${RETURN_TYPES}>(name: String, type: Any.Type, function: @escaping (${PARAM_LIST}) async throws -> ${RETURN}) {
         self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, P0.self)
-            let ret = try function(p)
-            return try context.convey(ret)
-        }
-    }
-    
-    // { await Type.xxx(p0: $0) }
-    init<P0, R>(name: String, type: Any.Type, function: @escaping (P0) async throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, P0.self)
+            try validate(arguments: args, count: ${PARAM_COUNT})
+            let ${PARAM_TUPLE} = try conveyParameters(args${PARAM_COMMA}${PARAM_CONVEY_TYPE_LIST})
             let promise = try JXValue.createPromise(in: context)
             Task {
                 do {
-                    let ret = try await function(p)
-                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
-                } catch {
-                    try promise.rejectFunction.call(withArguments: [context.error(error)])
-                }
-            }
-            return JXValue(context: context, value: promise.promise)
-        }
-    }
-    
-    // MARK: 2 parameters
-    
-    // { Type.xxx(p0: $0, p1: $1) }
-    init<P0, P1, R>(name: String, type: Any.Type, function: @escaping (P0, P1) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, P1.self)
-            let ret = try function(p.0, p.1)
-            return try context.convey(ret)
-        }
-    }
-    
-    // { await Type.xxx(p0: $0, p1: $1) }
-    init<P0, P1, R>(name: String, type: Any.Type, function: @escaping (P0, P1) async throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, P1.self)
-            let promise = try JXValue.createPromise(in: context)
-            Task {
-                do {
-                    let ret = try await function(p.0, p.1)
-                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
-                } catch {
-                    try promise.rejectFunction.call(withArguments: [context.error(error)])
-                }
-            }
-            return JXValue(context: context, value: promise.promise)
-        }
-    }
-    
-    // MARK: 3 parameters
-    
-    // { Type.xxx(p0: $0, p1: $1, p2: $2) }
-    init<P0, P1, P2, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self)
-            let ret = try function(p.0, p.1, p.2)
-            return try context.convey(ret)
-        }
-    }
-    
-    // { await Type.xxx(p0: $0, p1: $1, p2: $2) }
-    init<P0, P1, P2, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2) async throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self)
-            let promise = try JXValue.createPromise(in: context)
-            Task {
-                do {
-                    let ret = try await function(p.0, p.1, p.2)
-                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
-                } catch {
-                    try promise.rejectFunction.call(withArguments: [context.error(error)])
-                }
-            }
-            return JXValue(context: context, value: promise.promise)
-        }
-    }
-    
-    // MARK: 4 parameters
-    
-    // { Type.xxx(p0: $0, p1: $1, p2: $2, p3: $3) }
-    init<P0, P1, P2, P3, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
-            let ret = try function(p.0, p.1, p.2, p.3)
-            return try context.convey(ret)
-        }
-    }
-    
-    // { await Type.xxx(p0: $0, p1: $1, p2: $2, p3: $3) }
-    init<P0, P1, P2, P3, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3) async throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
-            let promise = try JXValue.createPromise(in: context)
-            Task {
-                do {
-                    let ret = try await function(p.0, p.1, p.2, p.3)
-                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
-                } catch {
-                    try promise.rejectFunction.call(withArguments: [context.error(error)])
-                }
-            }
-            return JXValue(context: context, value: promise.promise)
-        }
-    }
-    
-    // MARK: 5 parameters
-    
-    // { Type.xxx(p0: $0, p1: $1, p2: $2, p3: $3, p4: $4) }
-    init<P0, P1, P2, P3, P4, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
-            let ret = try function(p.0, p.1, p.2, p.3, p.4)
-            return try context.convey(ret)
-        }
-    }
-    
-    // { await Type.xxx(p0: $0, p1: $1, p2: $2, p3: $3, p4: $4) }
-    init<P0, P1, P2, P3, P4, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4) async throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
-            let promise = try JXValue.createPromise(in: context)
-            Task {
-                do {
-                    let ret = try await function(p.0, p.1, p.2, p.3, p.4)
-                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
-                } catch {
-                    try promise.rejectFunction.call(withArguments: [context.error(error)])
-                }
-            }
-            return JXValue(context: context, value: promise.promise)
-        }
-    }
-    
-    // MARK: 6 parameters
-    
-    // { Type.xxx(p0: $0, p1: $1, p2: $2, p3: $3, p4: $4, p5: $5) }
-    init<P0, P1, P2, P3, P4, P5, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
-            let ret = try function(p.0, p.1, p.2, p.3, p.4, p.5)
-            return try context.convey(ret)
-        }
-    }
-    
-    // { await Type.xxx(p0: $0, p1: $1, p2: $2, p3: $3, p4: $4, p5: $5) }
-    init<P0, P1, P2, P3, P4, P5, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5) async throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
-            let promise = try JXValue.createPromise(in: context)
-            Task {
-                do {
-                    let ret = try await function(p.0, p.1, p.2, p.3, p.4, p.5)
-                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
-                } catch {
-                    try promise.rejectFunction.call(withArguments: [context.error(error)])
-                }
-            }
-            return JXValue(context: context, value: promise.promise)
-        }
-    }
-    
-    // MARK: 7 parameters
-    
-    // { Type.xxx(p0: $0, p1: $1, p2: $2, p3: $3, p4: $4, p5: $5, p6: $6) }
-    init<P0, P1, P2, P3, P4, P5, P6, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
-            let ret = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6)
-            return try context.convey(ret)
-        }
-    }
-    
-    // { await Type.xxx(p0: $0, p1: $1, p2: $2, p3: $3, p4: $4, p5: $5, p6: $6) }
-    init<P0, P1, P2, P3, P4, P5, P6, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6) async throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
-            let promise = try JXValue.createPromise(in: context)
-            Task {
-                do {
-                    let ret = try await function(p.0, p.1, p.2, p.3, p.4, p.5, p.6)
-                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
-                } catch {
-                    try promise.rejectFunction.call(withArguments: [context.error(error)])
-                }
-            }
-            return JXValue(context: context, value: promise.promise)
-        }
-    }
-    
-    // MARK: 8 parameters
-    
-    // { Type.xxx(p0: $0, p1: $1, p2: $2, p3: $3, p4: $4, p5: $5, p6: $6, p7: $7) }
-    init<P0, P1, P2, P3, P4, P5, P6, P7, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
-            let ret = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
-            return try context.convey(ret)
-        }
-    }
-    
-    // { await Type.xxx(p0: $0, p1: $1, p2: $2, p3: $3, p4: $4, p5: $5, p6: $6, p7: $7) }
-    init<P0, P1, P2, P3, P4, P5, P6, P7, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
-            let promise = try JXValue.createPromise(in: context)
-            Task {
-                do {
-                    let ret = try await function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
-                    try promise.resolveFunction.call(withArguments: [context.convey(ret)])
+                    let r = try await function(${PARAM_TUPLE_LIST})
+                    try promise.resolveFunction.call(withArguments: [context.convey(${RETURN_CONVEY})])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -612,7 +315,9 @@ extension StaticFunctionBridge {
         }
     }
 }
+ARITY*/
 
+//~~~
 func conveyParameters(_ args: [JXValue]) throws -> () {
     return ()
 }
