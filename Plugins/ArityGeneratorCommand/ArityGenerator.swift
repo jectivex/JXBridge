@@ -33,6 +33,22 @@ import Foundation
 ///     ${RETURN_TYPES}: The generic return type(s). Use this in the member's generics list <...>
 ///     ${RETURN}: The return value. For simple values, this is R
 ///     ${RETURN_CONVEY}: The return value supplied to JXContext.convey(). Assumes the local value name is 'r'
+///
+/// `CLOSURE_SUPPORT`:
+///
+///     ${PARAM_TYPES_LIST}: The generic parameter type(s). Use this in the function's generics list <...>
+///     ${PARAM_LIST}: The parameters. For simple types, these are P0, P1, ...
+///     ${PARAM_LABEL_LIST}: The parameter labels: p0, p1, ...
+///     ${PARAM_CONVEY_TYPE_LIST}: The parameter types supplied to JXValue.convey()
+///     ${PARAM_COUNT}: The number of paramters
+///     ${PARAM_TUPLE_LIST}: Conveyed parameters are returned as a tuple p. A list of the tuple values: p.0, p.1, ...
+///     ${PARAM_TUPLE}: Conveyed parameters are returned as a tuple p. A list of the tuple values: p.0, p.1, ...
+///     ${PARAM_COMMA}: Empty string if there are no parameters, otherwise ', '
+///     ${RETURN_TYPES}: The generic return type(s). Use this in the member's generics list <...>
+///     ${RETURN}: The return value. For simple values, this is R
+///     ${RETURN_CONVEY}: The return value supplied to JXContext.convey(). Assumes the local value name is 'r'
+///     ${RETURN_CONVEY_TYPE}: The return type supplied to JXValue.convey()
+///     ${RETURN_FROMCONVEYED}: The value returned after being conveyed from the JXValue. Assumes the conveyed value is 'r'
 class ArityGenerator {
     static let arityCommentStart = "/*ARITY:"
     static let arityCommentEnd = "ARITY*/"
@@ -43,6 +59,7 @@ class ArityGenerator {
         case asyncProperty
         case function
         case asyncFunction
+        case closureSupport
         
         var string: String {
             // Make sure one member string isn't a prefix of another
@@ -55,6 +72,8 @@ class ArityGenerator {
                 return "FUNCTION"
             case .asyncFunction:
                 return "ASYNC_FUNCTION"
+            case .closureSupport:
+                return "CLOSURE_SUPPORT"
             }
         }
     }
@@ -73,6 +92,9 @@ class ArityGenerator {
     
     /// Whether to generate property closures and function trailing closure parameters for async vars and functions. Defaults to false.
     var asyncMemberClosures = false
+    
+    /// The maximum `JXClosure` parameter arity to generate. Defaults to 6.
+    var maximumJXClosureParameters = 6
     
     private let source: String
     private let input: String
@@ -111,6 +133,9 @@ class ArityGenerator {
         }
         if let asyncFunctionInputs = inputs[.asyncFunction] {
             outputs[.asyncFunction] = generateArity(asyncFunctionInputs, substitutions: functionAritySubstitutions(closureSupport: asyncMemberClosures))
+        }
+        if let closureSupportInputs = inputs[.closureSupport] {
+            outputs[.closureSupport] = generateArity(closureSupportInputs, substitutions: closureSupportAritySubstitutions())
         }
         return output()
     }
@@ -196,6 +221,12 @@ class ArityGenerator {
         return subs
     }
     
+    private func closureSupportAritySubstitutions() -> [[String: String]] {
+        return (0...maximumJXClosureParameters).map {
+            Self.closureSupportSubstitution(arity: $0)
+        }
+    }
+    
     private static func applySubstitutions(_ subs: [String: String], to input: String) -> String {
         var subbed = input
         for entry in subs {
@@ -254,6 +285,24 @@ class ArityGenerator {
             "${RETURN_TYPES}": "R",
             "${RETURN}": "R",
             "${RETURN_CONVEY}": "r"
+        ]
+    }
+    
+    private static func closureSupportSubstitution(arity: Int) -> [String: String] {
+        return [
+            "${PARAM_TYPES_LIST}": parameterList(mode: .type, arity: arity),
+            "${PARAM_LIST}": parameterList(mode: .type, arity: arity),
+            "${PARAM_LABEL_LIST}": parameterList(mode: .label, arity: arity),
+            "${PARAM_CONVEY_TYPE_LIST}": parameterList(mode: .conveyType, arity: arity),
+            "${PARAM_COUNT}": "\(arity)",
+            "${PARAM_TUPLE_LIST}": parameterList(mode: .tuple, arity: arity),
+            "${PARAM_TUPLE}": arity > 0 ? "p" : "_",
+            "${PARAM_COMMA}": arity > 0 ? ", " : "",
+            "${RETURN_TYPES}": "R",
+            "${RETURN}": "R",
+            "${RETURN_CONVEY}": "r",
+            "${RETURN_CONVEY_TYPE}": "R.self",
+            "${RETURN_FROMCONVEYED}": "r"
         ]
     }
     

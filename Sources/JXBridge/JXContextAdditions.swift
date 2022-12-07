@@ -25,52 +25,6 @@ extension JXContext {
         self.spi = bridgeSPI
         return bridgeSPI
     }
-    
-    /// Attempts to convey the given closure or function into this JavaScript context as a function.
-    ///
-    /// - Seealso: `JXValue.convey` to convey back from JavaScript.
-    public func conveyClosure<R>(_ f: (() throws -> R)?) throws -> JXValue {
-        guard let f else {
-            return null()
-        }
-        return JXValue(newFunctionIn: self) { context, _, args in
-            try validate(arguments: args, count: 0)
-            let ret = try f()
-            return try context.convey(ret)
-        }
-    }
-    
-    /// Attempts to convey the given closure or function into this JavaScript context as a function.
-    ///
-    /// - Seealso: `JXValue.convey` to convey back from JavaScript.
-    public func conveyClosure<P0, R>(_ f: ((P0) throws -> R)?) throws -> JXValue {
-        guard let f else {
-            return null()
-        }
-        return JXValue(newFunctionIn: self) { context, _, args in
-            try validate(arguments: args, count: 1)
-            let p0 = try conveyParameters(args, P0.self)
-            let ret = try f(p0)
-            return try context.convey(ret)
-        }
-    }
-    
-    /// Attempts to convey the given closure or function into this JavaScript context as a function.
-    ///
-    /// - Seealso: `JXValue.convey` to convey back from JavaScript.
-    public func conveyClosure<P0, P1, R>(_ f: ((P0, P1) throws -> R)?) throws -> JXValue {
-        guard let f else {
-            return null()
-        }
-        return JXValue(newFunctionIn: self) { context, _, args in
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, P1.self)
-            let ret = try f(p.0, p.1)
-            return try context.convey(ret)
-        }
-    }
-    
-    //~~~ Need to auto-gen this support too
 }
 
 final class JXBridgeContextSPI {
