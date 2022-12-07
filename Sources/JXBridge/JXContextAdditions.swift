@@ -69,6 +69,8 @@ extension JXContext {
             return try context.convey(ret)
         }
     }
+    
+    //~~~ Need to auto-gen this support too
 }
 
 final class JXBridgeContextSPI {
