@@ -61,115 +61,21 @@ public final class JXBridgeBuilder<T> {
         return self
     }
     
-    // MARK: 0 parameters
-    
-    // builder.constructor { Type.init }
-    @discardableResult public func constructor(_ cons: @escaping () -> () throws -> T) -> JXBridgeBuilder<T> {
+/*ARITY:FUNCTION
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor${PARAM_TYPES_DEC}(_ cons: @escaping () -> (${PARAM_LIST}) throws -> T) -> JXBridgeBuilder<T> {
         return add(ConstructorBridge(cons()))
     }
     
-    // builder.constructor { Type() }
-    @discardableResult public func constructor(_ cons: @escaping () throws -> T) -> JXBridgeBuilder<T> {
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor${PARAM_TYPES_DEC}(_ cons: @escaping (${PARAM_LIST}) throws -> T) -> JXBridgeBuilder<T> {
         return add(ConstructorBridge(cons))
     }
+}
+ARITY*/
     
-    // MARK: 1 parameter
-    
-    // builder.constructor { Type.init(p0:) }
-    @discardableResult public func constructor<P0>(_ cons: @escaping () -> (P0) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1) }
-    @discardableResult public func constructor<P0>(_ cons: @escaping (P0) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-    
-    // MARK: 2 parameters
-    
-    // builder.constructor { Type.init(p0:p1:) }
-    @discardableResult public func constructor<P0, P1>(_ cons: @escaping () -> (P0, P1) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1, p1: $2) }
-    @discardableResult public func constructor<P0, P1>(_ cons: @escaping (P0, P1) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-    
-    // MARK: 3 parameters
-    
-    // builder.constructor { Type.init(p0:p1:p2:) }
-    @discardableResult public func constructor<P0, P1, P2>(_ cons: @escaping () -> (P0, P1, P2) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1, p1: $2, p2: $3) }
-    @discardableResult public func constructor<P0, P1, P2>(_ cons: @escaping (P0, P1, P2) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-    
-    // MARK: 4 parameters
-    
-    // builder.constructor { Type.init(p0:p1:p2:p3:) }
-    @discardableResult public func constructor<P0, P1, P2, P3>(_ cons: @escaping () -> (P0, P1, P2, P3) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1, p1: $2, p2: $3, p3: $4) }
-    @discardableResult public func constructor<P0, P1, P2, P3>(_ cons: @escaping (P0, P1, P2, P3) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-    
-    // MARK: 5 parameters
-    
-    // builder.constructor { Type.init(p0:p1:p2:p3:p4:) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4>(_ cons: @escaping () -> (P0, P1, P2, P3, P4) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1, p1: $2, p2: $3, p3: $4, p4: $5) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4>(_ cons: @escaping (P0, P1, P2, P3, P4) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-    
-    // MARK: 6 parameters
-    
-    // builder.constructor { Type.init(p0:p1:p2:p3:p4:p5:) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1, p1: $2, p2: $3, p3: $4, p4: $5, p5: $6) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5>(_ cons: @escaping (P0, P1, P2, P3, P4, P5) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-    
-    // MARK: 7 parameters
-    
-    // builder.constructor { Type.init(p0:p1:p2:p3:p4:p5:p6:) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1, p1: $2, p2: $3, p3: $4, p4: $5, p5: $6, p6: $7) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-    
-    // MARK: 8 parameters
-    
-    // builder.constructor { Type.init(p0:p1:p2:p3:p4:p5:p6:p7:) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, P7>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1, p1: $2, p2: $3, p3: $4, p4: $5, p5: $6, p6: $7, p7: $8) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, P7>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-    
-    private func add(_ constructorBridge: ConstructorBridge) -> JXBridgeBuilder<T> {
+    func add(_ constructorBridge: ConstructorBridge) -> JXBridgeBuilder<T> {
         bridge.constructors.append(constructorBridge)
         return self
     }

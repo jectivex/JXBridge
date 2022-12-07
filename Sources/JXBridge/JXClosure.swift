@@ -1,6 +1,9 @@
 import JXKit
 
+/// `JXConvertible` wrappers around closures.
 public enum JXClosure {
+}
+
 /*ARITY:CLOSURE_SUPPORT
  extension JXClosure {
     /// `JXConvertible` wrapper around a non-throwing closure of arity ${PARAM_COUNT}.
@@ -100,4 +103,3 @@ extension JXValue {
     }
 }
 ARITY*/
-}

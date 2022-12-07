@@ -2,9 +2,16 @@
 //
 //		swift package plugin generate-arity JXPropertyWrappers.swift
 //			-maximumFunctionParameters 8
+//			-maximumTupleArity 2
+//			-optionalTuples 0
+//			-propertyTuples 0
+//			-returnTuples 1
+//			-maximumJXTupleArity 6
 //			-maximumClosureParameters 2
 //			-maximumThrowingClosureParameters -1
 //			-optionalClosures 1
+//			-propertyClosures 1
+//			-trailingClosures 1
 //			-asyncMemberClosures 0
 //			-maximumJXClosureParameters 6
 

@@ -2,9 +2,16 @@
 //
 //		swift package plugin generate-arity JXBridgeBuilder.swift
 //			-maximumFunctionParameters 8
+//			-maximumTupleArity 2
+//			-optionalTuples 0
+//			-propertyTuples 0
+//			-returnTuples 1
+//			-maximumJXTupleArity 6
 //			-maximumClosureParameters 2
 //			-maximumThrowingClosureParameters -1
 //			-optionalClosures 1
+//			-propertyClosures 1
+//			-trailingClosures 1
 //			-asyncMemberClosures 0
 //			-maximumJXClosureParameters 6
 
@@ -385,6 +392,1579 @@ extension JXBridgeBuilder.ClassVars.Var {
 }
 
 // FUNCTION
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor(_ cons: @escaping () -> () throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor(_ cons: @escaping () throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0>(_ cons: @escaping () -> (P0) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0>(_ cons: @escaping (P0) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<CR>(_ cons: @escaping () -> ((() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<CR>(_ cons: @escaping ((() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<CR>(_ cons: @escaping () -> ((() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<CR>(_ cons: @escaping ((() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<C0, CR>(_ cons: @escaping () -> (((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<C0, CR>(_ cons: @escaping (((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<C0, CR>(_ cons: @escaping () -> (((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<C0, CR>(_ cons: @escaping (((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<C0, C1, CR>(_ cons: @escaping () -> (((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<C0, C1, CR>(_ cons: @escaping (((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<C0, C1, CR>(_ cons: @escaping () -> (((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<C0, C1, CR>(_ cons: @escaping (((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<C0, C1, C2, CR>(_ cons: @escaping () -> (((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<C0, C1, C2, CR>(_ cons: @escaping (((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<C0, C1, C2, CR>(_ cons: @escaping () -> (((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<C0, C1, C2, CR>(_ cons: @escaping (((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<C0, C1, C2, C3, CR>(_ cons: @escaping () -> (((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<C0, C1, C2, C3, CR>(_ cons: @escaping (((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<C0, C1, C2, C3, CR>(_ cons: @escaping () -> (((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<C0, C1, C2, C3, CR>(_ cons: @escaping (((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<C0, C1, C2, C3, C4, CR>(_ cons: @escaping (((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<C0, C1, C2, C3, C4, CR>(_ cons: @escaping (((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1>(_ cons: @escaping () -> (P0, P1) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1>(_ cons: @escaping (P0, P1) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, CR>(_ cons: @escaping () -> (P0, (() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, CR>(_ cons: @escaping (P0, (() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, CR>(_ cons: @escaping () -> (P0, (() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, CR>(_ cons: @escaping (P0, (() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, C0, CR>(_ cons: @escaping () -> (P0, ((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, C0, CR>(_ cons: @escaping (P0, ((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, C0, CR>(_ cons: @escaping () -> (P0, ((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, C0, CR>(_ cons: @escaping (P0, ((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, C0, C1, CR>(_ cons: @escaping () -> (P0, ((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, C0, C1, CR>(_ cons: @escaping (P0, ((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, C0, C1, CR>(_ cons: @escaping () -> (P0, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, C0, C1, CR>(_ cons: @escaping (P0, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, CR>(_ cons: @escaping (P0, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, CR>(_ cons: @escaping (P0, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2>(_ cons: @escaping () -> (P0, P1, P2) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2>(_ cons: @escaping (P0, P1, P2) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, CR>(_ cons: @escaping () -> (P0, P1, (() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, CR>(_ cons: @escaping (P0, P1, (() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, CR>(_ cons: @escaping () -> (P0, P1, (() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, CR>(_ cons: @escaping (P0, P1, (() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, C0, CR>(_ cons: @escaping () -> (P0, P1, ((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, C0, CR>(_ cons: @escaping (P0, P1, ((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, C0, CR>(_ cons: @escaping () -> (P0, P1, ((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, C0, CR>(_ cons: @escaping (P0, P1, ((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, CR>(_ cons: @escaping (P0, P1, ((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, CR>(_ cons: @escaping (P0, P1, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3>(_ cons: @escaping () -> (P0, P1, P2, P3) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3>(_ cons: @escaping (P0, P1, P2, P3) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, CR>(_ cons: @escaping () -> (P0, P1, P2, (() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, CR>(_ cons: @escaping (P0, P1, P2, (() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, CR>(_ cons: @escaping () -> (P0, P1, P2, (() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, CR>(_ cons: @escaping (P0, P1, P2, (() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, CR>(_ cons: @escaping (P0, P1, P2, ((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, CR>(_ cons: @escaping (P0, P1, P2, ((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4>(_ cons: @escaping () -> (P0, P1, P2, P3, P4) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4>(_ cons: @escaping (P0, P1, P2, P3, P4) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, (() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, CR>(_ cons: @escaping (P0, P1, P2, P3, (() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, (() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, CR>(_ cons: @escaping (P0, P1, P2, P3, (() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5>(_ cons: @escaping (P0, P1, P2, P3, P4, P5) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, (() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, (() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, (() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, (() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, (() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, (() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, (() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, (() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, P7>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, P7>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, (() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, (() -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, (() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, (() -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
+
+extension JXBridgeBuilder {
+    // builder.constructor { Type.init(p0:...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons()))
+    }
+    
+    // builder.constructor { Type(p0: $1...) }
+    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
+        return add(ConstructorBridge(cons))
+    }
+}
+
 
 extension JXBridgeBuilder.Funcs.Func {
     // builder.func.xxx { Type.xxx(p0:...) }

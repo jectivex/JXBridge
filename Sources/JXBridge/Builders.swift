@@ -319,6 +319,6 @@ ARITY*/
 
 /*ARITY:PARAM_SUPPORT
 func conveyParameters${PARAM_TYPES_DEC}(_ args: [JXValue]${PARAM_COMMA}${PARAM_ARGS_LIST}) throws -> (${PARAM_LIST}) {
-    return ${PARAM_TRY}(${PARAM_ARGS_CONVEY_LIST})
+    return ${PARAM_TRY}(${PARAM_CONVEY_ARGS_LIST})
 }
 ARITY*/
