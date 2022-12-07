@@ -11,7 +11,7 @@ import Foundation
 /// Where `MEMBER` is one of the bridged member types below. The content within the comment is extracted and duplicated for all supported arities.
 /// The content should use the placeholders described below.
 ///
-/// `PROPERTY`, `ASYNC_PROPERTY`:
+/// `PROPERTY`, `ASYNC_PROPERTY`: Generate arity code for bridging properties.
 ///
 ///     ${VALUE_TYPES}: The generic value type(s). Use this in the member's generics list <...>
 ///     ${VALUE}: The value. For simple values, this is V
@@ -19,7 +19,7 @@ import Foundation
 ///     ${VALUE_CONVEY_TYPE}: The type to pass to JXValue.convey(to:) for the value
 ///     ${VALUE_FROMCONVEYED}: The value passed to the setter after being conveyed from the JXValue. Assumes the conveyed value is 'v'
 ///
-/// `FUNCTION`, `ASYNC_FUNCTION`:
+/// `FUNCTION`, `ASYNC_FUNCTION`: Generate arity code for bridging functions.
 ///
 ///     ${PARAM_TYPES_LIST}: The generic parameter type(s). Use this in the function's generics list <...>
 ///     ${PARAM_LIST}: The parameters. For simple types, these are P0, P1, ...
@@ -34,7 +34,7 @@ import Foundation
 ///     ${RETURN}: The return value. For simple values, this is R
 ///     ${RETURN_CONVEY}: The return value supplied to JXContext.convey(). Assumes the local value name is 'r'
 ///
-/// `CLOSURE_SUPPORT`:
+/// `CLOSURE_SUPPORT`: Generate arity code for general closure support.
 ///
 ///     ${PARAM_TYPES_LIST}: The generic parameter type(s). Use this in the function's generics list <...>
 ///     ${PARAM_LIST}: The parameters. For simple types, these are P0, P1, ...
@@ -49,6 +49,15 @@ import Foundation
 ///     ${RETURN_CONVEY}: The return value supplied to JXContext.convey(). Assumes the local value name is 'r'
 ///     ${RETURN_CONVEY_TYPE}: The return type supplied to JXValue.convey()
 ///     ${RETURN_FROMCONVEYED}: The value returned after being conveyed from the JXValue. Assumes the conveyed value is 'r'
+///
+/// `PARAM_SUPPORT`: Generate arity code for general parameter support.
+///
+///     ${PARAM_TYPES_DEC}: Declaration of the generic parameter type(s). Use this as the function's generics list <...>
+///     ${PARAM_LIST}: The parameters. For simple types, these are P0, P1, ...
+///     ${PARAM_ARGS_LIST}: Arguments to the function: _ p0: P0.Type, _ p1: P1.Type...
+///     ${PARAM_ARGS_CONVEY_LIST}: Code to convey each parameter from the corresponding arg: args[0].convey(to: p0)...
+///     ${PARAM_COMMA}: Empty string if there are no parameters, otherwise ', '
+///     ${PARAM_TRY}: Empty string if there are no parameters, otherwise 'try '
 class ArityGenerator {
     static let arityCommentStart = "/*ARITY:"
     static let arityCommentEnd = "ARITY*/"
@@ -59,6 +68,7 @@ class ArityGenerator {
         case asyncProperty
         case function
         case asyncFunction
+        case parameterSupport
         case closureSupport
         
         var string: String {
@@ -72,6 +82,8 @@ class ArityGenerator {
                 return "FUNCTION"
             case .asyncFunction:
                 return "ASYNC_FUNCTION"
+            case .parameterSupport:
+                return "PARAM_SUPPORT"
             case .closureSupport:
                 return "CLOSURE_SUPPORT"
             }
@@ -133,6 +145,9 @@ class ArityGenerator {
         }
         if let asyncFunctionInputs = inputs[.asyncFunction] {
             outputs[.asyncFunction] = generateArity(asyncFunctionInputs, substitutions: functionAritySubstitutions(closureSupport: asyncMemberClosures))
+        }
+        if let parameterSupportInputs = inputs[.parameterSupport] {
+            outputs[.parameterSupport] = generateArity(parameterSupportInputs, substitutions: parameterSupportAritySubstitutions())
         }
         if let closureSupportInputs = inputs[.closureSupport] {
             outputs[.closureSupport] = generateArity(closureSupportInputs, substitutions: closureSupportAritySubstitutions())
@@ -221,6 +236,12 @@ class ArityGenerator {
         return subs
     }
     
+    private func parameterSupportAritySubstitutions() -> [[String: String]] {
+        return (0...max(maximumFunctionParameters, maximumJXClosureParameters)).map {
+            Self.parameterSupportSubstitution(arity: $0)
+        }
+    }
+    
     private func closureSupportAritySubstitutions() -> [[String: String]] {
         return (0...maximumJXClosureParameters).map {
             Self.closureSupportSubstitution(arity: $0)
@@ -285,6 +306,17 @@ class ArityGenerator {
             "${RETURN_TYPES}": "R",
             "${RETURN}": "R",
             "${RETURN_CONVEY}": "r"
+        ]
+    }
+    
+    private static func parameterSupportSubstitution(arity: Int) -> [String: String] {
+        return [
+            "${PARAM_TYPES_DEC}": arity > 0 ? "<\(parameterList(mode: .type, arity: arity))>" : "",
+            "${PARAM_LIST}": parameterList(mode: .type, arity: arity),
+            "${PARAM_ARGS_LIST}": parameterList(mode: .args, arity: arity),
+            "${PARAM_ARGS_CONVEY_LIST}": parameterList(mode: .argsConvey, arity: arity),
+            "${PARAM_COMMA}": arity > 0 ? ", " : "",
+            "${PARAM_TRY}": arity > 0 ? "try " : ""
         ]
     }
     
@@ -378,6 +410,8 @@ class ArityGenerator {
         case labeled
         case label
         case tuple
+        case args
+        case argsConvey
     }
     
     private static func parameterList(mode: ParameterListMode, arity: Int, base: String = "P", trimLast: Bool = false, includeReturn: Bool = false) -> String {
@@ -399,6 +433,10 @@ class ArityGenerator {
                 } else {
                     string.append(base.lowercased())
                 }
+            case .args:
+                string.append("_ \(base.lowercased())\(i): \(base)\(i).Type")
+            case .argsConvey:
+                string.append("args[\(i)].convey(to: \(base.lowercased())\(i))")
             }
             if includeReturn || i < (toArity - 1) {
                 string.append(", ")

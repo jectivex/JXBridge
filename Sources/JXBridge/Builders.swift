@@ -317,67 +317,8 @@ extension StaticFunctionBridge {
 }
 ARITY*/
 
-//~~~
-func conveyParameters(_ args: [JXValue]) throws -> () {
-    return ()
+/*ARITY:PARAM_SUPPORT
+func conveyParameters${PARAM_TYPES_DEC}(_ args: [JXValue]${PARAM_COMMA}${PARAM_ARGS_LIST}) throws -> (${PARAM_LIST}) {
+    return ${PARAM_TRY}(${PARAM_ARGS_CONVEY_LIST})
 }
-
-func conveyParameters<P0>(_ args: [JXValue], _ p0: P0.Type) throws -> (P0) {
-    return try (args[0].convey(to: p0))
-}
-
-func conveyParameters<P0, P1>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type) throws -> (P0, P1) {
-    return try (args[0].convey(to: p0),
-                args[1].convey(to: p1))
-}
-
-func conveyParameters<P0, P1, P2>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type) throws -> (P0, P1, P2) {
-    return try (args[0].convey(to: p0),
-                args[1].convey(to: p1),
-                args[2].convey(to: p2))
-}
-
-func conveyParameters<P0, P1, P2, P3>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type) throws -> (P0, P1, P2, P3) {
-    return try (args[0].convey(to: p0),
-                args[1].convey(to: p1),
-                args[2].convey(to: p2),
-                args[3].convey(to: p3))
-}
-
-func conveyParameters<P0, P1, P2, P3, P4>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type, _ p4: P4.Type) throws -> (P0, P1, P2, P3, P4) {
-    return try (args[0].convey(to: p0),
-                args[1].convey(to: p1),
-                args[2].convey(to: p2),
-                args[3].convey(to: p3),
-                args[4].convey(to: p4))
-}
-
-func conveyParameters<P0, P1, P2, P3, P4, P5>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type, _ p4: P4.Type, _ p5: P5.Type) throws -> (P0, P1, P2, P3, P4, P5) {
-    return try (args[0].convey(to: p0),
-                args[1].convey(to: p1),
-                args[2].convey(to: p2),
-                args[3].convey(to: p3),
-                args[4].convey(to: p4),
-                args[5].convey(to: p5))
-}
-
-func conveyParameters<P0, P1, P2, P3, P4, P5, P6>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type, _ p4: P4.Type, _ p5: P5.Type, _ p6: P6.Type) throws -> (P0, P1, P2, P3, P4, P5, P6) {
-    return try (args[0].convey(to: p0),
-                args[1].convey(to: p1),
-                args[2].convey(to: p2),
-                args[3].convey(to: p3),
-                args[4].convey(to: p4),
-                args[5].convey(to: p5),
-                args[6].convey(to: p6))
-}
-
-func conveyParameters<P0, P1, P2, P3, P4, P5, P6, P7>(_ args: [JXValue], _ p0: P0.Type, _ p1: P1.Type, _ p2: P2.Type, _ p3: P3.Type, _ p4: P4.Type, _ p5: P5.Type, _ p6: P6.Type, _ p7: P7.Type) throws -> (P0, P1, P2, P3, P4, P5, P6, P7) {
-    return try (args[0].convey(to: p0),
-                args[1].convey(to: p1),
-                args[2].convey(to: p2),
-                args[3].convey(to: p3),
-                args[4].convey(to: p4),
-                args[5].convey(to: p5),
-                args[6].convey(to: p6),
-                args[7].convey(to: p7))
-}
+ARITY*/
