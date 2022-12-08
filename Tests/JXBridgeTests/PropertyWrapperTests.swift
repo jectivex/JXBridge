@@ -70,15 +70,8 @@ final class PropertyWrapperTests: XCTestCase {
 
         let test = TestClass(intVar: 1)
         try context.global.integrate(test)
-        var result = try context.eval("jx.increment(2); jx.computedVar")
+        let result = try context.eval("jx.increment(2); jx.computedVar")
         XCTAssertEqual(try result.int, 6)
-        
-        result = try context.eval("""
-var test = new jx.TestClass(1);
-test.closureVar = () => { return 100; };
-test.closureVar();
-""")
-        XCTAssertEqual(try result.int, 100)
     }
     
     func testJXStatic() throws {
