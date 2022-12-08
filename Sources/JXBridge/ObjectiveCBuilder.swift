@@ -23,7 +23,7 @@ final class ObjectiveCBuilder {
     }
 
     private func addConstructor(_ cls: AnyClass, _ method: JXObjectiveCMethod) {
-        let constructorBridge = ConstructorBridge(owningTypeName: String(describing: bridge.type), parameterCount: method.parameterCount) { args, context in
+        let constructorBridge = JXBridge.ConstructorBridge(owningTypeName: String(describing: bridge.type), parameterCount: method.parameterCount) { args, context in
             try validate(arguments: args, count: method.parameterCount)
             var convertedArgs: [AnyObject] = []
             for i in 0 ..< args.count {
@@ -51,12 +51,12 @@ final class ObjectiveCBuilder {
         } else {
             setter = nil
         }
-        bridge.properties.append(PropertyBridge(owningTypeName: String(describing: bridge.type), name: property.name, getter: getter, setter: setter))
+        bridge.properties.append(JXBridge.PropertyBridge(owningTypeName: String(describing: bridge.type), name: property.name, getter: getter, setter: setter))
     }
 
     private func addMethod(_ method: JXObjectiveCMethod) {
         let functionName = functionName(forSelectorName: method.name)
-        let functionBridge = FunctionBridge(owningTypeName: String(describing: bridge.type), name: functionName) { obj, args, context in
+        let functionBridge = JXBridge.FunctionBridge(owningTypeName: String(describing: bridge.type), name: functionName) { obj, args, context in
             try validate(arguments: args, count: method.parameterCount)
             var convertedArgs: [AnyObject] = []
             for i in 0 ..< args.count {
@@ -86,12 +86,12 @@ final class ObjectiveCBuilder {
         } else {
             setter = nil
         }
-        bridge.classProperties.append(PropertyBridge(owningTypeName: String(describing: bridge.type), name: property.name, getter: getter, setter: setter))
+        bridge.classProperties.append(JXBridge.PropertyBridge(owningTypeName: String(describing: bridge.type), name: property.name, getter: getter, setter: setter))
     }
 
     private func addClassMethod(_ method: JXObjectiveCMethod) {
         let functionName = functionName(forSelectorName: method.name)
-        let functionBridge = FunctionBridge(owningTypeName: String(describing: bridge.type), name: functionName) { obj, args, context in
+        let functionBridge = JXBridge.FunctionBridge(owningTypeName: String(describing: bridge.type), name: functionName) { obj, args, context in
             try validate(arguments: args, count: method.parameterCount)
             var convertedArgs: [AnyObject] = []
             for i in 0 ..< args.count {

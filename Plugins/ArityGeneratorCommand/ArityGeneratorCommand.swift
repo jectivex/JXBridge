@@ -87,6 +87,9 @@ import System
         for option in ArityGenerator.Option.allCases {
             header.append("//\t\t\t-\(option.rawValue) \(option.value(in: options))\n")
         }
+        if ArityGenerator.Option.beyondDefaults.value(in: options) > 0 {
+            header.append("\nimport JXBridge")
+        }
         header.append("\nimport JXKit\n")
         return header
     }

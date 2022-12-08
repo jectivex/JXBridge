@@ -36,9 +36,12 @@ targets[0].dependencies += [.product(name: "OpenCombineShim", package: "OpenComb
 let package = Package(
     name: "JXBridge",
     platforms: [ .macOS(.v12), .iOS(.v15), .tvOS(.v15) ],
-    products: products,
+    products: products + [
+    	.library(name: "JXBridgeExtended", targets: ["JXBridgeExtended"]),
+    ],
     dependencies: dependencies,
     targets: targets + [
+    	.target(name: "JXBridgeExtended", dependencies: ["JXBridge"]),
         .plugin(name: "ArityGeneratorCommand",
                 capability: .command(intent: .custom(verb: "generate-arity", description: "Generate arity support"),
                     permissions: [
