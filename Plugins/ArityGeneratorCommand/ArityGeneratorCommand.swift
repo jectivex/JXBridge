@@ -1,3 +1,6 @@
+#if canImport(Foundation)
+import Foundation
+#endif
 import PackagePlugin
 #if canImport(System)
 import System
@@ -16,7 +19,7 @@ import System
         }
 #if canImport(Foundation) && canImport(System)
         if #available(macOS 13.0, *) {
-            let (options, files) = try processArguments(arguments)
+            let (options, files, outputDir) = try processArguments(arguments)
             for file in files {
                 let inputPath = FilePath(file)
                 let inputFileName = inputPath.lastComponent?.string ?? file
@@ -30,29 +33,35 @@ import System
                 let output = try generator.generate()
                 
                 let outputFileName = inputPath.stem! + "+Arity.swift"
-                let outputPath = inputPath.removingLastComponent().appending(outputFileName)
+                let outputDir = outputDir ?? inputPath.removingLastComponent()
+                let outputPath = outputDir.appending(outputFileName)
                 print("Writing output to \(outputPath)...")
                 let fileContent = header(source: inputFileName, options: options) + output
-                try fileContent.write(toFile: outputPath.description, atomically: false, encoding: .utf8)
+                try fileContent.write(toFile: outputPath.string, atomically: false, encoding: .utf8)
             }
         } else {
             throw ArityGeneratorError(message: "\(String(describing: ArityGeneratorCommand.self)) requires macOS 13+")
         }
 #else
-        throw ArityGeneratorError(message: "\(String(describing: ArityGeneratorCommand.self)) requires System and Foundation modules")
+        throw ArityGeneratorError(message: "\(String(describing: ArityGeneratorCommand.self)) requires System module")
 #endif
     }
     
-    private func processArguments(_ arguments: [String]) throws -> (options: [ArityGenerator.Option: Int], files: [String]) {
+#if canImport(Foundation) && canImport(System)
+    private func processArguments(_ arguments: [String]) throws -> (options: [ArityGenerator.Option: Int], files: [String], outputDir: FilePath?) {
         var options: [ArityGenerator.Option: Int] = [:]
         var files: [String] = []
         var skipValue = false
+        var outputDir: String? = nil
         for i in 0..<arguments.count {
             guard !skipValue else {
                 skipValue = false
                 continue
             }
-            if arguments[i].starts(with: "-") && i < (arguments.count - 1) {
+            if arguments[i] == "-o" && i < (arguments.count - 1) {
+                outputDir = arguments[i + 1]
+                skipValue = true
+            } else if arguments[i].starts(with: "-") && i < (arguments.count - 1) {
                 let optionString = String(arguments[i].dropFirst())
                 let valueString = arguments[i + 1]
                 guard let option = ArityGenerator.Option(rawValue: optionString) else {
@@ -69,7 +78,7 @@ import System
                 files.append(arguments[i])
             }
         }
-        return (options, files)
+        return (options, files, outputDir.map { FilePath($0) })
     }
     
     private func header(source: String, options: [ArityGenerator.Option: Int]) -> String {
@@ -83,11 +92,12 @@ import System
     }
     
     private func usage() -> String {
-        var usage = "swift package plugin generate-arity [-<option> <number>] <files>"
+        var usage = "swift package plugin generate-arity [-o <output dir>] [-<option> <number>] <files>"
         usage.append("\nOptions:")
         for option in ArityGenerator.Option.allCases {
             usage.append("\n\t\(option.rawValue): Default value \(option.default)")
         }
         return usage
     }
+#endif
 }

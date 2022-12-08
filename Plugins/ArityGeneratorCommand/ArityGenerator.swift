@@ -113,6 +113,8 @@ class ArityGenerator {
         case asyncMemberClosures
         /// The maximum `JXClosure` parameter arity to generate.
         case maximumJXClosureParameters
+        /// Whether to only generate arities beyond the set of defaults.
+        case beyondDefaults
         
         var `default`: Int {
             switch self {
@@ -130,6 +132,7 @@ class ArityGenerator {
             case .trailingClosures: return 1
             case .asyncMemberClosures: return 0
             case .maximumJXClosureParameters: return 6
+            case .beyondDefaults: return 0
             }
         }
         
@@ -199,30 +202,46 @@ class ArityGenerator {
     /// Return the output containing the generated arity variants, for writing to a source file.
     func generate() throws -> String {
         if let propertyInputs = inputs[.property] {
-            outputs[.property] = generateArity(propertyInputs, substitutions: propertyAritySubstitutions(closureSupport: true))
+            outputs[.property] = generateArity(propertyInputs) {
+                propertyAritySubstitutions(options: $0, closureSupport: true)
+            }
         }
         if let asyncPropertyInputs = inputs[.asyncProperty] {
             let closureSupport = Option.asyncMemberClosures.value(in: options) > 0
-            outputs[.asyncProperty] = generateArity(asyncPropertyInputs, substitutions: propertyAritySubstitutions(closureSupport: closureSupport))
+            outputs[.asyncProperty] = generateArity(asyncPropertyInputs) {
+                propertyAritySubstitutions(options: $0, closureSupport: closureSupport)
+            }
         }
         if let constructorInputs = inputs[.constructor] {
-            outputs[.constructor] = generateArity(constructorInputs, substitutions: functionAritySubstitutions(tupleSupport: false, closureSupport: true))
+            outputs[.constructor] = generateArity(constructorInputs) {
+                functionAritySubstitutions(options: $0, tupleSupport: false, closureSupport: true)
+            }
         }
         if let functionInputs = inputs[.function] {
-            outputs[.function] = generateArity(functionInputs, substitutions: functionAritySubstitutions(tupleSupport: true, closureSupport: true))
+            outputs[.function] = generateArity(functionInputs) {
+                functionAritySubstitutions(options: $0, tupleSupport: true, closureSupport: true)
+            }
         }
         if let asyncFunctionInputs = inputs[.asyncFunction] {
             let closureSupport = Option.asyncMemberClosures.value(in: options) > 0
-            outputs[.asyncFunction] = generateArity(asyncFunctionInputs, substitutions: functionAritySubstitutions(tupleSupport: true, closureSupport: closureSupport))
+            outputs[.asyncFunction] = generateArity(asyncFunctionInputs) {
+                functionAritySubstitutions(options: $0, tupleSupport: true, closureSupport: closureSupport)
+            }
         }
         if let parameterSupportInputs = inputs[.parameterSupport] {
-            outputs[.parameterSupport] = generateArity(parameterSupportInputs, substitutions: parameterSupportAritySubstitutions())
+            outputs[.parameterSupport] = generateArity(parameterSupportInputs) {
+                parameterSupportAritySubstitutions(options: $0)
+            }
         }
         if let tupleSupportInputs = inputs[.tupleSupport] {
-            outputs[.tupleSupport] = generateArity(tupleSupportInputs, substitutions: tupleSupportAritySubstitutions())
+            outputs[.tupleSupport] = generateArity(tupleSupportInputs) {
+                tupleSupportAritySubstitutions(options: $0)
+            }
         }
         if let closureSupportInputs = inputs[.closureSupport] {
-            outputs[.closureSupport] = generateArity(closureSupportInputs, substitutions: closureSupportAritySubstitutions())
+            outputs[.closureSupport] = generateArity(closureSupportInputs) {
+                closureSupportAritySubstitutions(options: $0)
+            }
         }
         return output()
     }
@@ -256,15 +275,27 @@ class ArityGenerator {
         return inputs
     }
     
-    private func generateArity(_ arityInputs: [String], substitutions: [[String: String]]) -> [String] {
+    private func generateArity(_ arityInputs: [String], substitutions: ([Option: Int]) -> [[String: String]]) -> [String] {
+        var subs = substitutions(options)
+        if Option.beyondDefaults.value(in: options) > 0 {
+            // If we only want to generate output beyond what the defaults generate, we:
+            // 1. Generate all outputs for the current options
+            // 2. Generate outputs for the default options
+            // 3. Dedupe
+            let defaultOptions = Option.allCases.reduce(into: [Option: Int]()) { result, option in
+                result[option] = option.default
+            }
+            let defaultSubs = substitutions(defaultOptions)
+            subs = Self.removeSubstitutions(defaultSubs, from: subs)
+        }
         var arityOutputs: [String] = []
         for arityInput in arityInputs {
-            arityOutputs += substitutions.map { Self.applySubstitutions($0, to: arityInput) }
+            arityOutputs += subs.map { Self.applySubstitutions($0, to: arityInput) }
         }
         return arityOutputs
     }
     
-    private func propertyAritySubstitutions(closureSupport: Bool) -> [[String: String]] {
+    private func propertyAritySubstitutions(options: [Option: Int], closureSupport: Bool) -> [[String: String]] {
         let tupleArity = Option.maximumTupleArity.value(in: options)
         let includeTuples = tupleArity >= 2 && Option.propertyTuples.value(in: options) > 0
         let optionalTuples = includeTuples && Option.optionalTuples.value(in: options) > 0
@@ -299,7 +330,7 @@ class ArityGenerator {
         return subs
     }
     
-    private func functionAritySubstitutions(tupleSupport: Bool, closureSupport: Bool) -> [[String: String]] {
+    private func functionAritySubstitutions(options: [Option: Int], tupleSupport: Bool, closureSupport: Bool) -> [[String: String]] {
         let tupleArity = Option.maximumTupleArity.value(in: options)
         let includeTuples = tupleArity >= 2 && tupleSupport && Option.returnTuples.value(in: options) > 0
         let optionalTuples = includeTuples && Option.optionalTuples.value(in: options) > 0
@@ -344,19 +375,19 @@ class ArityGenerator {
         return subs
     }
     
-    private func parameterSupportAritySubstitutions() -> [[String: String]] {
+    private func parameterSupportAritySubstitutions(options: [Option: Int]) -> [[String: String]] {
         return (0...max(Option.maximumFunctionParameters.value(in: options), Option.maximumJXClosureParameters.value(in: options))).map {
             Self.parameterSupportSubstitution(arity: $0)
         }
     }
     
-    private func tupleSupportAritySubstitutions() -> [[String: String]] {
+    private func tupleSupportAritySubstitutions(options: [Option: Int]) -> [[String: String]] {
         return (2...Option.maximumJXTupleArity.value(in: options)).map {
             Self.tupleSupportSubstitution(arity: $0)
         }
     }
     
-    private func closureSupportAritySubstitutions() -> [[String: String]] {
+    private func closureSupportAritySubstitutions(options: [Option: Int]) -> [[String: String]] {
         return (0...Option.maximumJXClosureParameters.value(in: options)).map {
             Self.closureSupportSubstitution(arity: $0)
         }
@@ -368,6 +399,18 @@ class ArityGenerator {
             subbed = subbed.replacingOccurrences(of: entry.key, with: entry.value)
         }
         return subbed
+    }
+    
+    private static func removeSubstitutions(_ rmsubs: [[String: String]], from subs: [[String: String]]) -> [[String: String]] {
+        // Maintain order for consistent output
+        let rmSet = Set(rmsubs)
+        var deduped: [[String: String]] = []
+        for sub in subs {
+            if !rmSet.contains(sub) {
+                deduped.append(sub)
+            }
+        }
+        return deduped
     }
     
     private static func propertySubstitution(tupleInfo: TupleInfo? = nil, closureInfo: ClosureInfo? = nil) -> [String: String] {

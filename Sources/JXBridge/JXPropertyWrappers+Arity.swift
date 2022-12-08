@@ -15,6 +15,7 @@
 //			-trailingClosures 1
 //			-asyncMemberClosures 0
 //			-maximumJXClosureParameters 6
+//			-beyondDefaults 0
 
 import JXKit
 
