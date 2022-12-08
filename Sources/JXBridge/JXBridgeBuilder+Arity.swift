@@ -6,6 +6,7 @@
 //			-optionalTuples 0
 //			-propertyTuples 0
 //			-returnTuples 1
+//			-returnTuplesWhenTrailingClosures 0
 //			-maximumJXTupleArity 6
 //			-maximumClosureParameters 2
 //			-maximumThrowingClosureParameters -1
@@ -391,7 +392,7 @@ extension JXBridgeBuilder.ClassVars.Var {
     }
 }
 
-// FUNCTION
+// INIT
 
 extension JXBridgeBuilder {
     // builder.constructor { Type.init(p0:...) }
@@ -499,110 +500,6 @@ extension JXBridgeBuilder {
 
 extension JXBridgeBuilder {
     // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<C0, C1, C2, CR>(_ cons: @escaping () -> (((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<C0, C1, C2, CR>(_ cons: @escaping (((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<C0, C1, C2, CR>(_ cons: @escaping () -> (((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<C0, C1, C2, CR>(_ cons: @escaping (((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<C0, C1, C2, C3, CR>(_ cons: @escaping () -> (((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<C0, C1, C2, C3, CR>(_ cons: @escaping (((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<C0, C1, C2, C3, CR>(_ cons: @escaping () -> (((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<C0, C1, C2, C3, CR>(_ cons: @escaping (((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<C0, C1, C2, C3, C4, CR>(_ cons: @escaping (((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<C0, C1, C2, C3, C4, CR>(_ cons: @escaping (((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
     @discardableResult public func constructor<P0, P1>(_ cons: @escaping () -> (P0, P1) throws -> T) -> JXBridgeBuilder<T> {
         return add(ConstructorBridge(cons()))
     }
@@ -687,110 +584,6 @@ extension JXBridgeBuilder {
     
     // builder.constructor { Type(p0: $1...) }
     @discardableResult public func constructor<P0, C0, C1, CR>(_ cons: @escaping (P0, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, CR>(_ cons: @escaping (P0, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, CR>(_ cons: @escaping (P0, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
         return add(ConstructorBridge(cons))
     }
 }
@@ -889,110 +682,6 @@ extension JXBridgeBuilder {
 
 extension JXBridgeBuilder {
     // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
     @discardableResult public func constructor<P0, P1, P2, P3>(_ cons: @escaping () -> (P0, P1, P2, P3) throws -> T) -> JXBridgeBuilder<T> {
         return add(ConstructorBridge(cons()))
     }
@@ -1077,110 +766,6 @@ extension JXBridgeBuilder {
     
     // builder.constructor { Type(p0: $1...) }
     @discardableResult public func constructor<P0, P1, P2, C0, C1, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
         return add(ConstructorBridge(cons))
     }
 }
@@ -1279,110 +864,6 @@ extension JXBridgeBuilder {
 
 extension JXBridgeBuilder {
     // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
     @discardableResult public func constructor<P0, P1, P2, P3, P4, P5>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5) throws -> T) -> JXBridgeBuilder<T> {
         return add(ConstructorBridge(cons()))
     }
@@ -1467,110 +948,6 @@ extension JXBridgeBuilder {
     
     // builder.constructor { Type(p0: $1...) }
     @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
         return add(ConstructorBridge(cons))
     }
 }
@@ -1669,110 +1046,6 @@ extension JXBridgeBuilder {
 
 extension JXBridgeBuilder {
     // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
     @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, P7>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> T) -> JXBridgeBuilder<T> {
         return add(ConstructorBridge(cons()))
     }
@@ -1861,110 +1134,7 @@ extension JXBridgeBuilder {
     }
 }
 
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
-
-extension JXBridgeBuilder {
-    // builder.constructor { Type.init(p0:...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons()))
-    }
-    
-    // builder.constructor { Type(p0: $1...) }
-    @discardableResult public func constructor<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) -> JXBridgeBuilder<T> {
-        return add(ConstructorBridge(cons))
-    }
-}
-
+// FUNCTION
 
 extension JXBridgeBuilder.Funcs.Func {
     // builder.func.xxx { Type.xxx(p0:...) }
@@ -1981,12 +1151,38 @@ extension JXBridgeBuilder.Funcs.Func {
 
 extension JXBridgeBuilder.Funcs.Func {
     // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<U0, U1>(_ f: @escaping () -> (T) -> () throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+                        
+    // builder.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<U0, U1>(_ f: @escaping (T) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, R>(_ f: @escaping () -> (T) -> (P0) throws -> R) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f()))
     }
                         
     // builder.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, R>(_ f: @escaping (T, P0) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, U0, U1>(_ f: @escaping () -> (T) -> (P0) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+                        
+    // builder.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, U0, U1>(_ f: @escaping (T, P0) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f))
     }
 }
@@ -2072,116 +1268,25 @@ extension JXBridgeBuilder.Funcs.Func {
 
 extension JXBridgeBuilder.Funcs.Func {
     // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, CR, R>(_ f: @escaping (T, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, CR, R>(_ f: @escaping (T, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, CR, R>(_ f: @escaping (T, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, CR, R>(_ f: @escaping (T, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, R>(_ f: @escaping () -> (T) -> (P0, P1) throws -> R) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f()))
     }
                         
     // builder.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, R>(_ f: @escaping (T, P0, P1) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, U0, U1>(_ f: @escaping () -> (T) -> (P0, P1) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+                        
+    // builder.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, U0, U1>(_ f: @escaping (T, P0, P1) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f))
     }
 }
@@ -2267,116 +1372,25 @@ extension JXBridgeBuilder.Funcs.Func {
 
 extension JXBridgeBuilder.Funcs.Func {
     // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (P0, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, CR, R>(_ f: @escaping (T, P0, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (P0, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, CR, R>(_ f: @escaping (T, P0, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (P0, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, CR, R>(_ f: @escaping (T, P0, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (P0, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, CR, R>(_ f: @escaping (T, P0, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, R>(_ f: @escaping () -> (T) -> (P0, P1, P2) throws -> R) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f()))
     }
                         
     // builder.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, R>(_ f: @escaping (T, P0, P1, P2) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, U0, U1>(_ f: @escaping () -> (T) -> (P0, P1, P2) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+                        
+    // builder.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, U0, U1>(_ f: @escaping (T, P0, P1, P2) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f))
     }
 }
@@ -2462,116 +1476,25 @@ extension JXBridgeBuilder.Funcs.Func {
 
 extension JXBridgeBuilder.Funcs.Func {
     // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, CR, R>(_ f: @escaping (T, P0, P1, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, CR, R>(_ f: @escaping (T, P0, P1, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, CR, R>(_ f: @escaping (T, P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, CR, R>(_ f: @escaping (T, P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f()))
     }
                         
     // builder.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, R>(_ f: @escaping (T, P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, U0, U1>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+                        
+    // builder.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, U0, U1>(_ f: @escaping (T, P0, P1, P2, P3) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f))
     }
 }
@@ -2657,116 +1580,25 @@ extension JXBridgeBuilder.Funcs.Func {
 
 extension JXBridgeBuilder.Funcs.Func {
     // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, CR, R>(_ f: @escaping (T, P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, CR, R>(_ f: @escaping (T, P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, CR, R>(_ f: @escaping (T, P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, CR, R>(_ f: @escaping (T, P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f()))
     }
                         
     // builder.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, R>(_ f: @escaping (T, P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, U0, U1>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+                        
+    // builder.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, U0, U1>(_ f: @escaping (T, P0, P1, P2, P3, P4) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f))
     }
 }
@@ -2852,116 +1684,25 @@ extension JXBridgeBuilder.Funcs.Func {
 
 extension JXBridgeBuilder.Funcs.Func {
     // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f()))
     }
                         
     // builder.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, U0, U1>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+                        
+    // builder.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, U0, U1>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f))
     }
 }
@@ -3047,116 +1788,25 @@ extension JXBridgeBuilder.Funcs.Func {
 
 extension JXBridgeBuilder.Funcs.Func {
     // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f()))
     }
                         
     // builder.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, U0, U1>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+                        
+    // builder.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, U0, U1>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f))
     }
 }
@@ -3242,116 +1892,25 @@ extension JXBridgeBuilder.Funcs.Func {
 
 extension JXBridgeBuilder.Funcs.Func {
     // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f()))
     }
                         
     // builder.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+                        
+    // builder.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6, P7) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f))
     }
 }
@@ -3435,110 +1994,6 @@ extension JXBridgeBuilder.Funcs.Func {
 }
 
 
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.Funcs.Func {
-    // builder.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f()))
-    }
-                        
-    // builder.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, function: f))
-    }
-}
-
-
 extension JXBridgeBuilder.MutatingFuncs.Func {
     // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<R>(_ f: @escaping (inout T) throws -> R) -> JXBridgeBuilder<T> {
@@ -3549,7 +2004,23 @@ extension JXBridgeBuilder.MutatingFuncs.Func {
 
 extension JXBridgeBuilder.MutatingFuncs.Func {
     // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<U0, U1>(_ f: @escaping (inout T) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, mutatingFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.MutatingFuncs.Func {
+    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, R>(_ f: @escaping (inout T, P0) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, mutatingFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.MutatingFuncs.Func {
+    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, U0, U1>(_ f: @escaping (inout T, P0) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, mutatingFunction: f))
     }
 }
@@ -3605,71 +2076,15 @@ extension JXBridgeBuilder.MutatingFuncs.Func {
 
 extension JXBridgeBuilder.MutatingFuncs.Func {
     // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, CR, R>(_ f: @escaping (inout T, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, CR, R>(_ f: @escaping (inout T, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, R>(_ f: @escaping (inout T, P0, P1) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, mutatingFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.MutatingFuncs.Func {
+    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, U0, U1>(_ f: @escaping (inout T, P0, P1) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, mutatingFunction: f))
     }
 }
@@ -3725,71 +2140,15 @@ extension JXBridgeBuilder.MutatingFuncs.Func {
 
 extension JXBridgeBuilder.MutatingFuncs.Func {
     // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, CR, R>(_ f: @escaping (inout T, P0, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, CR, R>(_ f: @escaping (inout T, P0, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, P0, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, P0, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, R>(_ f: @escaping (inout T, P0, P1, P2) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, mutatingFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.MutatingFuncs.Func {
+    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, U0, U1>(_ f: @escaping (inout T, P0, P1, P2) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, mutatingFunction: f))
     }
 }
@@ -3845,71 +2204,15 @@ extension JXBridgeBuilder.MutatingFuncs.Func {
 
 extension JXBridgeBuilder.MutatingFuncs.Func {
     // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, CR, R>(_ f: @escaping (inout T, P0, P1, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, CR, R>(_ f: @escaping (inout T, P0, P1, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, R>(_ f: @escaping (inout T, P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, mutatingFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.MutatingFuncs.Func {
+    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, U0, U1>(_ f: @escaping (inout T, P0, P1, P2, P3) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, mutatingFunction: f))
     }
 }
@@ -3965,71 +2268,15 @@ extension JXBridgeBuilder.MutatingFuncs.Func {
 
 extension JXBridgeBuilder.MutatingFuncs.Func {
     // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, CR, R>(_ f: @escaping (inout T, P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, CR, R>(_ f: @escaping (inout T, P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, mutatingFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.MutatingFuncs.Func {
+    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, U0, U1>(_ f: @escaping (inout T, P0, P1, P2, P3, P4) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, mutatingFunction: f))
     }
 }
@@ -4085,71 +2332,15 @@ extension JXBridgeBuilder.MutatingFuncs.Func {
 
 extension JXBridgeBuilder.MutatingFuncs.Func {
     // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, mutatingFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.MutatingFuncs.Func {
+    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, U0, U1>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, mutatingFunction: f))
     }
 }
@@ -4205,71 +2396,15 @@ extension JXBridgeBuilder.MutatingFuncs.Func {
 
 extension JXBridgeBuilder.MutatingFuncs.Func {
     // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, mutatingFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.MutatingFuncs.Func {
+    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, U0, U1>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, mutatingFunction: f))
     }
 }
@@ -4325,71 +2460,15 @@ extension JXBridgeBuilder.MutatingFuncs.Func {
 
 extension JXBridgeBuilder.MutatingFuncs.Func {
     // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, mutatingFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.MutatingFuncs.Func {
+    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, P7) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, mutatingFunction: f))
     }
 }
@@ -4443,70 +2522,6 @@ extension JXBridgeBuilder.MutatingFuncs.Func {
 }
 
 
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.MutatingFuncs.Func {
-    // builder.mutating.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, mutatingFunction: f))
-    }
-}
-
-
 extension JXBridgeBuilder.StaticFuncs.Func {
     // builder.static.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<R>(_ f: @escaping () -> () throws -> R) -> JXBridgeBuilder<T> {
@@ -4522,12 +2537,38 @@ extension JXBridgeBuilder.StaticFuncs.Func {
 
 extension JXBridgeBuilder.StaticFuncs.Func {
     // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<U0, U1>(_ f: @escaping () -> () throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<U0, U1>(_ f: @escaping () throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, R>(_ f: @escaping () -> (P0) throws -> R) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
     }
  
     // builder.static.func.xxx { Type.xxx(p0: $0...) }
     @discardableResult public func callAsFunction<P0, R>(_ f: @escaping (P0) throws -> R) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, U0, U1>(_ f: @escaping () -> (P0) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, U0, U1>(_ f: @escaping (P0) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f))
     }
 }
@@ -4613,116 +2654,25 @@ extension JXBridgeBuilder.StaticFuncs.Func {
 
 extension JXBridgeBuilder.StaticFuncs.Func {
     // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, CR, R>(_ f: @escaping () -> (((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, CR, R>(_ f: @escaping (((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, CR, R>(_ f: @escaping () -> (((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, CR, R>(_ f: @escaping (((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, CR, R>(_ f: @escaping (((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, CR, R>(_ f: @escaping (((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, R>(_ f: @escaping () -> (P0, P1) throws -> R) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
     }
  
     // builder.static.func.xxx { Type.xxx(p0: $0...) }
     @discardableResult public func callAsFunction<P0, P1, R>(_ f: @escaping (P0, P1) throws -> R) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, U0, U1>(_ f: @escaping () -> (P0, P1) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, P1, U0, U1>(_ f: @escaping (P0, P1) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f))
     }
 }
@@ -4808,116 +2758,25 @@ extension JXBridgeBuilder.StaticFuncs.Func {
 
 extension JXBridgeBuilder.StaticFuncs.Func {
     // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, CR, R>(_ f: @escaping () -> (P0, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, CR, R>(_ f: @escaping (P0, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, CR, R>(_ f: @escaping () -> (P0, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, CR, R>(_ f: @escaping (P0, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (P0, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, CR, R>(_ f: @escaping (P0, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (P0, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, CR, R>(_ f: @escaping (P0, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, R>(_ f: @escaping () -> (P0, P1, P2) throws -> R) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
     }
  
     // builder.static.func.xxx { Type.xxx(p0: $0...) }
     @discardableResult public func callAsFunction<P0, P1, P2, R>(_ f: @escaping (P0, P1, P2) throws -> R) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, U0, U1>(_ f: @escaping () -> (P0, P1, P2) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, U0, U1>(_ f: @escaping (P0, P1, P2) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f))
     }
 }
@@ -5003,116 +2862,25 @@ extension JXBridgeBuilder.StaticFuncs.Func {
 
 extension JXBridgeBuilder.StaticFuncs.Func {
     // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, CR, R>(_ f: @escaping () -> (P0, P1, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, CR, R>(_ f: @escaping (P0, P1, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, CR, R>(_ f: @escaping () -> (P0, P1, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, CR, R>(_ f: @escaping (P0, P1, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, CR, R>(_ f: @escaping (P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, CR, R>(_ f: @escaping (P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, R>(_ f: @escaping () -> (P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
     }
  
     // builder.static.func.xxx { Type.xxx(p0: $0...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, R>(_ f: @escaping (P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, U0, U1>(_ f: @escaping () -> (P0, P1, P2, P3) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, U0, U1>(_ f: @escaping (P0, P1, P2, P3) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f))
     }
 }
@@ -5198,116 +2966,25 @@ extension JXBridgeBuilder.StaticFuncs.Func {
 
 extension JXBridgeBuilder.StaticFuncs.Func {
     // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, CR, R>(_ f: @escaping () -> (P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, CR, R>(_ f: @escaping (P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, CR, R>(_ f: @escaping () -> (P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, CR, R>(_ f: @escaping (P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, CR, R>(_ f: @escaping (P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, CR, R>(_ f: @escaping (P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
     }
  
     // builder.static.func.xxx { Type.xxx(p0: $0...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, R>(_ f: @escaping (P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, U0, U1>(_ f: @escaping () -> (P0, P1, P2, P3, P4) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, U0, U1>(_ f: @escaping (P0, P1, P2, P3, P4) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f))
     }
 }
@@ -5393,116 +3070,25 @@ extension JXBridgeBuilder.StaticFuncs.Func {
 
 extension JXBridgeBuilder.StaticFuncs.Func {
     // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, CR, R>(_ f: @escaping (P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, CR, R>(_ f: @escaping (P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(_ f: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(_ f: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
     }
  
     // builder.static.func.xxx { Type.xxx(p0: $0...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, U0, U1>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, U0, U1>(_ f: @escaping (P0, P1, P2, P3, P4, P5) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f))
     }
 }
@@ -5588,116 +3174,25 @@ extension JXBridgeBuilder.StaticFuncs.Func {
 
 extension JXBridgeBuilder.StaticFuncs.Func {
     // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
     }
  
     // builder.static.func.xxx { Type.xxx(p0: $0...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, U0, U1>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, U0, U1>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f))
     }
 }
@@ -5783,116 +3278,25 @@ extension JXBridgeBuilder.StaticFuncs.Func {
 
 extension JXBridgeBuilder.StaticFuncs.Func {
     // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
     }
  
     // builder.static.func.xxx { Type.xxx(p0: $0...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f))
     }
 }
@@ -5976,110 +3380,6 @@ extension JXBridgeBuilder.StaticFuncs.Func {
 }
 
 
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
-extension JXBridgeBuilder.StaticFuncs.Func {
-    // builder.static.func.xxx { Type.xxx(p0:...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
-    }
- 
-    // builder.static.func.xxx { Type.xxx(p0: $0...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
-    }
-}
-
-
 extension JXBridgeBuilder.ClassFuncs.Func {
     // builder.class.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<R>(_ f: @escaping (T.Type) throws -> R) -> JXBridgeBuilder<T> {
@@ -6090,7 +3390,23 @@ extension JXBridgeBuilder.ClassFuncs.Func {
 
 extension JXBridgeBuilder.ClassFuncs.Func {
     // builder.class.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<U0, U1>(_ f: @escaping (T.Type) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, R>(_ f: @escaping (T.Type, P0) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, U0, U1>(_ f: @escaping (T.Type, P0) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, classFunction: f))
     }
 }
@@ -6146,71 +3462,15 @@ extension JXBridgeBuilder.ClassFuncs.Func {
 
 extension JXBridgeBuilder.ClassFuncs.Func {
     // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, CR, R>(_ f: @escaping (T.Type, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, CR, R>(_ f: @escaping (T.Type, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, R>(_ f: @escaping (T.Type, P0, P1) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, U0, U1>(_ f: @escaping (T.Type, P0, P1) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, classFunction: f))
     }
 }
@@ -6266,71 +3526,15 @@ extension JXBridgeBuilder.ClassFuncs.Func {
 
 extension JXBridgeBuilder.ClassFuncs.Func {
     // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, CR, R>(_ f: @escaping (T.Type, P0, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, CR, R>(_ f: @escaping (T.Type, P0, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, P0, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, P0, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, R>(_ f: @escaping (T.Type, P0, P1, P2) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, U0, U1>(_ f: @escaping (T.Type, P0, P1, P2) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, classFunction: f))
     }
 }
@@ -6386,71 +3590,15 @@ extension JXBridgeBuilder.ClassFuncs.Func {
 
 extension JXBridgeBuilder.ClassFuncs.Func {
     // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, CR, R>(_ f: @escaping (T.Type, P0, P1, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, CR, R>(_ f: @escaping (T.Type, P0, P1, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, R>(_ f: @escaping (T.Type, P0, P1, P2, P3) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, U0, U1>(_ f: @escaping (T.Type, P0, P1, P2, P3) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, classFunction: f))
     }
 }
@@ -6506,71 +3654,15 @@ extension JXBridgeBuilder.ClassFuncs.Func {
 
 extension JXBridgeBuilder.ClassFuncs.Func {
     // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, U0, U1>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, classFunction: f))
     }
 }
@@ -6626,71 +3718,15 @@ extension JXBridgeBuilder.ClassFuncs.Func {
 
 extension JXBridgeBuilder.ClassFuncs.Func {
     // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, U0, U1>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, classFunction: f))
     }
 }
@@ -6746,71 +3782,15 @@ extension JXBridgeBuilder.ClassFuncs.Func {
 
 extension JXBridgeBuilder.ClassFuncs.Func {
     // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, U0, U1>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, classFunction: f))
     }
 }
@@ -6866,71 +3846,15 @@ extension JXBridgeBuilder.ClassFuncs.Func {
 
 extension JXBridgeBuilder.ClassFuncs.Func {
     // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, P7) throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, classFunction: f))
     }
 }
@@ -6983,70 +3907,6 @@ extension JXBridgeBuilder.ClassFuncs.Func {
     }
 }
 
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
-
-extension JXBridgeBuilder.ClassFuncs.Func {
-    // builder.class.func.xxx { $0.xxx(p0: $1...) }
-    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) -> JXBridgeBuilder<T> {
-        return add(FunctionBridge(name: name, classFunction: f))
-    }
-}
-
 // ASYNC_FUNCTION
 
 extension JXBridgeBuilder.Funcs.Func {
@@ -7057,6 +3917,19 @@ extension JXBridgeBuilder.Funcs.Func {
             
     // builder.func.xxx { await $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<R>(_ f: @escaping (T) async throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<U0, U1>(_ f: @escaping () -> (T) -> () async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+            
+    // builder.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<U0, U1>(_ f: @escaping (T) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f))
     }
 }
@@ -7077,12 +3950,38 @@ extension JXBridgeBuilder.Funcs.Func {
 
 extension JXBridgeBuilder.Funcs.Func {
     // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, U0, U1>(_ f: @escaping () -> (T) -> (P0) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+            
+    // builder.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, U0, U1>(_ f: @escaping (T, P0) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, R>(_ f: @escaping () -> (T) -> (P0, P1) async throws -> R) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f()))
     }
             
     // builder.func.xxx { await $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, R>(_ f: @escaping (T, P0, P1) async throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, U0, U1>(_ f: @escaping () -> (T) -> (P0, P1) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+            
+    // builder.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, U0, U1>(_ f: @escaping (T, P0, P1) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f))
     }
 }
@@ -7103,12 +4002,38 @@ extension JXBridgeBuilder.Funcs.Func {
 
 extension JXBridgeBuilder.Funcs.Func {
     // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, U0, U1>(_ f: @escaping () -> (T) -> (P0, P1, P2) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+            
+    // builder.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, U0, U1>(_ f: @escaping (T, P0, P1, P2) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3) async throws -> R) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f()))
     }
             
     // builder.func.xxx { await $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, R>(_ f: @escaping (T, P0, P1, P2, P3) async throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, U0, U1>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+            
+    // builder.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, U0, U1>(_ f: @escaping (T, P0, P1, P2, P3) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f))
     }
 }
@@ -7129,12 +4054,38 @@ extension JXBridgeBuilder.Funcs.Func {
 
 extension JXBridgeBuilder.Funcs.Func {
     // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, U0, U1>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+            
+    // builder.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, U0, U1>(_ f: @escaping (T, P0, P1, P2, P3, P4) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5) async throws -> R) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f()))
     }
             
     // builder.func.xxx { await $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5) async throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, U0, U1>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+            
+    // builder.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, U0, U1>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f))
     }
 }
@@ -7155,12 +4106,38 @@ extension JXBridgeBuilder.Funcs.Func {
 
 extension JXBridgeBuilder.Funcs.Func {
     // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, U0, U1>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+            
+    // builder.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, U0, U1>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f()))
     }
             
     // builder.func.xxx { await $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.Funcs.Func {
+    // builder.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(_ f: @escaping () -> (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, function: f()))
+    }
+            
+    // builder.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(_ f: @escaping (T, P0, P1, P2, P3, P4, P5, P6, P7) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, function: f))
     }
 }
@@ -7181,12 +4158,38 @@ extension JXBridgeBuilder.StaticFuncs.Func {
 
 extension JXBridgeBuilder.StaticFuncs.Func {
     // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<U0, U1>(_ f: @escaping () -> () async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<U0, U1>(_ f: @escaping () async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, R>(_ f: @escaping () -> (P0) async throws -> R) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
     }
  
     // builder.static.func.xxx { Type.xxx(p0: $0...) }
     @discardableResult public func callAsFunction<P0, R>(_ f: @escaping (P0) async throws -> R) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, U0, U1>(_ f: @escaping () -> (P0) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, U0, U1>(_ f: @escaping (P0) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f))
     }
 }
@@ -7207,12 +4210,38 @@ extension JXBridgeBuilder.StaticFuncs.Func {
 
 extension JXBridgeBuilder.StaticFuncs.Func {
     // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, U0, U1>(_ f: @escaping () -> (P0, P1) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, P1, U0, U1>(_ f: @escaping (P0, P1) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, R>(_ f: @escaping () -> (P0, P1, P2) async throws -> R) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
     }
  
     // builder.static.func.xxx { Type.xxx(p0: $0...) }
     @discardableResult public func callAsFunction<P0, P1, P2, R>(_ f: @escaping (P0, P1, P2) async throws -> R) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, U0, U1>(_ f: @escaping () -> (P0, P1, P2) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, U0, U1>(_ f: @escaping (P0, P1, P2) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f))
     }
 }
@@ -7233,12 +4262,38 @@ extension JXBridgeBuilder.StaticFuncs.Func {
 
 extension JXBridgeBuilder.StaticFuncs.Func {
     // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, U0, U1>(_ f: @escaping () -> (P0, P1, P2, P3) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, U0, U1>(_ f: @escaping (P0, P1, P2, P3) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4) async throws -> R) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
     }
  
     // builder.static.func.xxx { Type.xxx(p0: $0...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, R>(_ f: @escaping (P0, P1, P2, P3, P4) async throws -> R) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, U0, U1>(_ f: @escaping () -> (P0, P1, P2, P3, P4) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, U0, U1>(_ f: @escaping (P0, P1, P2, P3, P4) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f))
     }
 }
@@ -7259,12 +4314,38 @@ extension JXBridgeBuilder.StaticFuncs.Func {
 
 extension JXBridgeBuilder.StaticFuncs.Func {
     // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, U0, U1>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, U0, U1>(_ f: @escaping (P0, P1, P2, P3, P4, P5) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6) async throws -> R) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
     }
  
     // builder.static.func.xxx { Type.xxx(p0: $0...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, R>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6) async throws -> R) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, U0, U1>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, U0, U1>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(StaticFunctionBridge(name: name, type: T.self, function: f))
     }
 }
@@ -7283,9 +4364,30 @@ extension JXBridgeBuilder.StaticFuncs.Func {
 }
 
 
+extension JXBridgeBuilder.StaticFuncs.Func {
+    // builder.static.func.xxx { Type.xxx(p0:...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(_ f: @escaping () -> (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f()))
+    }
+ 
+    // builder.static.func.xxx { Type.xxx(p0: $0...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(_ f: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(StaticFunctionBridge(name: name, type: T.self, function: f))
+    }
+}
+
+
 extension JXBridgeBuilder.ClassFuncs.Func {
     // builder.class.func.xxx { await $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<R>(_ f: @escaping (T.Type) async throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<U0, U1>(_ f: @escaping (T.Type) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, classFunction: f))
     }
 }
@@ -7301,7 +4403,23 @@ extension JXBridgeBuilder.ClassFuncs.Func {
 
 extension JXBridgeBuilder.ClassFuncs.Func {
     // builder.class.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, U0, U1>(_ f: @escaping (T.Type, P0) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { await $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, R>(_ f: @escaping (T.Type, P0, P1) async throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, U0, U1>(_ f: @escaping (T.Type, P0, P1) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, classFunction: f))
     }
 }
@@ -7317,7 +4435,23 @@ extension JXBridgeBuilder.ClassFuncs.Func {
 
 extension JXBridgeBuilder.ClassFuncs.Func {
     // builder.class.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, U0, U1>(_ f: @escaping (T.Type, P0, P1, P2) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { await $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, R>(_ f: @escaping (T.Type, P0, P1, P2, P3) async throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, U0, U1>(_ f: @escaping (T.Type, P0, P1, P2, P3) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, classFunction: f))
     }
 }
@@ -7333,7 +4467,23 @@ extension JXBridgeBuilder.ClassFuncs.Func {
 
 extension JXBridgeBuilder.ClassFuncs.Func {
     // builder.class.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, U0, U1>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { await $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5) async throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, U0, U1>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, classFunction: f))
     }
 }
@@ -7349,7 +4499,23 @@ extension JXBridgeBuilder.ClassFuncs.Func {
 
 extension JXBridgeBuilder.ClassFuncs.Func {
     // builder.class.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, U0, U1>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { await $0.xxx(p0: $1...) }
     @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, R>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) -> JXBridgeBuilder<T> {
+        return add(FunctionBridge(name: name, classFunction: f))
+    }
+}
+
+
+extension JXBridgeBuilder.ClassFuncs.Func {
+    // builder.class.func.xxx { await $0.xxx(p0: $1...) }
+    @discardableResult public func callAsFunction<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(_ f: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, P7) async throws -> (U0, U1)) -> JXBridgeBuilder<T> {
         return add(FunctionBridge(name: name, classFunction: f))
     }
 }

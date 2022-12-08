@@ -6,6 +6,7 @@
 //			-optionalTuples 0
 //			-propertyTuples 0
 //			-returnTuples 1
+//			-returnTuplesWhenTrailingClosures 0
 //			-maximumJXTupleArity 6
 //			-maximumClosureParameters 2
 //			-maximumThrowingClosureParameters -1

@@ -323,7 +323,7 @@ class ArityGenerator {
                 // We ignore tupleArity < 2, so this loop's first iteration will be without tuples
                 let closureTupleArity = includeTuplesWhenClosures ? tupleArity : 1
                 for t in 1...closureTupleArity {
-                    for ot in 0...(optionalTuples ? 1 : 0) {
+                    for ot in 0...(optionalTuples && t >= 2 ? 1 : 0) {
                         let tupleInfo = t >= 2 ? TupleInfo(arity: t, optional: ot > 0) : nil
                         for cp in 0...closureArity {
                             subs.append(Self.functionSubstitution(arity: p, tupleInfo: tupleInfo, closureInfo: ClosureInfo(arity: cp)))
@@ -441,9 +441,9 @@ class ArityGenerator {
             "${PARAM_TUPLE_LIST}": "\(parameterList(mode: .tuple, arity: arity, trimLast: true))\(closureComma)\(closureInfo.fromConveyed("p", tupleArity: arity - 1))",
             "${PARAM_TUPLE}": arity > 0 ? "p" : "_",
             "${PARAM_COMMA}": arity > 0 ? ", " : "",
-            "${RETURN_TYPES}": "R",
-            "${RETURN}": "R",
-            "${RETURN_CONVEY}": "r"
+            "${RETURN_TYPES}": returnTypes,
+            "${RETURN}": returnString,
+            "${RETURN_CONVEY}": returnConvey
         ]
     }
     
@@ -562,7 +562,7 @@ class ArityGenerator {
         
         func fromConveyed(_ name: String, tupleArity: Int = 0) -> String {
             let p: String
-            if tupleArity <= 1 {
+            if tupleArity <= 0 {
                 p = name
             } else {
                 p = "\(name).\(tupleArity)"

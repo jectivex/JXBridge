@@ -202,6 +202,31 @@ invokeAsync(obj);
         XCTAssertEqual(try result.string, "asyncFuncSuccess")
     }
     
+    func testTuples() throws {
+        let context = JXContext()
+        try context.registry.register {
+            JXBridgeBuilder(type: TestStruct.self)
+                .constructor { TestStruct.init }
+//                .var.tupleVar { \.tupleVar }
+                .func.tupleFunc { TestStruct.tupleFunc }
+                .bridge
+        }
+//        var result = try context.eval("""
+//var s = new jx.TestStruct();
+//s.tupleVar = [1, '2'];
+//s;
+//""")
+//        let s = try result.convey(to: TestStruct.self)
+//        XCTAssertNotNil(s.tupleVar)
+//        XCTAssertEqual(s.tupleVar!.0, 1)
+//        XCTAssertEqual(s.tupleVar!.1, "2")
+        
+        let result = try context.eval("new jx.TestStruct().tupleFunc()")
+        let t = try result.convey(to: (Int, String).self)
+        XCTAssertEqual(t.0, 100)
+        XCTAssertEqual(t.1, "200")
+    }
+    
     func testCallbacks() throws {
         let context = JXContext()
         try context.registry.register {
@@ -295,10 +320,15 @@ private struct TestStruct {
     }
     
     var callbackVar: (() -> Int)?
+    var tupleVar: (Int, String)?
     
     func callbackFunc(add: Int, result: ((Int) -> Void)?) -> Bool {
         result?(readWriteInt + add)
         return result != nil
+    }
+    
+    func tupleFunc() -> (Int, String) {
+        return (100, "200")
     }
 }
 

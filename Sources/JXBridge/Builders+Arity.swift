@@ -6,6 +6,7 @@
 //			-optionalTuples 0
 //			-propertyTuples 0
 //			-returnTuples 1
+//			-returnTuplesWhenTrailingClosures 0
 //			-maximumJXTupleArity 6
 //			-maximumClosureParameters 2
 //			-maximumThrowingClosureParameters -1
@@ -792,7 +793,7 @@ extension StaticPropertyBridge {
     }
 }
 
-// FUNCTION
+// INIT
 
 extension ConstructorBridge {
     // Type.init(p0:...)
@@ -884,94 +885,6 @@ extension ConstructorBridge {
 
 extension ConstructorBridge {
     // Type.init(p0:...)
-    init<T, C0, C1, C2, CR>(_ cons: @escaping (((C0, C1, C2) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 1) { args, context in
-            let p = try conveyParameters(args, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            return try cons(p.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, C0, C1, C2, CR>(_ cons: @escaping (((C0, C1, C2) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 1) { args, context in
-            let p = try conveyParameters(args, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            return try cons(p?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, C0, C1, C2, C3, CR>(_ cons: @escaping (((C0, C1, C2, C3) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 1) { args, context in
-            let p = try conveyParameters(args, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            return try cons(p.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, C0, C1, C2, C3, CR>(_ cons: @escaping (((C0, C1, C2, C3) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 1) { args, context in
-            let p = try conveyParameters(args, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            return try cons(p?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (((C0, C1, C2, C3, C4) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 1) { args, context in
-            let p = try conveyParameters(args, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            return try cons(p.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (((C0, C1, C2, C3, C4) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 1) { args, context in
-            let p = try conveyParameters(args, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            return try cons(p?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 1) { args, context in
-            let p = try conveyParameters(args, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            return try cons(p.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 1) { args, context in
-            let p = try conveyParameters(args, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            return try cons(p?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
     init<T, P0, P1>(_ cons: @escaping (P0, P1) throws -> T) {
         self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 2) { args, context in
             let p = try conveyParameters(args, P0.self, P1.self)
@@ -1041,94 +954,6 @@ extension ConstructorBridge {
     init<T, P0, C0, C1, CR>(_ cons: @escaping (P0, ((C0, C1) -> CR)?) throws -> T) {
         self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 2) { args, context in
             let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity2<C0, C1, CR>>.self)
-            return try cons(p.0, p.1?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, C0, C1, C2, CR>(_ cons: @escaping (P0, ((C0, C1, C2) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 2) { args, context in
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            return try cons(p.0, p.1.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, C0, C1, C2, CR>(_ cons: @escaping (P0, ((C0, C1, C2) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 2) { args, context in
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            return try cons(p.0, p.1?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 2) { args, context in
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            return try cons(p.0, p.1.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 2) { args, context in
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            return try cons(p.0, p.1?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 2) { args, context in
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            return try cons(p.0, p.1.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 2) { args, context in
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            return try cons(p.0, p.1?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 2) { args, context in
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            return try cons(p.0, p.1.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 2) { args, context in
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
             return try cons(p.0, p.1?.closure)
         }
     }
@@ -1214,94 +1039,6 @@ extension ConstructorBridge {
 
 extension ConstructorBridge {
     // Type.init(p0:...)
-    init<T, P0, P1, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 3) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            return try cons(p.0, p.1, p.2.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 3) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            return try cons(p.0, p.1, p.2?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 3) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            return try cons(p.0, p.1, p.2.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 3) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            return try cons(p.0, p.1, p.2?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 3) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            return try cons(p.0, p.1, p.2.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 3) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            return try cons(p.0, p.1, p.2?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 3) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            return try cons(p.0, p.1, p.2.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 3) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            return try cons(p.0, p.1, p.2?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
     init<T, P0, P1, P2, P3>(_ cons: @escaping (P0, P1, P2, P3) throws -> T) {
         self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 4) { args, context in
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
@@ -1371,94 +1108,6 @@ extension ConstructorBridge {
     init<T, P0, P1, P2, C0, C1, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1) -> CR)?) throws -> T) {
         self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 4) { args, context in
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity2<C0, C1, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 4) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 4) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 4) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 4) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 4) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 4) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 4) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 4) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
             return try cons(p.0, p.1, p.2, p.3?.closure)
         }
     }
@@ -1544,94 +1193,6 @@ extension ConstructorBridge {
 
 extension ConstructorBridge {
     // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 5) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 5) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 5) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 5) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 5) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 5) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 5) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 5) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
     init<T, P0, P1, P2, P3, P4, P5>(_ cons: @escaping (P0, P1, P2, P3, P4, P5) throws -> T) {
         self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 6) { args, context in
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
@@ -1701,94 +1262,6 @@ extension ConstructorBridge {
     init<T, P0, P1, P2, P3, P4, C0, C1, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1) -> CR)?) throws -> T) {
         self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 6) { args, context in
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity2<C0, C1, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 6) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 6) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 6) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 6) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 6) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 6) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 6) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 6) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
             return try cons(p.0, p.1, p.2, p.3, p.4, p.5?.closure)
         }
     }
@@ -1874,94 +1347,6 @@ extension ConstructorBridge {
 
 extension ConstructorBridge {
     // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 7) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 7) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 7) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 7) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 7) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 7) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 7) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 7) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
     init<T, P0, P1, P2, P3, P4, P5, P6, P7>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> T) {
         self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 8) { args, context in
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
@@ -2036,94 +1421,7 @@ extension ConstructorBridge {
     }
 }
 
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 8) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 8) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 8) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 8) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 8) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 8) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 8) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-        }
-    }
-}
-
-
-extension ConstructorBridge {
-    // Type.init(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR>(_ cons: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> T) {
-        self = ConstructorBridge(owningTypeName: String(describing: T.self), parameterCount: 8) { args, context in
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            return try cons(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-        }
-    }
-}
-
+// FUNCTION
 
 extension FunctionBridge {
     // Type.xxx(p0:...)
@@ -2171,6 +1469,50 @@ extension FunctionBridge {
 
 extension FunctionBridge {
     // Type.xxx(p0:...)
+    init<T, U0, U1>(name: String, function: @escaping (T) -> () throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T) throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try callFunc()
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, U0, U1>(name: String, function: @escaping (T) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 0)
+            let _ = try conveyParameters(args)
+            let r = try function(target)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+
+    // { $0.xxx(p0: $1...) }
+    init<T, U0, U1>(name: String, mutatingFunction: @escaping (inout T) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            var target = obj as! T
+            try validate(arguments: args, count: 0)
+            let _ = try conveyParameters(args)
+            let r = try mutatingFunction(&target)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, U0, U1>(name: String, classFunction: @escaping (T.Type) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 0)
+            let _ = try conveyParameters(args)
+            let r = try classFunction(target)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...)
     init<T, P0, R>(name: String, function: @escaping (T) -> (P0) throws -> R) {
         self = FunctionBridge(name: name) { (obj: T, p0: P0) throws -> R in
             let callFunc = function(obj)
@@ -2208,6 +1550,50 @@ extension FunctionBridge {
             let p = try conveyParameters(args, P0.self)
             let r = try classFunction(target, p)
             return (target, try context.convey(r))
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...)
+    init<T, P0, U0, U1>(name: String, function: @escaping (T) -> (P0) throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0) throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try callFunc(p0)
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, U0, U1>(name: String, function: @escaping (T, P0) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 1)
+            let p = try conveyParameters(args, P0.self)
+            let r = try function(target, p)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, U0, U1>(name: String, mutatingFunction: @escaping (inout T, P0) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            var target = obj as! T
+            try validate(arguments: args, count: 1)
+            let p = try conveyParameters(args, P0.self)
+            let r = try mutatingFunction(&target, p)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, U0, U1>(name: String, classFunction: @escaping (T.Type, P0) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 1)
+            let p = try conveyParameters(args, P0.self)
+            let r = try classFunction(target, p)
+            return (target, try context.convey(JXTuple.Arity2(r)))
         }
     }
 }
@@ -2479,358 +1865,6 @@ extension FunctionBridge {
 
 extension FunctionBridge {
     // Type.xxx(p0:...)
-    init<T, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: ((C0, C1, C2) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, CR, R>(name: String, function: @escaping (T, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(target, p.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try mutatingFunction(&target, p.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try classFunction(target, p.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: ((C0, C1, C2) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, CR, R>(name: String, function: @escaping (T, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(target, p?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try mutatingFunction(&target, p?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try classFunction(target, p?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: ((C0, C1, C2, C3) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(target, p.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try mutatingFunction(&target, p.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try classFunction(target, p.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: ((C0, C1, C2, C3) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(target, p?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try mutatingFunction(&target, p?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try classFunction(target, p?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: ((C0, C1, C2, C3, C4) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(target, p.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try mutatingFunction(&target, p.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try classFunction(target, p.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: ((C0, C1, C2, C3, C4) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(target, p?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try mutatingFunction(&target, p?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try classFunction(target, p?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(target, p.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try mutatingFunction(&target, p.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try classFunction(target, p.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(target, p?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try mutatingFunction(&target, p?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try classFunction(target, p?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
     init<T, P0, P1, R>(name: String, function: @escaping (T) -> (P0, P1) throws -> R) {
         self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1) throws -> R in
             let callFunc = function(obj)
@@ -2868,6 +1902,50 @@ extension FunctionBridge {
             let p = try conveyParameters(args, P0.self, P1.self)
             let r = try classFunction(target, p.0, p.1)
             return (target, try context.convey(r))
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...)
+    init<T, P0, P1, U0, U1>(name: String, function: @escaping (T) -> (P0, P1) throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1) throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try callFunc(p0, p1)
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, U0, U1>(name: String, function: @escaping (T, P0, P1) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 2)
+            let p = try conveyParameters(args, P0.self, P1.self)
+            let r = try function(target, p.0, p.1)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, U0, U1>(name: String, mutatingFunction: @escaping (inout T, P0, P1) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            var target = obj as! T
+            try validate(arguments: args, count: 2)
+            let p = try conveyParameters(args, P0.self, P1.self)
+            let r = try mutatingFunction(&target, p.0, p.1)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, U0, U1>(name: String, classFunction: @escaping (T.Type, P0, P1) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 2)
+            let p = try conveyParameters(args, P0.self, P1.self)
+            let r = try classFunction(target, p.0, p.1)
+            return (target, try context.convey(JXTuple.Arity2(r)))
         }
     }
 }
@@ -3139,358 +2217,6 @@ extension FunctionBridge {
 
 extension FunctionBridge {
     // Type.xxx(p0:...)
-    init<T, P0, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (P0, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: ((C0, C1, C2) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, CR, R>(name: String, function: @escaping (T, P0, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(target, p.0, p.1.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, P0, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try classFunction(target, p.0, p.1.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (P0, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: ((C0, C1, C2) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, CR, R>(name: String, function: @escaping (T, P0, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(target, p.0, p.1?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, P0, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try classFunction(target, p.0, p.1?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (P0, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: ((C0, C1, C2, C3) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, P0, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(target, p.0, p.1.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, P0, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try classFunction(target, p.0, p.1.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (P0, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: ((C0, C1, C2, C3) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, P0, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(target, p.0, p.1?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, P0, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try classFunction(target, p.0, p.1?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: ((C0, C1, C2, C3, C4) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(target, p.0, p.1.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try classFunction(target, p.0, p.1.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: ((C0, C1, C2, C3, C4) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(target, p.0, p.1?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try classFunction(target, p.0, p.1?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(target, p.0, p.1.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try classFunction(target, p.0, p.1.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(target, p.0, p.1?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try classFunction(target, p.0, p.1?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
     init<T, P0, P1, P2, R>(name: String, function: @escaping (T) -> (P0, P1, P2) throws -> R) {
         self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2) throws -> R in
             let callFunc = function(obj)
@@ -3528,6 +2254,50 @@ extension FunctionBridge {
             let p = try conveyParameters(args, P0.self, P1.self, P2.self)
             let r = try classFunction(target, p.0, p.1, p.2)
             return (target, try context.convey(r))
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...)
+    init<T, P0, P1, P2, U0, U1>(name: String, function: @escaping (T) -> (P0, P1, P2) throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2) throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try callFunc(p0, p1, p2)
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, U0, U1>(name: String, function: @escaping (T, P0, P1, P2) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 3)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self)
+            let r = try function(target, p.0, p.1, p.2)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, U0, U1>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            var target = obj as! T
+            try validate(arguments: args, count: 3)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self)
+            let r = try mutatingFunction(&target, p.0, p.1, p.2)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, U0, U1>(name: String, classFunction: @escaping (T.Type, P0, P1, P2) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 3)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self)
+            let r = try classFunction(target, p.0, p.1, p.2)
+            return (target, try context.convey(JXTuple.Arity2(r)))
         }
     }
 }
@@ -3799,358 +2569,6 @@ extension FunctionBridge {
 
 extension FunctionBridge {
     // Type.xxx(p0:...)
-    init<T, P0, P1, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (P0, P1, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: ((C0, C1, C2) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, CR, R>(name: String, function: @escaping (T, P0, P1, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(target, p.0, p.1, p.2.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (P0, P1, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: ((C0, C1, C2) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, CR, R>(name: String, function: @escaping (T, P0, P1, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: ((C0, C1, C2, C3) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(target, p.0, p.1, p.2.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: ((C0, C1, C2, C3) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: ((C0, C1, C2, C3, C4) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(target, p.0, p.1, p.2.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: ((C0, C1, C2, C3, C4) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(target, p.0, p.1, p.2.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
     init<T, P0, P1, P2, P3, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3) throws -> R) {
         self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3) throws -> R in
             let callFunc = function(obj)
@@ -4188,6 +2606,50 @@ extension FunctionBridge {
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
             let r = try classFunction(target, p.0, p.1, p.2, p.3)
             return (target, try context.convey(r))
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...)
+    init<T, P0, P1, P2, P3, U0, U1>(name: String, function: @escaping (T) -> (P0, P1, P2, P3) throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3) throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try callFunc(p0, p1, p2, p3)
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, U0, U1>(name: String, function: @escaping (T, P0, P1, P2, P3) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 4)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
+            let r = try function(target, p.0, p.1, p.2, p.3)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, U0, U1>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            var target = obj as! T
+            try validate(arguments: args, count: 4)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
+            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, U0, U1>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 4)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
+            let r = try classFunction(target, p.0, p.1, p.2, p.3)
+            return (target, try context.convey(JXTuple.Arity2(r)))
         }
     }
 }
@@ -4459,358 +2921,6 @@ extension FunctionBridge {
 
 extension FunctionBridge {
     // Type.xxx(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: ((C0, C1, C2) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, CR, R>(name: String, function: @escaping (T, P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: ((C0, C1, C2) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, CR, R>(name: String, function: @escaping (T, P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: ((C0, C1, C2, C3) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: ((C0, C1, C2, C3) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: ((C0, C1, C2, C3, C4) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: ((C0, C1, C2, C3, C4) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
     init<T, P0, P1, P2, P3, P4, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4) throws -> R) {
         self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4) throws -> R in
             let callFunc = function(obj)
@@ -4848,6 +2958,50 @@ extension FunctionBridge {
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
             let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4)
             return (target, try context.convey(r))
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...)
+    init<T, P0, P1, P2, P3, P4, U0, U1>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4) throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4) throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try callFunc(p0, p1, p2, p3, p4)
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, U0, U1>(name: String, function: @escaping (T, P0, P1, P2, P3, P4) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 5)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
+            let r = try function(target, p.0, p.1, p.2, p.3, p.4)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, U0, U1>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            var target = obj as! T
+            try validate(arguments: args, count: 5)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
+            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, U0, U1>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 5)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
+            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4)
+            return (target, try context.convey(JXTuple.Arity2(r)))
         }
     }
 }
@@ -5119,358 +3273,6 @@ extension FunctionBridge {
 
 extension FunctionBridge {
     // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: ((C0, C1, C2) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: ((C0, C1, C2) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: ((C0, C1, C2, C3) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: ((C0, C1, C2, C3) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: ((C0, C1, C2, C3, C4) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: ((C0, C1, C2, C3, C4) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
     init<T, P0, P1, P2, P3, P4, P5, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5) throws -> R) {
         self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5) throws -> R in
             let callFunc = function(obj)
@@ -5508,6 +3310,50 @@ extension FunctionBridge {
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
             let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5)
             return (target, try context.convey(r))
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...)
+    init<T, P0, P1, P2, P3, P4, P5, U0, U1>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5) throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5) throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try callFunc(p0, p1, p2, p3, p4, p5)
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, U0, U1>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 6)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
+            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, U0, U1>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            var target = obj as! T
+            try validate(arguments: args, count: 6)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
+            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, U0, U1>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 6)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
+            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5)
+            return (target, try context.convey(JXTuple.Arity2(r)))
         }
     }
 }
@@ -5779,358 +3625,6 @@ extension FunctionBridge {
 
 extension FunctionBridge {
     // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: ((C0, C1, C2) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: ((C0, C1, C2) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: ((C0, C1, C2, C3) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: ((C0, C1, C2, C3) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: ((C0, C1, C2, C3, C4) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: ((C0, C1, C2, C3, C4) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
     init<T, P0, P1, P2, P3, P4, P5, P6, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6) throws -> R) {
         self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6) throws -> R in
             let callFunc = function(obj)
@@ -6168,6 +3662,50 @@ extension FunctionBridge {
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
             let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6)
             return (target, try context.convey(r))
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...)
+    init<T, P0, P1, P2, P3, P4, P5, P6, U0, U1>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6) throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6) throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try callFunc(p0, p1, p2, p3, p4, p5, p6)
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, P6, U0, U1>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, P6) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 7)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
+            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, P6, U0, U1>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            var target = obj as! T
+            try validate(arguments: args, count: 7)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
+            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, P6, U0, U1>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 7)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
+            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6)
+            return (target, try context.convey(JXTuple.Arity2(r)))
         }
     }
 }
@@ -6439,358 +3977,6 @@ extension FunctionBridge {
 
 extension FunctionBridge {
     // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: ((C0, C1, C2) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: ((C0, C1, C2) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: ((C0, C1, C2, C3) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: ((C0, C1, C2, C3) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: ((C0, C1, C2, C3, C4) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: ((C0, C1, C2, C3, C4) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
     init<T, P0, P1, P2, P3, P4, P5, P6, P7, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) {
         self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7) throws -> R in
             let callFunc = function(obj)
@@ -6828,6 +4014,50 @@ extension FunctionBridge {
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
             let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
             return (target, try context.convey(r))
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...)
+    init<T, P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7) throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try callFunc(p0, p1, p2, p3, p4, p5, p6, p7)
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, P6, P7) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 8)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
+            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, P7) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            var target = obj as! T
+            try validate(arguments: args, count: 8)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
+            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
+            return (target, try context.convey(JXTuple.Arity2(r)))
+        }
+    }
+    
+    // { $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, P7) throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 8)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
+            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
+            return (target, try context.convey(JXTuple.Arity2(r)))
         }
     }
 }
@@ -7097,358 +4327,6 @@ extension FunctionBridge {
 }
 
 
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: ((C0, C1, C2) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6, p7)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: ((C0, C1, C2) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6, p7)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: ((C0, C1, C2, C3) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6, p7)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: ((C0, C1, C2, C3) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6, p7)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: ((C0, C1, C2, C3, C4) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6, p7)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: ((C0, C1, C2, C3, C4) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6, p7)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6, p7)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
-extension FunctionBridge {
-    // Type.xxx(p0:...)
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R in
-            let callFunc = function(obj)
-            return try callFunc(p0, p1, p2, p3, p4, p5, p6, p7)
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(name: String, mutatingFunction: @escaping (inout T, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            var target = obj as! T
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try mutatingFunction(&target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-    
-    // { $0.xxx(p0: $1...) }
-    init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
-            let target = obj as! T.Type
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return (target, try context.convey(r))
-        }
-    }
-}
-
-
 extension StaticFunctionBridge {
     // { Type.xxx(p0: $0...) }
     init<R>(name: String, type: Any.Type, function: @escaping () throws -> R) {
@@ -7464,12 +4342,38 @@ extension StaticFunctionBridge {
 
 extension StaticFunctionBridge {
     // { Type.xxx(p0: $0...) }
+    init<U0, U1>(name: String, type: Any.Type, function: @escaping () throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 0)
+            let _ = try conveyParameters(args)
+            let r = try function()
+            return try context.convey(JXTuple.Arity2(r))
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { Type.xxx(p0: $0...) }
     init<P0, R>(name: String, type: Any.Type, function: @escaping (P0) throws -> R) {
         self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
             try validate(arguments: args, count: 1)
             let p = try conveyParameters(args, P0.self)
             let r = try function(p)
             return try context.convey(r)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { Type.xxx(p0: $0...) }
+    init<P0, U0, U1>(name: String, type: Any.Type, function: @escaping (P0) throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 1)
+            let p = try conveyParameters(args, P0.self)
+            let r = try function(p)
+            return try context.convey(JXTuple.Arity2(r))
         }
     }
 }
@@ -7555,116 +4459,25 @@ extension StaticFunctionBridge {
 
 extension StaticFunctionBridge {
     // { Type.xxx(p0: $0...) }
-    init<C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (((C0, C1, C2) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(p.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (((C0, C1, C2) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(p?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(p.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(p?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(p.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(p?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(p.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 1)
-            let p = try conveyParameters(args, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(p?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
     init<P0, P1, R>(name: String, type: Any.Type, function: @escaping (P0, P1) throws -> R) {
         self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
             try validate(arguments: args, count: 2)
             let p = try conveyParameters(args, P0.self, P1.self)
             let r = try function(p.0, p.1)
             return try context.convey(r)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { Type.xxx(p0: $0...) }
+    init<P0, P1, U0, U1>(name: String, type: Any.Type, function: @escaping (P0, P1) throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 2)
+            let p = try conveyParameters(args, P0.self, P1.self)
+            let r = try function(p.0, p.1)
+            return try context.convey(JXTuple.Arity2(r))
         }
     }
 }
@@ -7750,116 +4563,25 @@ extension StaticFunctionBridge {
 
 extension StaticFunctionBridge {
     // { Type.xxx(p0: $0...) }
-    init<P0, C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (P0, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(p.0, p.1.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (P0, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(p.0, p.1?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (P0, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(p.0, p.1.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (P0, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(p.0, p.1?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (P0, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(p.0, p.1.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (P0, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(p.0, p.1?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (P0, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(p.0, p.1.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (P0, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 2)
-            let p = try conveyParameters(args, P0.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(p.0, p.1?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
     init<P0, P1, P2, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2) throws -> R) {
         self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
             try validate(arguments: args, count: 3)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self)
             let r = try function(p.0, p.1, p.2)
             return try context.convey(r)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { Type.xxx(p0: $0...) }
+    init<P0, P1, P2, U0, U1>(name: String, type: Any.Type, function: @escaping (P0, P1, P2) throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 3)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self)
+            let r = try function(p.0, p.1, p.2)
+            return try context.convey(JXTuple.Arity2(r))
         }
     }
 }
@@ -7945,116 +4667,25 @@ extension StaticFunctionBridge {
 
 extension StaticFunctionBridge {
     // { Type.xxx(p0: $0...) }
-    init<P0, P1, C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(p.0, p.1, p.2.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(p.0, p.1, p.2?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(p.0, p.1, p.2.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(p.0, p.1, p.2?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(p.0, p.1, p.2.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(p.0, p.1, p.2?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(p.0, p.1, p.2.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 3)
-            let p = try conveyParameters(args, P0.self, P1.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(p.0, p.1, p.2?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
     init<P0, P1, P2, P3, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3) throws -> R) {
         self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
             try validate(arguments: args, count: 4)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
             let r = try function(p.0, p.1, p.2, p.3)
             return try context.convey(r)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { Type.xxx(p0: $0...) }
+    init<P0, P1, P2, P3, U0, U1>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3) throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 4)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
+            let r = try function(p.0, p.1, p.2, p.3)
+            return try context.convey(JXTuple.Arity2(r))
         }
     }
 }
@@ -8140,116 +4771,25 @@ extension StaticFunctionBridge {
 
 extension StaticFunctionBridge {
     // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 4)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
     init<P0, P1, P2, P3, P4, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4) throws -> R) {
         self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
             try validate(arguments: args, count: 5)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
             let r = try function(p.0, p.1, p.2, p.3, p.4)
             return try context.convey(r)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { Type.xxx(p0: $0...) }
+    init<P0, P1, P2, P3, P4, U0, U1>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4) throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 5)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
+            let r = try function(p.0, p.1, p.2, p.3, p.4)
+            return try context.convey(JXTuple.Arity2(r))
         }
     }
 }
@@ -8335,116 +4875,25 @@ extension StaticFunctionBridge {
 
 extension StaticFunctionBridge {
     // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 5)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
     init<P0, P1, P2, P3, P4, P5, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5) throws -> R) {
         self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
             try validate(arguments: args, count: 6)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
             let r = try function(p.0, p.1, p.2, p.3, p.4, p.5)
             return try context.convey(r)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { Type.xxx(p0: $0...) }
+    init<P0, P1, P2, P3, P4, P5, U0, U1>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5) throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 6)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
+            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5)
+            return try context.convey(JXTuple.Arity2(r))
         }
     }
 }
@@ -8530,116 +4979,25 @@ extension StaticFunctionBridge {
 
 extension StaticFunctionBridge {
     // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 6)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
     init<P0, P1, P2, P3, P4, P5, P6, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> R) {
         self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
             try validate(arguments: args, count: 7)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
             let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6)
             return try context.convey(r)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { Type.xxx(p0: $0...) }
+    init<P0, P1, P2, P3, P4, P5, P6, U0, U1>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 7)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
+            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6)
+            return try context.convey(JXTuple.Arity2(r))
         }
     }
 }
@@ -8725,116 +5083,25 @@ extension StaticFunctionBridge {
 
 extension StaticFunctionBridge {
     // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 7)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
     init<P0, P1, P2, P3, P4, P5, P6, P7, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) {
         self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
             try validate(arguments: args, count: 8)
             let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
             let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
             return try context.convey(r)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { Type.xxx(p0: $0...) }
+    init<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 8)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
+            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
+            return try context.convey(JXTuple.Arity2(r))
         }
     }
 }
@@ -8917,110 +5184,6 @@ extension StaticFunctionBridge {
     }
 }
 
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity3<C0, C1, C2, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity3<C0, C1, C2, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity4<C0, C1, C2, C3, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity4<C0, C1, C2, C3, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity5<C0, C1, C2, C3, C4, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity5<C0, C1, C2, C3, C4, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
-
-extension StaticFunctionBridge {
-    // { Type.xxx(p0: $0...) }
-    init<P0, P1, P2, P3, P4, P5, P6, C0, C1, C2, C3, C4, C5, CR, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1, C2, C3, C4, C5) -> CR)?) throws -> R) {
-        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: 8)
-            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, Optional<JXClosure.Arity6<C0, C1, C2, C3, C4, C5, CR>>.self)
-            let r = try function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7?.closure)
-            return try context.convey(r)
-        }
-    }
-}
-
 // ASYNC_FUNCTION
 
 extension FunctionBridge {
@@ -9063,6 +5226,57 @@ extension FunctionBridge {
                 do {
                     let r = try await classFunction(target)
                     try promise.resolveFunction.call(withArguments: [context.convey(r)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...) async
+    init<T, U0, U1>(name: String, function: @escaping (T) -> () async throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T) async throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try await callFunc()
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, U0, U1>(name: String, function: @escaping (T) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 0)
+            let _ = try conveyParameters(args)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(target)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, U0, U1>(name: String, classFunction: @escaping (T.Type) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 0)
+            let _ = try conveyParameters(args)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await classFunction(target)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -9127,6 +5341,57 @@ extension FunctionBridge {
 
 extension FunctionBridge {
     // Type.xxx(p0:...) async
+    init<T, P0, U0, U1>(name: String, function: @escaping (T) -> (P0) async throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0) async throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try await callFunc(p0)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, U0, U1>(name: String, function: @escaping (T, P0) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 1)
+            let p = try conveyParameters(args, P0.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(target, p)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, U0, U1>(name: String, classFunction: @escaping (T.Type, P0) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 1)
+            let p = try conveyParameters(args, P0.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await classFunction(target, p)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...) async
     init<T, P0, P1, R>(name: String, function: @escaping (T) -> (P0, P1) async throws -> R) {
         self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1) async throws -> R in
             let callFunc = function(obj)
@@ -9165,6 +5430,57 @@ extension FunctionBridge {
                 do {
                     let r = try await classFunction(target, p.0, p.1)
                     try promise.resolveFunction.call(withArguments: [context.convey(r)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...) async
+    init<T, P0, P1, U0, U1>(name: String, function: @escaping (T) -> (P0, P1) async throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1) async throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try await callFunc(p0, p1)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, P1, U0, U1>(name: String, function: @escaping (T, P0, P1) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 2)
+            let p = try conveyParameters(args, P0.self, P1.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(target, p.0, p.1)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, P1, U0, U1>(name: String, classFunction: @escaping (T.Type, P0, P1) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 2)
+            let p = try conveyParameters(args, P0.self, P1.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await classFunction(target, p.0, p.1)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -9229,6 +5545,57 @@ extension FunctionBridge {
 
 extension FunctionBridge {
     // Type.xxx(p0:...) async
+    init<T, P0, P1, P2, U0, U1>(name: String, function: @escaping (T) -> (P0, P1, P2) async throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2) async throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try await callFunc(p0, p1, p2)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, U0, U1>(name: String, function: @escaping (T, P0, P1, P2) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 3)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(target, p.0, p.1, p.2)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, U0, U1>(name: String, classFunction: @escaping (T.Type, P0, P1, P2) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 3)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await classFunction(target, p.0, p.1, p.2)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...) async
     init<T, P0, P1, P2, P3, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3) async throws -> R) {
         self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3) async throws -> R in
             let callFunc = function(obj)
@@ -9267,6 +5634,57 @@ extension FunctionBridge {
                 do {
                     let r = try await classFunction(target, p.0, p.1, p.2, p.3)
                     try promise.resolveFunction.call(withArguments: [context.convey(r)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...) async
+    init<T, P0, P1, P2, P3, U0, U1>(name: String, function: @escaping (T) -> (P0, P1, P2, P3) async throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3) async throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try await callFunc(p0, p1, p2, p3)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, U0, U1>(name: String, function: @escaping (T, P0, P1, P2, P3) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 4)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(target, p.0, p.1, p.2, p.3)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, U0, U1>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 4)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await classFunction(target, p.0, p.1, p.2, p.3)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -9331,6 +5749,57 @@ extension FunctionBridge {
 
 extension FunctionBridge {
     // Type.xxx(p0:...) async
+    init<T, P0, P1, P2, P3, P4, U0, U1>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4) async throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4) async throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try await callFunc(p0, p1, p2, p3, p4)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, U0, U1>(name: String, function: @escaping (T, P0, P1, P2, P3, P4) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 5)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(target, p.0, p.1, p.2, p.3, p.4)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, U0, U1>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 5)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await classFunction(target, p.0, p.1, p.2, p.3, p.4)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...) async
     init<T, P0, P1, P2, P3, P4, P5, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5) async throws -> R) {
         self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5) async throws -> R in
             let callFunc = function(obj)
@@ -9369,6 +5838,57 @@ extension FunctionBridge {
                 do {
                     let r = try await classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5)
                     try promise.resolveFunction.call(withArguments: [context.convey(r)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...) async
+    init<T, P0, P1, P2, P3, P4, P5, U0, U1>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5) async throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5) async throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try await callFunc(p0, p1, p2, p3, p4, p5)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, U0, U1>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 6)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(target, p.0, p.1, p.2, p.3, p.4, p.5)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, U0, U1>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 6)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -9433,6 +5953,57 @@ extension FunctionBridge {
 
 extension FunctionBridge {
     // Type.xxx(p0:...) async
+    init<T, P0, P1, P2, P3, P4, P5, P6, U0, U1>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6) async throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6) async throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try await callFunc(p0, p1, p2, p3, p4, p5, p6)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, P6, U0, U1>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, P6) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 7)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, P6, U0, U1>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 7)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+}
+
+
+extension FunctionBridge {
+    // Type.xxx(p0:...) async
     init<T, P0, P1, P2, P3, P4, P5, P6, P7, R>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) {
         self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7) async throws -> R in
             let callFunc = function(obj)
@@ -9482,6 +6053,57 @@ extension FunctionBridge {
 }
 
 
+extension FunctionBridge {
+    // Type.xxx(p0:...) async
+    init<T, P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(name: String, function: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> (U0, U1)) {
+        self = FunctionBridge(name: name) { (obj: T, p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7) async throws -> (U0, U1) in
+            let callFunc = function(obj)
+            return try await callFunc(p0, p1, p2, p3, p4, p5, p6, p7)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(name: String, function: @escaping (T, P0, P1, P2, P3, P4, P5, P6, P7) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T
+            try validate(arguments: args, count: 8)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+
+    // { await $0.xxx(p0: $1...) }
+    init<T, P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(name: String, classFunction: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, P7) async throws -> (U0, U1)) {
+        self = FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+            let target = obj as! T.Type
+            try validate(arguments: args, count: 8)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await classFunction(target, p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            let promiseValue = JXValue(context: context, value: promise.promise)
+            return (target, promiseValue)
+        }
+    }
+}
+
+
 extension StaticFunctionBridge {
     // { await Type.xxx(p0: $0...) }
     init<R>(name: String, type: Any.Type, function: @escaping () async throws -> R) {
@@ -9493,6 +6115,27 @@ extension StaticFunctionBridge {
                 do {
                     let r = try await function()
                     try promise.resolveFunction.call(withArguments: [context.convey(r)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return JXValue(context: context, value: promise.promise)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { await Type.xxx(p0: $0...) }
+    init<U0, U1>(name: String, type: Any.Type, function: @escaping () async throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 0)
+            let _ = try conveyParameters(args)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function()
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -9526,6 +6169,27 @@ extension StaticFunctionBridge {
 
 extension StaticFunctionBridge {
     // { await Type.xxx(p0: $0...) }
+    init<P0, U0, U1>(name: String, type: Any.Type, function: @escaping (P0) async throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 1)
+            let p = try conveyParameters(args, P0.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(p)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return JXValue(context: context, value: promise.promise)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { await Type.xxx(p0: $0...) }
     init<P0, P1, R>(name: String, type: Any.Type, function: @escaping (P0, P1) async throws -> R) {
         self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
             try validate(arguments: args, count: 2)
@@ -9535,6 +6199,27 @@ extension StaticFunctionBridge {
                 do {
                     let r = try await function(p.0, p.1)
                     try promise.resolveFunction.call(withArguments: [context.convey(r)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return JXValue(context: context, value: promise.promise)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { await Type.xxx(p0: $0...) }
+    init<P0, P1, U0, U1>(name: String, type: Any.Type, function: @escaping (P0, P1) async throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 2)
+            let p = try conveyParameters(args, P0.self, P1.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(p.0, p.1)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -9568,6 +6253,27 @@ extension StaticFunctionBridge {
 
 extension StaticFunctionBridge {
     // { await Type.xxx(p0: $0...) }
+    init<P0, P1, P2, U0, U1>(name: String, type: Any.Type, function: @escaping (P0, P1, P2) async throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 3)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(p.0, p.1, p.2)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return JXValue(context: context, value: promise.promise)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { await Type.xxx(p0: $0...) }
     init<P0, P1, P2, P3, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3) async throws -> R) {
         self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
             try validate(arguments: args, count: 4)
@@ -9577,6 +6283,27 @@ extension StaticFunctionBridge {
                 do {
                     let r = try await function(p.0, p.1, p.2, p.3)
                     try promise.resolveFunction.call(withArguments: [context.convey(r)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return JXValue(context: context, value: promise.promise)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { await Type.xxx(p0: $0...) }
+    init<P0, P1, P2, P3, U0, U1>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3) async throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 4)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(p.0, p.1, p.2, p.3)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -9610,6 +6337,27 @@ extension StaticFunctionBridge {
 
 extension StaticFunctionBridge {
     // { await Type.xxx(p0: $0...) }
+    init<P0, P1, P2, P3, P4, U0, U1>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4) async throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 5)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(p.0, p.1, p.2, p.3, p.4)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return JXValue(context: context, value: promise.promise)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { await Type.xxx(p0: $0...) }
     init<P0, P1, P2, P3, P4, P5, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5) async throws -> R) {
         self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
             try validate(arguments: args, count: 6)
@@ -9619,6 +6367,27 @@ extension StaticFunctionBridge {
                 do {
                     let r = try await function(p.0, p.1, p.2, p.3, p.4, p.5)
                     try promise.resolveFunction.call(withArguments: [context.convey(r)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return JXValue(context: context, value: promise.promise)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { await Type.xxx(p0: $0...) }
+    init<P0, P1, P2, P3, P4, P5, U0, U1>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5) async throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 6)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(p.0, p.1, p.2, p.3, p.4, p.5)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
@@ -9652,6 +6421,27 @@ extension StaticFunctionBridge {
 
 extension StaticFunctionBridge {
     // { await Type.xxx(p0: $0...) }
+    init<P0, P1, P2, P3, P4, P5, P6, U0, U1>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6) async throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 7)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(p.0, p.1, p.2, p.3, p.4, p.5, p.6)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return JXValue(context: context, value: promise.promise)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { await Type.xxx(p0: $0...) }
     init<P0, P1, P2, P3, P4, P5, P6, P7, R>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) {
         self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
             try validate(arguments: args, count: 8)
@@ -9661,6 +6451,27 @@ extension StaticFunctionBridge {
                 do {
                     let r = try await function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
                     try promise.resolveFunction.call(withArguments: [context.convey(r)])
+                } catch {
+                    try promise.rejectFunction.call(withArguments: [context.error(error)])
+                }
+            }
+            return JXValue(context: context, value: promise.promise)
+        }
+    }
+}
+
+
+extension StaticFunctionBridge {
+    // { await Type.xxx(p0: $0...) }
+    init<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(name: String, type: Any.Type, function: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> (U0, U1)) {
+        self = StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
+            try validate(arguments: args, count: 8)
+            let p = try conveyParameters(args, P0.self, P1.self, P2.self, P3.self, P4.self, P5.self, P6.self, P7.self)
+            let promise = try JXValue.createPromise(in: context)
+            Task {
+                do {
+                    let r = try await function(p.0, p.1, p.2, p.3, p.4, p.5, p.6, p.7)
+                    try promise.resolveFunction.call(withArguments: [context.convey(JXTuple.Arity2(r))])
                 } catch {
                     try promise.rejectFunction.call(withArguments: [context.error(error)])
                 }
