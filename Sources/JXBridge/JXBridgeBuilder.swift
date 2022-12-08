@@ -61,7 +61,7 @@ public final class JXBridgeBuilder<T> {
         return self
     }
     
-/*ARITY:FUNCTION
+/*ARITY:INIT
 extension JXBridgeBuilder {
     // builder.constructor { Type.init(p0:...) }
     @discardableResult public func constructor${PARAM_TYPES_DEC}(_ cons: @escaping () -> (${PARAM_LIST}) throws -> T) -> JXBridgeBuilder<T> {

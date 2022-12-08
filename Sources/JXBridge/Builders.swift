@@ -172,7 +172,7 @@ extension StaticPropertyBridge {
 }
 ARITY*/
 
-/*ARITY:FUNCTION
+/*ARITY:INIT
 extension ConstructorBridge {
     // Type.init(p0:...)
     init<T${PARAM_COMMA}${PARAM_TYPES_LIST}>(_ cons: @escaping (${PARAM_LIST}) throws -> T) {

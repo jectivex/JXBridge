@@ -22,7 +22,6 @@ import Foundation
 /// `FUNCTION`, `ASYNC_FUNCTION`: Generate arity code for bridging functions.
 ///
 ///     ${PARAM_TYPES_LIST}: The generic parameter type(s). Use this in the function's generics list <...>
-///     ${PARAM_TYPES_DEC}: Declaration of the generic parameter type(s). Use this as the function's generics list <...>
 ///     ${PARAM_LIST}: The parameters. For simple types, these are P0, P1, ...
 ///     ${PARAM_LABELED_LIST}: The parameters with labels: p0: P0, p1: P1, ...
 ///     ${PARAM_LABEL_LIST}: The parameter labels: p0, p1, ...
@@ -34,6 +33,19 @@ import Foundation
 ///     ${RETURN_TYPES}: The generic return type(s). Use this in the member's generics list <...>
 ///     ${RETURN}: The return value. For simple values, this is R
 ///     ${RETURN_CONVEY}: The return value supplied to JXContext.convey(). Assumes the local value name is 'r'
+///
+/// `INIT`: Generate arity code for bridging constructors.
+///
+///     ${PARAM_TYPES_LIST}: The generic parameter type(s). Use this in the function's generics list <...>
+///     ${PARAM_TYPES_DEC}: Declaration of the generic parameter type(s). Use this as the function's generics list <...>
+///     ${PARAM_LIST}: The parameters. For simple types, these are P0, P1, ...
+///     ${PARAM_LABELED_LIST}: The parameters with labels: p0: P0, p1: P1, ...
+///     ${PARAM_LABEL_LIST}: The parameter labels: p0, p1, ...
+///     ${PARAM_CONVEY_TYPE_LIST}: The parameter types supplied to JXValue.convey()
+///     ${PARAM_COUNT}: The number of paramters
+///     ${PARAM_TUPLE_LIST}: Conveyed parameters are returned as a tuple p. A list of the tuple values: p.0, p.1, ...
+///     ${PARAM_TUPLE}: Conveyed parameters are returned as a tuple p. This is either p or _ if there are no parameters
+///     ${PARAM_COMMA}: Empty string if there are no parameters, otherwise ', '
 ///
 /// `PARAM_SUPPORT`: Generate arity code for general parameter support.
 ///
@@ -83,6 +95,8 @@ class ArityGenerator {
         case propertyTuples
         /// Whether to support return tuples in functions.
         case returnTuples
+        /// Whether to support return tuples in functions with trailing closures.
+        case returnTuplesWhenTrailingClosures
         /// The maximum `JXTuple` arity to generate.
         case maximumJXTupleArity
         /// The maximum number of parameters of the property closure variants and function trailing closure variants to generate.
@@ -106,6 +120,7 @@ class ArityGenerator {
             case .maximumTupleArity: return 2
             case .propertyTuples: return 0
             case .returnTuples: return 1
+            case .returnTuplesWhenTrailingClosures: return 0
             case .maximumJXTupleArity: return 6
             case .optionalTuples: return 0
             case .maximumClosureParameters: return 2
@@ -127,6 +142,7 @@ class ArityGenerator {
         // List in desired output order
         case property
         case asyncProperty
+        case constructor
         case function
         case asyncFunction
         case parameterSupport
@@ -140,6 +156,8 @@ class ArityGenerator {
                 return "PROPERTY"
             case .asyncProperty:
                 return "ASYNC_PROPERTY"
+            case .constructor:
+                return "INIT"
             case .function:
                 return "FUNCTION"
             case .asyncFunction:
@@ -187,12 +205,15 @@ class ArityGenerator {
             let closureSupport = Option.asyncMemberClosures.value(in: options) > 0
             outputs[.asyncProperty] = generateArity(asyncPropertyInputs, substitutions: propertyAritySubstitutions(closureSupport: closureSupport))
         }
+        if let constructorInputs = inputs[.constructor] {
+            outputs[.constructor] = generateArity(constructorInputs, substitutions: functionAritySubstitutions(tupleSupport: false, closureSupport: true))
+        }
         if let functionInputs = inputs[.function] {
-            outputs[.function] = generateArity(functionInputs, substitutions: functionAritySubstitutions(closureSupport: true))
+            outputs[.function] = generateArity(functionInputs, substitutions: functionAritySubstitutions(tupleSupport: true, closureSupport: true))
         }
         if let asyncFunctionInputs = inputs[.asyncFunction] {
             let closureSupport = Option.asyncMemberClosures.value(in: options) > 0
-            outputs[.asyncFunction] = generateArity(asyncFunctionInputs, substitutions: functionAritySubstitutions(closureSupport: closureSupport))
+            outputs[.asyncFunction] = generateArity(asyncFunctionInputs, substitutions: functionAritySubstitutions(tupleSupport: true, closureSupport: closureSupport))
         }
         if let parameterSupportInputs = inputs[.parameterSupport] {
             outputs[.parameterSupport] = generateArity(parameterSupportInputs, substitutions: parameterSupportAritySubstitutions())
@@ -244,12 +265,25 @@ class ArityGenerator {
     }
     
     private func propertyAritySubstitutions(closureSupport: Bool) -> [[String: String]] {
-        let includeClosures = closureSupport && Option.propertyClosures.value(in: options) > 0
-        let optionalClosures = Option.optionalClosures.value(in: options) > 0
+        let tupleArity = Option.maximumTupleArity.value(in: options)
+        let includeTuples = tupleArity >= 2 && Option.propertyTuples.value(in: options) > 0
+        let optionalTuples = includeTuples && Option.optionalTuples.value(in: options) > 0
+        let closureArity = Option.maximumClosureParameters.value(in: options)
+        let includeClosures = closureSupport && closureArity >= 0 && Option.propertyClosures.value(in: options) > 0
+        let optionalClosures = includeClosures && Option.optionalClosures.value(in: options) > 0
+        
         var subs: [[String: String]] = []
         subs.append(Self.propertySubstitution())
+        if includeTuples {
+            for t in 2...tupleArity {
+                subs.append(Self.propertySubstitution(tupleInfo: TupleInfo(arity: t)))
+                if optionalTuples {
+                    subs.append(Self.propertySubstitution(tupleInfo: TupleInfo(arity: t, optional: true)))
+                }
+            }
+        }
         if includeClosures {
-            for cp in 0...Option.maximumClosureParameters.value(in: options) {
+            for cp in 0...closureArity {
                 subs.append(Self.propertySubstitution(closureInfo: ClosureInfo(arity: cp)))
                 if optionalClosures {
                     subs.append(Self.propertySubstitution(closureInfo: ClosureInfo(arity: cp, optional: true)))
@@ -265,22 +299,43 @@ class ArityGenerator {
         return subs
     }
     
-    private func functionAritySubstitutions(closureSupport: Bool) -> [[String: String]] {
-        let includeClosures = closureSupport && Option.trailingClosures.value(in: options) > 0
-        let optionalClosures = Option.optionalClosures.value(in: options) > 0
+    private func functionAritySubstitutions(tupleSupport: Bool, closureSupport: Bool) -> [[String: String]] {
+        let tupleArity = Option.maximumTupleArity.value(in: options)
+        let includeTuples = tupleArity >= 2 && tupleSupport && Option.returnTuples.value(in: options) > 0
+        let optionalTuples = includeTuples && Option.optionalTuples.value(in: options) > 0
+        let includeTuplesWhenClosures = includeTuples && Option.returnTuplesWhenTrailingClosures.value(in: options) > 0
+        let closureArity = Option.maximumClosureParameters.value(in: options)
+        let includeClosures = closureSupport && closureArity >= 0 && Option.trailingClosures.value(in: options) > 0
+        let optionalClosures = includeClosures && Option.optionalClosures.value(in: options) > 0
+        
         var subs: [[String: String]] = []
         for p in 0...Option.maximumFunctionParameters.value(in: options) {
             subs.append(Self.functionSubstitution(arity: p))
-            if includeClosures && p > 0 {
-                for cp in 0...Option.maximumJXClosureParameters.value(in: options) {
-                    subs.append(Self.functionSubstitution(arity: p, closureInfo: ClosureInfo(arity: cp)))
-                    if optionalClosures {
-                        subs.append(Self.functionSubstitution(arity: p, closureInfo: ClosureInfo(arity: cp, optional: true)))
+            if includeTuples {
+                for t in 2...tupleArity {
+                    subs.append(Self.functionSubstitution(arity: p, tupleInfo: TupleInfo(arity: t)))
+                    if optionalTuples {
+                        subs.append(Self.functionSubstitution(arity: p, tupleInfo: TupleInfo(arity: t, optional: true)))
                     }
-                    if cp <= Option.maximumThrowingClosureParameters.value(in: options) {
-                        subs.append(Self.functionSubstitution(arity: p, closureInfo: ClosureInfo(arity: cp, throwing: true)))
-                        if optionalClosures {
-                            subs.append(Self.functionSubstitution(arity: p, closureInfo: ClosureInfo(arity: cp, throwing: true, optional: true)))
+                }
+            }
+            if includeClosures && p > 0 {
+                // We ignore tupleArity < 2, so this loop's first iteration will be without tuples
+                let closureTupleArity = includeTuplesWhenClosures ? tupleArity : 1
+                for t in 1...closureTupleArity {
+                    for ot in 0...(optionalTuples ? 1 : 0) {
+                        let tupleInfo = t >= 2 ? TupleInfo(arity: t, optional: ot > 0) : nil
+                        for cp in 0...closureArity {
+                            subs.append(Self.functionSubstitution(arity: p, tupleInfo: tupleInfo, closureInfo: ClosureInfo(arity: cp)))
+                            if optionalClosures {
+                                subs.append(Self.functionSubstitution(arity: p, tupleInfo: tupleInfo, closureInfo: ClosureInfo(arity: cp, optional: true)))
+                            }
+                            if cp <= Option.maximumThrowingClosureParameters.value(in: options) {
+                                subs.append(Self.functionSubstitution(arity: p, tupleInfo: tupleInfo, closureInfo: ClosureInfo(arity: cp, throwing: true)))
+                                if optionalClosures {
+                                    subs.append(Self.functionSubstitution(arity: p, tupleInfo: tupleInfo, closureInfo: ClosureInfo(arity: cp, throwing: true, optional: true)))
+                                }
+                            }
                         }
                     }
                 }
@@ -315,26 +370,47 @@ class ArityGenerator {
         return subbed
     }
     
-    private static func propertySubstitution(closureInfo: ClosureInfo? = nil) -> [String: String] {
-        guard let closureInfo else {
+    private static func propertySubstitution(tupleInfo: TupleInfo? = nil, closureInfo: ClosureInfo? = nil) -> [String: String] {
+        if let tupleInfo {
             return [
-                "${VALUE_TYPES}": "V",
-                "${VALUE}": "V",
-                "${VALUE_CONVEY}": "v",
-                "${VALUE_CONVEY_TYPE}": "V.self",
-                "${VALUE_FROMCONVEYED}": "v"
+                "${VALUE_TYPES}": parameterList(mode: .type, arity: tupleInfo.arity, base: "U"),
+                "${VALUE}": tupleInfo.type,
+                "${VALUE_CONVEY}": tupleInfo.convey("v"),
+                "${VALUE_CONVEY_TYPE}": tupleInfo.conveyType,
+                "${VALUE_FROMCONVEYED}": tupleInfo.fromConveyed("v")
+            ]
+        }
+        if let closureInfo {
+            return [
+                "${VALUE_TYPES}": parameterList(mode: .type, arity: closureInfo.arity, base: "C", includeReturn: true),
+                "${VALUE}": closureInfo.type,
+                "${VALUE_CONVEY}": closureInfo.convey("v"),
+                "${VALUE_CONVEY_TYPE}": closureInfo.conveyType,
+                "${VALUE_FROMCONVEYED}": closureInfo.fromConveyed("v")
             ]
         }
         return [
-            "${VALUE_TYPES}": parameterList(mode: .type, arity: closureInfo.arity, base: "C", includeReturn: true),
-            "${VALUE}": closureInfo.type,
-            "${VALUE_CONVEY}": closureInfo.convey("v"),
-            "${VALUE_CONVEY_TYPE}": closureInfo.conveyType,
-            "${VALUE_FROMCONVEYED}": closureInfo.fromConveyed("v")
+            "${VALUE_TYPES}": "V",
+            "${VALUE}": "V",
+            "${VALUE_CONVEY}": "v",
+            "${VALUE_CONVEY_TYPE}": "V.self",
+            "${VALUE_FROMCONVEYED}": "v"
         ]
     }
     
-    private static func functionSubstitution(arity: Int, closureInfo: ClosureInfo? = nil) -> [String: String] {
+    private static func functionSubstitution(arity: Int, tupleInfo: TupleInfo? = nil, closureInfo: ClosureInfo? = nil) -> [String: String] {
+        let returnTypes: String
+        let returnString: String
+        let returnConvey: String
+        if let tupleInfo {
+            returnTypes = parameterList(mode: .type, arity: tupleInfo.arity, base: "U")
+            returnString = tupleInfo.type
+            returnConvey = tupleInfo.convey("r")
+        } else {
+            returnTypes = "R"
+            returnString = "R"
+            returnConvey = "r"
+        }
         guard let closureInfo else {
             return [
                 "${PARAM_TYPES_LIST}": parameterList(mode: .type, arity: arity),
@@ -347,9 +423,9 @@ class ArityGenerator {
                 "${PARAM_TUPLE_LIST}": parameterList(mode: .tuple, arity: arity),
                 "${PARAM_TUPLE}": arity > 0 ? "p" : "_",
                 "${PARAM_COMMA}": arity > 0 ? ", " : "",
-                "${RETURN_TYPES}": "R",
-                "${RETURN}": "R",
-                "${RETURN_CONVEY}": "r"
+                "${RETURN_TYPES}": returnTypes,
+                "${RETURN}": returnString,
+                "${RETURN_CONVEY}": returnConvey
             ]
         }
         let closureComma = (arity > 1) ? ", " : ""
@@ -362,7 +438,7 @@ class ArityGenerator {
             "${PARAM_LABEL_LIST}": parameterList(mode: .label, arity: arity),
             "${PARAM_CONVEY_TYPE_LIST}": "\(parameterList(mode: .conveyType, arity: arity, trimLast: true))\(closureComma)\(closureInfo.conveyType)",
             "${PARAM_COUNT}": "\(arity)",
-            "${PARAM_TUPLE_LIST}": "\(parameterList(mode: .tuple, arity: arity, trimLast: true))\(closureComma)\(closureInfo.fromConveyed("p", tupleArity: arity))",
+            "${PARAM_TUPLE_LIST}": "\(parameterList(mode: .tuple, arity: arity, trimLast: true))\(closureComma)\(closureInfo.fromConveyed("p", tupleArity: arity - 1))",
             "${PARAM_TUPLE}": arity > 0 ? "p" : "_",
             "${PARAM_COMMA}": arity > 0 ? ", " : "",
             "${RETURN_TYPES}": "R",
@@ -411,6 +487,34 @@ class ArityGenerator {
         ]
     }
     
+    struct TupleInfo {
+        var arity: Int
+        var optional = false
+        
+        var type: String {
+            let typeList = parameterList(mode: .type, arity: arity, base: "U")
+            return optional ? "(\(typeList))?" : "(\(typeList))"
+        }
+        
+        var conveyType: String {
+            let typeList = parameterList(mode: .type, arity: arity, base: "U")
+            let type = "JXTuple.Arity\(arity)<\(typeList)>"
+            return optional ? "Optional<\(type)>.self" : "\(type).self"
+        }
+        
+        func convey(_ name: String) -> String {
+            return "JXTuple.Arity\(arity)(\(name))"
+        }
+        
+        func fromConveyed(_ name: String) -> String {
+            if optional {
+                return "\(name)?.tuple"
+            } else {
+                return "\(name).tuple"
+            }
+        }
+    }
+    
     struct ClosureInfo {
         var arity: Int
         var throwing = false
@@ -446,20 +550,14 @@ class ArityGenerator {
             return type
         }
         
-        func convey(_ name: String, tupleArity: Int = 0) -> String {
-            let p: String
-            if tupleArity <= 0 {
-                p = name
-            } else {
-                p = "\(name).\(tupleArity)"
-            }
+        func convey(_ name: String) -> String {
             let type: String
             if throwing {
                 type = "JXClosure.Throwing\(arity)"
             } else {
                 type = "JXClosure.Arity\(arity)"
             }
-            return "\(type)(\(p))"
+            return "\(type)(\(name))"
         }
         
         func fromConveyed(_ name: String, tupleArity: Int = 0) -> String {
@@ -467,7 +565,7 @@ class ArityGenerator {
             if tupleArity <= 1 {
                 p = name
             } else {
-                p = "\(name).\(tupleArity - 1)"
+                p = "\(name).\(tupleArity)"
             }
             if optional {
                 return "\(p)?.closure"

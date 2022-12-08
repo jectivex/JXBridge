@@ -218,7 +218,7 @@ ARITY*/
 public struct JXInit {
     let constructorBridge: ConstructorBridge
 
-/*ARITY:FUNCTION
+/*ARITY:INIT
 extension JXInit {
     public init<T${PARAM_COMMA}${PARAM_TYPES_LIST}>(wrappedValue: @escaping (${PARAM_LIST}) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
