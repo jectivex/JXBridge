@@ -116,17 +116,17 @@ class ArityGenerator {
         
         var `default`: Int {
             switch self {
-            case .maximumFunctionParameters: return 8
+            case .maximumFunctionParameters: return 6
             case .maximumTupleArity: return 2
             case .propertyTuples: return 0
             case .returnTuples: return 1
             case .returnTuplesWhenTrailingClosures: return 0
             case .maximumJXTupleArity: return 6
             case .optionalTuples: return 0
-            case .maximumClosureParameters: return 2
+            case .maximumClosureParameters: return 1
             case .maximumThrowingClosureParameters: return -1
             case .optionalClosures: return 1
-            case .propertyClosures: return 1
+            case .propertyClosures: return 0
             case .trailingClosures: return 1
             case .asyncMemberClosures: return 0
             case .maximumJXClosureParameters: return 6

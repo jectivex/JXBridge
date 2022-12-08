@@ -1,17 +1,17 @@
 // THIS FILE IS AUTO GENERATED FROM JXClosure.swift. DO NOT EDIT
 //
 //		swift package plugin generate-arity JXClosure.swift
-//			-maximumFunctionParameters 8
+//			-maximumFunctionParameters 6
 //			-maximumTupleArity 2
 //			-optionalTuples 0
 //			-propertyTuples 0
 //			-returnTuples 1
 //			-returnTuplesWhenTrailingClosures 0
 //			-maximumJXTupleArity 6
-//			-maximumClosureParameters 2
+//			-maximumClosureParameters 1
 //			-maximumThrowingClosureParameters -1
 //			-optionalClosures 1
-//			-propertyClosures 1
+//			-propertyClosures 0
 //			-trailingClosures 1
 //			-asyncMemberClosures 0
 //			-maximumJXClosureParameters 6
@@ -20,7 +20,7 @@ import JXKit
 
 // CLOSURE_SUPPORT
 
- extension JXClosure {
+extension JXClosure {
     /// `JXConvertible` wrapper around a non-throwing closure of arity 0.
     public struct Arity0<R>: JXConvertible {
         public let closure: () -> R
@@ -119,7 +119,7 @@ extension JXValue {
 }
 
 
- extension JXClosure {
+extension JXClosure {
     /// `JXConvertible` wrapper around a non-throwing closure of arity 1.
     public struct Arity1<P0, R>: JXConvertible {
         public let closure: (P0) -> R
@@ -218,7 +218,7 @@ extension JXValue {
 }
 
 
- extension JXClosure {
+extension JXClosure {
     /// `JXConvertible` wrapper around a non-throwing closure of arity 2.
     public struct Arity2<P0, P1, R>: JXConvertible {
         public let closure: (P0, P1) -> R
@@ -317,7 +317,7 @@ extension JXValue {
 }
 
 
- extension JXClosure {
+extension JXClosure {
     /// `JXConvertible` wrapper around a non-throwing closure of arity 3.
     public struct Arity3<P0, P1, P2, R>: JXConvertible {
         public let closure: (P0, P1, P2) -> R
@@ -416,7 +416,7 @@ extension JXValue {
 }
 
 
- extension JXClosure {
+extension JXClosure {
     /// `JXConvertible` wrapper around a non-throwing closure of arity 4.
     public struct Arity4<P0, P1, P2, P3, R>: JXConvertible {
         public let closure: (P0, P1, P2, P3) -> R
@@ -515,7 +515,7 @@ extension JXValue {
 }
 
 
- extension JXClosure {
+extension JXClosure {
     /// `JXConvertible` wrapper around a non-throwing closure of arity 5.
     public struct Arity5<P0, P1, P2, P3, P4, R>: JXConvertible {
         public let closure: (P0, P1, P2, P3, P4) -> R
@@ -614,7 +614,7 @@ extension JXValue {
 }
 
 
- extension JXClosure {
+extension JXClosure {
     /// `JXConvertible` wrapper around a non-throwing closure of arity 6.
     public struct Arity6<P0, P1, P2, P3, P4, P5, R>: JXConvertible {
         public let closure: (P0, P1, P2, P3, P4, P5) -> R

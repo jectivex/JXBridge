@@ -321,6 +321,17 @@ extension JXBridgeContextSPI: JXContextSPI {
         return try value.bridged as? T
     }
     
+    func errorDetail(conveying type: Any.Type) -> String? {
+        let typeString = String(describing: type)
+        if typeString.range(of: "->") != nil {
+            return "If this is a function or closure, you may have to wrap it in a JXClosure. See documentation for details"
+        } else if typeString.first == "(" && typeString.last == ")" {
+            return "If this is a tuple, you may have to wrap it in a JXTuple. See the documentation for details"
+        } else {
+            return nil
+        }
+    }
+    
     private func throwInitializationError() throws {
         // If we didn't initialize cleanly, throw an error for all operations.
         guard let initializationError else {

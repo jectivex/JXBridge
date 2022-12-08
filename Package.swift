@@ -25,7 +25,7 @@ var targets: [Target] = [
 #endif
 
 var dependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/jectivex/JXKit.git", from: "3.3.1"),
+    .package(url: "https://github.com/jectivex/JXKit.git", from: "3.3.3"),
 ]
 
 #if !canImport(Combine)

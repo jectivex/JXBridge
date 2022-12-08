@@ -1,11 +1,14 @@
 import JXKit
 
-/// `JXConvertible` wrappers around closures.
+/// `JXConvertible` wrappers around closures, converting them to and from JavaScript functions. Use these wrappers when passing closures directly to or from `JXKit`.
+/// When bridging native API, closures can be automatically wrapped by the generated bridging code up to a certain arity.
+///
+/// - Seealso `ArityGenerator` tool documentation
 public enum JXClosure {
 }
 
 /*ARITY:CLOSURE_SUPPORT
- extension JXClosure {
+extension JXClosure {
     /// `JXConvertible` wrapper around a non-throwing closure of arity ${PARAM_COUNT}.
     public struct Arity${PARAM_COUNT}<${PARAM_TYPES_LIST}${PARAM_COMMA}${RETURN_TYPES}>: JXConvertible {
         public let closure: (${PARAM_LIST}) -> ${RETURN}

@@ -1,6 +1,9 @@
 import JXKit
 
-/// `JXConvertible` wrappers around tuples.
+/// `JXConvertible` wrappers around tuples, converting them to and from JavaScript arrays. Use these wrappers when passing tuples directly to or from `JXKit`.
+/// When bridging native API, tuples can be automatically wrapped by the generated bridging code up to a certain arity.
+///
+/// - Seealso `ArityGenerator` tool documentation
 public enum JXTuple {
 }
 

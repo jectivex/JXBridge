@@ -207,20 +207,9 @@ invokeAsync(obj);
         try context.registry.register {
             JXBridgeBuilder(type: TestStruct.self)
                 .constructor { TestStruct.init }
-//                .var.tupleVar { \.tupleVar }
                 .func.tupleFunc { TestStruct.tupleFunc }
                 .bridge
         }
-//        var result = try context.eval("""
-//var s = new jx.TestStruct();
-//s.tupleVar = [1, '2'];
-//s;
-//""")
-//        let s = try result.convey(to: TestStruct.self)
-//        XCTAssertNotNil(s.tupleVar)
-//        XCTAssertEqual(s.tupleVar!.0, 1)
-//        XCTAssertEqual(s.tupleVar!.1, "2")
-        
         let result = try context.eval("new jx.TestStruct().tupleFunc()")
         let t = try result.convey(to: (Int, String).self)
         XCTAssertEqual(t.0, 100)
@@ -233,28 +222,17 @@ invokeAsync(obj);
             JXBridgeBuilder(type: TestStruct.self)
                 .constructor { TestStruct.init }
                 .var.readWriteInt { \.readWriteInt }
-                .var.callbackVar { \.callbackVar }
                 .func.callbackFunc { TestStruct.callbackFunc }
                 .bridge
         }
         var result = try context.eval("""
 var s = new jx.TestStruct();
 s.readWriteInt = 2;
-s.callbackVar = () => { return 3; }
-
 let result = 0
-let add = s.callbackVar();
-s.callbackFunc(add, (r) => { result = r; });
+s.callbackFunc(3, (r) => { result = r; });
 result;
 """)
         XCTAssertEqual(try result.int, 5)
-        
-        var s = TestStruct()
-        s.callbackVar = { return 3 }
-        result = try context.withValues(s) {
-            try context.eval("$0.callbackVar();")
-        }
-        XCTAssertEqual(try result.int, 3)
         
         result = try context.eval("""
 var s = new jx.TestStruct();
@@ -318,9 +296,6 @@ private struct TestStruct {
     func exceptionFunc() throws {
         throw TestError(message: "exceptionFunc error")
     }
-    
-    var callbackVar: (() -> Int)?
-    var tupleVar: (Int, String)?
     
     func callbackFunc(add: Int, result: ((Int) -> Void)?) -> Bool {
         result?(readWriteInt + add)

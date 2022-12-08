@@ -13,7 +13,7 @@ struct JSCodeGenerator {
     /// Define a var with a value of the given namespace.
     static func defineNamespaceJSProxy(_ namespace: JXNamespace) -> String {
         let js = "var \(namespace) = \(newNamespaceJSProxy(namespace))"
-        print(js) //~~~
+        //print(js)
         return js
     }
     
@@ -52,7 +52,7 @@ new Proxy({ _jxNamespace: '\(namespace)' }, {
 \(functionsJS)
 }
 """
-        print(classJS) //~~~
+        //print(classJS)
         return classJS
     }
 

@@ -1,17 +1,17 @@
 // THIS FILE IS AUTO GENERATED FROM JXTuple.swift. DO NOT EDIT
 //
 //		swift package plugin generate-arity JXTuple.swift
-//			-maximumFunctionParameters 8
+//			-maximumFunctionParameters 6
 //			-maximumTupleArity 2
 //			-optionalTuples 0
 //			-propertyTuples 0
 //			-returnTuples 1
 //			-returnTuplesWhenTrailingClosures 0
 //			-maximumJXTupleArity 6
-//			-maximumClosureParameters 2
+//			-maximumClosureParameters 1
 //			-maximumThrowingClosureParameters -1
 //			-optionalClosures 1
-//			-propertyClosures 1
+//			-propertyClosures 0
 //			-trailingClosures 1
 //			-asyncMemberClosures 0
 //			-maximumJXClosureParameters 6

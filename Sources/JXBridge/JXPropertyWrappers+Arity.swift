@@ -1,17 +1,17 @@
 // THIS FILE IS AUTO GENERATED FROM JXPropertyWrappers.swift. DO NOT EDIT
 //
 //		swift package plugin generate-arity JXPropertyWrappers.swift
-//			-maximumFunctionParameters 8
+//			-maximumFunctionParameters 6
 //			-maximumTupleArity 2
 //			-optionalTuples 0
 //			-propertyTuples 0
 //			-returnTuples 1
 //			-returnTuplesWhenTrailingClosures 0
 //			-maximumJXTupleArity 6
-//			-maximumClosureParameters 2
+//			-maximumClosureParameters 1
 //			-maximumThrowingClosureParameters -1
 //			-optionalClosures 1
-//			-propertyClosures 1
+//			-propertyClosures 0
 //			-trailingClosures 1
 //			-asyncMemberClosures 0
 //			-maximumJXClosureParameters 6
@@ -31,144 +31,12 @@ extension JXVar {
 }
 
 
-extension JXVar {
-    public init<T, CR>(wrappedValue: (get: (T) throws -> (() -> CR), set: ((T, (() -> CR)) -> Void)?), _ type: T.Type) {
-        propertyBridge = { PropertyBridge(name: $0, getter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<T, CR>(wrappedValue: @escaping (T) throws -> (() -> CR), _ type: T.Type) {
-        self = JXVar(wrappedValue: (get: wrappedValue, set: nil), type)
-    }
-}
-
-
-extension JXVar {
-    public init<T, CR>(wrappedValue: (get: (T) throws -> (() -> CR)?, set: ((T, (() -> CR)?) -> Void)?), _ type: T.Type) {
-        propertyBridge = { PropertyBridge(name: $0, getter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<T, CR>(wrappedValue: @escaping (T) throws -> (() -> CR)?, _ type: T.Type) {
-        self = JXVar(wrappedValue: (get: wrappedValue, set: nil), type)
-    }
-}
-
-
-extension JXVar {
-    public init<T, C0, CR>(wrappedValue: (get: (T) throws -> ((C0) -> CR), set: ((T, ((C0) -> CR)) -> Void)?), _ type: T.Type) {
-        propertyBridge = { PropertyBridge(name: $0, getter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<T, C0, CR>(wrappedValue: @escaping (T) throws -> ((C0) -> CR), _ type: T.Type) {
-        self = JXVar(wrappedValue: (get: wrappedValue, set: nil), type)
-    }
-}
-
-
-extension JXVar {
-    public init<T, C0, CR>(wrappedValue: (get: (T) throws -> ((C0) -> CR)?, set: ((T, ((C0) -> CR)?) -> Void)?), _ type: T.Type) {
-        propertyBridge = { PropertyBridge(name: $0, getter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<T, C0, CR>(wrappedValue: @escaping (T) throws -> ((C0) -> CR)?, _ type: T.Type) {
-        self = JXVar(wrappedValue: (get: wrappedValue, set: nil), type)
-    }
-}
-
-
-extension JXVar {
-    public init<T, C0, C1, CR>(wrappedValue: (get: (T) throws -> ((C0, C1) -> CR), set: ((T, ((C0, C1) -> CR)) -> Void)?), _ type: T.Type) {
-        propertyBridge = { PropertyBridge(name: $0, getter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<T, C0, C1, CR>(wrappedValue: @escaping (T) throws -> ((C0, C1) -> CR), _ type: T.Type) {
-        self = JXVar(wrappedValue: (get: wrappedValue, set: nil), type)
-    }
-}
-
-
-extension JXVar {
-    public init<T, C0, C1, CR>(wrappedValue: (get: (T) throws -> ((C0, C1) -> CR)?, set: ((T, ((C0, C1) -> CR)?) -> Void)?), _ type: T.Type) {
-        propertyBridge = { PropertyBridge(name: $0, getter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<T, C0, C1, CR>(wrappedValue: @escaping (T) throws -> ((C0, C1) -> CR)?, _ type: T.Type) {
-        self = JXVar(wrappedValue: (get: wrappedValue, set: nil), type)
-    }
-}
-
-
 extension JXStaticVar {
     public init<V>(wrappedValue: (get: () throws -> V, set: ((V) -> Void)?)) {
         propertyBridge = { StaticPropertyBridge(name: $0, type: Any.self, getter: wrappedValue.get, setter: wrappedValue.set) }
     }
     
     public init<V>(wrappedValue: @escaping () throws -> V) {
-        self = JXStaticVar(wrappedValue: (get: wrappedValue, set: nil))
-    }
-}
-
-
-extension JXStaticVar {
-    public init<CR>(wrappedValue: (get: () throws -> (() -> CR), set: (((() -> CR)) -> Void)?)) {
-        propertyBridge = { StaticPropertyBridge(name: $0, type: Any.self, getter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<CR>(wrappedValue: @escaping () throws -> (() -> CR)) {
-        self = JXStaticVar(wrappedValue: (get: wrappedValue, set: nil))
-    }
-}
-
-
-extension JXStaticVar {
-    public init<CR>(wrappedValue: (get: () throws -> (() -> CR)?, set: (((() -> CR)?) -> Void)?)) {
-        propertyBridge = { StaticPropertyBridge(name: $0, type: Any.self, getter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<CR>(wrappedValue: @escaping () throws -> (() -> CR)?) {
-        self = JXStaticVar(wrappedValue: (get: wrappedValue, set: nil))
-    }
-}
-
-
-extension JXStaticVar {
-    public init<C0, CR>(wrappedValue: (get: () throws -> ((C0) -> CR), set: ((((C0) -> CR)) -> Void)?)) {
-        propertyBridge = { StaticPropertyBridge(name: $0, type: Any.self, getter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<C0, CR>(wrappedValue: @escaping () throws -> ((C0) -> CR)) {
-        self = JXStaticVar(wrappedValue: (get: wrappedValue, set: nil))
-    }
-}
-
-
-extension JXStaticVar {
-    public init<C0, CR>(wrappedValue: (get: () throws -> ((C0) -> CR)?, set: ((((C0) -> CR)?) -> Void)?)) {
-        propertyBridge = { StaticPropertyBridge(name: $0, type: Any.self, getter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<C0, CR>(wrappedValue: @escaping () throws -> ((C0) -> CR)?) {
-        self = JXStaticVar(wrappedValue: (get: wrappedValue, set: nil))
-    }
-}
-
-
-extension JXStaticVar {
-    public init<C0, C1, CR>(wrappedValue: (get: () throws -> ((C0, C1) -> CR), set: ((((C0, C1) -> CR)) -> Void)?)) {
-        propertyBridge = { StaticPropertyBridge(name: $0, type: Any.self, getter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<C0, C1, CR>(wrappedValue: @escaping () throws -> ((C0, C1) -> CR)) {
-        self = JXStaticVar(wrappedValue: (get: wrappedValue, set: nil))
-    }
-}
-
-
-extension JXStaticVar {
-    public init<C0, C1, CR>(wrappedValue: (get: () throws -> ((C0, C1) -> CR)?, set: ((((C0, C1) -> CR)?) -> Void)?)) {
-        propertyBridge = { StaticPropertyBridge(name: $0, type: Any.self, getter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<C0, C1, CR>(wrappedValue: @escaping () throws -> ((C0, C1) -> CR)?) {
         self = JXStaticVar(wrappedValue: (get: wrappedValue, set: nil))
     }
 }
@@ -185,116 +53,8 @@ extension JXClassVar {
 }
 
 
-extension JXClassVar {
-    public init<T, CR>(wrappedValue: (get: (T.Type) throws -> (() -> CR), set: ((T.Type, (() -> CR)) -> Void)?), _ type: T.Type) {
-        propertyBridge = { PropertyBridge(name: $0, classGetter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<T, CR>(wrappedValue: @escaping (T.Type) throws -> (() -> CR), _ type: T.Type) {
-        self = JXClassVar(wrappedValue: (get: wrappedValue, set: nil), type)
-    }
-}
-
-
-extension JXClassVar {
-    public init<T, CR>(wrappedValue: (get: (T.Type) throws -> (() -> CR)?, set: ((T.Type, (() -> CR)?) -> Void)?), _ type: T.Type) {
-        propertyBridge = { PropertyBridge(name: $0, classGetter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<T, CR>(wrappedValue: @escaping (T.Type) throws -> (() -> CR)?, _ type: T.Type) {
-        self = JXClassVar(wrappedValue: (get: wrappedValue, set: nil), type)
-    }
-}
-
-
-extension JXClassVar {
-    public init<T, C0, CR>(wrappedValue: (get: (T.Type) throws -> ((C0) -> CR), set: ((T.Type, ((C0) -> CR)) -> Void)?), _ type: T.Type) {
-        propertyBridge = { PropertyBridge(name: $0, classGetter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<T, C0, CR>(wrappedValue: @escaping (T.Type) throws -> ((C0) -> CR), _ type: T.Type) {
-        self = JXClassVar(wrappedValue: (get: wrappedValue, set: nil), type)
-    }
-}
-
-
-extension JXClassVar {
-    public init<T, C0, CR>(wrappedValue: (get: (T.Type) throws -> ((C0) -> CR)?, set: ((T.Type, ((C0) -> CR)?) -> Void)?), _ type: T.Type) {
-        propertyBridge = { PropertyBridge(name: $0, classGetter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<T, C0, CR>(wrappedValue: @escaping (T.Type) throws -> ((C0) -> CR)?, _ type: T.Type) {
-        self = JXClassVar(wrappedValue: (get: wrappedValue, set: nil), type)
-    }
-}
-
-
-extension JXClassVar {
-    public init<T, C0, C1, CR>(wrappedValue: (get: (T.Type) throws -> ((C0, C1) -> CR), set: ((T.Type, ((C0, C1) -> CR)) -> Void)?), _ type: T.Type) {
-        propertyBridge = { PropertyBridge(name: $0, classGetter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<T, C0, C1, CR>(wrappedValue: @escaping (T.Type) throws -> ((C0, C1) -> CR), _ type: T.Type) {
-        self = JXClassVar(wrappedValue: (get: wrappedValue, set: nil), type)
-    }
-}
-
-
-extension JXClassVar {
-    public init<T, C0, C1, CR>(wrappedValue: (get: (T.Type) throws -> ((C0, C1) -> CR)?, set: ((T.Type, ((C0, C1) -> CR)?) -> Void)?), _ type: T.Type) {
-        propertyBridge = { PropertyBridge(name: $0, classGetter: wrappedValue.get, setter: wrappedValue.set) }
-    }
-    
-    public init<T, C0, C1, CR>(wrappedValue: @escaping (T.Type) throws -> ((C0, C1) -> CR)?, _ type: T.Type) {
-        self = JXClassVar(wrappedValue: (get: wrappedValue, set: nil), type)
-    }
-}
-
-
 extension JXKeyPath {
     public init<T, V>(wrappedValue: KeyPath<T, V>) {
-        propertyBridge = { PropertyBridge(name: $0, keyPath: wrappedValue) }
-    }
-}
-
-
-extension JXKeyPath {
-    public init<T, CR>(wrappedValue: KeyPath<T, (() -> CR)>) {
-        propertyBridge = { PropertyBridge(name: $0, keyPath: wrappedValue) }
-    }
-}
-
-
-extension JXKeyPath {
-    public init<T, CR>(wrappedValue: KeyPath<T, (() -> CR)?>) {
-        propertyBridge = { PropertyBridge(name: $0, keyPath: wrappedValue) }
-    }
-}
-
-
-extension JXKeyPath {
-    public init<T, C0, CR>(wrappedValue: KeyPath<T, ((C0) -> CR)>) {
-        propertyBridge = { PropertyBridge(name: $0, keyPath: wrappedValue) }
-    }
-}
-
-
-extension JXKeyPath {
-    public init<T, C0, CR>(wrappedValue: KeyPath<T, ((C0) -> CR)?>) {
-        propertyBridge = { PropertyBridge(name: $0, keyPath: wrappedValue) }
-    }
-}
-
-
-extension JXKeyPath {
-    public init<T, C0, C1, CR>(wrappedValue: KeyPath<T, ((C0, C1) -> CR)>) {
-        propertyBridge = { PropertyBridge(name: $0, keyPath: wrappedValue) }
-    }
-}
-
-
-extension JXKeyPath {
-    public init<T, C0, C1, CR>(wrappedValue: KeyPath<T, ((C0, C1) -> CR)?>) {
         propertyBridge = { PropertyBridge(name: $0, keyPath: wrappedValue) }
     }
 }
@@ -366,20 +126,6 @@ extension JXInit {
 
 
 extension JXInit {
-    public init<T, C0, C1, CR>(wrappedValue: @escaping (((C0, C1) -> CR)) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, C0, C1, CR>(wrappedValue: @escaping (((C0, C1) -> CR)?) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
     public init<T, P0, P1>(wrappedValue: @escaping (P0, P1) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
@@ -409,20 +155,6 @@ extension JXInit {
 
 extension JXInit {
     public init<T, P0, C0, CR>(wrappedValue: @escaping (P0, ((C0) -> CR)?) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, C0, C1, CR>(wrappedValue: @escaping (P0, ((C0, C1) -> CR)) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, C0, C1, CR>(wrappedValue: @escaping (P0, ((C0, C1) -> CR)?) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
 }
@@ -464,20 +196,6 @@ extension JXInit {
 
 
 extension JXInit {
-    public init<T, P0, P1, C0, C1, CR>(wrappedValue: @escaping (P0, P1, ((C0, C1) -> CR)) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, C0, C1, CR>(wrappedValue: @escaping (P0, P1, ((C0, C1) -> CR)?) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
     public init<T, P0, P1, P2, P3>(wrappedValue: @escaping (P0, P1, P2, P3) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
@@ -507,20 +225,6 @@ extension JXInit {
 
 extension JXInit {
     public init<T, P0, P1, P2, C0, CR>(wrappedValue: @escaping (P0, P1, P2, ((C0) -> CR)?) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, C0, C1, CR>(wrappedValue: @escaping (P0, P1, P2, ((C0, C1) -> CR)) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, C0, C1, CR>(wrappedValue: @escaping (P0, P1, P2, ((C0, C1) -> CR)?) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
 }
@@ -562,20 +266,6 @@ extension JXInit {
 
 
 extension JXInit {
-    public init<T, P0, P1, P2, P3, C0, C1, CR>(wrappedValue: @escaping (P0, P1, P2, P3, ((C0, C1) -> CR)) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, C0, C1, CR>(wrappedValue: @escaping (P0, P1, P2, P3, ((C0, C1) -> CR)?) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
     public init<T, P0, P1, P2, P3, P4, P5>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
@@ -605,118 +295,6 @@ extension JXInit {
 
 extension JXInit {
     public init<T, P0, P1, P2, P3, P4, C0, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, ((C0) -> CR)?) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, C0, C1, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, ((C0, C1) -> CR)) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, C0, C1, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, ((C0, C1) -> CR)?) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, P5, P6>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, P5, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, (() -> CR)) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, P5, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, (() -> CR)?) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, P5, C0, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, ((C0) -> CR)) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, P5, C0, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, ((C0) -> CR)?) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, P5, C0, C1, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1) -> CR)) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, P5, C0, C1, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1) -> CR)?) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, P7>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, (() -> CR)) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, (() -> CR)?) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, C0, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0) -> CR)) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, C0, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0) -> CR)?) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1) -> CR)) throws -> T) {
-        constructorBridge = ConstructorBridge(wrappedValue)
-    }
-}
-
-
-extension JXInit {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, CR>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1) -> CR)?) throws -> T) {
         constructorBridge = ConstructorBridge(wrappedValue)
     }
 }
@@ -780,20 +358,6 @@ extension JXFunc {
 
 
 extension JXFunc {
-    public init<T, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (((C0, C1) -> CR)?) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
     public init<T, P0, P1, R>(wrappedValue: @escaping (T) -> (P0, P1) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
@@ -830,20 +394,6 @@ extension JXFunc {
 
 extension JXFunc {
     public init<T, P0, C0, CR, R>(wrappedValue: @escaping (T) -> (P0, ((C0) -> CR)?) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (P0, ((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (P0, ((C0, C1) -> CR)?) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
 }
@@ -892,20 +442,6 @@ extension JXFunc {
 
 
 extension JXFunc {
-    public init<T, P0, P1, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, ((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, ((C0, C1) -> CR)?) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
     public init<T, P0, P1, P2, P3, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
@@ -942,20 +478,6 @@ extension JXFunc {
 
 extension JXFunc {
     public init<T, P0, P1, P2, C0, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, ((C0) -> CR)?) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, ((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, ((C0, C1) -> CR)?) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
 }
@@ -1004,20 +526,6 @@ extension JXFunc {
 
 
 extension JXFunc {
-    public init<T, P0, P1, P2, P3, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, ((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, ((C0, C1) -> CR)?) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
     public init<T, P0, P1, P2, P3, P4, P5, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
@@ -1054,132 +562,6 @@ extension JXFunc {
 
 extension JXFunc {
     public init<T, P0, P1, P2, P3, P4, C0, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, ((C0) -> CR)?) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, ((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, ((C0, C1) -> CR)?) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, U0, U1>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6) throws -> (U0, U1)) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, (() -> CR)) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, (() -> CR)?) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, C0, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, ((C0) -> CR)) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, C0, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, ((C0) -> CR)?) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, ((C0, C1) -> CR)?) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, P7, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) throws -> (U0, U1)) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, (() -> CR)) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, (() -> CR)?) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, C0, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0) -> CR)) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, C0, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0) -> CR)?) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
-extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, CR, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, ((C0, C1) -> CR)?) throws -> R) {
         functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
     }
 }
@@ -1242,20 +624,6 @@ extension JXStaticFunc {
 
 
 extension JXStaticFunc {
-    public init<C0, C1, CR, R>(wrappedValue: @escaping (((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<C0, C1, CR, R>(wrappedValue: @escaping (((C0, C1) -> CR)?) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
     public init<P0, P1, R>(wrappedValue: @escaping (P0, P1) throws -> R) {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
     }
@@ -1292,20 +660,6 @@ extension JXStaticFunc {
 
 extension JXStaticFunc {
     public init<P0, C0, CR, R>(wrappedValue: @escaping (P0, ((C0) -> CR)?) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, C0, C1, CR, R>(wrappedValue: @escaping (P0, ((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, C0, C1, CR, R>(wrappedValue: @escaping (P0, ((C0, C1) -> CR)?) throws -> R) {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
     }
 }
@@ -1354,20 +708,6 @@ extension JXStaticFunc {
 
 
 extension JXStaticFunc {
-    public init<P0, P1, C0, C1, CR, R>(wrappedValue: @escaping (P0, P1, ((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, C0, C1, CR, R>(wrappedValue: @escaping (P0, P1, ((C0, C1) -> CR)?) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
     public init<P0, P1, P2, P3, R>(wrappedValue: @escaping (P0, P1, P2, P3) throws -> R) {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
     }
@@ -1404,20 +744,6 @@ extension JXStaticFunc {
 
 extension JXStaticFunc {
     public init<P0, P1, P2, C0, CR, R>(wrappedValue: @escaping (P0, P1, P2, ((C0) -> CR)?) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, C0, C1, CR, R>(wrappedValue: @escaping (P0, P1, P2, ((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, C0, C1, CR, R>(wrappedValue: @escaping (P0, P1, P2, ((C0, C1) -> CR)?) throws -> R) {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
     }
 }
@@ -1466,20 +792,6 @@ extension JXStaticFunc {
 
 
 extension JXStaticFunc {
-    public init<P0, P1, P2, P3, C0, C1, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, ((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, C0, C1, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, ((C0, C1) -> CR)?) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
     public init<P0, P1, P2, P3, P4, P5, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5) throws -> R) {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
     }
@@ -1516,132 +828,6 @@ extension JXStaticFunc {
 
 extension JXStaticFunc {
     public init<P0, P1, P2, P3, P4, C0, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, ((C0) -> CR)?) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, C0, C1, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, ((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, C0, C1, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, ((C0, C1) -> CR)?) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, P6, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, P6, U0, U1>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6) throws -> (U0, U1)) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, (() -> CR)) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, (() -> CR)?) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, C0, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, ((C0) -> CR)) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, C0, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, ((C0) -> CR)?) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, C0, C1, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, C0, C1, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, ((C0, C1) -> CR)?) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, P6, P7, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) throws -> (U0, U1)) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, P6, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, (() -> CR)) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, P6, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, (() -> CR)?) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, P6, C0, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0) -> CR)) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, P6, C0, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0) -> CR)?) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, P6, C0, C1, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1) -> CR)) throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, P6, C0, C1, CR, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, ((C0, C1) -> CR)?) throws -> R) {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
     }
 }
@@ -1704,20 +890,6 @@ extension JXClassFunc {
 
 
 extension JXClassFunc {
-    public init<T, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, ((C0, C1) -> CR)) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, ((C0, C1) -> CR)?) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
     public init<T, P0, P1, R>(wrappedValue: @escaping (T.Type, P0, P1) throws -> R, _ type: T.Type) {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
@@ -1754,20 +926,6 @@ extension JXClassFunc {
 
 extension JXClassFunc {
     public init<T, P0, C0, CR, R>(wrappedValue: @escaping (T.Type, P0, ((C0) -> CR)?) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, P0, ((C0, C1) -> CR)) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, P0, ((C0, C1) -> CR)?) throws -> R, _ type: T.Type) {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
 }
@@ -1816,20 +974,6 @@ extension JXClassFunc {
 
 
 extension JXClassFunc {
-    public init<T, P0, P1, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, ((C0, C1) -> CR)) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, ((C0, C1) -> CR)?) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
     public init<T, P0, P1, P2, P3, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3) throws -> R, _ type: T.Type) {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
@@ -1866,20 +1010,6 @@ extension JXClassFunc {
 
 extension JXClassFunc {
     public init<T, P0, P1, P2, C0, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, ((C0) -> CR)?) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, ((C0, C1) -> CR)) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, ((C0, C1) -> CR)?) throws -> R, _ type: T.Type) {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
 }
@@ -1928,20 +1058,6 @@ extension JXClassFunc {
 
 
 extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1) -> CR)) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, ((C0, C1) -> CR)?) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
     public init<T, P0, P1, P2, P3, P4, P5, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5) throws -> R, _ type: T.Type) {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
@@ -1978,132 +1094,6 @@ extension JXClassFunc {
 
 extension JXClassFunc {
     public init<T, P0, P1, P2, P3, P4, C0, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0) -> CR)?) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1) -> CR)) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, ((C0, C1) -> CR)?) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, U0, U1>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6) throws -> (U0, U1), _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, (() -> CR)) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, (() -> CR)?) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, C0, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0) -> CR)) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, C0, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0) -> CR)?) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1) -> CR)) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, ((C0, C1) -> CR)?) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, P7, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, P7) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, P7) throws -> (U0, U1), _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, (() -> CR)) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, (() -> CR)?) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, C0, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0) -> CR)) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, C0, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0) -> CR)?) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1) -> CR)) throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, C0, C1, CR, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, ((C0, C1) -> CR)?) throws -> R, _ type: T.Type) {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
 }
@@ -2208,34 +1198,6 @@ extension JXClassFunc {
 }
 
 
- extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6) async throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
- extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, U0, U1>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6) async throws -> (U0, U1)) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
- extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, P7, R>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
- extension JXFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(wrappedValue: @escaping (T) -> (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> (U0, U1)) {
-        functionBridge = { FunctionBridge(name: $0, function: wrappedValue) }
-    }
-}
-
-
 extension JXStaticFunc {
     public init<R>(wrappedValue: @escaping () async throws -> R) {
         functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
@@ -2334,34 +1296,6 @@ extension JXStaticFunc {
 }
 
 
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, P6, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6) async throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, P6, U0, U1>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6) async throws -> (U0, U1)) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, P6, P7, R>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
-extension JXStaticFunc {
-    public init<P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(wrappedValue: @escaping (P0, P1, P2, P3, P4, P5, P6, P7) async throws -> (U0, U1)) {
-        functionBridge = { StaticFunctionBridge(name: $0, type: Any.self, function: wrappedValue) }
-    }
-}
-
-
 extension JXClassFunc {
     public init<T, R>(wrappedValue: @escaping (T.Type) async throws -> R, _ type: T.Type) {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
@@ -2455,34 +1389,6 @@ extension JXClassFunc {
 
 extension JXClassFunc {
     public init<T, P0, P1, P2, P3, P4, P5, U0, U1>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5) async throws -> (U0, U1), _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6) async throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, U0, U1>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6) async throws -> (U0, U1), _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, P7, R>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, P7) async throws -> R, _ type: T.Type) {
-        functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
-    }
-}
-
-
-extension JXClassFunc {
-    public init<T, P0, P1, P2, P3, P4, P5, P6, P7, U0, U1>(wrappedValue: @escaping (T.Type, P0, P1, P2, P3, P4, P5, P6, P7) async throws -> (U0, U1), _ type: T.Type) {
         functionBridge = { FunctionBridge(name: $0, classFunction: wrappedValue) }
     }
 }
