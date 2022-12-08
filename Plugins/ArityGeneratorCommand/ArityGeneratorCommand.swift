@@ -13,11 +13,11 @@ import System
 /// - Note: The location of your Command Line Tools must be set in Xcode->Settings->Locations
 @main struct ArityGeneratorCommand: CommandPlugin {
     func performCommand(context: PluginContext, arguments: [String]) async throws {
+#if canImport(Foundation) && canImport(System)
         if arguments.isEmpty {
             print(usage())
             return
         }
-#if canImport(Foundation) && canImport(System)
         if #available(macOS 13.0, *) {
             let (options, files, outputDir) = try processArguments(arguments)
             for file in files {
