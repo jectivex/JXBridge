@@ -273,7 +273,7 @@ s.callbackFunc(2, null);
             try context.eval("var obj = new jx.TestStruct(); obj.exceptionFunc(1);")
             XCTFail("Wrong number of arguments")
         } catch {
-            XCTAssertEqual("\(error)", "Error calling TestStruct.exceptionFunc: No registered function with that name and 1 parameters <<script: var obj = new jx.TestStruct(); obj.exceptionFunc(1); >>")
+            XCTAssertEqual("\(error)", "Error calling TestStruct.exceptionFunc: No registered function with that name expecting 1 parameters <<script: var obj = new jx.TestStruct(); obj.exceptionFunc(1); >>")
         }
         
         do {
