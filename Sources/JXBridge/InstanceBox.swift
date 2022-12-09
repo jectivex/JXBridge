@@ -35,8 +35,9 @@ final class InstanceBox: NativeBox {
     }
 
     func call(function: JXValue, arguments args: JXValue) throws -> JXValue {
-        let functionBridge = try bridge.function(for: function.string, superclassRegistry: registry)
-        let (instance, ret) = try functionBridge.call(for: instance, with: args.array, in: function.context)
+        let argsArray = try args.array
+        let functionBridge = try bridge.function(for: function.string, parameterCount: argsArray.count, superclassRegistry: registry)
+        let (instance, ret) = try functionBridge.call(for: instance, with: argsArray, in: function.context)
         self.instance = instance
         return ret
     }

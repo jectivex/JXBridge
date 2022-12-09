@@ -56,8 +56,7 @@ final class ObjectiveCBuilder {
 
     private func addMethod(_ method: JXObjectiveCMethod) {
         let functionName = functionName(forSelectorName: method.name)
-        let functionBridge = JXBridge.FunctionBridge(owningTypeName: String(describing: bridge.type), name: functionName) { obj, args, context in
-            try validate(arguments: args, count: method.parameterCount)
+        let functionBridge = JXBridge.FunctionBridge(owningTypeName: String(describing: bridge.type), name: functionName, parameterCount: method.parameterCount) { obj, args, context in
             var convertedArgs: [AnyObject] = []
             for i in 0 ..< args.count {
                 let convertedArg = try conveyToObjectiveC(args[i], toBoxed: method.parameterTypes[i])
@@ -91,8 +90,7 @@ final class ObjectiveCBuilder {
 
     private func addClassMethod(_ method: JXObjectiveCMethod) {
         let functionName = functionName(forSelectorName: method.name)
-        let functionBridge = JXBridge.FunctionBridge(owningTypeName: String(describing: bridge.type), name: functionName) { obj, args, context in
-            try validate(arguments: args, count: method.parameterCount)
+        let functionBridge = JXBridge.FunctionBridge(owningTypeName: String(describing: bridge.type), name: functionName, parameterCount: method.parameterCount) { obj, args, context in
             var convertedArgs: [AnyObject] = []
             for i in 0 ..< args.count {
                 let convertedArg = try conveyToObjectiveC(args[i], toBoxed: method.parameterTypes[i])

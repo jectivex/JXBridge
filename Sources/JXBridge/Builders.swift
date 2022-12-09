@@ -196,9 +196,8 @@ extension JXBridge.FunctionBridge {
     
     // { $0.xxx(p0: $1...) }
     public init<T, ${PARAM_TYPES_LIST}${PARAM_COMMA}${RETURN_TYPES}>(name: String, function: @escaping (T${PARAM_COMMA}${PARAM_LIST}) throws -> ${RETURN}) {
-        self = JXBridge.FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+        self = JXBridge.FunctionBridge(owningTypeName: String(describing: T.self), name: name, parameterCount: ${PARAM_COUNT}) { obj, args, context in
             let target = obj as! T
-            try validate(arguments: args, count: ${PARAM_COUNT})
             let ${PARAM_TUPLE} = try conveyParameters(args${PARAM_COMMA}${PARAM_CONVEY_TYPE_LIST})
             let r = try function(target${PARAM_COMMA}${PARAM_TUPLE_LIST})
             return (target, try context.convey(${RETURN_CONVEY}))
@@ -207,9 +206,8 @@ extension JXBridge.FunctionBridge {
 
     // { $0.xxx(p0: $1...) }
     public init<T, ${PARAM_TYPES_LIST}${PARAM_COMMA}${RETURN_TYPES}>(name: String, mutatingFunction: @escaping (inout T${PARAM_COMMA}${PARAM_LIST}) throws -> ${RETURN}) {
-        self = JXBridge.FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+        self = JXBridge.FunctionBridge(owningTypeName: String(describing: T.self), name: name, parameterCount: ${PARAM_COUNT}) { obj, args, context in
             var target = obj as! T
-            try validate(arguments: args, count: ${PARAM_COUNT})
             let ${PARAM_TUPLE} = try conveyParameters(args${PARAM_COMMA}${PARAM_CONVEY_TYPE_LIST})
             let r = try mutatingFunction(&target${PARAM_COMMA}${PARAM_TUPLE_LIST})
             return (target, try context.convey(${RETURN_CONVEY}))
@@ -218,9 +216,8 @@ extension JXBridge.FunctionBridge {
     
     // { $0.xxx(p0: $1...) }
     public init<T, ${PARAM_TYPES_LIST}${PARAM_COMMA}${RETURN_TYPES}>(name: String, classFunction: @escaping (T.Type${PARAM_COMMA}${PARAM_LIST}) throws -> ${RETURN}) {
-        self = JXBridge.FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+        self = JXBridge.FunctionBridge(owningTypeName: String(describing: T.self), name: name, parameterCount: ${PARAM_COUNT}) { obj, args, context in
             let target = obj as! T.Type
-            try validate(arguments: args, count: ${PARAM_COUNT})
             let ${PARAM_TUPLE} = try conveyParameters(args${PARAM_COMMA}${PARAM_CONVEY_TYPE_LIST})
             let r = try classFunction(target${PARAM_COMMA}${PARAM_TUPLE_LIST})
             return (target, try context.convey(${RETURN_CONVEY}))
@@ -241,9 +238,8 @@ extension JXBridge.FunctionBridge {
 
     // { await $0.xxx(p0: $1...) }
     init<T, ${PARAM_TYPES_LIST}${PARAM_COMMA}${RETURN_TYPES}>(name: String, function: @escaping (T${PARAM_COMMA}${PARAM_LIST}) async throws -> ${RETURN}) {
-        self = JXBridge.FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+        self = JXBridge.FunctionBridge(owningTypeName: String(describing: T.self), name: name, parameterCount: ${PARAM_COUNT}) { obj, args, context in
             let target = obj as! T
-            try validate(arguments: args, count: ${PARAM_COUNT})
             let ${PARAM_TUPLE} = try conveyParameters(args${PARAM_COMMA}${PARAM_CONVEY_TYPE_LIST})
             let promise = try JXValue.createPromise(in: context)
             Task {
@@ -261,9 +257,8 @@ extension JXBridge.FunctionBridge {
 
     // { await $0.xxx(p0: $1...) }
     init<T, ${PARAM_TYPES_LIST}${PARAM_COMMA}${RETURN_TYPES}>(name: String, classFunction: @escaping (T.Type${PARAM_COMMA}${PARAM_LIST}) async throws -> ${RETURN}) {
-        self = JXBridge.FunctionBridge(owningTypeName: String(describing: T.self), name: name) { obj, args, context in
+        self = JXBridge.FunctionBridge(owningTypeName: String(describing: T.self), name: name, parameterCount: ${PARAM_COUNT}) { obj, args, context in
             let target = obj as! T.Type
-            try validate(arguments: args, count: ${PARAM_COUNT})
             let ${PARAM_TUPLE} = try conveyParameters(args${PARAM_COMMA}${PARAM_CONVEY_TYPE_LIST})
             let promise = try JXValue.createPromise(in: context)
             Task {
@@ -285,8 +280,7 @@ ARITY*/
 extension JXBridge.StaticFunctionBridge {
     // { Type.xxx(p0: $0...) }
     init<${PARAM_TYPES_LIST}${PARAM_COMMA}${RETURN_TYPES}>(name: String, type: Any.Type, function: @escaping (${PARAM_LIST}) throws -> ${RETURN}) {
-        self = JXBridge.StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: ${PARAM_COUNT})
+        self = JXBridge.StaticFunctionBridge(owningTypeName: String(describing: type), name: name, parameterCount: ${PARAM_COUNT}) { args, context in
             let ${PARAM_TUPLE} = try conveyParameters(args${PARAM_COMMA}${PARAM_CONVEY_TYPE_LIST})
             let r = try function(${PARAM_TUPLE_LIST})
             return try context.convey(${RETURN_CONVEY})
@@ -299,8 +293,7 @@ ARITY*/
 extension JXBridge.StaticFunctionBridge {
     // { await Type.xxx(p0: $0...) }
     init<${PARAM_TYPES_LIST}${PARAM_COMMA}${RETURN_TYPES}>(name: String, type: Any.Type, function: @escaping (${PARAM_LIST}) async throws -> ${RETURN}) {
-        self = JXBridge.StaticFunctionBridge(owningTypeName: String(describing: type), name: name) { args, context in
-            try validate(arguments: args, count: ${PARAM_COUNT})
+        self = JXBridge.StaticFunctionBridge(owningTypeName: String(describing: type), name: name, parameterCount: ${PARAM_COUNT}) { args, context in
             let ${PARAM_TUPLE} = try conveyParameters(args${PARAM_COMMA}${PARAM_CONVEY_TYPE_LIST})
             let promise = try JXValue.createPromise(in: context)
             Task {
