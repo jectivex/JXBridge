@@ -39,8 +39,9 @@ new Proxy({ _jxNamespace: '\(namespace)' }, {
         var extendsClause = ""
         if let superclassBridge = self.superclassBridge {
             extendsClause = " extends \(superclassBridge.qualifiedTypeName)"
+        } else if let jsSuperclassName = bridge.jsSuperclassName {
+            extendsClause = " extends \(jsSuperclassName)"
         }
-        
         let classJS = """
 \(bridge.qualifiedTypeName) = class\(extendsClause) {
     static _jxStaticNative = _jxCreateStaticNative('\(bridge.typeName)', '\(bridge.namespace)');
@@ -105,6 +106,8 @@ new Proxy({ _jxNamespace: '\(namespace)' }, {
             // Call super with our special token arg telling it we'll inject _jxNative ourselves,
             // so that we can create it with our subclass type name and namespace
             superCall = "super('_jxNative');"
+        } else if bridge.jsSuperclassName != nil {
+            superCall = "super();"
         }
         return """
     constructor(...args) {

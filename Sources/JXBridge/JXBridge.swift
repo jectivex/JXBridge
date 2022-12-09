@@ -56,6 +56,9 @@ public struct JXBridge {
         return registry.bridge(for: superclass)
     }
     
+    /// To extend a JavaScript class, set the fully qualified class name.
+    public var jsSuperclassName: String?
+    
     /// Bridged constructors.
     var constructors: [ConstructorBridge] = []
     
