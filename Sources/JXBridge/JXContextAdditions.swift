@@ -113,23 +113,27 @@ final class JXBridgeContextSPI {
         }
         try defineNamespace(.default)
         
-        // jx.import(namespace.symbol) or jx.import(namespace)
+        // jx.import(namespace.symbol[, 'alias']) or jx.import(namespace[, 'alias'])
         let importFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
                 throw JXError.contextDeallocated()
             }
-            for arg in args {
-                let typeName = try arg[JSCodeGenerator.typeNamePropertyName]
-                if typeName.isUndefined {
-                    let namespace = try arg[JSCodeGenerator.namespacePropertyName]
-                    guard !namespace.isUndefined else {
-                        throw JXError(message: "Import error: '\(try arg.string)' is not a known type or namespace")
-                    }
-                    try self.importNamespace(JXNamespace(namespace.string), value: arg)
-                } else {
-                    if !(try context.global.hasProperty(typeName)) {
-                        try context.global.setProperty(typeName.string, arg)
-                    }
+            guard args.count == 1 || args.count == 2 else {
+                throw JXError(message: "Import error: expected a type or module name and optional alias. Received \(args.count) args")
+            }
+            let object = args[0]
+            let alias = try args.count > 1 ? args[1].string : nil
+            let typeName = try object[JSCodeGenerator.typeNamePropertyName]
+            if typeName.isUndefined {
+                let namespace = try object[JSCodeGenerator.namespacePropertyName]
+                guard !namespace.isUndefined else {
+                    throw JXError(message: "Import error: '\(try object.string)' is not a known type or namespace")
+                }
+                try self.importNamespace(JXNamespace(namespace.string), as: alias, value: object)
+            } else {
+                let symbol = try alias ?? typeName.string
+                if !context.global.hasProperty(symbol) {
+                    try context.global.setProperty(symbol, object)
                 }
             }
             return context.undefined()
@@ -230,8 +234,14 @@ final class JXBridgeContextSPI {
     }
     private var definedTypeNames: Set<String> = []
     
-    private func importNamespace(_ namespace: JXNamespace, value: JXValue) throws {
+    private func importNamespace(_ namespace: JXNamespace, as alias: String?, value: JXValue) throws {
         guard let context else {
+            return
+        }
+        if let alias {
+            if !context.global.hasProperty(alias) {
+                try context.global.setProperty(alias, context.global[namespace])
+            }
             return
         }
         guard namespace != .none && namespace != .default else {
