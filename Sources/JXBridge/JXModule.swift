@@ -11,19 +11,19 @@ public protocol JXModule {
     /// Use this function to prepare the context for use with this module. It may be used to add values, `integrate` functionality, etc.
     func initialize(in context: JXContext) throws
     
-    /// This function is called to lazily define symbols accessed on this namespace. Use it to add values, register bridges, etc.
+    /// This function is called to lazily define symbols accessed on this namespace. Use it to add values, register bridges, etc. Defaults to `false` as we assume that simple modules will use `register` and `initialize` to eagerly define all symbols.
     ///
     /// - Returns `true` if the symbol was added or a bridge was registered, `false` otherwise.
     func define(symbol: String, namespace: JXNamespace, in context: JXContext) throws -> Bool
     
-    /// Prepare for the given conveyed or returned  instance, typically by registering a type bridge.
+    /// Prepare for the given conveyed or returned  instance, typically by registering a type bridge. Defaults to `false` as we assume that simple modules will use `register` and `initialize` to eagerly define all symbols.
     ///
     /// - Returns `true` if the instance was handled, `false` otherwise.
     func define(for instance: Any, in context: JXContext) throws -> Bool
     
     /// User has requested that this namespace define all symbols and bridges for use.
     ///
-    /// - Returns `true` if this module supports defining all symbols, `false` otherwise. Defaults to `true`.
+    /// - Returns `true` if this module supports defining all symbols, `false` otherwise. Defaults to `true` as we assume that simple modules will use `register` and `initialize` to eagerly define all symbols.
     func defineAll(namespace: JXNamespace, in context: JXContext) throws -> Bool
 }
 
