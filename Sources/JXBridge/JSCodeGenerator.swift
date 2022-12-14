@@ -20,7 +20,7 @@ struct JSCodeGenerator {
     /// Return a new namespace that performs a callback on any attempt to access its classes, giving us a chance to lazily define the requested class.
     static func newNamespaceJSProxy(_ namespace: JXNamespace) -> String {
         return """
-new Proxy({ _jxNamespace: '\(namespace)' }, {
+new Proxy({_jxNamespace: '\(namespace)'}, {
     get(target, property) {
         if (target[property] === undefined) {
             _jxDefine(property, '\(namespace)');
