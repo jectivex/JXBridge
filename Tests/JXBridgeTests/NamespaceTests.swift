@@ -3,20 +3,48 @@ import JXKit
 import XCTest
 
 final class NamespaceTests: XCTestCase {
-    func testNonDefaultNamespace() throws {
+    func testNoneNamespace() throws {
+        let context = JXContext()
+        XCTAssertTrue(try context.global.hasNamespace(.none))
+        XCTAssertFalse(try context.global[JXNamespace.none].isUndefined)
+        XCTAssertFalse(try context.global.addNamespace(JXNamespace.none).isUndefined)
+        XCTAssertFalse(try context.global.deleteNamespace(.none))
+    }
+    
+    func testSingleTokenNamespace() throws {
+        try namespaceTest("test")
+    }
+    
+    func testMultipleTokenNamespace() throws {
+        try namespaceTest("com.domain.test")
+    }
+    
+    private func namespaceTest(_ namespace: JXNamespace) throws {
+        let context = JXContext()
+        XCTAssertFalse(try context.global.hasNamespace(namespace))
+        XCTAssertTrue(try context.global[namespace].isUndefined)
+        XCTAssertFalse(try context.global.deleteNamespace(namespace))
+        
+        XCTAssertFalse(try context.global.addNamespace(namespace).isUndefined)
+        XCTAssertTrue(try context.global.hasNamespace(namespace))
+        XCTAssertFalse(try context.global[namespace].isUndefined)
+        XCTAssertTrue(try context.global.deleteNamespace(namespace))
+    }
+    
+    func testNonDefaultNamespaceBridge() throws {
         let context = JXContext()
         try context.registry.register {
-            JXBridgeBuilder(type: TestStruct.self, namespace: "test")
+            JXBridgeBuilder(type: TestStruct.self, namespace: "test.bridge")
                 .constructor { TestStruct.init }
                 .var.intVar { \.intVar }
                 .bridge
         }
 
-        let result = try context.eval("const obj = new test.TestStruct(); obj.intVar;")
+        let result = try context.eval("const obj = new test.bridge.TestStruct(); obj.intVar;")
         XCTAssertEqual(try result.int, 1)
     }
     
-    func testNoneNamespace() throws {
+    func testNoneNamespaceBridge() throws {
         let context = JXContext()
         try context.registry.register {
             JXBridgeBuilder(type: TestStruct.self, namespace: .none)

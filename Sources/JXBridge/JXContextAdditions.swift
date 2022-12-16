@@ -103,11 +103,10 @@ final class JXBridgeContextSPI {
     }
     
     private func defineNamespace(_ namespace: JXNamespace) throws {
-        //~~~ tokenize into '.' segments and create objects
-        guard namespace != .none, let context, !context.global.hasProperty(namespace.value) else {
+        guard let context, namespace != .none else {
             return
         }
-        try context.eval(JSCodeGenerator.defineNamespaceJSProxy(namespace))
+        try context.global.addNamespace(namespace)
     }
     
     private func defineClass(for bridge: JXBridge) throws {

@@ -73,7 +73,7 @@ class JSModuleManager {
         // Cache again after running the body in case it resets module.exports = x
         // Note that we use IIFEs to give private scopes and namespaces to the module code
         return """
-return (function() {
+(function() {
     const module = { exports: {} };
     const exports = module.exports;
     \(cacheExports)
