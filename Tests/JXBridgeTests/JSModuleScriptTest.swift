@@ -8,18 +8,17 @@ final class JSModuleScriptTests: XCTestCase {
     func testModuleScriptString() throws {
         let context = JXContext()
         try context.prepareBridge()
-        let spi = context.spi as! JXBridgeContextSPI
+        let exports = try context.evalModule(moduleJS)
         
-        let exports = try spi.moduleManager.evalModule(moduleJS)
-        
-        XCTAssertFalse(context.global.hasProperty("foo"))
+        XCTAssertFalse(context.global.hasProperty("module"))
+        XCTAssertFalse(context.global.hasProperty("name"))
         XCTAssertFalse(context.global.hasProperty("getNameFunction"))
         XCTAssertFalse(context.global.hasProperty("getName"))
         XCTAssertFalse(context.global.hasProperty("NameTypeClass"))
         XCTAssertFalse(context.global.hasProperty("NameType"))
         XCTAssertFalse(context.global.hasProperty("privateName"))
         
-        XCTAssertFalse(exports.hasProperty("foo"))
+        XCTAssertFalse(exports.hasProperty("name"))
         XCTAssertFalse(exports.hasProperty("getNameFunction"))
         XCTAssertTrue(exports.hasProperty("getName"))
         let name = try exports["getName"].call()

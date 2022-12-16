@@ -26,30 +26,36 @@ class JSModuleManager {
         return try context.eval(js, this: this)
     }
     
-    func evalModule(resource: String) throws -> JXValue {
+    func evalModule(resource: String, cache: Bool) throws -> JXValue {
         guard let context else {
             throw JXError.contextDeallocated()
         }
+        
         let key = Self.key(for: resource)
-        if var module = moduleCache[key] {
-            if let referencedByKey = evalKeyStack.last, module.referencedByKeys.insert(referencedByKey).inserted {
-                moduleCache[key] = module
+        if cache {
+            if var module = moduleCache[key] {
+                if let referencedByKey = evalKeyStack.last, module.referencedByKeys.insert(referencedByKey).inserted {
+                    moduleCache[key] = module
+                }
+                return try module.exports(in: context)
             }
-            return try module.exports(in: context)
         }
+        
         guard let js = try loader.loadScript(resource: resource) else {
             throw JXError.resourceNotFound(resource)
         }
         
-        // Create a module reference before evaluating to avoid infinite recursion in the case of circular dependencies
-        var module = JSModule(resource: resource, key: key)
-        if let referencedByKey = evalKeyStack.last {
-            module.referencedByKeys.insert(referencedByKey)
+        if cache {
+            // Create a module reference before evaluating to avoid infinite recursion in the case of circular dependencies
+            var module = JSModule(resource: resource, key: key)
+            if let referencedByKey = evalKeyStack.last {
+                module.referencedByKeys.insert(referencedByKey)
+            }
+            moduleCache[resource] = module
         }
-        moduleCache[resource] = module
         
-        evalKeyStack.append(key)
-        defer { evalKeyStack.removeLast() }
+        if cache { evalKeyStack.append(key) }
+        defer { if cache { evalKeyStack.removeLast() } }
         let moduleJS = Self.toModuleJS(js, key: key)
         return try context.eval(moduleJS)
     }
@@ -65,7 +71,7 @@ class JSModuleManager {
     private static func toModuleJS(_ js: String, key: String? = nil) -> String {
         let cacheExports: String
         if let key {
-            cacheExports = "\(JSCodeGenerator.moduleExportsCacheObjectName).\(key) = module.exports;"
+            cacheExports = "\(JSCodeGenerator.moduleExportsCacheObject).\(key) = module.exports;"
         } else {
             cacheExports = ""
         }
@@ -80,6 +86,9 @@ class JSModuleManager {
     (function() {
         \(js)
     })()
+    if (module.exports.import === undefined) {
+        module.exports.import = () => { \(JSCodeGenerator.importFunction)(this); }
+    }
     \(cacheExports)
     return module.exports;
 })();
@@ -102,6 +111,6 @@ private struct JSModule {
     var referencedByKeys = Set<String>()
     
     func exports(in context: JXContext) throws -> JXValue {
-        return try context.global[JSCodeGenerator.moduleExportsCacheObjectName][key]
+        return try context.global[JSCodeGenerator.moduleExportsCacheObject][key]
     }
 }

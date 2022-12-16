@@ -10,6 +10,21 @@ extension JXContext {
         return try bridgeSPI.moduleManager.eval(resource: resource, this: this)
     }
     
+    /// Evaluate the JavaScript contained in the given resource with module semantics, returning its exports.
+    ///
+    /// - Parameters:
+    ///   - cache: Whether to cache the module exports for future `eval` and `require` calls
+    public func evalModule(resource: String, cache: Bool = false) throws -> JXValue {
+        try prepareBridge()
+        return try bridgeSPI.moduleManager.evalModule(resource: resource, cache: false)
+    }
+    
+    /// Evaluate the given JavaScript with module semantics, returning its exports.
+    public func evalModule(_ script: String) throws -> JXValue {
+        try prepareBridge()
+        return try bridgeSPI.moduleManager.evalModule(script)
+    }
+    
     /// Prepare this context for use with JavaScript and native bridging.
     ///
     /// - Note: Bridge preparation typically happens implicitly when you access the `registry` property. Use this function to prepare explicitly and possibly handle any errors that occur.
@@ -123,7 +138,7 @@ final class JXBridgeContextSPI {
         let exports: JXValue
         switch script.source {
         case .resource(let resource):
-            exports = try moduleManager.evalModule(resource: resource)
+            exports = try moduleManager.evalModule(resource: resource, cache: false)
         case .js(let js):
             exports = try moduleManager.evalModule(js)
         }
@@ -161,38 +176,28 @@ final class JXBridgeContextSPI {
             guard args.count == 1 && args[0].isString else {
                 throw JXError(message: "'require' expects a single string argument")
             }
-            return try self.moduleManager.evalModule(resource: args[0].string)
+            return try self.moduleManager.evalModule(resource: args[0].string, cache: true)
         }
         try context.global.setProperty("require", require)
-        try context.global.setProperty(JSCodeGenerator.moduleExportsCacheObjectName, context.object())
+        try context.global.setProperty(JSCodeGenerator.moduleExportsCacheObject, context.object())
         
-        //~~~
-        // jx.import(namespace.symbol[, 'alias']) or jx.import(namespace[, 'alias'])
         let importFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
                 throw JXError.contextDeallocated()
             }
-            guard args.count == 1 || args.count == 2 else {
-                throw JXError(message: "Import error: expected a type or module name and optional alias. Received \(args.count) args")
+            guard args.count == 1 else {
+                throw JXError.internalError("import")
             }
             let object = args[0]
-            let alias = try args.count > 1 ? args[1].string : nil
-            let typeName = try object[JSCodeGenerator.typeNamePropertyName]
-            if typeName.isUndefined {
-                let namespace = try object[JSCodeGenerator.namespacePropertyName]
-                guard !namespace.isUndefined else {
-                    throw JXError(message: "Import error: '\(try object.string)' is not a known type or namespace")
-                }
-                try self.importNamespace(JXNamespace(namespace.string), as: alias, value: object)
+            let namespace = try object[JSCodeGenerator.namespaceProperty]
+            if namespace.isUndefined {
+                try self.importProperties(of: object)
             } else {
-                let symbol = try alias ?? typeName.string
-                if !context.global.hasProperty(symbol) {
-                    try context.global.setProperty(symbol, object)
-                }
+                try self.importNamespace(JXNamespace(namespace.string), value: object)
             }
-            return context.undefined()
+            return object
         }
-        try context.global[JXNamespace.default.value].setProperty("import", importFunction)
+        try context.global.setProperty(JSCodeGenerator.importFunction, importFunction)
         
         // Define a symbol accessed through a namespace
         let defineFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
@@ -211,7 +216,7 @@ final class JXBridgeContextSPI {
             }
             return context.undefined()
         }
-        try context.global.setProperty(JSCodeGenerator.defineFunctionName, defineFunction)
+        try context.global.setProperty(JSCodeGenerator.defineFunction, defineFunction)
         
         // Create a native instance box
         let createNativeFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
@@ -226,7 +231,7 @@ final class JXBridgeContextSPI {
             let object = context.object(peer: instanceBox)
             return object
         }
-        try context.global.setProperty(JSCodeGenerator.createNativeFunctionName, createNativeFunction)
+        try context.global.setProperty(JSCodeGenerator.createNativeFunction, createNativeFunction)
 
         // Create a native static box
         let createStaticNativeFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
@@ -241,7 +246,7 @@ final class JXBridgeContextSPI {
             let object = context.object(peer: staticBox)
             return object
         }
-        try context.global.setProperty(JSCodeGenerator.createStaticNativeFunctionName, createStaticNativeFunction)
+        try context.global.setProperty(JSCodeGenerator.createStaticNativeFunction, createStaticNativeFunction)
 
         // Get, set, call native properties and methods
         let getPropertyFunction = JXValue(newFunctionIn: context) { context, this, args in
@@ -251,7 +256,7 @@ final class JXBridgeContextSPI {
             }
             return try nativeBox.get(property: args[1])
         }
-        try context.global.setProperty(JSCodeGenerator.getPropertyFunctionName, getPropertyFunction)
+        try context.global.setProperty(JSCodeGenerator.getPropertyFunction, getPropertyFunction)
 
         let setPropertyFunction = JXValue(newFunctionIn: context) { context, this, args in
             // Instance, property name, value
@@ -261,7 +266,7 @@ final class JXBridgeContextSPI {
             try nativeBox.set(property: args[1], value: args[2])
             return context.undefined()
         }
-        try context.global.setProperty(JSCodeGenerator.setPropertyFunctionName, setPropertyFunction)
+        try context.global.setProperty(JSCodeGenerator.setPropertyFunction, setPropertyFunction)
 
         let callFunction = JXValue(newFunctionIn: context) { context, this, args in
             // Instance, function name, args array
@@ -270,7 +275,7 @@ final class JXBridgeContextSPI {
             }
             return try nativeBox.call(function: args[1], arguments: args[2])
         }
-        try context.global.setProperty(JSCodeGenerator.callFunctionName, callFunction)
+        try context.global.setProperty(JSCodeGenerator.callFunction, callFunction)
     }
 
     private func defineClass(for bridge: JXBridge, in context: JXContext) throws {
@@ -288,26 +293,19 @@ final class JXBridgeContextSPI {
     }
     private var definedTypeNames: Set<String> = []
     
-    private func importNamespace(_ namespace: JXNamespace, as alias: String?, value: JXValue) throws {
+    private func importNamespace(_ namespace: JXNamespace, value: JXValue) throws {
         guard let context else {
             return
         }
-        if let alias {
-            if !context.global.hasProperty(alias) {
-                try context.global.setProperty(alias, context.global[namespace])
-            }
-            return
-        }
         guard namespace != .none && namespace != .default else {
-            throw JXError(message: "Namespace '\(namespace)' does not support importing all symbols. Import specific symbols")
+            throw JXError(message: "Namespace '\(namespace)' does not support import()")
         }
-        guard let module = context.registry.module(for: namespace) else {
-            throw JXError(message: "Module '\(namespace)' not found in registry")
+        if let module = context.registry.module(for: namespace) {
+            guard try module.defineAll(namespace: namespace, in: context) else {
+                throw JXError(message: "Module for namespace '\(namespace)' does not support import()")
+            }
         }
-        guard try module.defineAll(namespace: namespace, in: context) else {
-            throw JXError(message: "Module for namespace '\(namespace)' does not support importing all symbols. Import specific symbols")
-        }
-
+        
         // Now that all namespace symbols are defined, move them into the global namespace.
         // First define all registered types
         for bridge in context.registry.bridges(in: namespace) {
@@ -315,8 +313,18 @@ final class JXBridgeContextSPI {
                 try defineClass(for: bridge, in: context)
             }
         }
-        // Now move all namespace properties to global
-        for entry in try context.global[namespace].dictionary {
+        try importProperties(of: value)
+    }
+    
+    private func importProperties(of value: JXValue) throws {
+        guard let context else {
+            return
+        }
+        for entry in try value.dictionary {
+            // Don't import the namespace name (if present) or the import function itself
+            guard entry.key != JSCodeGenerator.namespaceProperty && entry.key != "import" else {
+                continue
+            }
             if !context.global.hasProperty(entry.key) {
                 try context.global.setProperty(entry.key, entry.value)
             }
@@ -377,10 +385,10 @@ extension JXBridgeContextSPI: JXContextSPI {
         }
 
         // Construct with a special argument to avoid creating a new native instance on construction, then inject our value instance
-        let obj = try context.new(bridge.qualifiedTypeName, withArguments: [JSCodeGenerator.nativePropertyName])
+        let obj = try context.new(bridge.qualifiedTypeName, withArguments: [JSCodeGenerator.nativeProperty])
         let instanceBox = InstanceBox(value, bridge: bridge, registry: registry)
         let nativeBox = context.object(peer: instanceBox)
-        try obj.setProperty(JSCodeGenerator.nativePropertyName, nativeBox)
+        try obj.setProperty(JSCodeGenerator.nativeProperty, nativeBox)
         return obj
     }
 

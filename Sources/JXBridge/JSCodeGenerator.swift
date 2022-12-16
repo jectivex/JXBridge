@@ -1,27 +1,21 @@
 /// Generates JavaScript code.
 struct JSCodeGenerator {
-    static let typeNamePropertyName = "_jxTypeName"
-    static let namespacePropertyName = "_jxNamespace"
-    static let defineFunctionName = "_jxDefine"
-    static let createNativeFunctionName = "_jxCreateNative"
-    static let createStaticNativeFunctionName = "_jxCreateStaticNative"
-    static let nativePropertyName = "_jxNative"
-    static let getPropertyFunctionName = "_jxGet"
-    static let setPropertyFunctionName = "_jxSet"
-    static let callFunctionName = "_jxCall"
-    static let moduleExportsCacheObjectName = "_jxModuleExportsCache"
-    
-    /// Define a var with a value of the given namespace.
-    static func defineNamespaceJSProxy(_ namespace: JXNamespace) -> String {
-        let js = "var \(namespace) = \(newNamespaceJSProxy(namespace))"
-        //print(js)
-        return js
-    }
+    static let typeNameProperty = "_jxTypeName"
+    static let namespaceProperty = "_jxNamespace"
+    static let defineFunction = "_jxDefine"
+    static let createNativeFunction = "_jxCreateNative"
+    static let createStaticNativeFunction = "_jxCreateStaticNative"
+    static let nativeProperty = "_jxNative"
+    static let getPropertyFunction = "_jxGet"
+    static let setPropertyFunction = "_jxSet"
+    static let callFunction = "_jxCall"
+    static let importFunction = "_jxImport"
+    static let moduleExportsCacheObject = "_jxModuleExportsCache"
     
     /// Return a new namespace that performs a callback on any attempt to access its classes, giving us a chance to lazily define the requested class.
     static func newNamespaceJSProxy(_ namespace: JXNamespace) -> String {
         return """
-new Proxy({_jxNamespace: '\(namespace)'}, {
+new Proxy({ _jxNamespace: '\(namespace)', import() { _jxImport(this); } }, {
     get(target, property) {
         if (target[property] === undefined) {
             _jxDefine(property, '\(namespace)');

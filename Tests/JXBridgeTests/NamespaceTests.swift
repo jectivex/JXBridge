@@ -62,31 +62,23 @@ final class NamespaceTests: XCTestCase {
         try context.registry.registerBridge(for: TestStruct.self)
         try context.registry.registerBridge(for: TestStruct2.self)
 
-        let result = try context.eval("jx.import(test.TestStruct); jx.import(test.TestStruct2); const obj = new TestStruct(); const obj2 = new TestStruct2(); obj2.stringVar + obj.intVar;")
+        let result = try context.eval("test.import(); const obj = new TestStruct(); const obj2 = new TestStruct2(); obj2.stringVar + obj.intVar;")
         XCTAssertEqual(try result.string, "a1")
     }
     
-    func testImportAlias() throws {
+    func testAlias() throws {
         let context = JXContext()
         try context.registry.register(TestModule())
 
-        let result = try context.eval("jx.import(test.TestStruct, 'TS'); jx.import(test.TestStruct2, 'TS2'); const obj = new TS(); const obj2 = new TS2(); obj2.stringVar + obj.intVar;")
+        let result = try context.eval("const { TestStruct: TS, TestStruct2: TS2 } = test; const obj = new TS(); const obj2 = new TS2(); obj2.stringVar + obj.intVar;")
         XCTAssertEqual(try result.string, "a1")
     }
     
-    func testImportModule() throws {
+    func testModuleAlias() throws {
         let context = JXContext()
         try context.registry.register(TestModule())
 
-        let result = try context.eval("jx.import(test); const obj = new TestStruct(); const obj2 = new TestStruct2(); obj2.stringVar + obj.intVar + testFunc();")
-        XCTAssertEqual(try result.string, "a1testFunc")
-    }
-    
-    func testImportModuleAlias() throws {
-        let context = JXContext()
-        try context.registry.register(TestModule())
-
-        let result = try context.eval("jx.import(test, 't'); const obj = new t.TestStruct(); const obj2 = new t.TestStruct2(); obj2.stringVar + obj.intVar + t.testFunc();")
+        let result = try context.eval("const t = test; const obj = new t.TestStruct(); const obj2 = new t.TestStruct2(); obj2.stringVar + obj.intVar + t.testFunc();")
         XCTAssertEqual(try result.string, "a1testFunc")
     }
 }

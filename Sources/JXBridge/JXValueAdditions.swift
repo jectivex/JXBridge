@@ -4,10 +4,10 @@ extension JXValue {
     /// Return any bridged instance represented by this value.
     public var bridged: Any? {
         get throws {
-            guard hasProperty(JSCodeGenerator.nativePropertyName) else {
+            guard hasProperty(JSCodeGenerator.nativeProperty) else {
                 return nil
             }
-            let nativeProperty = try self[JSCodeGenerator.nativePropertyName]
+            let nativeProperty = try self[JSCodeGenerator.nativeProperty]
             guard let instanceBox = nativeProperty.peer as? InstanceBox else {
                 return nil
             }
