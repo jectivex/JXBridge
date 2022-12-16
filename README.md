@@ -4,7 +4,7 @@
 [![Swift5 compatible][Swift5Badge]][Swift5Link] 
 ![Platform][SwiftPlatforms]
 
-Bridge ObjectiveC and Swift classes and structs to JavaScript using `JXKit`.
+Bridge ObjectiveC and Swift classes and structs with JavaScript using `JXKit`.
 
 ## API
 

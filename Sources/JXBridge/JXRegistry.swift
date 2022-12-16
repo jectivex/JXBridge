@@ -8,6 +8,7 @@ public final class JXRegistry {
     private var bridgesByGivenTypeName: [TypeNameKey: JXBridge] = [:]
     private var bridgesByActualTypeName: [String: JXBridge] = [:]
     private(set) var modulesByNamespace: [JXNamespace: [JXModule]] = [:] // 0 or 1 module per known namespace. Internal for testing
+    private var moduleScriptsByNamespace: [JXNamespace: [JSModuleScript]] = [:]
     private var unnamespacedModules: [JXModule] = []
     
     // Allow any context using this registry to listen for additions that require JS generation
@@ -21,8 +22,8 @@ public final class JXRegistry {
     func bridges(in namespace: JXNamespace) -> AnyCollection<JXBridge> {
         return AnyCollection(bridgesByGivenTypeName.compactMap { $0.key.namespace == namespace ? $0.value : nil })
     }
-    var unnamespacedBridges: AnyCollection<JXBridge> {
-        return AnyCollection(bridgesByActualTypeName.values.filter { $0.namespace == .none })
+    func moduleScripts(in namespace: JXNamespace) -> AnyCollection<JSModuleScript> {
+        return AnyCollection(moduleScriptsByNamespace[namespace] ?? [])
     }
 
     public init() {
@@ -181,6 +182,34 @@ public final class JXRegistry {
     }
 
 #endif
+    
+    /// Register a JavaScript module resource to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.
+    public func registerModuleScript(resource: String, namespace: JXNamespace) throws {
+        try registerModuleScript(JSModuleScript(source: .resource(resource), namespace: namespace))
+    }
+    
+    /// Register JavaScript module code to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.
+    public func registerModuleScript(_ script: String, namespace: JXNamespace) throws {
+        try registerModuleScript(JSModuleScript(source: .js(script), namespace: namespace))
+    }
+    
+    private func registerModuleScript(_ script: JSModuleScript) throws {
+        if var existingScripts = moduleScriptsByNamespace[script.namespace] {
+            existingScripts.append(script)
+            moduleScriptsByNamespace[script.namespace] = existingScripts
+            try listeners.didRegisterModuleScript(script)
+            return
+        }
+        
+        if script.namespace != .none {
+            if !modulesByNamespace.keys.contains(script.namespace) {
+                modulesByNamespace[script.namespace] = []
+                try listeners.didAddNamespace(script.namespace)
+            }
+        }
+        moduleScriptsByNamespace[script.namespace] = [script]
+        try listeners.didRegisterModuleScript(script)
+    }
 
     /// Return the registered bridge for the given type name, or nil if none has been registered.
     /// 

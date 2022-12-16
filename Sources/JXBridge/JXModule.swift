@@ -2,7 +2,9 @@ import JXKit
 
 /// A self-contained set of native functionality exported to JavaScript under a namespace.
 public protocol JXModule {
-    /// The namespace for this module. Use ``JXNamespace/none`` for modules that auto-register types in any namespace.
+    /// The namespace for this module.
+    ///
+    /// - Note: Use ``JXNamespace/none`` for meta-modules that auto-register types in any namespace.
     var namespace: JXNamespace { get }
     
     /// Use this function to pre-register types or other required modules. It is called once when the module is added to the registry.

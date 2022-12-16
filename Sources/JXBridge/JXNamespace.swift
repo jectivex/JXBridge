@@ -6,6 +6,7 @@ public struct JXNamespace: ExpressibleByStringLiteral, CustomStringConvertible, 
     /// Special value used to represent the absence of a namespace.
     public static let none = JXNamespace("")
     
+    /// The namespace string.
     public let value: String
     
     public init(_ value: String) {

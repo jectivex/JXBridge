@@ -4,6 +4,21 @@ import Foundation
 import JXKit
 
 extension JXContext {
+    /// Evaluate the JavaScript contained in the given resource.
+    public func eval(resource: String, this: JXValue? = nil) throws -> JXValue {
+        try prepareBridge()
+        return try bridgeSPI.moduleManager.eval(resource: resource, this: this)
+    }
+    
+    /// Prepare this context for use with JavaScript and native bridging.
+    ///
+    /// - Note: Bridge preparation typically happens implicitly when you access the `registry` property. Use this function to prepare explicitly and possibly handle any errors that occur.
+    public func prepareBridge() throws {
+        if spi as? JXBridgeContextSPI == nil {
+            spi = try JXBridgeContextSPI(tryContext: self)
+        }
+    }
+    
     /// Register types bridged to JavaScript for use in this context.
     public var registry: JXRegistry {
         // Note: Accessing the registry causes us to access bridgeSPI, which sets our SPI on the context if needed
@@ -33,11 +48,18 @@ final class JXBridgeContextSPI {
     
     init(context: JXContext) {
         self.context = context
+        self.moduleManager = JSModuleManager(context: context)
         do {
             try defineGlobalFunctions()
         } catch {
             initializationError = error
         }
+    }
+    
+    init(tryContext: JXContext) throws {
+        self.context = tryContext
+        self.moduleManager = JSModuleManager(context: tryContext)
+        try defineGlobalFunctions()
     }
     
     var registry: JXRegistry {
@@ -67,14 +89,21 @@ final class JXBridgeContextSPI {
         try initializeRegistry(registry)
     }
     private var _registry: JXRegistry?
-
+    
+    let moduleManager: JSModuleManager
+    
     private func initializeRegistry(_ registry: JXRegistry) throws {
-        try registry.namespaces.forEach { try defineNamespace($0) }
-        try registry.unnamespacedBridges.forEach { try defineClass(for: $0) }
-        try registry.modules.forEach { try initializeModule($0, addErrorContext: true) }
+        try registry.bridges(in: .none).forEach { try defineClass(for: $0) }
+        try registry.moduleScripts(in: .none).forEach { try loadModuleScript($0, addErrorContext: true) }
+        for namespace in registry.namespaces {
+            try defineNamespace(namespace)
+            try registry.moduleScripts(in: namespace).forEach { try loadModuleScript($0, addErrorContext: true) }
+        }
+        try registry.modules.forEach { try initializeModule($0, registry: registry, addErrorContext: true) }
     }
     
     private func defineNamespace(_ namespace: JXNamespace) throws {
+        //~~~ tokenize into '.' segments and create objects
         guard namespace != .none, let context, !context.global.hasProperty(namespace.value) else {
             return
         }
@@ -88,11 +117,24 @@ final class JXBridgeContextSPI {
         try defineClass(for: bridge, in: context)
     }
     
-    private func initializeModule(_ module: JXModule, addErrorContext: Bool = false) throws {
+    private func loadModuleScript(_ script: JSModuleScript, addErrorContext: Bool = false) throws {
         guard let context else {
             return
         }
-        try context.global.addNamespace(module.namespace)
+        let exports: JXValue
+        switch script.source {
+        case .resource(let resource):
+            exports = try moduleManager.evalModule(resource: resource)
+        case .js(let js):
+            exports = try moduleManager.evalModule(js)
+        }
+        try context.global[script.namespace].integrate(exports)
+    }
+    
+    private func initializeModule(_ module: JXModule, registry: JXRegistry, addErrorContext: Bool = false) throws {
+        guard let context else {
+            return
+        }
         do {
             try module.initialize(in: context)
         } catch {
@@ -113,6 +155,19 @@ final class JXBridgeContextSPI {
         }
         try defineNamespace(.default)
         
+        let require = JXValue(newFunctionIn: context) { [weak self] context, this, args in
+            guard let self else {
+                return context.undefined()
+            }
+            guard args.count == 1 && args[0].isString else {
+                throw JXError(message: "'require' expects a single string argument")
+            }
+            return try self.moduleManager.evalModule(resource: args[0].string)
+        }
+        try context.global.setProperty("require", require)
+        try context.global.setProperty(JSCodeGenerator.moduleExportsCacheObjectName, context.object())
+        
+        //~~~
         // jx.import(namespace.symbol[, 'alias']) or jx.import(namespace[, 'alias'])
         let importFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
@@ -276,7 +331,11 @@ extension JXBridgeContextSPI: RegistryListener {
     }
     
     func didRegisterModule(_ module: JXModule) throws {
-        try initializeModule(module)
+        try initializeModule(module, registry: registry)
+    }
+    
+    func didRegisterModuleScript(_ script: JSModuleScript) throws {
+        try loadModuleScript(script)
     }
     
     func didRegisterUnnamespacedBridge(_ bridge: JXBridge) throws {

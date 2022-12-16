@@ -2,6 +2,7 @@
 protocol RegistryListener: AnyObject {
     func didAddNamespace(_ namespace: JXNamespace) throws
     func didRegisterModule(_ module: JXModule) throws
+    func didRegisterModuleScript(_ script: JSModuleScript) throws
     func didRegisterUnnamespacedBridge(_ bridge: JXBridge) throws
 }
 
@@ -25,6 +26,10 @@ final class RegistryListeners {
     
     func didRegisterModule(_ module: JXModule) throws {
         try listeners.forEach { try $0.listener?.didRegisterModule(module) }
+    }
+    
+    func didRegisterModuleScript(_ script: JSModuleScript) throws {
+        try listeners.forEach { try $0.listener?.didRegisterModuleScript(script) }
     }
     
     func didRegisterUnnamespacedBridge(_ bridge: JXBridge) throws {

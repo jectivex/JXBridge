@@ -9,6 +9,10 @@ extension JXError {
         return JXError(message: "The JXContext has been deallocated")
     }
     
+    static func resourceNotFound(_ module: String) -> JXError {
+        return JXError(message: "Unable to locate resource '\(module)'")
+    }
+    
     static func instanceDeallocated() -> JXError {
         return JXError(message: "The instance has been deallocated")
     }

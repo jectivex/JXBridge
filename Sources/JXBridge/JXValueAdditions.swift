@@ -15,6 +15,16 @@ extension JXValue {
         }
     }
     
+    /// Import the properties of the given value into this value.
+    public func integrate(_ value: JXValue) throws {
+        guard value.isObject else {
+            return
+        }
+        for entry in try value.dictionary {
+            try setProperty(entry.key, entry.value)
+        }
+    }
+    
     /// Bind the bridged instance properties and functions of the given object to the type's namespace on this value.
     ///
     /// - Parameters:

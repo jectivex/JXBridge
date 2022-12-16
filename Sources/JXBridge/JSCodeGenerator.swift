@@ -9,6 +9,7 @@ struct JSCodeGenerator {
     static let getPropertyFunctionName = "_jxGet"
     static let setPropertyFunctionName = "_jxSet"
     static let callFunctionName = "_jxCall"
+    static let moduleExportsCacheObjectName = "_jxModuleExportsCache"
     
     /// Define a var with a value of the given namespace.
     static func defineNamespaceJSProxy(_ namespace: JXNamespace) -> String {
