@@ -32,7 +32,7 @@ extension JXValue {
     /// - Warning: The given object is not retained.
     public func integrate(_ instance: Any, namespace: JXNamespace? = nil) throws {
         guard let bridge = try context.registry.bridge(for: instance, definingIn: context) else {
-            throw JXError.missingBridge(for: String(describing: Swift.type(of: instance)), namespace: namespace?.value ?? JXNamespace.none.value)
+            throw JXError.missingBridge(for: String(describing: Swift.type(of: instance)), namespace: namespace?.string ?? JXNamespace.none.string)
         }
         let namespaceValue = try addNamespace(namespace ?? bridge.namespace)
         
@@ -116,9 +116,9 @@ extension JXValue {
     
     /// Traverse a '.'-separated namespace, returning the object hosting the ultimate namespace property as well as the name of that property.
     private func traverseNamespace(_ namespace: JXNamespace, createIntermediates: Bool = false) throws -> (parent: JXValue, property: String) {
-        let tokens = namespace.value.split(separator: ".")
+        let tokens = namespace.string.split(separator: ".")
         guard tokens.count > 1 && !self.isUndefined else {
-            return (self, namespace.value)
+            return (self, namespace.string)
         }
         
         let property = String(tokens.last!)

@@ -39,7 +39,7 @@ public struct JXBridge {
     public private(set) var qualifiedTypeName = ""
     
     private mutating func updateQualifiedTypeName() {
-        if namespace.value.isEmpty {
+        if namespace.string.isEmpty {
             qualifiedTypeName = typeName
         } else {
             qualifiedTypeName = "\(namespace).\(typeName)"

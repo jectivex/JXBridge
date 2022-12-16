@@ -7,17 +7,17 @@ public struct JXNamespace: ExpressibleByStringLiteral, CustomStringConvertible, 
     public static let none = JXNamespace("")
     
     /// The namespace string.
-    public let value: String
+    public let string: String
     
-    public init(_ value: String) {
-        self.value = value
+    public init(_ string: String) {
+        self.string = string
     }
     
     public init(stringLiteral: String) {
-        self.value = stringLiteral
+        self.string = stringLiteral
     }
     
     public var description: String {
-        return value
+        return string
     }
 }
