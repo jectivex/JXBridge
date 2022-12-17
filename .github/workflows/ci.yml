@@ -65,9 +65,11 @@ jobs:
           export SWIFTPM_ENABLE_COMMAND_PLUGINS=1
           export DOCC_JSON_PRETTYPRINT="YES"
 
-          # insert the docc dependency
-          # sed -I "" 's;^    dependencies: \[;    dependencies: [ .package(name: "swift-docc-plugin", url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"), ;1' Package.swift
-          sed -I "" 's;^    var dependencies: \[Package.Dependency] = \[;    var dependencies: [Package.Dependency] = [ .package(name: "swift-docc-plugin", url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"), ;1' Package.swift
+          # insert the docc dependency manually using sed to avoid
+          # polluting Package.swift with unnecessary dependencies
+          sed -I "" 's;^ *var dependencies: \[Package.Dependency] = \[$;    var dependencies: [Package.Dependency] = [ .package(name: "swift-docc-plugin", url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"), ;1' Package.swift
+
+          cat Package.swift
 
           swift package --allow-writing-to-directory docs \
             generate-documentation --target JXBridge \
