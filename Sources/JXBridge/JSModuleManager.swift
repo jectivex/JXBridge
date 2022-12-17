@@ -5,7 +5,7 @@ import JXKit
 
 /// Manage JavaScript module loading and caching.
 class JSModuleManager {
-    private var context: JXContext?
+    private weak var context: JXContext?
     
     init(context: JXContext) {
         self.context = context
@@ -13,36 +13,47 @@ class JSModuleManager {
     
 #if canImport(Foundation)
     
-    private let loader = JSLoader()
+    private let loader = ResourceLoader()
     private var moduleCache: [String: JSModule] = [:]
-    private var evalStack: [(key: String, resource: String, root: URL)] = []
+    private var evalStack: [(key: String?, url: URL?, root: URL)] = []
     
-    func eval(resource: String, root: URL, this: JXValue?) throws -> JXValue {
+    func withRoot(_ root: URL, perform: (JSModuleManager) throws -> JXValue) throws -> JXValue {
+        evalStack.append((nil, nil, root))
+        defer { evalStack.removeLast() }
+        return try perform(self)
+    }
+    
+    func eval(resource: String, this: JXValue?) throws -> JXValue {
         guard let context else {
             throw JXError.contextDeallocated()
         }
-        let url = loader.scriptURL(resource: resource, root: root)
+        guard let evalState = evalStack.last else {
+            throw JXError.unknownResourceRoot(for: resource)
+        }
+        let url = try loader.resourceURL(resource: resource, relativeTo: evalState.url, root: evalState.root)
         guard let js = try loader.loadScript(from: url) else {
             throw JXError.resourceNotFound(resource)
         }
         // Add this resource to the stack so that it is recorded as a referrer of any modules it requires.
         // This resource is not a module, however, and so it doesn't have its own referrers, and changes to it will not propagate
         let key = key(for: url)
-        evalStack.append((key, resource, root))
+        evalStack.append((key, url, evalState.root))
         defer { evalStack.removeLast() }
         return try context.eval(js, this: this)
     }
     
-    func evalModule(resource: String, root: URL, cacheExports: Bool) throws -> JXValue {
+    func evalModule(resource: String, cacheExports: Bool) throws -> JXValue {
         guard let context else {
             throw JXError.contextDeallocated()
         }
-        
-        let url = loader.scriptURL(resource: resource, root: root)
+        guard let evalState = evalStack.last else {
+            throw JXError.unknownResourceRoot(for: resource)
+        }
+        let url = try loader.resourceURL(resource: resource, relativeTo: evalState.url, root: evalState.root)
         let key = key(for: url)
         if cacheExports {
             if var module = moduleCache[key] {
-                if let referencedBy = evalStack.last, module.referencedByKeys.insert(referencedBy.key).inserted {
+                if let referencedBy = evalState.key, module.referencedByKeys.insert(referencedBy).inserted {
                     moduleCache[key] = module
                 }
                 return try module.exports(in: context)
@@ -56,20 +67,19 @@ class JSModuleManager {
         if cacheExports {
             // Create a module reference before evaluating to avoid infinite recursion in the case of circular dependencies
             var module = JSModule(key: key, url: url)
-            if let referencedBy = evalStack.last {
-                module.referencedByKeys.insert(referencedBy.key)
+            if let referencedBy = evalState.key {
+                module.referencedByKeys.insert(referencedBy)
             }
             moduleCache[key] = module
         }
         
-        evalStack.append((key, resource, root))
+        evalStack.append((key, url, evalState.root))
         defer { evalStack.removeLast() }
-        let moduleJS = Self.toModuleJS(js, key: key)
-        return try context.eval(moduleJS)
+        let moduleScript = toModuleScript(js, key: key)
+        return try context.eval(moduleScript)
     }
     
-    private func key(for resource: URL) -> String {
-        let url = resource.standardized
+    private func key(for url: URL) -> String {
         if let key = resourceURLToKey[url] {
             return key
         }
@@ -94,26 +104,16 @@ class JSModuleManager {
     
 #endif
     
-    func evalModule(_ js: String) throws -> JXValue {
-        guard let context else {
-            throw JXError.contextDeallocated()
-        }
-        let moduleJS = Self.toModuleJS(js)
-        return try context.eval(moduleJS)
-    }
-    
     func require(_ resource: String) throws -> JXValue {
 #if canImport(Foundation)
-        guard let evalState = evalStack.last else {
-            throw JXError(message: "You can only use 'require' in scripts loaded from resource URLs. You cannot use it when passing JavaScript code as a string")
-        }
-        return try evalModule(resource: resource, root: evalState.root, cacheExports: true)
+        return try evalModule(resource: resource, cacheExports: true)
 #else
-        throw JXError(message: "JavaScript resource loading is not available on platforms without Foundation support")
+        throw JXError(message: "'require' is not available on platforms without Foundation support")
 #endif
     }
     
-    private static func toModuleJS(_ js: String, key: String? = nil) -> String {
+    /// Return the JavaScript to run to evaluate the given script as a module.
+    func toModuleScript(_ script: String, key: String? = nil) -> String {
         let cacheExports: String
         if let key {
             cacheExports = "\(JSCodeGenerator.moduleExportsCacheObject).\(key) = module.exports;"
@@ -129,7 +129,7 @@ class JSModuleManager {
     const exports = module.exports;
     \(cacheExports)
     (function() {
-        \(js)
+        \(script)
     })()
     if (module.exports.import === undefined) {
         module.exports.import = function() { \(JSCodeGenerator.importFunction)(this); }

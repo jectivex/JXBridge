@@ -186,8 +186,20 @@ public final class JXRegistry {
 #if canImport(Foundation)
 
     /// Register a JavaScript module resource to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.
+    ///
+    /// - Parameters:
+    ///   - resource: The JavaScript file to load, in the form `/path/file.js` or `/path/file`. Note the leading `/` because the resource path is not being interpreted relative to another resource.
+    ///   - root: The root of the JavaScript resources, typically `Bundle.module.resourceURL` for a Swift package. This is used to locate the resource and any scripts it references via `require`.
     public func registerModuleScript(resource: String, root: URL, namespace: JXNamespace) throws {
         try registerModuleScript(JSModuleScript(source: .resource(resource, root), namespace: namespace))
+    }
+    
+    /// Register JavaScript module code to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.
+    ///
+    /// - Parameters:
+    ///   - root: The root of the JavaScript resources, typically `Bundle.module.resourceURL` for a Swift package. This is used to locate any scripts referenced via `require`.
+    public func registerModuleScript(_ script: String, root: URL, namespace: JXNamespace) throws {
+        try registerModuleScript(JSModuleScript(source: .jsWithRoot(script, root), namespace: namespace))
     }
     
 #endif

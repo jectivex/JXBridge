@@ -39,8 +39,7 @@ let package = Package(
     ],
     dependencies: dependencies,
     targets: targets + [
-        .testTarget(name: "JXBridgeTests", dependencies: ["JXBridge"],
-                    resources: [.copy("module1.js"), .copy("module2.js")]),
+        .testTarget(name: "JXBridgeTests", dependencies: ["JXBridge"], resources: [.copy("jsmodules")]),
     	.target(name: "JXBridgeExtended", dependencies: ["JXBridge"]),
         .plugin(name: "ArityGeneratorCommand",
                 capability: .command(intent: .custom(verb: "generate-arity", description: "Generate arity support"),
