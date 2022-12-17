@@ -1,4 +1,4 @@
-#if canImport(ObjectiveC)
+#if canImport(Foundation)
 import Foundation
 #endif
 import JXKit
@@ -183,10 +183,14 @@ public final class JXRegistry {
 
 #endif
     
+#if canImport(Foundation)
+
     /// Register a JavaScript module resource to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.
-    public func registerModuleScript(resource: String, namespace: JXNamespace) throws {
-        try registerModuleScript(JSModuleScript(source: .resource(resource), namespace: namespace))
+    public func registerModuleScript(resource: String, root: URL, namespace: JXNamespace) throws {
+        try registerModuleScript(JSModuleScript(source: .resource(resource, root), namespace: namespace))
     }
+    
+#endif
     
     /// Register JavaScript module code to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.
     public func registerModuleScript(_ script: String, namespace: JXNamespace) throws {

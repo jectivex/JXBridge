@@ -10,7 +10,6 @@ let products: [Product] = [
 ]
 var targets: [Target] = [
     .target(name: "JXBridge", dependencies: ["JXKit", "JXBridgeObjC"]),
-    .testTarget(name: "JXBridgeTests", dependencies: ["JXBridge"]),
     .target(name: "JXBridgeObjC", dependencies: []),
     .testTarget(name: "JXBridgeObjCTests", dependencies: ["JXBridgeObjC"]),
 ]
@@ -20,7 +19,6 @@ let products: [Product] = [
 ]
 var targets: [Target] = [
     .target(name: "JXBridge", dependencies: ["JXKit"]),
-    .testTarget(name: "JXBridgeTests", dependencies: ["JXBridge"]),
 ]
 #endif
 
@@ -41,6 +39,8 @@ let package = Package(
     ],
     dependencies: dependencies,
     targets: targets + [
+        .testTarget(name: "JXBridgeTests", dependencies: ["JXBridge"],
+                    resources: [.copy("module1.js"), .copy("module2.js")]),
     	.target(name: "JXBridgeExtended", dependencies: ["JXBridge"]),
         .plugin(name: "ArityGeneratorCommand",
                 capability: .command(intent: .custom(verb: "generate-arity", description: "Generate arity support"),

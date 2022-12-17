@@ -1,58 +1,61 @@
-#if canImport(ObjectiveC)
+#if canImport(Foundation)
 import Foundation
 #endif
 import JXKit
 
 extension JXContext {
+#if canImport(Foundation)
+    
     /// Evaluate the JavaScript contained in the given resource.
-    public func eval(resource: String, this: JXValue? = nil) throws -> JXValue {
-        try prepareBridge()
-        return try bridgeSPI.moduleManager.eval(resource: resource, this: this)
+    ///
+    /// - Parameters:
+    ///   - root: The location the given resource is relative to, typically `Bundle.module.resourceURL` for a Swift package. This is used to locate the resource and any scripts it references via `require`.
+    public func eval(resource: String, root: URL, this: JXValue? = nil) throws -> JXValue {
+        return try prepareBridge(throwing: true).moduleManager.eval(resource: resource, root: root, this: this)
     }
     
     /// Evaluate the JavaScript contained in the given resource with module semantics, returning its exports.
     ///
     /// - Parameters:
-    ///   - cache: Whether to cache the module exports for future `eval` and `require` calls
-    public func evalModule(resource: String, cache: Bool = false) throws -> JXValue {
-        try prepareBridge()
-        return try bridgeSPI.moduleManager.evalModule(resource: resource, cache: false)
+    ///   - root: The location the given resource is relative to, typically `Bundle.module.resourceURL` for a Swift package. This is used to locate the resource and any scripts it references via `require`.
+    ///   - cacheExports: Whether to cache the module exports for future `eval` and `require` calls
+    public func evalModule(resource: String, root: URL, cacheExports: Bool = false) throws -> JXValue {
+        return try prepareBridge(throwing: true).moduleManager.evalModule(resource: resource, root: root, cacheExports: cacheExports)
     }
+    
+#endif
     
     /// Evaluate the given JavaScript with module semantics, returning its exports.
     public func evalModule(_ script: String) throws -> JXValue {
-        try prepareBridge()
-        return try bridgeSPI.moduleManager.evalModule(script)
+        return try prepareBridge(throwing: true).moduleManager.evalModule(script)
     }
     
     /// Prepare this context for use with JavaScript and native bridging.
     ///
     /// - Note: Bridge preparation typically happens implicitly when you access the `registry` property. Use this function to prepare explicitly and possibly handle any errors that occur.
     public func prepareBridge() throws {
-        if spi as? JXBridgeContextSPI == nil {
-            spi = try JXBridgeContextSPI(tryContext: self)
-        }
+        let _ = try prepareBridge(throwing: true)
     }
     
     /// Register types bridged to JavaScript for use in this context.
     public var registry: JXRegistry {
-        // Note: Accessing the registry causes us to access bridgeSPI, which sets our SPI on the context if needed
-        return bridgeSPI.registry
+        return (try? prepareBridge(throwing: false))?.registry ?? JXRegistry()
     }
     
     /// Set a pre-configured or shared registry for this context.
     public func setRegistry(_ registry: JXRegistry) throws {
-        try bridgeSPI.setRegistry(registry)
+        try prepareBridge(throwing: true).setRegistry(registry)
     }
     
-    private var bridgeSPI: JXBridgeContextSPI {
-        if let bridgeSPI = self.spi as? JXBridgeContextSPI {
+    private func prepareBridge(throwing: Bool) throws -> JXBridgeContextSPI {
+        if let bridgeSPI = spi as? JXBridgeContextSPI {
             return bridgeSPI
         }
-
-        // We setup our SPI lazily so that if a context is used directly and doesn't need it, it doesn't incur any overhead
         let bridgeSPI = JXBridgeContextSPI(context: self)
-        self.spi = bridgeSPI
+        if throwing {
+            try bridgeSPI.throwInitializationError()
+        }
+        spi = bridgeSPI
         return bridgeSPI
     }
 }
@@ -75,6 +78,16 @@ final class JXBridgeContextSPI {
         self.context = tryContext
         self.moduleManager = JSModuleManager(context: tryContext)
         try defineGlobalFunctions()
+    }
+    
+    func throwInitializationError() throws {
+        // If we didn't initialize cleanly, throw an error for all operations
+        guard let initializationError else {
+            return
+        }
+        var error = JXError(cause: initializationError)
+        error.message = "Unable to initialize JXBridge for this JXContext: \(error.message)"
+        throw error
     }
     
     var registry: JXRegistry {
@@ -137,8 +150,10 @@ final class JXBridgeContextSPI {
         }
         let exports: JXValue
         switch script.source {
-        case .resource(let resource):
-            exports = try moduleManager.evalModule(resource: resource, cache: false)
+#if canImport(Foundation)
+        case .resource(let resource, let root):
+            exports = try moduleManager.evalModule(resource: resource, root: root, cacheExports: false)
+#endif
         case .js(let js):
             exports = try moduleManager.evalModule(js)
         }
@@ -176,7 +191,7 @@ final class JXBridgeContextSPI {
             guard args.count == 1 && args[0].isString else {
                 throw JXError(message: "'require' expects a single string argument")
             }
-            return try self.moduleManager.evalModule(resource: args[0].string, cache: true)
+            return try self.moduleManager.require(args[0].string)
         }
         try context.global.setProperty("require", require)
         try context.global.setProperty(JSCodeGenerator.moduleExportsCacheObject, context.object())
@@ -406,15 +421,5 @@ extension JXBridgeContextSPI: JXContextSPI {
         } else {
             return nil
         }
-    }
-    
-    private func throwInitializationError() throws {
-        // If we didn't initialize cleanly, throw an error for all operations.
-        guard let initializationError else {
-            return
-        }
-        var error = JXError(cause: initializationError)
-        error.message = "Unable to initialize JXBridge for this JXContext: \(error.message)"
-        throw error
     }
 }
