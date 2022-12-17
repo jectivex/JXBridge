@@ -179,7 +179,7 @@ private func conveyToObjectiveC(_ value: JXValue, toBoxed type: JXObjectiveCType
             let array = try value.array
             return try array.map { try conveyToObjectiveC($0, toBoxed: .object) } as NSArray
         case .object:
-            if let bridgeSPI = value.context.spi as? JXBridgeContextSPI, let object = try bridgeSPI.fromJX(value, to: NSObject.self) {
+            if let spi = value.context.spi as? ContextSPI, let object = try spi.fromJX(value, to: NSObject.self) {
                 return object
             }
             let dictionary = try value.dictionary

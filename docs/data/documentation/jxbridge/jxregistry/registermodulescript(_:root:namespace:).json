@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "Register a JavaScript module resource to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.",
+      "text" : "Register JavaScript module code to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.",
       "type" : "text"
     }
   ],
@@ -15,11 +15,11 @@
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerModuleScript(resource:root:namespace:)"
+    "url" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerModuleScript(_:root:namespace:)"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:8JXBridge10JXRegistryC20registerModuleScript8resource4root9namespaceySS_10Foundation3URLVAA11JXNamespaceVtKF",
+    "externalID" : "s:8JXBridge10JXRegistryC20registerModuleScript_4root9namespaceySS_10Foundation3URLVAA11JXNamespaceVtKF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -36,14 +36,6 @@
       {
         "kind" : "text",
         "text" : "("
-      },
-      {
-        "kind" : "externalParam",
-        "text" : "resource"
-      },
-      {
-        "kind" : "text",
-        "text" : ": "
       },
       {
         "kind" : "typeIdentifier",
@@ -101,7 +93,7 @@
     "role" : "symbol",
     "roleHeading" : "Instance Method",
     "symbolKind" : "method",
-    "title" : "registerModuleScript(resource:root:namespace:)"
+    "title" : "registerModuleScript(_:root:namespace:)"
   },
   "primaryContentSections" : [
     {
@@ -132,7 +124,15 @@
             },
             {
               "kind" : "externalParam",
-              "text" : "resource"
+              "text" : "_"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "script"
             },
             {
               "kind" : "text",
@@ -199,44 +199,6 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "The JavaScript file to load, in the form ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "\/path\/file.js",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " or ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "\/path\/file",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : ". Note the leading ",
-                  "type" : "text"
-                },
-                {
-                  "code" : "\/",
-                  "type" : "codeVoice"
-                },
-                {
-                  "text" : " because the resource path is not being interpreted relative to another resource.",
-                  "type" : "text"
-                }
-              ],
-              "type" : "paragraph"
-            }
-          ],
-          "name" : "resource"
-        },
-        {
-          "content" : [
-            {
-              "inlineContent" : [
-                {
                   "text" : "The root of the JavaScript resources, typically ",
                   "type" : "text"
                 },
@@ -245,7 +207,7 @@
                   "type" : "codeVoice"
                 },
                 {
-                  "text" : " for a Swift package. This is used to locate the resource and any scripts it references via ",
+                  "text" : " for a Swift package. This is used to locate any scripts referenced via ",
                   "type" : "text"
                 },
                 {
@@ -276,7 +238,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/jxbridge\/jxregistry\/registermodulescript(resource:root:namespace:)"
+        "\/documentation\/jxbridge\/jxregistry\/registermodulescript(_:root:namespace:)"
       ],
       "traits" : [
         {
@@ -366,10 +328,10 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxregistry"
 },
-"doc://JXBridge/documentation/JXBridge/JXRegistry/registerModuleScript(resource:root:namespace:)": {
+"doc://JXBridge/documentation/JXBridge/JXRegistry/registerModuleScript(_:root:namespace:)": {
   "abstract" : [
     {
-      "text" : "Register a JavaScript module resource to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.",
+      "text" : "Register JavaScript module code to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.",
       "type" : "text"
     }
   ],
@@ -389,14 +351,6 @@
     {
       "kind" : "text",
       "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "resource"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
     },
     {
       "kind" : "typeIdentifier",
@@ -446,12 +400,12 @@
       "text" : "throws"
     }
   ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerModuleScript(resource:root:namespace:)",
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerModuleScript(_:root:namespace:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "registerModuleScript(resource:root:namespace:)",
+  "title" : "registerModuleScript(_:root:namespace:)",
   "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxregistry\/registermodulescript(resource:root:namespace:)"
+  "url" : "\/documentation\/jxbridge\/jxregistry\/registermodulescript(_:root:namespace:)"
 }
 }
 }

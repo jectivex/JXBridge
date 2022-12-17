@@ -120,6 +120,7 @@
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerBridge(for:namespace:)-6id25",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerBridge(forObjectiveC:namespace:)",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerModuleScript(_:namespace:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerModuleScript(_:root:namespace:)",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerModuleScript(resource:root:namespace:)"
       ],
       "title" : "Instance Methods"
@@ -1059,6 +1060,85 @@
   "title" : "registerModuleScript(_:namespace:)",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxregistry\/registermodulescript(_:namespace:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/registerModuleScript(_:root:namespace:)": {
+  "abstract" : [
+    {
+      "text" : "Register JavaScript module code to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "registerModuleScript"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "root"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation3URLV",
+      "text" : "URL"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "namespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
+      "text" : "JXNamespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerModuleScript(_:root:namespace:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "registerModuleScript(_:root:namespace:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/registermodulescript(_:root:namespace:)"
 },
 "doc://JXBridge/documentation/JXBridge/JXRegistry/registerModuleScript(resource:root:namespace:)": {
   "abstract" : [

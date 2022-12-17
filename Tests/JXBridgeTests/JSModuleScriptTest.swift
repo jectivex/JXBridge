@@ -17,7 +17,7 @@ final class JSModuleScriptTests: XCTestCase {
     
     private func moduleScriptTest(fromResource: Bool) throws {
         let context = JXContext()
-        let exports = try fromResource ? context.evalModule(resource: "module1.js", root: Bundle.module.resourceURL!) : context.evalModule(module1JS)
+        let exports = try fromResource ? context.evalModule(resource: "/jsmodules/module1", root: Bundle.module.resourceURL!) : context.evalModule(module1JS)
         
         XCTAssertFalse(context.global.hasProperty("module"))
         XCTAssertFalse(context.global.hasProperty("name"))
@@ -73,9 +73,15 @@ final class JSModuleScriptTests: XCTestCase {
         XCTAssertEqual(try result.string, "classprivatefoo")
     }
     
-    func testRequire() throws {
+    func testRequireFromString() throws {
         let context = JXContext()
-        let exports = try context.evalModule(resource: "module2.js", root: Bundle.module.resourceURL!)
+        let result = try context.eval("const m2 = require('/jsmodules/module2'); m2.getName2();", root: Bundle.module.resourceURL!)
+        XCTAssertEqual(try result.string, "foo2")
+    }
+    
+    func testRequireFromResource() throws {
+        let context = JXContext()
+        let exports = try context.evalModule(resource: "/jsmodules/module2", root: Bundle.module.resourceURL!)
 
         XCTAssertFalse(exports.hasProperty("getName"))
         XCTAssertFalse(exports.hasProperty("NameType"))
@@ -85,7 +91,7 @@ final class JSModuleScriptTests: XCTestCase {
     }
 }
 
-private var module1JS = (try? String(contentsOf: Bundle.module.url(forResource: "module1", withExtension: "js")!)) ?? ""
+private var module1JS = (try? String(contentsOf: Bundle.module.url(forResource: "jsmodules/module1", withExtension: "js")!)) ?? ""
 
 private struct TestModule: JXModule {
     let fromResource: Bool
@@ -93,7 +99,7 @@ private struct TestModule: JXModule {
     
     func register(with registry: JXRegistry) throws {
         if fromResource {
-            try registry.registerModuleScript(resource: "module1.js", root: Bundle.module.resourceURL!, namespace: namespace)
+            try registry.registerModuleScript(resource: "/jsmodules/module1", root: Bundle.module.resourceURL!, namespace: namespace)
         } else {
             try registry.registerModuleScript(module1JS, namespace: namespace)
         }

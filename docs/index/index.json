@@ -2463,6 +2463,11 @@
                 "type" : "method"
               },
               {
+                "path" : "\/documentation\/jxbridge\/jxregistry\/registermodulescript(_:root:namespace:)",
+                "title" : "func registerModuleScript(String, root: URL, namespace: JXNamespace) throws",
+                "type" : "method"
+              },
+              {
                 "path" : "\/documentation\/jxbridge\/jxregistry\/registermodulescript(resource:root:namespace:)",
                 "title" : "func registerModuleScript(resource: String, root: URL, namespace: JXNamespace) throws",
                 "type" : "method"
