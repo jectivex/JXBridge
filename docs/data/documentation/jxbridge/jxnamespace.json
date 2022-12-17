@@ -81,6 +81,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/JXBridge\/s23CustomStringConvertibleP",
         "doc:\/\/JXBridge\/SQ",
         "doc:\/\/JXBridge\/s43ExpressibleByExtendedGraphemeClusterLiteralP",
         "doc:\/\/JXBridge\/s26ExpressibleByStringLiteralP",
@@ -110,7 +111,8 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/value"
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/description",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/string"
       ],
       "title" : "Instance Properties"
     },
@@ -282,6 +284,40 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxnamespace\/default"
 },
+"doc://JXBridge/documentation/JXBridge/JXNamespace/description": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "description"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/description",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "description",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxnamespace\/description"
+},
 "doc://JXBridge/documentation/JXBridge/JXNamespace/init(_:)": {
   "abstract" : [
 
@@ -395,9 +431,12 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxnamespace\/none"
 },
-"doc://JXBridge/documentation/JXBridge/JXNamespace/value": {
+"doc://JXBridge/documentation/JXBridge/JXNamespace/string": {
   "abstract" : [
-
+    {
+      "text" : "The namespace string.",
+      "type" : "text"
+    }
   ],
   "fragments" : [
     {
@@ -410,7 +449,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "value"
+      "text" : "string"
     },
     {
       "kind" : "text",
@@ -422,12 +461,17 @@
       "text" : "String"
     }
   ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/value",
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/string",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "value",
+  "title" : "string",
   "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxnamespace\/value"
+  "url" : "\/documentation\/jxbridge\/jxnamespace\/string"
+},
+"doc://JXBridge/s23CustomStringConvertibleP": {
+  "identifier" : "doc:\/\/JXBridge\/s23CustomStringConvertibleP",
+  "title" : "Swift.CustomStringConvertible",
+  "type" : "unresolvable"
 },
 "doc://JXBridge/s26ExpressibleByStringLiteralP": {
   "identifier" : "doc:\/\/JXBridge\/s26ExpressibleByStringLiteralP",

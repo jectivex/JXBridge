@@ -112,12 +112,15 @@
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/bridge(for:)-11rnj",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/bridge(for:)-3owdv",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/bridge(for:namespace:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/module(for:)",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/register(_:)-8a70h",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/register(_:)-8pd83",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/register(_:)-tn59",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerBridge(for:namespace:)-170lw",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerBridge(for:namespace:)-6id25",
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerBridge(forObjectiveC:namespace:)"
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerBridge(forObjectiveC:namespace:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerModuleScript(_:namespace:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerModuleScript(resource:root:namespace:)"
       ],
       "title" : "Instance Methods"
     }
@@ -180,6 +183,51 @@
   "title" : "JXBridging",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridging"
+},
+"doc://JXBridge/documentation/JXBridge/JXNamespace/none": {
+  "abstract" : [
+    {
+      "text" : "Special value used to represent the absence of a namespace.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "none"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
+      "text" : "JXNamespace"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/none",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "none",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxnamespace\/none"
 },
 "doc://JXBridge/documentation/JXBridge/JXRegistry": {
   "abstract" : [
@@ -424,6 +472,73 @@
   "title" : "init()",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxregistry\/init()"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/module(for:)": {
+  "abstract" : [
+    {
+      "text" : "Return the module registered under the given namespace, or nil if none has been registered. Modules registered under ",
+      "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/none",
+      "isActive" : true,
+      "type" : "reference"
+    },
+    {
+      "text" : " are not returned.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "module"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
+      "text" : "JXNamespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge8JXModuleP",
+      "text" : "JXModule"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/module(for:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "module(for:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/module(for:)"
 },
 "doc://JXBridge/documentation/JXBridge/JXRegistry/objectiveCMemberPrefixes": {
   "abstract" : [
@@ -882,6 +997,155 @@
   "title" : "registerBridge(forObjectiveC:namespace:)",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxregistry\/registerbridge(forobjectivec:namespace:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/registerModuleScript(_:namespace:)": {
+  "abstract" : [
+    {
+      "text" : "Register JavaScript module code to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "registerModuleScript"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "namespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
+      "text" : "JXNamespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerModuleScript(_:namespace:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "registerModuleScript(_:namespace:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/registermodulescript(_:namespace:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXRegistry/registerModuleScript(resource:root:namespace:)": {
+  "abstract" : [
+    {
+      "text" : "Register a JavaScript module resource to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "registerModuleScript"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "resource"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "root"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation3URLV",
+      "text" : "URL"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "namespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
+      "text" : "JXNamespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry\/registerModuleScript(resource:root:namespace:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "registerModuleScript(resource:root:namespace:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxregistry\/registermodulescript(resource:root:namespace:)"
 },
 "doc://JXBridge/documentation/JXBridge/JXStaticBridging": {
   "abstract" : [

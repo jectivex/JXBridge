@@ -106,10 +106,11 @@
     },
     {
       "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule\/define(for:in:)-2r84t",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule\/define(symbol:namespace:in:)-9y7eo",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule\/defineAll(namespace:in:)-7qelr",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule\/initialize(in:)-62ton",
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule\/register(with:)-4okgr",
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule\/registerBridge(for:in:)-2o2ib",
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule\/registerBridge(for:namespace:in:)-58fa9"
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule\/register(with:)-4okgr"
       ],
       "title" : "Instance Methods"
     }
@@ -301,6 +302,313 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxmodule"
 },
+"doc://JXBridge/documentation/JXBridge/JXModule/define(for:in:)-2r84t": {
+  "abstract" : [
+    {
+      "text" : "Prepare for the given conveyed or returned  instance, typically by registering a type bridge. Defaults to ",
+      "type" : "text"
+    },
+    {
+      "code" : "false",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " as we assume that simple modules will use ",
+      "type" : "text"
+    },
+    {
+      "code" : "register",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and ",
+      "type" : "text"
+    },
+    {
+      "code" : "initialize",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to eagerly define all symbols.",
+      "type" : "text"
+    }
+  ],
+  "defaultImplementations" : 1,
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "define"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "Any"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "in"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:5JXKit9JXContextC",
+      "text" : "JXContext"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule\/define(for:in:)-2r84t",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "define(for:in:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxmodule\/define(for:in:)-2r84t"
+},
+"doc://JXBridge/documentation/JXBridge/JXModule/define(symbol:namespace:in:)-9y7eo": {
+  "abstract" : [
+    {
+      "text" : "This function is called to lazily define symbols accessed on this namespace. Use it to add values, register bridges, etc. Defaults to ",
+      "type" : "text"
+    },
+    {
+      "code" : "false",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " as we assume that simple modules will use ",
+      "type" : "text"
+    },
+    {
+      "code" : "register",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " and ",
+      "type" : "text"
+    },
+    {
+      "code" : "initialize",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " to eagerly define all symbols.",
+      "type" : "text"
+    }
+  ],
+  "defaultImplementations" : 1,
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "define"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "symbol"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "namespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
+      "text" : "JXNamespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "in"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:5JXKit9JXContextC",
+      "text" : "JXContext"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule\/define(symbol:namespace:in:)-9y7eo",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "define(symbol:namespace:in:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxmodule\/define(symbol:namespace:in:)-9y7eo"
+},
+"doc://JXBridge/documentation/JXBridge/JXModule/defineAll(namespace:in:)-7qelr": {
+  "abstract" : [
+    {
+      "text" : "User has requested that this namespace define all symbols and bridges for use.",
+      "type" : "text"
+    }
+  ],
+  "defaultImplementations" : 1,
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "defineAll"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "namespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
+      "text" : "JXNamespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "in"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:5JXKit9JXContextC",
+      "text" : "JXContext"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule\/defineAll(namespace:in:)-7qelr",
+  "kind" : "symbol",
+  "required" : true,
+  "role" : "symbol",
+  "title" : "defineAll(namespace:in:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxmodule\/defineall(namespace:in:)-7qelr"
+},
 "doc://JXBridge/documentation/JXBridge/JXModule/initialize(in:)-62ton": {
   "abstract" : [
     {
@@ -367,16 +675,7 @@
 "doc://JXBridge/documentation/JXBridge/JXModule/namespace": {
   "abstract" : [
     {
-      "text" : "The namespace for this module. Use ",
-      "type" : "text"
-    },
-    {
-      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/none",
-      "isActive" : true,
-      "type" : "reference"
-    },
-    {
-      "text" : " for modules that auto-register types in any namespace.",
+      "text" : "The namespace for this module.",
       "type" : "text"
     }
   ],
@@ -465,245 +764,6 @@
   "title" : "register(with:)",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxmodule\/register(with:)-4okgr"
-},
-"doc://JXBridge/documentation/JXBridge/JXModule/registerBridge(for:in:)-2o2ib": {
-  "abstract" : [
-    {
-      "text" : "Register a bridge for the given conveyed or returned instance, or return ",
-      "type" : "text"
-    },
-    {
-      "code" : "false",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " if the instance does not belong to this module. This will not be called for pre-registered types.",
-      "type" : "text"
-    }
-  ],
-  "defaultImplementations" : 1,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "registerBridge"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "for"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "Any"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "in"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge10JXRegistryC",
-      "text" : "JXRegistry"
-    },
-    {
-      "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sb",
-      "text" : "Bool"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule\/registerBridge(for:in:)-2o2ib",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "registerBridge(for:in:)",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxmodule\/registerbridge(for:in:)-2o2ib"
-},
-"doc://JXBridge/documentation/JXBridge/JXModule/registerBridge(for:namespace:in:)-58fa9": {
-  "abstract" : [
-    {
-      "text" : "Register a bridge for the given type name used in JavaScript, or return ",
-      "type" : "text"
-    },
-    {
-      "code" : "false",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " if it is an unknown type. This will not be called for pre-registered types.",
-      "type" : "text"
-    }
-  ],
-  "defaultImplementations" : 1,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "registerBridge"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "for"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "namespace"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
-      "text" : "JXNamespace"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "in"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge10JXRegistryC",
-      "text" : "JXRegistry"
-    },
-    {
-      "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sb",
-      "text" : "Bool"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule\/registerBridge(for:namespace:in:)-58fa9",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "registerBridge(for:namespace:in:)",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxmodule\/registerbridge(for:namespace:in:)-58fa9"
-},
-"doc://JXBridge/documentation/JXBridge/JXNamespace/none": {
-  "abstract" : [
-    {
-      "text" : "Special value used to represent the absence of a namespace.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "static"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "let"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "none"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
-      "text" : "JXNamespace"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/none",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "none",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxnamespace\/none"
 },
 "doc://JXBridge/documentation/JXBridge/JXStaticBridging": {
   "abstract" : [

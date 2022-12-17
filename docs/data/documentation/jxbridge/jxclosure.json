@@ -1,0 +1,779 @@
+{
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrappers around closures, converting them to and from JavaScript functions. Use these wrappers when passing closures directly to or from ",
+      "type" : "text"
+    },
+    {
+      "code" : "JXKit",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "When bridging native API, closures can be automatically wrapped by the generated bridging code up to a certain arity.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/JXBridge\/documentation\/JXBridge"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:8JXBridge9JXClosureO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "JXClosure"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "JXBridge"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "JXClosure"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "JXClosure"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "macOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "JXClosure"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Seealso ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "ArityGenerator",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " tool documentation",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Arity0",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Arity1",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Arity2",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Arity3",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Arity4",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Arity5",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Arity6",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Throwing0",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Throwing1",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Throwing2",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Throwing3",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Throwing4",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Throwing5",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Throwing6"
+      ],
+      "title" : "Structures"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/jxbridge\/jxclosure"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+, 
+"references": {
+"doc://JXBridge/documentation/JXBridge": {
+  "abstract" : [
+
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge",
+  "kind" : "symbol",
+  "role" : "collection",
+  "title" : "JXBridge",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrappers around closures, converting them to and from JavaScript functions. Use these wrappers when passing closures directly to or from ",
+      "type" : "text"
+    },
+    {
+      "code" : "JXKit",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    },
+    {
+      "text" : " ",
+      "type" : "text"
+    },
+    {
+      "text" : "When bridging native API, closures can be automatically wrapped by the generated bridging code up to a certain arity.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "enum"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "JXClosure"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "JXClosure"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure/Arity0": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrapper around a non-throwing closure of arity 0.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Arity0"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Arity0",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Arity0"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure.Arity0",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure\/arity0"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure/Arity1": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrapper around a non-throwing closure of arity 1.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Arity1"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Arity1",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Arity1"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure.Arity1",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure\/arity1"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure/Arity2": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrapper around a non-throwing closure of arity 2.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Arity2"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Arity2",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Arity2"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure.Arity2",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure\/arity2"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure/Arity3": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrapper around a non-throwing closure of arity 3.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Arity3"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Arity3",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Arity3"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure.Arity3",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure\/arity3"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure/Arity4": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrapper around a non-throwing closure of arity 4.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Arity4"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Arity4",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Arity4"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure.Arity4",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure\/arity4"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure/Arity5": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrapper around a non-throwing closure of arity 5.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Arity5"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Arity5",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Arity5"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure.Arity5",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure\/arity5"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure/Arity6": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrapper around a non-throwing closure of arity 6.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Arity6"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Arity6",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Arity6"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure.Arity6",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure\/arity6"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure/Throwing0": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrapper around a throwing closure of arity 0.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Throwing0"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Throwing0",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Throwing0"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure.Throwing0",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure\/throwing0"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure/Throwing1": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrapper around a throwing closure of arity 1.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Throwing1"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Throwing1",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Throwing1"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure.Throwing1",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure\/throwing1"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure/Throwing2": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrapper around a throwing closure of arity 2.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Throwing2"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Throwing2",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Throwing2"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure.Throwing2",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure\/throwing2"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure/Throwing3": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrapper around a throwing closure of arity 3.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Throwing3"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Throwing3",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Throwing3"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure.Throwing3",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure\/throwing3"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure/Throwing4": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrapper around a throwing closure of arity 4.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Throwing4"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Throwing4",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Throwing4"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure.Throwing4",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure\/throwing4"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure/Throwing5": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrapper around a throwing closure of arity 5.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Throwing5"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Throwing5",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Throwing5"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure.Throwing5",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure\/throwing5"
+},
+"doc://JXBridge/documentation/JXBridge/JXClosure/Throwing6": {
+  "abstract" : [
+    {
+      "code" : "JXConvertible",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : " wrapper around a throwing closure of arity 6.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "Throwing6"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXClosure\/Throwing6",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "Throwing6"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXClosure.Throwing6",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxclosure\/throwing6"
+}
+}
+}

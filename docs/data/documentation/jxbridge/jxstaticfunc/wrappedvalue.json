@@ -13,7 +13,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:8JXBridge12JXStaticFuncV12wrappedValuexyKcvp",
+    "externalID" : "s:8JXBridge12JXStaticFuncV12wrappedValueypSgvp",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -29,19 +29,15 @@
       },
       {
         "kind" : "text",
-        "text" : ": () "
+        "text" : ": "
       },
       {
         "kind" : "keyword",
-        "text" : "throws"
+        "text" : "Any"
       },
       {
         "kind" : "text",
-        "text" : " -> "
-      },
-      {
-        "kind" : "typeIdentifier",
-        "text" : "R"
+        "text" : "?"
       }
     ],
     "modules" : [
@@ -79,23 +75,15 @@
             },
             {
               "kind" : "text",
-              "text" : ": () "
+              "text" : ": "
             },
             {
               "kind" : "keyword",
-              "text" : "throws"
+              "text" : "Any"
             },
             {
               "kind" : "text",
-              "text" : " -> "
-            },
-            {
-              "kind" : "typeIdentifier",
-              "text" : "R"
-            },
-            {
-              "kind" : "text",
-              "text" : " { "
+              "text" : "? { "
             },
             {
               "kind" : "keyword",
@@ -205,19 +193,15 @@
     },
     {
       "kind" : "text",
-      "text" : ": () "
+      "text" : ": "
     },
     {
       "kind" : "keyword",
-      "text" : "throws"
+      "text" : "Any"
     },
     {
       "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "R"
+      "text" : "?"
     }
   ],
   "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXStaticFunc\/wrappedValue",

@@ -97,6 +97,13 @@
   "topicSections" : [
     {
       "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Vars\/Var\/name"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Vars\/Var\/add(_:)",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Vars\/Var\/callAsFunction(_:)-1izel",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Vars\/Var\/callAsFunction(_:)-6woay",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Vars\/Var\/callAsFunction(_:)-96f3f",
@@ -226,6 +233,70 @@
   "title" : "JXBridgeBuilder.Vars.Var",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/vars\/var"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/Vars/Var/add(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "add"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridgeAAV",
+      "text" : "JXBridge"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridgeAAV14PropertyBridgeV",
+      "text" : "PropertyBridge"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge0A7BuilderC",
+      "text" : "JXBridgeBuilder"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "typeIdentifier",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ">"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Vars\/Var\/add(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "add(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/vars\/var\/add(_:)"
 },
 "doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/Vars/Var/callAsFunction(_:)-1izel": {
   "abstract" : [
@@ -706,6 +777,40 @@
   "title" : "callAsFunction(get:set:)",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/vars\/var\/callasfunction(get:set:)-4qhdb"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridgeBuilder/Vars/Var/name": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "name"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder\/Vars\/Var\/name",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "name",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridgebuilder\/vars\/var\/name"
 }
 }
 }

@@ -208,8 +208,8 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyJXBridging\/registerBridge(for:in:)",
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyJXBridging\/registerBridge(for:namespace:in:)"
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyJXBridging\/define(for:in:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyJXBridging\/define(symbol:namespace:in:)"
       ],
       "title" : "Instance Methods"
     },
@@ -308,6 +308,174 @@
   "title" : "JXModule Implementations",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/anyjxbridging\/jxmodule-implementations"
+},
+"doc://JXBridge/documentation/JXBridge/AnyJXBridging/define(for:in:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "define"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "for"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "Any"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "in"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:5JXKit9JXContextC",
+      "text" : "JXContext"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyJXBridging\/define(for:in:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "define(for:in:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/anyjxbridging\/define(for:in:)"
+},
+"doc://JXBridge/documentation/JXBridge/AnyJXBridging/define(symbol:namespace:in:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "func"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "define"
+    },
+    {
+      "kind" : "text",
+      "text" : "("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "symbol"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "namespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
+      "text" : "JXNamespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "in"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:5JXKit9JXContextC",
+      "text" : "JXContext"
+    },
+    {
+      "kind" : "text",
+      "text" : ") "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "throws"
+    },
+    {
+      "kind" : "text",
+      "text" : " -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:Sb",
+      "text" : "Bool"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyJXBridging\/define(symbol:namespace:in:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "define(symbol:namespace:in:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/anyjxbridging\/define(symbol:namespace:in:)"
 },
 "doc://JXBridge/documentation/JXBridge/AnyJXBridging/init(map:)-6udrb": {
   "abstract" : [
@@ -493,174 +661,6 @@
   "title" : "namespace",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/anyjxbridging\/namespace"
-},
-"doc://JXBridge/documentation/JXBridge/AnyJXBridging/registerBridge(for:in:)": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "registerBridge"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "for"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "Any"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "in"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge10JXRegistryC",
-      "text" : "JXRegistry"
-    },
-    {
-      "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sb",
-      "text" : "Bool"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyJXBridging\/registerBridge(for:in:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "registerBridge(for:in:)",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/anyjxbridging\/registerbridge(for:in:)"
-},
-"doc://JXBridge/documentation/JXBridge/AnyJXBridging/registerBridge(for:namespace:in:)": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "func"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "registerBridge"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "for"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "namespace"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
-      "text" : "JXNamespace"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "externalParam",
-      "text" : "in"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge10JXRegistryC",
-      "text" : "JXRegistry"
-    },
-    {
-      "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:Sb",
-      "text" : "Bool"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyJXBridging\/registerBridge(for:namespace:in:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "registerBridge(for:namespace:in:)",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/anyjxbridging\/registerbridge(for:namespace:in:)"
 },
 "doc://JXBridge/documentation/JXBridge/JXBridging": {
   "abstract" : [

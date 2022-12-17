@@ -275,16 +275,7 @@
                 {
                   "inlineContent" : [
                     {
-                      "text" : "Throws ",
-                      "type" : "text"
-                    },
-                    {
-                      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/namespaceViolation(_:_:)",
-                      "isActive" : true,
-                      "type" : "reference"
-                    },
-                    {
-                      "text" : " if you attempt to use an invalid namespace or register the same type under multiple namespaces.",
+                      "text" : "Throws An error if you attempt to use an invalid namespace or register the same type under multiple namespaces.",
                       "type" : "text"
                     }
                   ],
@@ -390,64 +381,6 @@
   "title" : "JXBridge",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridge"
-},
-"doc://JXBridge/documentation/JXBridge/JXBridgeErrors/namespaceViolation(_:_:)": {
-  "abstract" : [
-    {
-      "text" : "Detected attempt to register the same type under multiple namespaces.",
-      "type" : "text"
-    },
-    {
-      "text" : " ",
-      "type" : "text"
-    },
-    {
-      "text" : "(Type name, namespace)",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "case"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "namespaceViolation"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:SS",
-      "text" : "String"
-    },
-    {
-      "kind" : "text",
-      "text" : ")"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeErrors\/namespaceViolation(_:_:)",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "JXBridgeErrors.namespaceViolation(_:_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxbridgeerrors\/namespaceviolation(_:_:)"
 },
 "doc://JXBridge/documentation/JXBridge/JXNamespace": {
   "abstract" : [

@@ -79,26 +79,6 @@
             {
               "kind" : "identifier",
               "text" : "JXKeyPath"
-            },
-            {
-              "kind" : "text",
-              "text" : "<"
-            },
-            {
-              "kind" : "genericParameter",
-              "text" : "T"
-            },
-            {
-              "kind" : "text",
-              "text" : ", "
-            },
-            {
-              "kind" : "genericParameter",
-              "text" : "V"
-            },
-            {
-              "kind" : "text",
-              "text" : ">"
             }
           ]
         }
@@ -136,6 +116,7 @@
   "topicSections" : [
     {
       "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXKeyPath\/init(_:)",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXKeyPath\/init(wrappedValue:)"
       ],
       "title" : "Initializers"
@@ -206,6 +187,54 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxkeypath"
 },
+"doc://JXBridge/documentation/JXBridge/JXKeyPath/init(_:)": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridgeAAV",
+      "text" : "JXBridge"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridgeAAV14PropertyBridgeV",
+      "text" : "PropertyBridge"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXKeyPath\/init(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxkeypath\/init(_:)"
+},
 "doc://JXBridge/documentation/JXBridge/JXKeyPath/init(wrappedValue:)": {
   "abstract" : [
 
@@ -217,7 +246,23 @@
     },
     {
       "kind" : "text",
-      "text" : "("
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "V"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
     },
     {
       "kind" : "externalParam",
@@ -282,29 +327,12 @@
       "text" : ": "
     },
     {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s7KeyPathC",
-      "text" : "KeyPath"
+      "kind" : "keyword",
+      "text" : "Any"
     },
     {
       "kind" : "text",
-      "text" : "<"
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ", "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "V"
-    },
-    {
-      "kind" : "text",
-      "text" : ">"
+      "text" : "?"
     }
   ],
   "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXKeyPath\/wrappedValue",

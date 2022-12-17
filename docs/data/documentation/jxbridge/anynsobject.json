@@ -113,8 +113,8 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject\/registerBridge(for:in:)",
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject\/registerBridge(for:namespace:in:)"
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject\/define(for:in:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject\/define(symbol:namespace:in:)"
       ],
       "title" : "Instance Methods"
     },
@@ -204,41 +204,7 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/anynsobject\/jxmodule-implementations"
 },
-"doc://JXBridge/documentation/JXBridge/AnyNSObject/namespace": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "let"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "namespace"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
-      "text" : "JXNamespace"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject\/namespace",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "namespace",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/anynsobject\/namespace"
-},
-"doc://JXBridge/documentation/JXBridge/AnyNSObject/registerBridge(for:in:)": {
+"doc://JXBridge/documentation/JXBridge/AnyNSObject/define(for:in:)": {
   "abstract" : [
 
   ],
@@ -253,7 +219,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "registerBridge"
+      "text" : "define"
     },
     {
       "kind" : "text",
@@ -285,8 +251,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge10JXRegistryC",
-      "text" : "JXRegistry"
+      "preciseIdentifier" : "s:5JXKit9JXContextC",
+      "text" : "JXContext"
     },
     {
       "kind" : "text",
@@ -306,14 +272,14 @@
       "text" : "Bool"
     }
   ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject\/registerBridge(for:in:)",
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject\/define(for:in:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "registerBridge(for:in:)",
+  "title" : "define(for:in:)",
   "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/anynsobject\/registerbridge(for:in:)"
+  "url" : "\/documentation\/jxbridge\/anynsobject\/define(for:in:)"
 },
-"doc://JXBridge/documentation/JXBridge/AnyNSObject/registerBridge(for:namespace:in:)": {
+"doc://JXBridge/documentation/JXBridge/AnyNSObject/define(symbol:namespace:in:)": {
   "abstract" : [
 
   ],
@@ -328,7 +294,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "registerBridge"
+      "text" : "define"
     },
     {
       "kind" : "text",
@@ -336,7 +302,7 @@
     },
     {
       "kind" : "externalParam",
-      "text" : "for"
+      "text" : "symbol"
     },
     {
       "kind" : "text",
@@ -378,8 +344,8 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:8JXBridge10JXRegistryC",
-      "text" : "JXRegistry"
+      "preciseIdentifier" : "s:5JXKit9JXContextC",
+      "text" : "JXContext"
     },
     {
       "kind" : "text",
@@ -399,12 +365,46 @@
       "text" : "Bool"
     }
   ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject\/registerBridge(for:namespace:in:)",
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject\/define(symbol:namespace:in:)",
   "kind" : "symbol",
   "role" : "symbol",
-  "title" : "registerBridge(for:namespace:in:)",
+  "title" : "define(symbol:namespace:in:)",
   "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/anynsobject\/registerbridge(for:namespace:in:)"
+  "url" : "\/documentation\/jxbridge\/anynsobject\/define(symbol:namespace:in:)"
+},
+"doc://JXBridge/documentation/JXBridge/AnyNSObject/namespace": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "let"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "namespace"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridge11JXNamespaceV",
+      "text" : "JXNamespace"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject\/namespace",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "namespace",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/anynsobject\/namespace"
 },
 "doc://JXBridge/documentation/JXBridge/JXModule": {
   "abstract" : [

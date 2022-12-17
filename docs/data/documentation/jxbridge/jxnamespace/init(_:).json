@@ -72,7 +72,7 @@
             },
             {
               "kind" : "internalParam",
-              "text" : "value"
+              "text" : "string"
             },
             {
               "kind" : "text",

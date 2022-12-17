@@ -13,7 +13,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:8JXBridge11JXStaticVarV12wrappedValuexyKc3get_yxcSg3settvp",
+    "externalID" : "s:8JXBridge11JXStaticVarV12wrappedValueypSgvp",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -29,48 +29,15 @@
       },
       {
         "kind" : "text",
-        "text" : ": (get"
-      },
-      {
-        "kind" : "text",
-        "text" : ": () "
+        "text" : ": "
       },
       {
         "kind" : "keyword",
-        "text" : "throws"
+        "text" : "Any"
       },
       {
         "kind" : "text",
-        "text" : " -> "
-      },
-      {
-        "kind" : "typeIdentifier",
-        "text" : "V"
-      },
-      {
-        "kind" : "text",
-        "text" : ", set"
-      },
-      {
-        "kind" : "text",
-        "text" : ": (("
-      },
-      {
-        "kind" : "typeIdentifier",
-        "text" : "V"
-      },
-      {
-        "kind" : "text",
-        "text" : ") -> "
-      },
-      {
-        "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:s4Voida",
-        "text" : "Void"
-      },
-      {
-        "kind" : "text",
-        "text" : ")?)"
+        "text" : "?"
       }
     ],
     "modules" : [
@@ -108,48 +75,15 @@
             },
             {
               "kind" : "text",
-              "text" : ": (get"
-            },
-            {
-              "kind" : "text",
-              "text" : ": () "
+              "text" : ": "
             },
             {
               "kind" : "keyword",
-              "text" : "throws"
+              "text" : "Any"
             },
             {
               "kind" : "text",
-              "text" : " -> "
-            },
-            {
-              "kind" : "typeIdentifier",
-              "text" : "V"
-            },
-            {
-              "kind" : "text",
-              "text" : ", set"
-            },
-            {
-              "kind" : "text",
-              "text" : ": (("
-            },
-            {
-              "kind" : "typeIdentifier",
-              "text" : "V"
-            },
-            {
-              "kind" : "text",
-              "text" : ") -> "
-            },
-            {
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:s4Voida",
-              "text" : "Void"
-            },
-            {
-              "kind" : "text",
-              "text" : ")?) { "
+              "text" : "? { "
             },
             {
               "kind" : "keyword",
@@ -259,48 +193,15 @@
     },
     {
       "kind" : "text",
-      "text" : ": (get"
-    },
-    {
-      "kind" : "text",
-      "text" : ": () "
+      "text" : ": "
     },
     {
       "kind" : "keyword",
-      "text" : "throws"
+      "text" : "Any"
     },
     {
       "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "V"
-    },
-    {
-      "kind" : "text",
-      "text" : ", set"
-    },
-    {
-      "kind" : "text",
-      "text" : ": (("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "V"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s4Voida",
-      "text" : "Void"
-    },
-    {
-      "kind" : "text",
-      "text" : ")?)"
+      "text" : "?"
     }
   ],
   "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXStaticVar\/wrappedValue",

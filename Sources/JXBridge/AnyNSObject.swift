@@ -7,19 +7,19 @@ import JXKit
 public struct AnyNSObject: JXModule {    
     public let namespace: JXNamespace = .none
     
-    public func registerBridge(for typeName: String, namespace: JXNamespace, in registry: JXRegistry) throws -> Bool {
-        guard let cls = NSClassFromString(typeName), let nsobjectType = cls as? NSObject.Type else {
+    public func define(symbol: String, namespace: JXNamespace, in context: JXContext) throws -> Bool {
+        guard let cls = NSClassFromString(symbol), let nsobjectType = cls as? NSObject.Type else {
             return false
         }
-        try registry.registerBridge(forObjectiveC: nsobjectType)
+        try context.registry.registerBridge(forObjectiveC: nsobjectType)
         return true
     }
 
-    public func registerBridge(for instance: Any, in registry: JXRegistry) throws -> Bool {
+    public func define(for instance: Any, in context: JXContext) throws -> Bool {
         guard let obj = instance as? NSObject else {
             return false
         }
-        try registry.registerBridge(forObjectiveC: type(of: obj))
+        try context.registry.registerBridge(forObjectiveC: type(of: obj))
         return true
     }
 }

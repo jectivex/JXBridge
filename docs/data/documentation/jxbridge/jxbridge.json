@@ -89,6 +89,17 @@
   "topicSections" : [
     {
       "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/ConstructorBridge",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/FunctionBridge",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/PropertyBridge",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/StaticFunctionBridge",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/StaticPropertyBridge"
+      ],
+      "title" : "Structures"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/jsSuperclassName",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/namespace",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/qualifiedTypeName",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/superclass",
@@ -156,6 +167,217 @@
   "title" : "JXBridge",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridge"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridge/ConstructorBridge": {
+  "abstract" : [
+    {
+      "text" : "Internal type used to bridge a native constructor.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "ConstructorBridge"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/ConstructorBridge",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "ConstructorBridge"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridge.ConstructorBridge",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridge\/constructorbridge"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridge/FunctionBridge": {
+  "abstract" : [
+    {
+      "text" : "Internal type used ot bridge a native instance function.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "FunctionBridge"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/FunctionBridge",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "FunctionBridge"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridge.FunctionBridge",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridge\/functionbridge"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridge/PropertyBridge": {
+  "abstract" : [
+    {
+      "text" : "Internal type used to bridge a native instance property.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "PropertyBridge"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/PropertyBridge",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "PropertyBridge"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridge.PropertyBridge",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridge\/propertybridge"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridge/StaticFunctionBridge": {
+  "abstract" : [
+    {
+      "text" : "Internal type used to bridge a native static function.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "StaticFunctionBridge"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/StaticFunctionBridge",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "StaticFunctionBridge"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridge.StaticFunctionBridge",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridge\/staticfunctionbridge"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridge/StaticPropertyBridge": {
+  "abstract" : [
+    {
+      "text" : "Internal type used to bridge a native static property.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "struct"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "StaticPropertyBridge"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/StaticPropertyBridge",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "StaticPropertyBridge"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXBridge.StaticPropertyBridge",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridge\/staticpropertybridge"
+},
+"doc://JXBridge/documentation/JXBridge/JXBridge/jsSuperclassName": {
+  "abstract" : [
+    {
+      "text" : "To extend a JavaScript class, set the fully qualified class name.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "jsSuperclassName"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridge\/jsSuperclassName",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "jsSuperclassName",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxbridge\/jssuperclassname"
 },
 "doc://JXBridge/documentation/JXBridge/JXBridge/namespace": {
   "abstract" : [

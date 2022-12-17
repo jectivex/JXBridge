@@ -13,7 +13,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:8JXBridge6JXFuncV12wrappedValueyq_yKcxcvp",
+    "externalID" : "s:8JXBridge6JXFuncV12wrappedValueypSgvp",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -29,27 +29,15 @@
       },
       {
         "kind" : "text",
-        "text" : ": ("
-      },
-      {
-        "kind" : "typeIdentifier",
-        "text" : "T"
-      },
-      {
-        "kind" : "text",
-        "text" : ") -> () "
+        "text" : ": "
       },
       {
         "kind" : "keyword",
-        "text" : "throws"
+        "text" : "Any"
       },
       {
         "kind" : "text",
-        "text" : " -> "
-      },
-      {
-        "kind" : "typeIdentifier",
-        "text" : "R"
+        "text" : "?"
       }
     ],
     "modules" : [
@@ -87,31 +75,15 @@
             },
             {
               "kind" : "text",
-              "text" : ": ("
-            },
-            {
-              "kind" : "typeIdentifier",
-              "text" : "T"
-            },
-            {
-              "kind" : "text",
-              "text" : ") -> () "
+              "text" : ": "
             },
             {
               "kind" : "keyword",
-              "text" : "throws"
+              "text" : "Any"
             },
             {
               "kind" : "text",
-              "text" : " -> "
-            },
-            {
-              "kind" : "typeIdentifier",
-              "text" : "R"
-            },
-            {
-              "kind" : "text",
-              "text" : " { "
+              "text" : "? { "
             },
             {
               "kind" : "keyword",
@@ -221,27 +193,15 @@
     },
     {
       "kind" : "text",
-      "text" : ": ("
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ") -> () "
+      "text" : ": "
     },
     {
       "kind" : "keyword",
-      "text" : "throws"
+      "text" : "Any"
     },
     {
       "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "R"
+      "text" : "?"
     }
   ],
   "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXFunc\/wrappedValue",

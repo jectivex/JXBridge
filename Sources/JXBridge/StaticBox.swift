@@ -6,7 +6,7 @@ final class StaticBox: NativeBox {
         let typeNameString = try typeName.string
         let namespaceString = try namespace.string
         guard let bridge = registry.bridge(for: typeNameString, namespace: JXNamespace(namespaceString)) else {
-            throw JXBridgeErrors.unknownType(typeNameString)
+            throw JXError.missingBridge(for: typeNameString, namespace: namespaceString)
         }
         return StaticBox(bridge: bridge, registry: registry)
     }
@@ -43,13 +43,14 @@ final class StaticBox: NativeBox {
 
     func call(function: JXValue, arguments args: JXValue) throws -> JXValue {
         let functionName = try function.string
-        if bridge.hasClassFunction(for: functionName, superclassRegistry: registry) {
-            let functionBridge = try bridge.classFunction(for: functionName, superclassRegistry: registry)
-            let (_, result) = try functionBridge.call(for: bridge.type, with: args.array, in: function.context)
+        let argsArray = try args.array
+        if bridge.hasClassFunction(for: functionName, parameterCount: argsArray.count, superclassRegistry: registry) {
+            let functionBridge = try bridge.classFunction(for: functionName, parameterCount: argsArray.count, superclassRegistry: registry)
+            let (_, result) = try functionBridge.call(for: bridge.type, with: argsArray, in: function.context)
             return result
         } else {
-            let functionBridge = try bridge.staticFunction(for: functionName, superclassRegistry: registry)
-            return try functionBridge.call(with: args.array, in: function.context)
+            let functionBridge = try bridge.staticFunction(for: functionName, parameterCount: argsArray.count, superclassRegistry: registry)
+            return try functionBridge.call(with: argsArray, in: function.context)
         }
     }
 }

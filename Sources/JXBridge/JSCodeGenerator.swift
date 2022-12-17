@@ -1,26 +1,24 @@
 /// Generates JavaScript code.
 struct JSCodeGenerator {
-    static let typeNamePropertyName = "_jxTypeName"
-    static let defineClassFunctionName = "_jxDefineClass"
-    static let createNativeFunctionName = "_jxCreateNative"
-    static let createStaticNativeFunctionName = "_jxCreateStaticNative"
-    static let nativePropertyName = "_jxNative"
-    static let getPropertyFunctionName = "_jxGet"
-    static let setPropertyFunctionName = "_jxSet"
-    static let callFunctionName = "_jxCall"
-    
-    /// Define a var with a value of the given namespace.
-    static func defineNamespaceJSProxy(_ namespace: JXNamespace) -> String {
-        return "var \(namespace.value) = \(newNamespaceJSProxy(namespace))"
-    }
+    static let typeNameProperty = "_jxTypeName"
+    static let namespaceProperty = "_jxNamespace"
+    static let defineFunction = "_jxDefine"
+    static let createNativeFunction = "_jxCreateNative"
+    static let createStaticNativeFunction = "_jxCreateStaticNative"
+    static let nativeProperty = "_jxNative"
+    static let getPropertyFunction = "_jxGet"
+    static let setPropertyFunction = "_jxSet"
+    static let callFunction = "_jxCall"
+    static let importFunction = "_jxImport"
+    static let moduleExportsCacheObject = "_jxModuleExportsCache"
     
     /// Return a new namespace that performs a callback on any attempt to access its classes, giving us a chance to lazily define the requested class.
     static func newNamespaceJSProxy(_ namespace: JXNamespace) -> String {
         return """
-new Proxy({}, {
+new Proxy({ _jxNamespace: '\(namespace)', import() { _jxImport(this); } }, {
     get(target, property) {
         if (target[property] === undefined) {
-            _jxDefineClass(property, '\(namespace.value)');
+            _jxDefine(property, '\(namespace)');
         }
         return target[property];
     }
@@ -34,18 +32,15 @@ new Proxy({}, {
     /// Define a JavaScript class for the given type. The JavaScript class uses an objec internally to invoke native API.
     func defineJSClass() -> String {
         var extendsClause = ""
-        var nativeDeclaration = ""
         if let superclassBridge = self.superclassBridge {
             extendsClause = " extends \(superclassBridge.qualifiedTypeName)"
-        } else {
-            nativeDeclaration = "_jxNative;"
+        } else if let jsSuperclassName = bridge.jsSuperclassName {
+            extendsClause = " extends \(jsSuperclassName)"
         }
-        
         let classJS = """
 \(bridge.qualifiedTypeName) = class\(extendsClause) {
-    static _jxStaticNative = _jxCreateStaticNative('\(bridge.typeName)', '\(bridge.namespace.value)');
+    static _jxStaticNative = _jxCreateStaticNative('\(bridge.typeName)', '\(bridge.namespace)');
     static _jxTypeName = '\(bridge.typeName)';
-    \(nativeDeclaration)
 \(staticPropertiesJS)
 \(staticFunctionsJS)
 \(constructorJS)
@@ -53,7 +48,7 @@ new Proxy({}, {
 \(functionsJS)
 }
 """
-        print(classJS) //~~~
+        //print(classJS)
         return classJS
     }
 
@@ -106,6 +101,8 @@ new Proxy({}, {
             // Call super with our special token arg telling it we'll inject _jxNative ourselves,
             // so that we can create it with our subclass type name and namespace
             superCall = "super('_jxNative');"
+        } else if bridge.jsSuperclassName != nil {
+            superCall = "super();"
         }
         return """
     constructor(...args) {
@@ -113,7 +110,7 @@ new Proxy({}, {
         if (args.length === 1 && args[0] === '_jxNative') {
             this._jxNative = null; // Will be inserted
         } else {
-            this._jxNative = _jxCreateNative('\(bridge.typeName)', '\(bridge.namespace.value)', args);
+            this._jxNative = _jxCreateNative('\(bridge.typeName)', '\(bridge.namespace)', args);
         }
     }
 """

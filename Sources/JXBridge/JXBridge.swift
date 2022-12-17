@@ -18,7 +18,7 @@ public struct JXBridge {
         }
 #endif
     }
-
+    
     public let type: Any.Type
     
     /// It is possible to customize the name used for the type in scripts.
@@ -39,10 +39,10 @@ public struct JXBridge {
     public private(set) var qualifiedTypeName = ""
     
     private mutating func updateQualifiedTypeName() {
-        if namespace.value.isEmpty {
+        if namespace.string.isEmpty {
             qualifiedTypeName = typeName
         } else {
-            qualifiedTypeName = namespace.value + "." + typeName
+            qualifiedTypeName = "\(namespace).\(typeName)"
         }
     }
     
@@ -55,22 +55,25 @@ public struct JXBridge {
         }
         return registry.bridge(for: superclass)
     }
-
+    
+    /// To extend a JavaScript class, set the fully qualified class name.
+    public var jsSuperclassName: String?
+    
     /// Bridged constructors.
     var constructors: [ConstructorBridge] = []
-
+    
     /// Return the bridged constructor with the given parameter count.
     func constructor(forParameterCount count: Int, superclassRegistry: JXRegistry? = nil) throws -> ConstructorBridge {
         if let constructor = findConstructor(forParameterCount: count, superclassRegistry: superclassRegistry) {
             return constructor
         }
         if constructors.isEmpty {
-            throw JXBridgeErrors.noConstructors(String(describing: type))
+            throw JXError(message: "Error calling \(String(describing: type)).init: No constructors registered")
         } else {
-            throw JXBridgeErrors.invalidArgumentCount(String(describing: type), "init")
+            throw JXError(message: "Error calling \(String(describing: type)).init: No registered constructor with \(count) parameters")
         }
     }
-
+    
     private func findConstructor(forParameterCount count: Int, superclassRegistry: JXRegistry? = nil) -> ConstructorBridge? {
         // Look in reverse order so that later additions override earlier ones
         if let constructor = constructors.last(where: { $0.parameterCount == count }) {
@@ -85,27 +88,27 @@ public struct JXBridge {
         }
         return superclassBridge(in: superclassRegistry)?.findConstructor(forParameterCount: count, superclassRegistry: superclassRegistry)
     }
-
+    
     /// Bridged instance properties.
     var properties: [PropertyBridge] = [] {
         didSet {
             propertiesByName = nil
         }
     }
-
+    
     /// Whether we have a bridged property with the given name.
     func hasProperty(for name: String, superclassRegistry: JXRegistry? = nil) -> Bool {
         return findProperty(for: name, superclassRegistry: superclassRegistry) != nil
     }
-
+    
     /// Return the bridged property with the given name.
     func property(for name: String, superclassRegistry: JXRegistry? = nil) throws -> PropertyBridge {
         if let property = findProperty(for: name, superclassRegistry: superclassRegistry) {
             return property
         }
-        throw JXBridgeErrors.unknownPropertyName(String(describing: type), name)
+        throw JXError(message: "Error accessing \(String(describing: type)).\(name): No registered property with that name")
     }
-
+    
     private func findProperty(for name: String, superclassRegistry: JXRegistry?) -> PropertyBridge? {
         if let property = propertiesByName?[name] {
             return property
@@ -114,61 +117,61 @@ public struct JXBridge {
             return nil
         }
         return superclassBridge(in: superclassRegistry)?.findProperty(for: name, superclassRegistry: superclassRegistry)
-
+        
     }
     private var propertiesByName: [String: PropertyBridge]?
-
+    
     /// Bridged instance functions.
     var functions: [FunctionBridge] = [] {
         didSet {
-            functionsByName = nil
+            functionsByKey = nil
         }
     }
-
+    
     /// Whether we have a bridged instance function with the given name.
-    func hasFunction(for name: String, superclassRegistry: JXRegistry? = nil) -> Bool {
-        return findFunction(for: name, superclassRegistry: superclassRegistry) != nil
+    func hasFunction(for name: String, parameterCount: Int, superclassRegistry: JXRegistry? = nil) -> Bool {
+        return findFunction(for: name, parameterCount: parameterCount, superclassRegistry: superclassRegistry) != nil
     }
-
+    
     /// Return the bridged instance function with the given name.
-    func function(for name: String, superclassRegistry: JXRegistry? = nil) throws -> FunctionBridge {
-        if let function = findFunction(for: name, superclassRegistry: superclassRegistry) {
+    func function(for name: String, parameterCount: Int, superclassRegistry: JXRegistry? = nil) throws -> FunctionBridge {
+        if let function = findFunction(for: name, parameterCount: parameterCount, superclassRegistry: superclassRegistry) {
             return function
         }
-        throw JXBridgeErrors.unknownFunctionName(String(describing: type), name)
+        throw JXError(message: "Error calling \(String(describing: type)).\(name): No registered function with that name expecting \(parameterCount) parameters")
     }
-
-    private func findFunction(for name: String, superclassRegistry: JXRegistry? = nil) -> FunctionBridge? {
-        if let function = functionsByName?[name] {
+    
+    private func findFunction(for name: String, parameterCount: Int, superclassRegistry: JXRegistry? = nil) -> FunctionBridge? {
+        if let function = functionsByKey?[FunctionBridgeKey(name: name, parameterCount: parameterCount)] {
             return function
         }
         guard let superclassRegistry else {
             return nil
         }
-        return superclassBridge(in: superclassRegistry)?.findFunction(for: name, superclassRegistry: superclassRegistry)
+        return superclassBridge(in: superclassRegistry)?.findFunction(for: name, parameterCount: parameterCount, superclassRegistry: superclassRegistry)
     }
-    private var functionsByName: [String: FunctionBridge]?
-
+    private var functionsByKey: [FunctionBridgeKey: FunctionBridge]?
+    
     /// Bridged static properties.
     var staticProperties: [StaticPropertyBridge] = [] {
         didSet {
             staticPropertiesByName = nil
         }
     }
-
+    
     /// Whether we have a bridged static property with the given name.
     func hasStaticProperty(for name: String, superclassRegistry: JXRegistry? = nil) -> Bool {
         return findStaticProperty(for: name, superclassRegistry: superclassRegistry) != nil
     }
-
+    
     /// Return the bridged static property with the given name.
     func staticProperty(for name: String, superclassRegistry: JXRegistry? = nil) throws -> StaticPropertyBridge {
         if let property = findStaticProperty(for: name, superclassRegistry: superclassRegistry) {
             return property
         }
-        throw JXBridgeErrors.unknownPropertyName(String(describing: type), name)
+        throw JXError(message: "Error accessing \(String(describing: type)).\(name): No registered static property with that name")
     }
-
+    
     private func findStaticProperty(for name: String, superclassRegistry: JXRegistry? = nil) -> StaticPropertyBridge? {
         if let property = staticPropertiesByName?[name] {
             return property
@@ -179,58 +182,58 @@ public struct JXBridge {
         return superclassBridge(in: superclassRegistry)?.findStaticProperty(for: name, superclassRegistry: superclassRegistry)
     }
     private var staticPropertiesByName: [String: StaticPropertyBridge]?
-
+    
     /// Bridged static functions.
     var staticFunctions: [StaticFunctionBridge] = [] {
         didSet {
-            staticFunctionsByName = nil
+            staticFunctionsByKey = nil
         }
     }
-
+    
     /// Whether we have a bridged static function with the given name.
-    func hasStaticFunction(for name: String, superclassRegistry: JXRegistry? = nil) -> Bool {
-        return findStaticFunction(for: name, superclassRegistry: superclassRegistry) != nil
+    func hasStaticFunction(for name: String, parameterCount: Int, superclassRegistry: JXRegistry? = nil) -> Bool {
+        return findStaticFunction(for: name, parameterCount: parameterCount, superclassRegistry: superclassRegistry) != nil
     }
-
+    
     /// Return the bridged static function with the given name.
-    func staticFunction(for name: String, superclassRegistry: JXRegistry? = nil) throws -> StaticFunctionBridge {
-        if let function = findStaticFunction(for: name, superclassRegistry: superclassRegistry) {
+    func staticFunction(for name: String, parameterCount: Int, superclassRegistry: JXRegistry? = nil) throws -> StaticFunctionBridge {
+        if let function = findStaticFunction(for: name, parameterCount: parameterCount, superclassRegistry: superclassRegistry) {
             return function
         }
-        throw JXBridgeErrors.unknownFunctionName(String(describing: type), name)
+        throw JXError(message: "Error calling \(String(describing: type)).\(name): No registered static function with that name expecting \(parameterCount) parameters")
     }
-
-    private func findStaticFunction(for name: String, superclassRegistry: JXRegistry?) -> StaticFunctionBridge? {
-        if let function = staticFunctionsByName?[name] {
+    
+    private func findStaticFunction(for name: String, parameterCount: Int, superclassRegistry: JXRegistry?) -> StaticFunctionBridge? {
+        if let function = staticFunctionsByKey?[FunctionBridgeKey(name: name, parameterCount: parameterCount)] {
             return function
         }
         guard let superclassRegistry else {
             return nil
         }
-        return superclassBridge(in: superclassRegistry)?.findStaticFunction(for: name, superclassRegistry: superclassRegistry)
+        return superclassBridge(in: superclassRegistry)?.findStaticFunction(for: name, parameterCount: parameterCount, superclassRegistry: superclassRegistry)
     }
-    private var staticFunctionsByName: [String: StaticFunctionBridge]?
-
+    private var staticFunctionsByKey: [FunctionBridgeKey: StaticFunctionBridge]?
+    
     /// Bridged class properties.
     var classProperties: [PropertyBridge] = [] {
         didSet {
             classPropertiesByName = nil
         }
     }
-
+    
     /// Whether we have a bridged class property with the given name.
     func hasClassProperty(for name: String, superclassRegistry: JXRegistry? = nil) -> Bool {
         return findClassProperty(for: name, superclassRegistry: superclassRegistry) != nil
     }
-
+    
     /// Return the bridged class property with the given name.
     func classProperty(for name: String, superclassRegistry: JXRegistry? = nil) throws -> PropertyBridge {
         if let property = findClassProperty(for: name, superclassRegistry: superclassRegistry) {
             return property
         }
-        throw JXBridgeErrors.unknownPropertyName(String(describing: type), name)
+        throw JXError(message: "Error accessing \(String(describing: type)).\(name): No registered class property with that name")
     }
-
+    
     private func findClassProperty(for name: String, superclassRegistry: JXRegistry?) -> PropertyBridge? {
         if let property = classPropertiesByName?[name] {
             return property
@@ -239,41 +242,41 @@ public struct JXBridge {
             return nil
         }
         return superclassBridge(in: superclassRegistry)?.findClassProperty(for: name, superclassRegistry: superclassRegistry)
-
+        
     }
     private var classPropertiesByName: [String: PropertyBridge]?
-
+    
     /// Bridged class functions.
     var classFunctions: [FunctionBridge] = [] {
         didSet {
-            classFunctionsByName = nil
+            classFunctionsByKey = nil
         }
     }
-
+    
     /// Whether we have a bridged class function with the given name.
-    func hasClassFunction(for name: String, superclassRegistry: JXRegistry? = nil) -> Bool {
-        return findClassFunction(for: name, superclassRegistry: superclassRegistry) != nil
+    func hasClassFunction(for name: String, parameterCount: Int, superclassRegistry: JXRegistry? = nil) -> Bool {
+        return findClassFunction(for: name, parameterCount: parameterCount, superclassRegistry: superclassRegistry) != nil
     }
-
+    
     /// Return the bridged class function with the given name.
-    func classFunction(for name: String, superclassRegistry: JXRegistry? = nil) throws -> FunctionBridge {
-        if let function = findClassFunction(for: name, superclassRegistry: superclassRegistry) {
+    func classFunction(for name: String, parameterCount: Int, superclassRegistry: JXRegistry? = nil) throws -> FunctionBridge {
+        if let function = findClassFunction(for: name, parameterCount: parameterCount, superclassRegistry: superclassRegistry) {
             return function
         }
-        throw JXBridgeErrors.unknownFunctionName(String(describing: type), name)
+        throw JXError(message: "Error calling \(String(describing: type)).\(name): No registered class function with that name expecting \(parameterCount) parameters")
     }
-
-    private func findClassFunction(for name: String, superclassRegistry: JXRegistry? = nil) -> FunctionBridge? {
-        if let function = classFunctionsByName?[name] {
+    
+    private func findClassFunction(for name: String, parameterCount: Int, superclassRegistry: JXRegistry? = nil) -> FunctionBridge? {
+        if let function = classFunctionsByKey?[FunctionBridgeKey(name: name, parameterCount: parameterCount)] {
             return function
         }
         guard let superclassRegistry else {
             return nil
         }
-        return superclassBridge(in: superclassRegistry)?.findClassFunction(for: name, superclassRegistry: superclassRegistry)
+        return superclassBridge(in: superclassRegistry)?.findClassFunction(for: name, parameterCount: parameterCount, superclassRegistry: superclassRegistry)
     }
-    private var classFunctionsByName: [String: FunctionBridge]?
-
+    private var classFunctionsByKey: [FunctionBridgeKey: FunctionBridge]?
+    
     /// Call this method before using any funcs that lookup members by name or other criteria.
     mutating func prepareLookupCaches() {
         // We cache such that later additions override previous additions
@@ -282,9 +285,9 @@ public struct JXBridge {
                 result[property.name] = property
             }
         }
-        if functionsByName == nil {
-            functionsByName = functions.reduce(into: [String: FunctionBridge]()) { result, function in
-                result[function.name] = function
+        if functionsByKey == nil {
+            functionsByKey = functions.reduce(into: [FunctionBridgeKey: FunctionBridge]()) { result, function in
+                result[FunctionBridgeKey(name: function.name, parameterCount: function.parameterCount)] = function
             }
         }
         if staticPropertiesByName == nil {
@@ -292,9 +295,9 @@ public struct JXBridge {
                 result[property.name] = property
             }
         }
-        if staticFunctionsByName == nil {
-            staticFunctionsByName = staticFunctions.reduce(into: [String: StaticFunctionBridge]()) { result, function in
-                result[function.name] = function
+        if staticFunctionsByKey == nil {
+            staticFunctionsByKey = staticFunctions.reduce(into: [FunctionBridgeKey: StaticFunctionBridge]()) { result, function in
+                result[FunctionBridgeKey(name: function.name, parameterCount: function.parameterCount)] = function
             }
         }
         if classPropertiesByName == nil {
@@ -302,84 +305,171 @@ public struct JXBridge {
                 result[property.name] = property
             }
         }
-        if classFunctionsByName == nil {
-            classFunctionsByName = classFunctions.reduce(into: [String: FunctionBridge]()) { result, function in
-                result[function.name] = function
+        if classFunctionsByKey == nil {
+            classFunctionsByKey = classFunctions.reduce(into: [FunctionBridgeKey: FunctionBridge]()) { result, function in
+                result[FunctionBridgeKey(name: function.name, parameterCount: function.parameterCount)] = function
+            }
+        }
+    }
+    
+    /// Internal type used to bridge a native constructor.
+    public struct ConstructorBridge {
+        let owningTypeName: String
+        let parameterCount: Int
+        let constructor: ([JXValue], JXContext) throws -> Any
+        
+        public init(owningTypeName: String, parameterCount: Int, constructor: @escaping ([JXValue], JXContext) throws -> Any) {
+            self.owningTypeName = owningTypeName
+            self.parameterCount = parameterCount
+            self.constructor = constructor
+        }
+        
+        /// Call the constructor, returning the constructed instance.
+        func call(_ args: [JXValue], in context: JXContext) throws -> Any {
+            do {
+                return try constructor(args, context)
+            } catch {
+                var error = JXError(cause: error)
+                error.message = "Error invoking \(owningTypeName).init: \(error.message)"
+                throw error
+            }
+        }
+    }
+    
+    /// Internal type used to bridge a native instance property.
+    public struct PropertyBridge {
+        let owningTypeName: String
+        let name: String
+        let getter: (Any, JXContext) throws -> JXValue
+        let setter: ((Any, JXValue, JXContext) throws -> Any)? // Returns target instance (for value types)
+        
+        public init(owningTypeName: String, name: String, getter: @escaping (Any, JXContext) throws -> JXValue, setter: ((Any, JXValue, JXContext) throws -> Any)?) {
+            self.owningTypeName = owningTypeName
+            self.name = name
+            self.getter = getter
+            self.setter = setter
+        }
+        
+        /// Call the getter, returning the value.
+        func get(for instance: Any, in context: JXContext) throws -> JXValue {
+            do {
+                return try getter(instance, context)
+            } catch {
+                var error = JXError(cause: error)
+                error.message = "Error getting \(owningTypeName).\(name): \(error.message)"
+                throw error
+            }
+        }
+        
+        /// Call the setter, returning the target instance. For value types, this may be a different value.
+        func set(for instance: Any, value: JXValue, in context: JXContext) throws -> Any {
+            guard let setter = self.setter else {
+                throw JXError(message: "Error setting \(owningTypeName).\(name): This property is read only")
+            }
+            do {
+                return try setter(instance, value, context)
+            } catch {
+                var error = JXError(cause: error)
+                error.message = "Error setting \(owningTypeName).\(name): \(error.message)"
+                throw error
+            }
+        }
+    }
+    
+    /// Internal type used ot bridge a native instance function.
+    public struct FunctionBridge {
+        let owningTypeName: String
+        let name: String
+        let parameterCount: Int
+        let function: (Any, [JXValue], JXContext) throws -> (Any, JXValue) // Returns target instance (for value types)
+        
+        public init(owningTypeName: String, name: String, parameterCount: Int, function: @escaping (Any, [JXValue], JXContext) throws -> (Any, JXValue)) {
+            self.owningTypeName = owningTypeName
+            self.name = name
+            self.parameterCount = parameterCount
+            self.function = function
+        }
+        
+        /// Call the function, returning the target instance and function return. For value types, the target instance may be a different value.
+        func call(for instance: Any, with args: [JXValue], in context: JXContext) throws -> (Any, JXValue) {
+            do {
+                return try function(instance, args, context)
+            } catch {
+                var error = JXError(cause: error)
+                error.message = "Error calling \(owningTypeName).\(name): \(error.message)"
+                throw error
+            }
+        }
+    }
+    
+    /// Internal type used to bridge a native static property.
+    public struct StaticPropertyBridge {
+        let owningTypeName: String
+        let name: String
+        let getter: (JXContext) throws -> JXValue
+        let setter: ((JXValue, JXContext) throws -> Void)?
+        
+        public init(owningTypeName: String, name: String, getter: @escaping (JXContext) throws -> JXValue, setter: ((JXValue, JXContext) throws -> Void)?) {
+            self.owningTypeName = owningTypeName
+            self.name = name
+            self.getter = getter
+            self.setter = setter
+        }
+        
+        /// Call the getter, returning the value.
+        func get(in context: JXContext) throws -> JXValue {
+            do {
+                return try getter(context)
+            } catch {
+                var error = JXError(cause: error)
+                error.message = "Error getting \(owningTypeName).\(name): \(error.message)"
+                throw error
+            }
+        }
+        
+        /// Call the setter.
+        func set(value: JXValue, in context: JXContext) throws {
+            guard let setter = self.setter else {
+                throw JXError(message: "Error setting \(owningTypeName).\(name): This property is read only")
+            }
+            do {
+                try setter(value, context)
+            } catch {
+                var error = JXError(cause: error)
+                error.message = "Error setting \(owningTypeName).\(name): \(error.message)"
+                throw error
+            }
+        }
+    }
+    
+    /// Internal type used to bridge a native static function.
+    public struct StaticFunctionBridge {
+        let owningTypeName: String
+        let name: String
+        let parameterCount: Int
+        let function: ([JXValue], JXContext) throws -> JXValue
+        
+        public init(owningTypeName: String, name: String, parameterCount: Int, function: @escaping ([JXValue], JXContext) throws -> JXValue) {
+            self.owningTypeName = owningTypeName
+            self.name = name
+            self.parameterCount = parameterCount
+            self.function = function
+        }
+        
+        /// Call the function, returning the function return.
+        func call(with args: [JXValue], in context: JXContext) throws -> JXValue {
+            do {
+                return try function(args, context)
+            } catch {
+                var error = JXError(cause: error)
+                error.message = "Error calling \(owningTypeName).\(name): \(error.message)"
+                throw error
             }
         }
     }
 }
 
-/// Bridge a native constructor.
-struct ConstructorBridge {
+private struct FunctionBridgeKey: Hashable {
+    let name: String
     let parameterCount: Int
-    let constructor: ([JXValue], JXContext) throws -> Any
-
-    /// Call the constructor, returning the constructed instance.
-    func call(_ args: [JXValue], in context: JXContext) throws -> Any {
-        return try constructor(args, context)
-    }
-}
-
-/// Bridge a native instance property.
-struct PropertyBridge {
-    let name: String
-    let getter: (Any, JXContext) throws -> JXValue
-    let setter: ((Any, JXValue, JXContext) throws -> Any)? // Returns target instance (for value types)
-
-    /// Call the getter, returning the value.
-    func get(for instance: Any, in context: JXContext) throws -> JXValue {
-        return try getter(instance, context)
-    }
-
-    /// Call the setter, returning the target instance. For value types, this may be a different value.
-    func set(for instance: Any, value: JXValue, in context: JXContext) throws -> Any {
-        guard let setter = self.setter else {
-            throw JXBridgeErrors.readOnlyProperty(String(describing: Swift.type(of: instance)), name)
-        }
-        return try setter(instance, value, context)
-    }
-}
-
-/// Bridge a native instance function.
-struct FunctionBridge {
-    let name: String
-    let function: (Any, [JXValue], JXContext) throws -> (Any, JXValue) // Returns target instance (for value types)
-
-    /// Call the function, returning the target instance and function return. For value types, the target instance may be a different value.
-    func call(for instance: Any, with args: [JXValue], in context: JXContext) throws -> (Any, JXValue) {
-        return try function(instance, args, context)
-    }
-}
-
-/// Bridge a native static property.
-struct StaticPropertyBridge {
-    let owningTypeName: String
-    let name: String
-    let getter: (JXContext) throws -> JXValue
-    let setter: ((JXValue, JXContext) throws -> Void)?
-
-    /// Call the getter, returning the value.
-    func get(in context: JXContext) throws -> JXValue {
-        return try getter(context)
-    }
-
-    /// Call the setter.
-    func set(value: JXValue, in context: JXContext) throws {
-        guard let setter = self.setter else {
-            throw JXBridgeErrors.readOnlyProperty(owningTypeName, name)
-        }
-        try setter(value, context)
-    }
-}
-
-/// Bridge a native static function.
-struct StaticFunctionBridge {
-    let name: String
-    let function: ([JXValue], JXContext) throws -> JXValue
-
-    /// Call the function, returning the function return.
-    func call(with args: [JXValue], in context: JXContext) throws -> JXValue {
-        return try function(args, context)
-    }
 }

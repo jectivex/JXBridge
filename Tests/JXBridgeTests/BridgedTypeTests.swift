@@ -1,8 +1,10 @@
-#if canImport(Combine)
-import Combine
-#endif
 import JXKit
 import XCTest
+#if canImport(Combine)
+import Combine
+#else
+import OpenCombine
+#endif
 
 #if DEBUG
 @testable import JXBridge
@@ -153,7 +155,6 @@ caughtErr;
         XCTAssertEqual(try result.string, "baseStaticString")
     }
 
-#if canImport(Combine)
     func testPropertyWrapped() throws {
         let context = JXContext()
         let bridge = JXBridgeBuilder(type: TestObservableClass.self)
@@ -175,8 +176,7 @@ caughtErr;
             token = nil
         }
     }
-#endif
-    
+
     func testAsync() async throws {
         let context = JXContext()
         try context.registry.register {
@@ -201,6 +201,88 @@ invokeAsync(obj);
 """, priority: .low)
         XCTAssertEqual(try result.string, "asyncFuncSuccess")
     }
+    
+    func testTuples() throws {
+        let context = JXContext()
+        try context.registry.register {
+            JXBridgeBuilder(type: TestStruct.self)
+                .constructor { TestStruct.init }
+                .func.tupleFunc { TestStruct.tupleFunc }
+                .bridge
+        }
+        let result = try context.eval("new jx.TestStruct().tupleFunc()")
+        let t = try result.convey(to: (Int, String).self)
+        XCTAssertEqual(t.0, 100)
+        XCTAssertEqual(t.1, "200")
+    }
+    
+    func testCallbacks() throws {
+        let context = JXContext()
+        try context.registry.register {
+            JXBridgeBuilder(type: TestStruct.self)
+                .constructor { TestStruct.init }
+                .var.readWriteInt { \.readWriteInt }
+                .func.callbackFunc { TestStruct.callbackFunc }
+                .bridge
+        }
+        var result = try context.eval("""
+var s = new jx.TestStruct();
+s.readWriteInt = 2;
+let result = 0
+s.callbackFunc(3, (r) => { result = r; });
+result;
+""")
+        XCTAssertEqual(try result.int, 5)
+        
+        result = try context.eval("""
+var s = new jx.TestStruct();
+s.callbackFunc(2, null);
+""")
+        XCTAssertEqual(result.bool, false)
+    }
+    
+    func testErrors() throws {
+        let context = JXContext()
+        try context.registry.register {
+            JXBridgeBuilder(type: TestStruct.self)
+                .constructor { TestStruct.init }
+                .var.readWriteInt { \.readWriteInt }
+                .func.exceptionFunc { TestStruct.exceptionFunc }
+                .bridge
+        }
+        try context.registry.register {
+            JXBridgeBuilder(type: TestBaseClass.self)
+                .bridge
+        }
+
+        do {
+            try context.eval("var obj = new jx.TestBaseClass();")
+            XCTFail("Missing constructor")
+        } catch {
+            XCTAssertEqual("\(error)", "Error calling TestBaseClass.init: No constructors registered <<script: var obj = new jx.TestBaseClass(); >>")
+        }
+        
+        do {
+            try context.eval("var obj = new jx.TestStruct(); obj.readWriteInt = 'a';")
+            XCTFail("Bad property type")
+        } catch {
+            XCTAssertEqual("\(error)", "Error setting TestStruct.readWriteInt: JavaScript value 'a' converted to invalid number 'nan' <<script: var obj = new jx.TestStruct(); obj.readWriteInt = 'a'; >>")
+        }
+        
+        do {
+            try context.eval("var obj = new jx.TestStruct(); obj.exceptionFunc(1);")
+            XCTFail("Wrong number of arguments")
+        } catch {
+            XCTAssertEqual("\(error)", "Error calling TestStruct.exceptionFunc: No registered function with that name expecting 1 parameters <<script: var obj = new jx.TestStruct(); obj.exceptionFunc(1); >>")
+        }
+        
+        do {
+            try context.eval("var obj = new jx.TestStruct(); obj.exceptionFunc();")
+            XCTFail("exceptionFunc() should throw")
+        } catch {
+            XCTAssertEqual("\(error)", "Error calling TestStruct.exceptionFunc: TestError(message: \"exceptionFunc error\") <<script: var obj = new jx.TestStruct(); obj.exceptionFunc(); >>")
+        }
+    }
 }
 
 private struct TestStruct {
@@ -213,6 +295,15 @@ private struct TestStruct {
 
     func exceptionFunc() throws {
         throw TestError(message: "exceptionFunc error")
+    }
+    
+    func callbackFunc(add: Int, result: ((Int) -> Void)?) -> Bool {
+        result?(readWriteInt + add)
+        return result != nil
+    }
+    
+    func tupleFunc() -> (Int, String) {
+        return (100, "200")
     }
 }
 
@@ -279,13 +370,11 @@ private class TestSubClass: TestBaseClass {
     var readWriteInt = 1
 }
 
-#if canImport(Combine)
 private class TestObservableClass: ObservableObject {
     @Published var publishedInt = 1
 
     init() {
     }
 }
-#endif
 
 #endif // DEBUG

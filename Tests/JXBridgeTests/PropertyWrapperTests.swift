@@ -1,6 +1,11 @@
 import JXBridge
 import JXKit
 import XCTest
+#if canImport(Combine)
+import Combine
+#else
+import OpenCombine
+#endif
 
 final class PropertyWrapperTests: XCTestCase {
     func testJX() throws {
@@ -34,11 +39,28 @@ final class PropertyWrapperTests: XCTestCase {
         XCTAssertEqual(test.intVar, 3)
     }
     
+    func testJXFuncWithCallback() throws {
+        let context = JXContext()
+        try context.registry.register(AnyJXBridging())
+
+        let test = TestClass(intVar: 1)
+        try context.global.integrate(test)
+        var callbackCalled = false
+        let callback: (Int) -> Void = { sum in
+            callbackCalled = true
+            XCTAssertEqual(sum, 3)
+        }
+        try context.withValues([JXClosure.Arity1(callback)]) {
+            try context.eval("jx.sum(2, $0)")
+        }
+        XCTAssertTrue(callbackCalled)
+    }
+    
     func testJXInit() throws {
         let context = JXContext()
         try context.registry.registerBridge(for: TestClass(intVar: 0))
 
-        let result = try context.eval("const test = new jx.TestClass(1); test.increment(2); test.intVar")
+        let result = try context.eval("var test = new jx.TestClass(1); test.increment(2); test.intVar")
         XCTAssertEqual(try result.int, 3)
     }
     
@@ -100,7 +122,6 @@ final class PropertyWrapperTests: XCTestCase {
         XCTAssertEqual(try result.int, 2)
     }
     
-#if canImport(Combine)
     func testJXPublished() throws {
         let context = JXContext()
         try context.registry.registerBridge(for: TestObservable(intVar: 0))
@@ -162,8 +183,7 @@ final class PropertyWrapperTests: XCTestCase {
             publishedWillChangeToken = nil
         }
     }
-#endif
-    
+
     func testAsync() async throws {
         let context = JXContext()
         try context.registry.registerBridge(for: TestAsync())
@@ -181,6 +201,9 @@ private class TestClass: JXBridging {
     }
     
     @JX var intVar: Int
+    
+    @JXKeyPath var jxclosureVar = \TestClass.closureVar
+    var closureVar: (() -> Int)?
 
     @JXKeyPath var jxcomputedVar = \TestClass.computedVar
     var computedVar: Int {
@@ -191,6 +214,11 @@ private class TestClass: JXBridging {
     func increment(by: Int) -> Int {
         intVar += by
         return intVar
+    }
+    
+    @JXFunc var jxsum = sum
+    func sum(with value: Int, result: (Int) -> Void) {
+        result(intVar + value)
     }
     
     @JXStaticVar var jxstaticVar = (get: { TestClass.staticVar }, set: { TestClass.staticVar = $0 })
@@ -235,7 +263,6 @@ private class TestSubClass: TestClass {
     }
 }
 
-#if canImport(Combine)
 private class TestObservable: ObservableObject, JXBridging {
     init(intVar: Int) {
         self.intVar = intVar
@@ -248,7 +275,6 @@ private class TestObservable: ObservableObject, JXBridging {
     var jxState: JXState?
 #endif
 }
-#endif
 
 private class TestAsync: JXBridging {
     @JXInit var jxinit = { TestAsync() }

@@ -1,16 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "The namespace for this module. Use ",
-      "type" : "text"
-    },
-    {
-      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/none",
-      "isActive" : true,
-      "type" : "reference"
-    },
-    {
-      "text" : " for modules that auto-register types in any namespace.",
+      "text" : "The namespace for this module.",
       "type" : "text"
     }
   ],
@@ -112,6 +103,42 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Use ",
+                  "type" : "text"
+                },
+                {
+                  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/none",
+                  "isActive" : true,
+                  "type" : "reference"
+                },
+                {
+                  "text" : " for meta-modules that auto-register types in any namespace.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -184,16 +211,7 @@
 "doc://JXBridge/documentation/JXBridge/JXModule/namespace": {
   "abstract" : [
     {
-      "text" : "The namespace for this module. Use ",
-      "type" : "text"
-    },
-    {
-      "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXNamespace\/none",
-      "isActive" : true,
-      "type" : "reference"
-    },
-    {
-      "text" : " for modules that auto-register types in any namespace.",
+      "text" : "The namespace for this module.",
       "type" : "text"
     }
   ],

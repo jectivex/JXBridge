@@ -15,6 +15,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
+    "extendedModule" : "JXBridge",
     "externalID" : "s:8JXBridge0A7BuilderC4VarsV3VarV14callAsFunction3get3setACyqd0__Gqd1__qd0__Kc_qd0__qd0___qd1__tctlF",
     "fragments" : [
       {

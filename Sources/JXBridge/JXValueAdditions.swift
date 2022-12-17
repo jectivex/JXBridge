@@ -1,14 +1,38 @@
 import JXKit
 
 extension JXValue {
+    /// Return any bridged instance represented by this value.
+    public var bridged: Any? {
+        get throws {
+            guard hasProperty(JSCodeGenerator.nativeProperty) else {
+                return nil
+            }
+            let nativeProperty = try self[JSCodeGenerator.nativeProperty]
+            guard let instanceBox = nativeProperty.peer as? InstanceBox else {
+                return nil
+            }
+            return instanceBox.instance
+        }
+    }
+    
+    /// Import the properties of the given value into this value.
+    public func integrate(_ value: JXValue) throws {
+        guard value.isObject else {
+            return
+        }
+        for entry in try value.dictionary {
+            try setProperty(entry.key, entry.value)
+        }
+    }
+    
     /// Bind the bridged instance properties and functions of the given object to the type's namespace on this value.
     ///
     /// - Parameters:
     ///   - namespace: Override the type bridge's namespace.
     /// - Warning: The given object is not retained.
     public func integrate(_ instance: Any, namespace: JXNamespace? = nil) throws {
-        guard let bridge = try context.registry.bridge(for: instance, autobridging: true) else {
-            throw JXBridgeErrors.unknownType(String(describing: Swift.type(of: instance)))
+        guard let bridge = try context.registry.bridge(for: instance, definingIn: context) else {
+            throw JXError.missingBridge(for: String(describing: Swift.type(of: instance)), namespace: namespace?.string ?? JXNamespace.none.string)
         }
         let namespaceValue = try addNamespace(namespace ?? bridge.namespace)
         
@@ -47,11 +71,12 @@ extension JXValue {
     }
     
     /// Whether a property exists matching the value of the given namespace.
-    public func hasNamespace(_ namespace: JXNamespace) -> Bool {
+    public func hasNamespace(_ namespace: JXNamespace) throws -> Bool {
         guard namespace != .none else {
             return true
         }
-        return hasProperty(namespace.value)
+        let (parent, property) = try traverseNamespace(namespace)
+        return !parent.isUndefined && parent.hasProperty(property)
     }
     
     /// The property value representing the given namespace.
@@ -60,18 +85,23 @@ extension JXValue {
             guard namespace != .none else {
                 return self
             }
-            return try self[namespace.value]
+            let (parent, property) = try traverseNamespace(namespace)
+            return try parent.isUndefined ? parent : parent[property]
         }
     }
     
     /// Add the given namespace to this value.
     @discardableResult public func addNamespace(_ namespace: JXNamespace) throws -> JXValue {
-        let existing = try self[namespace]
+        guard namespace != .none else {
+            return self
+        }
+        let (parent, property) = try traverseNamespace(namespace, createIntermediates: true)
+        let existing = try parent[property]
         guard existing.isNullOrUndefined else {
             return existing
         }
         let value = try context.eval(JSCodeGenerator.newNamespaceJSProxy(namespace))
-        try self.setProperty(namespace.value, value)
+        try parent.setProperty(property, value)
         return value
     }
     
@@ -80,7 +110,30 @@ extension JXValue {
         guard namespace != .none else {
             return false
         }
-        return try deleteProperty(namespace.value)
+        let (parent, property) = try traverseNamespace(namespace)
+        return try !parent.isUndefined && parent.deleteProperty(property)
+    }
+    
+    /// Traverse a '.'-separated namespace, returning the object hosting the ultimate namespace property as well as the name of that property.
+    private func traverseNamespace(_ namespace: JXNamespace, createIntermediates: Bool = false) throws -> (parent: JXValue, property: String) {
+        let tokens = namespace.string.split(separator: ".")
+        guard tokens.count > 1 && !self.isUndefined else {
+            return (self, namespace.string)
+        }
+        
+        let property = String(tokens.last!)
+        var parent = self
+        for i in 0..<(tokens.count - 1) {
+            let token = String(tokens[i])
+            if parent.hasProperty(token) {
+                parent = try parent[token]
+            } else if createIntermediates {
+                parent = try parent.setProperty(token, context.object())
+            } else {
+                return (context.undefined(), property)
+            }
+        }
+        return (parent, property)
     }
 }
 
@@ -103,7 +156,7 @@ private struct WeakRef: Ref {
     var instance: Any {
         get throws {
             guard let object else {
-                throw JXBridgeErrors.invalidInstance("Instance has been deallocated")
+                throw JXError.instanceDeallocated()
             }
             return object
         }

@@ -79,26 +79,6 @@
             {
               "kind" : "identifier",
               "text" : "JXVar"
-            },
-            {
-              "kind" : "text",
-              "text" : "<"
-            },
-            {
-              "kind" : "genericParameter",
-              "text" : "T"
-            },
-            {
-              "kind" : "text",
-              "text" : ", "
-            },
-            {
-              "kind" : "genericParameter",
-              "text" : "V"
-            },
-            {
-              "kind" : "text",
-              "text" : ">"
             }
           ]
         }
@@ -160,9 +140,10 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/init(wrappedValue:_:)-32gcx",
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/init(wrappedValue:_:)-4w3q",
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/init(wrappedValue:_:)-5os1r"
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/init(_:)",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/init(wrappedValue:_:)-4rlt6",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/init(wrappedValue:_:)-6dmr1",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/init(wrappedValue:_:)-6q9l2"
       ],
       "title" : "Initializers"
     },
@@ -232,7 +213,7 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxvar"
 },
-"doc://JXBridge/documentation/JXBridge/JXVar/init(wrappedValue:_:)-32gcx": {
+"doc://JXBridge/documentation/JXBridge/JXVar/init(_:)": {
   "abstract" : [
 
   ],
@@ -243,7 +224,71 @@
     },
     {
       "kind" : "text",
-      "text" : "("
+      "text" : "(("
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    },
+    {
+      "kind" : "text",
+      "text" : ") -> "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridgeAAV",
+      "text" : "JXBridge"
+    },
+    {
+      "kind" : "text",
+      "text" : "."
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:8JXBridgeAAV14PropertyBridgeV",
+      "text" : "PropertyBridge"
+    },
+    {
+      "kind" : "text",
+      "text" : ")"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/init(_:)",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxvar\/init(_:)"
+},
+"doc://JXBridge/documentation/JXBridge/JXVar/init(wrappedValue:_:)-4rlt6": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
+    {
+      "kind" : "identifier",
+      "text" : "init"
+    },
+    {
+      "kind" : "text",
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "V"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
     },
     {
       "kind" : "externalParam",
@@ -294,14 +339,14 @@
       "text" : ".Type)"
     }
   ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/init(wrappedValue:_:)-32gcx",
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/init(wrappedValue:_:)-4rlt6",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "init(wrappedValue:_:)",
   "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxvar\/init(wrappedvalue:_:)-32gcx"
+  "url" : "\/documentation\/jxbridge\/jxvar\/init(wrappedvalue:_:)-4rlt6"
 },
-"doc://JXBridge/documentation/JXBridge/JXVar/init(wrappedValue:_:)-4w3q": {
+"doc://JXBridge/documentation/JXBridge/JXVar/init(wrappedValue:_:)-6dmr1": {
   "abstract" : [
 
   ],
@@ -312,68 +357,23 @@
     },
     {
       "kind" : "text",
-      "text" : "("
+      "text" : "<"
     },
     {
-      "kind" : "externalParam",
-      "text" : "wrappedValue"
-    },
-    {
-      "kind" : "text",
-      "text" : ": ("
-    },
-    {
-      "kind" : "typeIdentifier",
+      "kind" : "genericParameter",
       "text" : "T"
-    },
-    {
-      "kind" : "text",
-      "text" : ") "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "throws"
-    },
-    {
-      "kind" : "text",
-      "text" : " -> "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "text" : "V"
     },
     {
       "kind" : "text",
       "text" : ", "
     },
     {
-      "kind" : "typeIdentifier",
-      "text" : "T"
+      "kind" : "genericParameter",
+      "text" : "V"
     },
     {
       "kind" : "text",
-      "text" : ".Type)"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/init(wrappedValue:_:)-4w3q",
-  "kind" : "symbol",
-  "role" : "symbol",
-  "title" : "init(wrappedValue:_:)",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxvar\/init(wrappedvalue:_:)-4w3q"
-},
-"doc://JXBridge/documentation/JXBridge/JXVar/init(wrappedValue:_:)-5os1r": {
-  "abstract" : [
-
-  ],
-  "fragments" : [
-    {
-      "kind" : "identifier",
-      "text" : "init"
-    },
-    {
-      "kind" : "text",
-      "text" : "("
+      "text" : ">("
     },
     {
       "kind" : "externalParam",
@@ -449,33 +449,45 @@
       "text" : ".Type)"
     }
   ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/init(wrappedValue:_:)-5os1r",
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/init(wrappedValue:_:)-6dmr1",
   "kind" : "symbol",
   "role" : "symbol",
   "title" : "init(wrappedValue:_:)",
   "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxvar\/init(wrappedvalue:_:)-5os1r"
+  "url" : "\/documentation\/jxbridge\/jxvar\/init(wrappedvalue:_:)-6dmr1"
 },
-"doc://JXBridge/documentation/JXBridge/JXVar/wrappedValue": {
+"doc://JXBridge/documentation/JXBridge/JXVar/init(wrappedValue:_:)-6q9l2": {
   "abstract" : [
 
   ],
   "fragments" : [
     {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
       "kind" : "identifier",
-      "text" : "wrappedValue"
+      "text" : "init"
     },
     {
       "kind" : "text",
-      "text" : ": (get"
+      "text" : "<"
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "T"
+    },
+    {
+      "kind" : "text",
+      "text" : ", "
+    },
+    {
+      "kind" : "genericParameter",
+      "text" : "V"
+    },
+    {
+      "kind" : "text",
+      "text" : ">("
+    },
+    {
+      "kind" : "externalParam",
+      "text" : "wrappedValue"
     },
     {
       "kind" : "text",
@@ -503,11 +515,7 @@
     },
     {
       "kind" : "text",
-      "text" : ", set"
-    },
-    {
-      "kind" : "text",
-      "text" : ": (("
+      "text" : ", "
     },
     {
       "kind" : "typeIdentifier",
@@ -515,24 +523,44 @@
     },
     {
       "kind" : "text",
-      "text" : ", "
-    },
+      "text" : ".Type)"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/init(wrappedValue:_:)-6q9l2",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "init(wrappedValue:_:)",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxvar\/init(wrappedvalue:_:)-6q9l2"
+},
+"doc://JXBridge/documentation/JXBridge/JXVar/wrappedValue": {
+  "abstract" : [
+
+  ],
+  "fragments" : [
     {
-      "kind" : "typeIdentifier",
-      "text" : "V"
+      "kind" : "keyword",
+      "text" : "var"
     },
     {
       "kind" : "text",
-      "text" : ") -> "
+      "text" : " "
     },
     {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:s4Voida",
-      "text" : "Void"
+      "kind" : "identifier",
+      "text" : "wrappedValue"
     },
     {
       "kind" : "text",
-      "text" : ")?)"
+      "text" : ": "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "Any"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
     }
   ],
   "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXVar\/wrappedValue",

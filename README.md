@@ -4,7 +4,7 @@
 [![Swift5 compatible][Swift5Badge]][Swift5Link] 
 ![Platform][SwiftPlatforms]
 
-A `JXKit` addition to bridge ObjectiveC and Swift classes and structs to JavaScript.
+Bridge ObjectiveC and Swift classes and structs with JavaScript using `JXKit`.
 
 ## API
 
@@ -12,7 +12,7 @@ Browse the [API Documentation].
 
 ## Dependencies
 
- - [JXKit][]: Cross-platform JavaScript engine[^1]
+- [JXKit][]: Cross-platform JavaScript engine[^1]
 
 [Swift Package Manager]: https://swift.org/package-manager
 [API Documentation]: https://www.jective.org/JXBridge/documentation/jxbridge/
@@ -36,9 +36,9 @@ Browse the [API Documentation].
 - Formalize threading model.
     - We currently assume that there is never concurrent access to a `JXContext`.
     - We always evaluate JavaScript - including calling any bridged native code - on the context's calling thread.
-- Test performance of bridged code.
-- Support Swift tuples as return values?
-    - This would require additional function builder overloads to maintain the tuple element types.
+- Support mode in which all JS executes on a given background queue and hops to another queue for native code.
+- Support native Actors and perform async calls.
+- Add JXContext.current for native code called from JS.
 - Support Swift delegates in JavaScript.
     - I don't think there's any way to get around requiring the developer to write an implementing of the delegate protocol. But we may be able to give her a simple API with which to invoke the corresponding JS code for each delegate callback. E.g.:
     
@@ -46,10 +46,6 @@ Browse the [API Documentation].
                 return jsDelegate.invoke('senderDidSomethingWithResult', [sender, result]).convey(to: Return.self)
             }
         
-- Support Swift trailing closures in JavaScript.
-    - This would require additional function builder overloads for all support block signatures. We could limit the overloads to non-async instance functions.
-    - Consider support for Void closures with no args, a single Bool arg, and a single Result arg.
-
 - Consider a SourceKit plugin option to auto-generate Swift bridging code.
 - Test enhancing and overriding reflected ObjectiveC API with explicit bridging.
 - Support ObjectiveC trailing `error: NSError**` parameters.

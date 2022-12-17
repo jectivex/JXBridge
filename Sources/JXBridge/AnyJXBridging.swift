@@ -12,7 +12,7 @@ public struct AnyJXBridging: JXModule {
             guard namespace != .none else {
                 return typeName
             }
-            return namespace.value + "." + typeName
+            return "\(namespace).\(typeName)"
         }
         self.init(map: { map[qualifiedTypeName($0, namespace: $1)] })
     }
@@ -24,28 +24,28 @@ public struct AnyJXBridging: JXModule {
     
     public let namespace: JXNamespace = .none
     
-    public func registerBridge(for typeName: String, namespace: JXNamespace, in registry: JXRegistry) throws -> Bool {
-        guard let value = map(typeName, namespace) else {
+    public func define(symbol: String, namespace: JXNamespace, in context: JXContext) throws -> Bool {
+        guard let value = map(symbol, namespace) else {
             return false
         }
         if let bridging = value as? JXBridging {
             guard !(value is JXBridging.Type) else {
-                throw JXBridgeErrors.invalidInstance("Register a JXBridging instance, not a class")
+                throw JXError(message: "AnyJXBridging module: Supply a JXBridging instance, not a class")
             }
-            try registry.registerBridge(for: bridging, namespace: namespace)
+            try context.registry.registerBridge(for: bridging, namespace: namespace)
         } else if let bridgingType = value as? JXStaticBridging.Type {
-            try registry.registerBridge(for: bridgingType, namespace: namespace)
+            try context.registry.registerBridge(for: bridgingType, namespace: namespace)
         } else {
             return false
         }
         return true
     }
 
-    public func registerBridge(for instance: Any, in registry: JXRegistry) throws -> Bool {
+    public func define(for instance: Any, in context: JXContext) throws -> Bool {
         if let bridging = instance as? JXBridging {
-            try registry.registerBridge(for: bridging)
+            try context.registry.registerBridge(for: bridging)
         } else if let bridgingType = type(of: instance) as? JXStaticBridging.Type {
-            try registry.registerBridge(for: bridgingType)
+            try context.registry.registerBridge(for: bridgingType)
         } else {
             return false
         }

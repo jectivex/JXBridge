@@ -6,7 +6,7 @@ final class InstanceBox: NativeBox {
         let typeNameString = try typeName.string
         let namespaceString = try namespace.string
         guard let bridge = registry.bridge(for: typeNameString, namespace: JXNamespace(namespaceString)) else {
-            throw JXBridgeErrors.unknownType(typeNameString)
+            throw JXError.missingBridge(for: typeNameString, namespace: namespaceString)
         }
         let argsArray = try args.array
         let constructor = try bridge.constructor(forParameterCount: argsArray.count, superclassRegistry: registry)
@@ -35,8 +35,9 @@ final class InstanceBox: NativeBox {
     }
 
     func call(function: JXValue, arguments args: JXValue) throws -> JXValue {
-        let functionBridge = try bridge.function(for: function.string, superclassRegistry: registry)
-        let (instance, ret) = try functionBridge.call(for: instance, with: args.array, in: function.context)
+        let argsArray = try args.array
+        let functionBridge = try bridge.function(for: function.string, parameterCount: argsArray.count, superclassRegistry: registry)
+        let (instance, ret) = try functionBridge.call(for: instance, with: argsArray, in: function.context)
         self.instance = instance
         return ret
     }
