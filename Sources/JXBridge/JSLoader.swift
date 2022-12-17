@@ -7,7 +7,7 @@ import JXKit
 class JSLoader {
     /// Return the URL for the givne script resource.
     func scriptURL(resource: String, root: URL) -> URL {
-        if #available(iOS 16.0, *) {
+        if #available(macOS 13.0, iOS 16.0, *) {
             return root.appending(path: resource, directoryHint: .notDirectory)
         } else {
             return root.appendingPathComponent(resource, isDirectory: false)
