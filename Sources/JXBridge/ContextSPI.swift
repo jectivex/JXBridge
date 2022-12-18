@@ -90,9 +90,13 @@ final class ContextSPI {
         switch script.source {
 #if canImport(Foundation)
         case .resource(let resource, let root):
-            exports = try context.evalModule(resource: resource, root: root, cacheExports: false)
+            exports = try moduleManager.withRoot(root, namespace: script.namespace) { mm in
+                return try mm.evalModule(resource: resource, cacheExports: false)
+            }
         case .jsWithRoot(let js, let root):
-            exports = try context.evalModule(js, root: root)
+            exports = try moduleManager.withRoot(root, namespace: script.namespace) { mm in
+                return try context.evalModule(js, root: root)
+            }
 #endif
         case .js(let js):
             exports = try context.evalModule(js)
@@ -129,9 +133,9 @@ final class ContextSPI {
                 return context.undefined()
             }
             guard args.count == 1 && args[0].isString else {
-                throw JXError(message: "'require' expects a single string argument")
+                throw JXError(message: "'require' expects a single argument")
             }
-            return try self.moduleManager.require(args[0].string)
+            return try self.moduleManager.require(args[0])
         }
         try context.global.setProperty("require", require)
         try context.global.setProperty(JSCodeGenerator.moduleExportsCacheObject, context.object())

@@ -14,11 +14,11 @@ class JSModuleManager {
 #if canImport(Foundation)
     
     private let loader = ResourceLoader()
-    private var moduleCache: [String: JSModule] = [:]
+    private var moduleCache: [String: Module] = [:]
     private var evalStack: [(key: String?, url: URL?, root: URL)] = []
     
-    func withRoot(_ root: URL, perform: (JSModuleManager) throws -> JXValue) throws -> JXValue {
-        evalStack.append((nil, nil, root))
+    func withRoot(_ root: URL, namespace: JXNamespace? = nil, perform: (JSModuleManager) throws -> JXValue) throws -> JXValue {
+        evalStack.append((namespace?.string, nil, root))
         defer { evalStack.removeLast() }
         return try perform(self)
     }
@@ -66,7 +66,7 @@ class JSModuleManager {
         
         if cacheExports {
             // Create a module reference before evaluating to avoid infinite recursion in the case of circular dependencies
-            var module = JSModule(key: key, url: url)
+            var module = Module(key: key, type: .js(url))
             if let referencedBy = evalState.key {
                 module.referencedByKeys.insert(referencedBy)
             }
@@ -79,12 +79,23 @@ class JSModuleManager {
         return try context.eval(moduleScript)
     }
     
+    private func recordJXModuleReference(namespace: JXNamespace) {
+        guard let referencedBy = evalStack.last?.key else {
+            return
+        }
+        var module = moduleCache[namespace.string] ?? Module(key: namespace.string, type: .jx(namespace))
+        if module.referencedByKeys.insert(referencedBy).inserted {
+            moduleCache[namespace.string] = module
+        }
+    }
+    
     private func key(for url: URL) -> String {
         if let key = resourceURLToKey[url] {
             return key
         }
-        let key = "r\(resourceId)"
+        let key = "_jxr\(resourceId)"
         resourceId += 1
+        resourceURLToKey[url] = key
         resourceURLToKey[url] = key
         return key
     }
@@ -92,21 +103,38 @@ class JSModuleManager {
     private var resourceURLToKey: [URL: String] = [:]
     private var resourceId = 0
     
-    private struct JSModule {
+    private enum ModuleType {
+        case js(URL)
+        case jx(JXNamespace)
+    }
+    private struct Module {
         let key: String
-        let url: URL
+        let type: ModuleType
         var referencedByKeys = Set<String>()
         
         func exports(in context: JXContext) throws -> JXValue {
-            return try context.global[JSCodeGenerator.moduleExportsCacheObject][key]
+            switch type {
+            case .js:
+                return try context.global[JSCodeGenerator.moduleExportsCacheObject][key]
+            case .jx(let namespace):
+                return try context.global[namespace]
+            }
         }
     }
     
 #endif
     
-    func require(_ resource: String) throws -> JXValue {
+    func require(_ value: JXValue) throws -> JXValue {
 #if canImport(Foundation)
-        return try evalModule(resource: resource, cacheExports: true)
+        guard !value.isString else {
+            return try evalModule(resource: value.string, cacheExports: true)
+        }
+        let moduleNameValue = try value[JSCodeGenerator.namespaceProperty]
+        guard moduleNameValue.isString else {
+            throw JXError(message: "'require' expects a file path string or a JXModule namespace object, e.g. require('/module.js') or require(jxswiftui)")
+        }
+        try recordJXModuleReference(namespace: JXNamespace(moduleNameValue.string))
+        return value
 #else
         throw JXError(message: "'require' is not available on platforms without Foundation support")
 #endif
