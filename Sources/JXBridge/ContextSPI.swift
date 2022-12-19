@@ -7,6 +7,7 @@ import JXKit
 final class ContextSPI {
     private weak var context: JXContext?
     private var initializationError: Error?
+    private var registrySubscription: ListenerCollection.Cancellable?
     
     init(context: JXContext) {
         self.context = context
@@ -34,7 +35,7 @@ final class ContextSPI {
         }
         let registry = JXRegistry()
         _registry = registry
-        registry.listeners.addListener(self)
+        registrySubscription = registry.listeners.addListener(self)
         do {
             try initializeRegistry(registry)
         } catch {
@@ -49,9 +50,8 @@ final class ContextSPI {
         guard registry !== _registry else {
             return
         }
-        _registry?.listeners.removeListener(self)
         _registry = registry
-        registry.listeners.addListener(self)
+        registrySubscription = registry.listeners.addListener(self)
         try initializeRegistry(registry)
     }
     private var _registry: JXRegistry?
@@ -86,22 +86,33 @@ final class ContextSPI {
         guard let context else {
             return
         }
-        let exports: JXValue
-        switch script.source {
+        do {
+            let exports: JXValue
+            switch script.source {
 #if canImport(Foundation)
-        case .resource(let resource, let root):
-            exports = try moduleManager.withRoot(root, namespace: script.namespace) { mm in
-                return try mm.evalModule(resource: resource, cacheExports: false)
-            }
-        case .jsWithRoot(let js, let root):
-            exports = try moduleManager.withRoot(root, namespace: script.namespace) { mm in
-                return try context.evalModule(js, root: root)
-            }
+            case .resource(let resource, let root):
+                exports = try moduleManager.withRoot(root, namespace: script.namespace) { mm in
+                    return try mm.evalModule(resource: resource, cacheExports: false)
+                }
+            case .jsWithRoot(let js, let root):
+                exports = try moduleManager.withRoot(root, namespace: script.namespace) { mm in
+                    return try context.evalModule(js, root: root)
+                }
 #endif
-        case .js(let js):
-            exports = try context.evalModule(js)
+            case .js(let js):
+                exports = try context.evalModule(js)
+            }
+            try context.global[script.namespace].integrate(exports)
+        } catch {
+            // When initialization isn't an immediate result of the dev registering the module, add context to help them track down the problem
+            if addErrorContext {
+                var error = JXError(cause: error)
+                error.message = "Error integrating JavaScript modules for module'\(script.namespace)': \(error.message)"
+                throw error
+            } else {
+                throw error
+            }
         }
-        try context.global[script.namespace].integrate(exports)
     }
     
     private func initializeModule(_ module: JXModule, registry: JXRegistry, addErrorContext: Bool = false) throws {

@@ -12,7 +12,7 @@ public final class JXRegistry {
     private var unnamespacedModules: [JXModule] = []
     
     // Allow any context using this registry to listen for additions that require JS generation
-    let listeners = RegistryListeners()
+    let listeners = ListenerCollection()
     var namespaces: AnyCollection<JXNamespace> {
         return AnyCollection(modulesByNamespace.keys)
     }
@@ -35,7 +35,7 @@ public final class JXRegistry {
         guard module.namespace != .none else {
             try module.register(with: self)
             unnamespacedModules.append(module)
-            try listeners.didRegisterModule(module)
+            try listeners.forEachListener(as: RegistryListener.self) { try $0.didRegisterModule(module) }
             return true
         }
         
@@ -45,7 +45,7 @@ public final class JXRegistry {
         }
         modulesByNamespace[module.namespace] = [module] // Assign before initializing to avoid recursion on circular dependencies
         if existingModules == nil {
-            try listeners.didAddNamespace(module.namespace)
+            try listeners.forEachListener(as: RegistryListener.self) { try $0.didAddNamespace(module.namespace) }
         }
         do {
             try module.register(with: self)
@@ -54,7 +54,7 @@ public final class JXRegistry {
             modulesByNamespace[module.namespace] = []
             throw error
         }
-        try listeners.didRegisterModule(module)
+        try listeners.forEachListener(as: RegistryListener.self) { try $0.didRegisterModule(module) }
         return true
     }
     
@@ -79,10 +79,10 @@ public final class JXRegistry {
         bridgesByActualTypeName[actualTypeName] = preparedBridge
         
         if preparedBridge.namespace == .none {
-            try listeners.didRegisterUnnamespacedBridge(preparedBridge)
+            try listeners.forEachListener(as: RegistryListener.self) { try $0.didRegisterUnnamespacedBridge(preparedBridge) }
         } else if modulesByNamespace[preparedBridge.namespace] == nil {
             modulesByNamespace[preparedBridge.namespace] = []
-            try listeners.didAddNamespace(preparedBridge.namespace)
+            try listeners.forEachListener(as: RegistryListener.self) { try $0.didAddNamespace(preparedBridge.namespace) }
         }
     }
     
@@ -213,18 +213,18 @@ public final class JXRegistry {
         if var existingScripts = moduleScriptsByNamespace[script.namespace] {
             existingScripts.append(script)
             moduleScriptsByNamespace[script.namespace] = existingScripts
-            try listeners.didRegisterModuleScript(script)
+            try listeners.forEachListener(as: RegistryListener.self) { try $0.didRegisterModuleScript(script) }
             return
         }
         
         if script.namespace != .none {
             if !modulesByNamespace.keys.contains(script.namespace) {
                 modulesByNamespace[script.namespace] = []
-                try listeners.didAddNamespace(script.namespace)
+                try listeners.forEachListener(as: RegistryListener.self) { try $0.didAddNamespace(script.namespace) }
             }
         }
         moduleScriptsByNamespace[script.namespace] = [script]
-        try listeners.didRegisterModuleScript(script)
+        try listeners.forEachListener(as: RegistryListener.self) { try $0.didRegisterModuleScript(script) }
     }
 
     /// Return the registered bridge for the given type name, or nil if none has been registered.

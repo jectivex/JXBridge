@@ -4,7 +4,7 @@ import Foundation
 import JXKit
 
 /// Manage JavaScript module loading and caching.
-class JSModuleManager {
+final class JSModuleManager {
     private weak var context: JXContext?
     
     init(context: JXContext) {
@@ -17,6 +17,10 @@ class JSModuleManager {
     private var moduleCache: [String: Module] = [:]
     private var evalStack: [(key: String?, url: URL?, root: URL)] = []
     
+    /// Perform a set of operations where any given resources use the given root URL.
+    ///
+    /// - Parameters:
+    ///   - namespace: If given, the opeations are being performed by the ``JXModule`` using the given namespace.
     func withRoot(_ root: URL, namespace: JXNamespace? = nil, perform: (JSModuleManager) throws -> JXValue) throws -> JXValue {
         evalStack.append((namespace?.string, nil, root))
         defer { evalStack.removeLast() }
@@ -89,6 +93,38 @@ class JSModuleManager {
         }
     }
     
+    private func resourcesDidUpdate(at urls: Set<URL>) {
+        // When a module changes, we have to reload that module and also all the modules that reference it,
+        // as their exports could also be affected. And so on recursively. Perform a breadth-first traversal
+        // of the reference graph to create an ordered list of modules to reload
+        let keys = urls.map { key(for: $0) }
+        var processKeyQueue = keys
+        var seenKeys = Set(keys)
+        var reloadKeys: [String] = []
+        while !processKeyQueue.isEmpty {
+            let key = processKeyQueue.removeFirst()
+            reloadKeys.append(key)
+            if let module = moduleCache[key] {
+                processKeyQueue += module.referencedByKeys.subtracting(seenKeys)
+                seenKeys.formUnion(module.referencedByKeys)
+            }
+        }
+        reloadKeys.forEach { reloadModule(for: $0) }
+        //~~~ tell listeners that all seenKeys updated
+    }
+    
+    private func reloadModule(for key: String) {
+        guard let module = moduleCache[key] else {
+            return
+        }
+        switch module.type {
+        case .js(let url):
+            break //~~~
+        case .jx(let namespace):
+            break //~~~
+        }
+    }
+    
     private func key(for url: URL) -> String {
         if let key = resourceURLToKey[url] {
             return key
@@ -107,6 +143,7 @@ class JSModuleManager {
         case js(URL)
         case jx(JXNamespace)
     }
+    
     private struct Module {
         let key: String
         let type: ModuleType
@@ -124,6 +161,7 @@ class JSModuleManager {
     
 #endif
     
+    /// Logic for the `require` JavaScript module function.
     func require(_ value: JXValue) throws -> JXValue {
 #if canImport(Foundation)
         guard !value.isString else {
