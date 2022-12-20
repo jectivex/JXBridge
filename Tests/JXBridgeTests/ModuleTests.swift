@@ -137,7 +137,7 @@ private struct LazyModule: JXModule {
         if throwError {
             throw ModuleError.some("LazyModule.register")
         }
-        if let addDependency = self.addDependency {
+        if let addDependency {
             try registry.register(addDependency)
         }
     }

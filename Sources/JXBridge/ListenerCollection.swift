@@ -1,53 +1,27 @@
-/// An unordered collection of weakly-held event listeners.
-public final class ListenerCollection {
-    // Note: it would have been nice to use publishers for these events, but we want to avoid Combine
-    // dependencies where possible and be able to synchronously throw any listener errors
+import Combine
+
+/// An ordered collection of event listeners.
+///
+/// - Warning: Listeners are **strongly** held. This class should **not** be accessed concurrently.
+final class ListenerCollection<T> {
+    // Note: it would have been nice to use publishers for these events, but we want to synchronously throw any listener errors
     
-    /// You must retain this object to receive events.
-    public final class Cancellable {
-        private let collection: ListenerCollection
-        private var key: Int?
-        
-        fileprivate init(collection: ListenerCollection, key: Int) {
-            self.collection = collection
-            self.key = key
-        }
-        
-        deinit {
-            cancel()
-        }
-        
-        /// Stop receiving events.
-        public func cancel() {
-            if let key {
-                self.key = nil
-                collection.listeners[key] = nil
-            }
-        }
-    }
-    
-    private var listeners: [Int: WeakRef] = [:]
+    private var listeners: [Int: T] = [:]
     private var keyGenerator = 0
     
     /// Add a listener to be sent events.
     ///
-    /// - Returns: A `Cancellable` you can use to stop receiving events, and which you must retain to continue to receive them.
-    public func addListener(_ listener: AnyObject) -> Cancellable {
+    /// - Returns: A ``JX`Cancellable`` you can use to stop receiving events, and which you must retain to continue to receive them.
+    func addListener(_ listener: T) -> JXCancellable {
         let key = keyGenerator
         keyGenerator += 1
-        listeners[key] = WeakRef(listener: listener)
-        return Cancellable(collection: self, key: key)
+        listeners[key] = listener
+        return JXCancellable { [weak self] in self?.listeners[key] = nil }
     }
     
-    func forEachListener<T>(as: T.Type, perform: (T) throws -> Void) rethrows {
-        try listeners.values.forEach {
-            if let listener = $0.listener as? T {
-                try perform(listener)
-            }
-        }
-    }
-    
-    private struct WeakRef {
-        weak var listener: AnyObject?
+    func forEachListener(perform: (T) throws -> Void) rethrows {
+        try listeners
+            .sorted { $0.key < $1.key }
+            .forEach { try perform($0.value) }
     }
 }

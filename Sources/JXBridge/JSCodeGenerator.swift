@@ -32,7 +32,7 @@ new Proxy({ _jxNamespace: '\(namespace)', import() { _jxImport(this); } }, {
     /// Define a JavaScript class for the given type. The JavaScript class uses an objec internally to invoke native API.
     func defineJSClass() -> String {
         var extendsClause = ""
-        if let superclassBridge = self.superclassBridge {
+        if let superclassBridge {
             extendsClause = " extends \(superclassBridge.qualifiedTypeName)"
         } else if let jsSuperclassName = bridge.jsSuperclassName {
             extendsClause = " extends \(jsSuperclassName)"

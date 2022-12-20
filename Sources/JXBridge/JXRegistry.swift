@@ -8,11 +8,11 @@ public final class JXRegistry {
     private var bridgesByGivenTypeName: [TypeNameKey: JXBridge] = [:]
     private var bridgesByActualTypeName: [String: JXBridge] = [:]
     private(set) var modulesByNamespace: [JXNamespace: [JXModule]] = [:] // 0 or 1 module per known namespace. Internal for testing
-    private var moduleScriptsByNamespace: [JXNamespace: [JSModuleScript]] = [:]
+    private var moduleScriptsByNamespace: [JXNamespace: [JXModuleScript]] = [:]
     private var unnamespacedModules: [JXModule] = []
     
     // Allow any context using this registry to listen for additions that require JS generation
-    let listeners = ListenerCollection()
+    let didUpdate = ListenerCollection<JXRegistryListener>()
     var namespaces: AnyCollection<JXNamespace> {
         return AnyCollection(modulesByNamespace.keys)
     }
@@ -22,7 +22,7 @@ public final class JXRegistry {
     func bridges(in namespace: JXNamespace) -> AnyCollection<JXBridge> {
         return AnyCollection(bridgesByGivenTypeName.compactMap { $0.key.namespace == namespace ? $0.value : nil })
     }
-    func moduleScripts(in namespace: JXNamespace) -> AnyCollection<JSModuleScript> {
+    func moduleScripts(in namespace: JXNamespace) -> AnyCollection<JXModuleScript> {
         return AnyCollection(moduleScriptsByNamespace[namespace] ?? [])
     }
 
@@ -35,7 +35,7 @@ public final class JXRegistry {
         guard module.namespace != .none else {
             try module.register(with: self)
             unnamespacedModules.append(module)
-            try listeners.forEachListener(as: RegistryListener.self) { try $0.didRegisterModule(module) }
+            try didUpdate.forEachListener { try $0.didRegisterModule(module) }
             return true
         }
         
@@ -45,7 +45,7 @@ public final class JXRegistry {
         }
         modulesByNamespace[module.namespace] = [module] // Assign before initializing to avoid recursion on circular dependencies
         if existingModules == nil {
-            try listeners.forEachListener(as: RegistryListener.self) { try $0.didAddNamespace(module.namespace) }
+            try didUpdate.forEachListener { try $0.didAddNamespace(module.namespace) }
         }
         do {
             try module.register(with: self)
@@ -54,7 +54,7 @@ public final class JXRegistry {
             modulesByNamespace[module.namespace] = []
             throw error
         }
-        try listeners.forEachListener(as: RegistryListener.self) { try $0.didRegisterModule(module) }
+        try didUpdate.forEachListener { try $0.didRegisterModule(module) }
         return true
     }
     
@@ -79,10 +79,10 @@ public final class JXRegistry {
         bridgesByActualTypeName[actualTypeName] = preparedBridge
         
         if preparedBridge.namespace == .none {
-            try listeners.forEachListener(as: RegistryListener.self) { try $0.didRegisterUnnamespacedBridge(preparedBridge) }
+            try didUpdate.forEachListener { try $0.didRegisterUnnamespacedBridge(preparedBridge) }
         } else if modulesByNamespace[preparedBridge.namespace] == nil {
             modulesByNamespace[preparedBridge.namespace] = []
-            try listeners.forEachListener(as: RegistryListener.self) { try $0.didAddNamespace(preparedBridge.namespace) }
+            try didUpdate.forEachListener { try $0.didAddNamespace(preparedBridge.namespace) }
         }
     }
     
@@ -191,7 +191,7 @@ public final class JXRegistry {
     ///   - resource: The JavaScript file to load, in the form `/path/file.js` or `/path/file`. Note the leading `/` because the resource path is not being interpreted relative to another resource.
     ///   - root: The root of the JavaScript resources, typically `Bundle.module.resourceURL` for a Swift package. This is used to locate the resource and any scripts it references via `require`.
     public func registerModuleScript(resource: String, root: URL, namespace: JXNamespace) throws {
-        try registerModuleScript(JSModuleScript(source: .resource(resource, root), namespace: namespace))
+        try registerModuleScript(JXModuleScript(source: .resource(resource, root), namespace: namespace))
     }
     
     /// Register JavaScript module code to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.
@@ -199,32 +199,32 @@ public final class JXRegistry {
     /// - Parameters:
     ///   - root: The root of the JavaScript resources, typically `Bundle.module.resourceURL` for a Swift package. This is used to locate any scripts referenced via `require`.
     public func registerModuleScript(_ script: String, root: URL, namespace: JXNamespace) throws {
-        try registerModuleScript(JSModuleScript(source: .jsWithRoot(script, root), namespace: namespace))
+        try registerModuleScript(JXModuleScript(source: .jsWithRoot(script, root), namespace: namespace))
     }
     
 #endif
     
     /// Register JavaScript module code to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.
     public func registerModuleScript(_ script: String, namespace: JXNamespace) throws {
-        try registerModuleScript(JSModuleScript(source: .js(script), namespace: namespace))
+        try registerModuleScript(JXModuleScript(source: .js(script), namespace: namespace))
     }
     
-    private func registerModuleScript(_ script: JSModuleScript) throws {
+    private func registerModuleScript(_ script: JXModuleScript) throws {
         if var existingScripts = moduleScriptsByNamespace[script.namespace] {
             existingScripts.append(script)
             moduleScriptsByNamespace[script.namespace] = existingScripts
-            try listeners.forEachListener(as: RegistryListener.self) { try $0.didRegisterModuleScript(script) }
+            try didUpdate.forEachListener { try $0.didRegisterModuleScript(script) }
             return
         }
         
         if script.namespace != .none {
             if !modulesByNamespace.keys.contains(script.namespace) {
                 modulesByNamespace[script.namespace] = []
-                try listeners.forEachListener(as: RegistryListener.self) { try $0.didAddNamespace(script.namespace) }
+                try didUpdate.forEachListener { try $0.didAddNamespace(script.namespace) }
             }
         }
         moduleScriptsByNamespace[script.namespace] = [script]
-        try listeners.forEachListener(as: RegistryListener.self) { try $0.didRegisterModuleScript(script) }
+        try didUpdate.forEachListener { try $0.didRegisterModuleScript(script) }
     }
 
     /// Return the registered bridge for the given type name, or nil if none has been registered.
@@ -296,6 +296,14 @@ public final class JXRegistry {
         }
         return nil
     }
+}
+
+/// Listen for registry updates.
+struct JXRegistryListener {
+    var didAddNamespace: (JXNamespace) throws -> Void = { _ in }
+    var didRegisterModule: (JXModule) throws -> Void = { _ in }
+    var didRegisterModuleScript: (JXModuleScript) throws -> Void = { _ in }
+    var didRegisterUnnamespacedBridge: (JXBridge) throws -> Void = { _ in }
 }
 
 private struct TypeNameKey: Hashable {

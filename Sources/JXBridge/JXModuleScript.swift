@@ -2,14 +2,14 @@
 import Foundation
 #endif
 
-/// Represents JavaScript module content.
-struct JSModuleScript: Equatable {
-    var source: JSSource
+/// Represents a JavaScript module script integrated into a `JXModule`.
+struct JXModuleScript: Equatable {
+    var source: JXModuleScriptSource
     var namespace: JXNamespace
 }
 
-/// JavaScript source.
-enum JSSource: Equatable {
+/// JavaScript source integrated into a `JXModule`.
+enum JXModuleScriptSource: Equatable {
 #if canImport(Foundation)
     /// The resource and its root URL from which this script was loaded.
     case resource(String, URL)
