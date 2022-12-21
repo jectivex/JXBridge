@@ -7,10 +7,11 @@ import JXKit
 final class ContextSPI {
     private weak var context: JXContext?
     private var initializationError: Error?
+    private var registrySubscription: JXCancellable?
     
     init(context: JXContext) {
         self.context = context
-        self.moduleManager = JSModuleManager(context: context)
+        self.scriptManager = ScriptManager(context: context)
         do {
             try defineGlobalFunctions()
         } catch {
@@ -34,7 +35,7 @@ final class ContextSPI {
         }
         let registry = JXRegistry()
         _registry = registry
-        registry.listeners.addListener(self)
+        registrySubscription = registry.didUpdate.addListener(newRegistryListener())
         do {
             try initializeRegistry(registry)
         } catch {
@@ -49,14 +50,23 @@ final class ContextSPI {
         guard registry !== _registry else {
             return
         }
-        _registry?.listeners.removeListener(self)
         _registry = registry
-        registry.listeners.addListener(self)
+        registrySubscription = registry.didUpdate.addListener(newRegistryListener())
         try initializeRegistry(registry)
     }
     private var _registry: JXRegistry?
     
-    let moduleManager: JSModuleManager
+    let scriptManager: ScriptManager
+    
+    private func newRegistryListener() -> JXRegistryListener {
+        weak var weakSelf = self
+        var listener = JXRegistryListener()
+        listener.didAddNamespace = { try weakSelf?.defineNamespace($0) }
+        listener.didRegisterModule = { try weakSelf?.initializeModule($0) }
+        listener.didRegisterModuleScript = { try weakSelf?.loadModuleScript($0) }
+        listener.didRegisterUnnamespacedBridge = { try weakSelf?.defineClass(for: $0) }
+        return listener
+    }
     
     private func initializeRegistry(_ registry: JXRegistry) throws {
         try registry.bridges(in: .none).forEach { try defineClass(for: $0) }
@@ -65,7 +75,7 @@ final class ContextSPI {
             try defineNamespace(namespace)
             try registry.moduleScripts(in: namespace).forEach { try loadModuleScript($0, addErrorContext: true) }
         }
-        try registry.modules.forEach { try initializeModule($0, registry: registry, addErrorContext: true) }
+        try registry.modules.forEach { try initializeModule($0, addErrorContext: true) }
     }
     
     private func defineNamespace(_ namespace: JXNamespace) throws {
@@ -82,25 +92,39 @@ final class ContextSPI {
         try defineClass(for: bridge, in: context)
     }
     
-    private func loadModuleScript(_ script: JSModuleScript, addErrorContext: Bool = false) throws {
+    private func loadModuleScript(_ script: JXModuleScript, addErrorContext: Bool = false) throws {
         guard let context else {
-            return
+            throw JXError.contextDeallocated()
         }
-        let exports: JXValue
-        switch script.source {
+        do {
+            switch script.source {
 #if canImport(Foundation)
-        case .resource(let resource, let root):
-            exports = try context.evalModule(resource: resource, root: root, cacheExports: false)
-        case .jsWithRoot(let js, let root):
-            exports = try context.evalModule(js, root: root)
+            case .resource(let resource, let root):
+                let _ = try scriptManager.withRoot(root, namespace: script.namespace) { sm in
+                    try sm.evalModule(resource: resource)
+                }
+            case .jsWithRoot(let js, let root):
+                let _ = try scriptManager.withRoot(root, namespace: script.namespace) { sm in
+                    return try sm.evalModule(js)
+                }
 #endif
-        case .js(let js):
-            exports = try context.evalModule(js)
+            case .js(let js):
+                let exports = try scriptManager.evalModule(js)
+                try context.global[script.namespace].integrate(exports)
+            }
+        } catch {
+            // When initialization isn't an immediate result of the dev registering the module, add context to help them track down the problem
+            if addErrorContext {
+                var error = JXError(cause: error)
+                error.message = "Error integrating JavaScript modules for module'\(script.namespace)': \(error.message)"
+                throw error
+            } else {
+                throw error
+            }
         }
-        try context.global[script.namespace].integrate(exports)
     }
     
-    private func initializeModule(_ module: JXModule, registry: JXRegistry, addErrorContext: Bool = false) throws {
+    private func initializeModule(_ module: JXModule, addErrorContext: Bool = false) throws {
         guard let context else {
             return
         }
@@ -128,10 +152,10 @@ final class ContextSPI {
             guard let self else {
                 return context.undefined()
             }
-            guard args.count == 1 && args[0].isString else {
-                throw JXError(message: "'require' expects a single string argument")
+            guard args.count == 1 else {
+                throw JXError(message: "'require' expects a single argument")
             }
-            return try self.moduleManager.require(args[0].string)
+            return try self.scriptManager.require(args[0])
         }
         try context.global.setProperty("require", require)
         try context.global.setProperty(JSCodeGenerator.moduleExportsCacheObject, context.object())
@@ -284,24 +308,6 @@ final class ContextSPI {
                 try context.global.setProperty(entry.key, entry.value)
             }
         }
-    }
-}
-
-extension ContextSPI: RegistryListener {
-    func didAddNamespace(_ namespace: JXNamespace) throws {
-        try defineNamespace(namespace)
-    }
-    
-    func didRegisterModule(_ module: JXModule) throws {
-        try initializeModule(module, registry: registry)
-    }
-    
-    func didRegisterModuleScript(_ script: JSModuleScript) throws {
-        try loadModuleScript(script)
-    }
-    
-    func didRegisterUnnamespacedBridge(_ bridge: JXBridge) throws {
-        try defineClass(for: bridge)
     }
 }
 

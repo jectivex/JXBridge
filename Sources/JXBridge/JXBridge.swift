@@ -50,7 +50,7 @@ public struct JXBridge {
     public var superclass: Any.Type?
     
     func superclassBridge(in registry: JXRegistry) -> JXBridge? {
-        guard let superclass = self.superclass else {
+        guard let superclass else {
             return nil
         }
         return registry.bridge(for: superclass)
@@ -363,7 +363,7 @@ public struct JXBridge {
         
         /// Call the setter, returning the target instance. For value types, this may be a different value.
         func set(for instance: Any, value: JXValue, in context: JXContext) throws -> Any {
-            guard let setter = self.setter else {
+            guard let setter else {
                 throw JXError(message: "Error setting \(owningTypeName).\(name): This property is read only")
             }
             do {
@@ -429,7 +429,7 @@ public struct JXBridge {
         
         /// Call the setter.
         func set(value: JXValue, in context: JXContext) throws {
-            guard let setter = self.setter else {
+            guard let setter else {
                 throw JXError(message: "Error setting \(owningTypeName).\(name): This property is read only")
             }
             do {

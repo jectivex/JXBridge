@@ -5,6 +5,9 @@ import JXKit
 
 /// Load resources.
 class ResourceLoader {
+    /// Invoked when resources change.
+    let didChange = ListenerCollection<ResourceListener>()
+    
     /// Return the URL for the given resource.
     func resourceURL(resource: String, relativeTo: URL?, root: URL) throws -> URL {
         if resource.hasPrefix("/") {
@@ -34,6 +37,15 @@ class ResourceLoader {
             }
         }
     }
+    
+    private func resourcesDidChange(urls: Set<URL>) {
+        didChange.forEachListener { $0.handler(urls) }
+    }
+}
+
+/// Listen for resource keys.
+struct ResourceListener {
+    let handler: (Set<URL>) -> Void
 }
 
 #endif
