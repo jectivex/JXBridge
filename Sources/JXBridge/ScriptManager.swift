@@ -24,18 +24,18 @@ final class ScriptManager {
     let didAccess = ListenerCollection<ScriptListener>()
     
     /// Evaluate the given script as a JavaScript module, returning its exports.
-    func evalModule(_ script: String) throws -> JXValue {
+    ///
+    /// - Parameters:
+    ///   - namespace: If given, the module exports will be integrated into this namespace.
+    func evalModule(_ script: String, for namespace: JXNamespace? = nil) throws -> JXValue {
         guard let context else {
             throw JXError.contextDeallocated()
         }
         let moduleScript = toModuleScript(script)
         let exports = try context.eval(moduleScript)
-#if canImport(Foundation)
-        // If we're evaluating this module for inclusion in a JXModule namespace, integrate it
-        if let namespace = evalStack.last?.namespace {
+        if let namespace {
             try context.global[namespace].integrate(exports)
         }
-#endif
         return exports
     }
     
@@ -43,29 +43,16 @@ final class ScriptManager {
     
     private let loader = ResourceLoader()
     private var moduleCache: [String: Module] = [:]
-    private var evalStack: [(key: String?, url: URL?, namespace: JXNamespace?, root: URL)] = []
+    private var evalStack: [(key: String?, url: URL?, root: URL)] = []
     
     /// Perform a set of operations where any given resources use the given root URL.
-    ///
-    /// - Parameters:
-    ///   - namespace: If given, the opeations are being performed by the ``JXModule`` using the given namespace. The return value will be integrated into the namespace.
-    func withRoot(_ root: URL, namespace: JXNamespace? = nil, perform: (ScriptManager) throws -> JXValue) throws -> JXValue {
-        guard let context else {
-            throw JXError.contextDeallocated()
-        }
-        if let namespace, !moduleCache.keys.contains(namespace.string) {
-            let module = Module(key: namespace.string, type: .jx(namespace))
-            moduleCache[namespace.string] = module
-        }
-        evalStack.append((namespace?.string, nil, namespace, root))
+    func withRoot(_ root: URL, perform: (ScriptManager) throws -> JXValue) throws -> JXValue {
+        evalStack.append((nil, nil, root))
         defer { evalStack.removeLast() }
-        let ret = try perform(self)
-        if let namespace {
-            try context.global[namespace].integrate(ret)
-        }
-        return ret
+        return try perform(self)
     }
     
+    /// Evaluate the given script as a JavaScript module, returning its exports.
     func eval(resource: String, this: JXValue?) throws -> JXValue {
         guard let context else {
             throw JXError.contextDeallocated()
@@ -81,12 +68,16 @@ final class ScriptManager {
         // This resource is not a module, however, and so it doesn't have its own referrers, and changes to it will not propagate
         let key = key(for: url)
         didAccess.forEachListener { $0.handler([key]) }
-        evalStack.append((key, url, nil, evalState.root))
+        evalStack.append((key, url, evalState.root))
         defer { evalStack.removeLast() }
         return try context.eval(js, this: this)
     }
     
-    func evalModule(resource: String) throws -> JXValue {
+    /// Evaluate the given resource as a JavaScript module, returning its exports.
+    ///
+    /// - Parameters:
+    ///   - namespace: If given, the module exports will be integrated into this namespace.
+    func evalModule(resource: String, for namespace: JXNamespace? = nil) throws -> JXValue {
         guard let context else {
             throw JXError.contextDeallocated()
         }
@@ -99,27 +90,33 @@ final class ScriptManager {
         
         // Already have cached exports?
         if var module = moduleCache[key] {
-            if let referencedBy = evalState.key, module.referencedByKeys.insert(referencedBy).inserted {
-                moduleCache[key] = module
-            }
-            return try module.exports(in: context)
+            // Setup references before eval in case there are errors: when the script updates
+            // we want to be sure to update its references as well
+            module.referencedBy(key: evalState.key)
+            module.integratedInto(namespace: namespace)
+            moduleCache[key] = module
+            let exports = try module.exports(in: context)
+            try module.integrate(exports: exports, into: namespace)
+            return exports
         }
         
         guard let js = try loader.loadScript(from: url) else {
             throw JXError.resourceNotFound(resource)
         }
         
-        // Create a module reference before evaluating to avoid infinite recursion in the case of circular dependencies
-        var module = Module(key: key, type: .js(url))
-        if let referencedBy = evalState.key {
-            module.referencedByKeys.insert(referencedBy)
-        }
+        // Create a module reference before evaluating to avoid infinite recursion in the case of circular dependencies.
+        // Also see note above about setting references before evaluating in case there is an error
+        var module = Module(key: key, type: .js(url, evalState.root))
+        module.referencedBy(key: evalState.key)
+        module.integratedInto(namespace: namespace)
         moduleCache[key] = module
         
-        evalStack.append((key, url, nil, evalState.root))
+        evalStack.append((key, url, evalState.root))
         defer { evalStack.removeLast() }
         let moduleScript = toModuleScript(js, key: key)
-        return try context.eval(moduleScript)
+        let exports = try context.eval(moduleScript)
+        try module.integrate(exports: exports, into: namespace)
+        return exports
     }
     
     private func recordJXModuleReference(namespace: JXNamespace) {
@@ -129,7 +126,7 @@ final class ScriptManager {
         // Record which JS modules 'require' a JX namespace just as we record which JS modules
         // 'require' other JS modules. JX namespaces can change when any integrated scripts change
         var module = moduleCache[namespace.string] ?? Module(key: namespace.string, type: .jx(namespace))
-        if module.referencedByKeys.insert(referencedBy).inserted {
+        if module.referencedBy(key: referencedBy) {
             moduleCache[namespace.string] = module
         }
     }
@@ -156,16 +153,37 @@ final class ScriptManager {
     }
     
     private func reloadModule(for key: String) {
-        //~~~ TODO: Reload module
-//        guard let module = moduleCache[key] else {
-//            return
-//        }
-//        switch module.type {
-//        case .js(let url):
-//            break
-//        case .jx(let namespace):
-//            break
-//        }
+        guard let module = moduleCache[key] else {
+            return
+        }
+        switch module.type {
+        case .js(let url, let root):
+            do {
+                print("Reloading JavaScript module at \(url.absoluteString)...")
+                try reloadModule(module, url: url, root: root)
+            } catch {
+                print("JavaScript module reload error: \(error)")
+            }
+        case .jx:
+            // Nothing to do. JS modules will integrate into the JX module namespace when they reload
+            break
+        }
+    }
+    
+    private func reloadModule(_ module: Module, url: URL, root: URL) throws {
+        guard let context else {
+            throw JXError.contextDeallocated()
+        }
+        guard let js = try loader.loadScript(from: url) else {
+            throw JXError.resourceNotFound(url.absoluteString)
+        }
+        evalStack.append((module.key, url, root))
+        defer { evalStack.removeLast() }
+        let moduleScript = toModuleScript(js, key: module.key)
+        let exports = try context.eval(moduleScript)
+        for namespace in module.integratedIntoNamespaces {
+            try module.integrate(exports: exports, into: namespace)
+        }
     }
     
     private func key(for url: URL) -> String {
@@ -182,14 +200,37 @@ final class ScriptManager {
     private var resourceId = 0
     
     private enum ModuleType {
-        case js(URL)
+        case js(URL, URL) // resource URL, root URL
         case jx(JXNamespace)
     }
     
     private struct Module {
         let key: String
         let type: ModuleType
-        var referencedByKeys = Set<String>()
+        private(set) var referencedByKeys = Set<String>()
+        private(set) var integratedIntoNamespaces = Set<JXNamespace>()
+        
+        @discardableResult mutating func referencedBy(key: String?) -> Bool {
+            guard let key else {
+                return false
+            }
+            return referencedByKeys.insert(key).inserted
+        }
+        
+        @discardableResult mutating func integratedInto(namespace: JXNamespace?) -> Bool {
+            guard let namespace else {
+                return false
+            }
+            return integratedIntoNamespaces.insert(namespace).inserted
+        }
+        
+        @discardableResult func integrate(exports: JXValue, into namespace: JXNamespace?) throws -> Bool {
+            guard let namespace else {
+                return false
+            }
+            try exports.context.global[namespace].integrate(exports)
+            return true
+        }
         
         func exports(in context: JXContext) throws -> JXValue {
             switch type {

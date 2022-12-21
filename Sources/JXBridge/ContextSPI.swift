@@ -100,12 +100,12 @@ final class ContextSPI {
             switch script.source {
 #if canImport(Foundation)
             case .resource(let resource, let root):
-                let _ = try scriptManager.withRoot(root, namespace: script.namespace) { sm in
-                    try sm.evalModule(resource: resource)
+                let _ = try scriptManager.withRoot(root) { sm in
+                    try sm.evalModule(resource: resource, for: script.namespace)
                 }
             case .jsWithRoot(let js, let root):
-                let _ = try scriptManager.withRoot(root, namespace: script.namespace) { sm in
-                    return try sm.evalModule(js)
+                let _ = try scriptManager.withRoot(root) { sm in
+                    return try sm.evalModule(js, for: script.namespace)
                 }
 #endif
             case .js(let js):
