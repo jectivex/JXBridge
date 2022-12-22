@@ -6,16 +6,20 @@ import JXKit
 /// Manage JavaScript script loading and caching.
 final class ScriptManager {
     private weak var context: JXContext?
-    private var resourcesSubscription: JXCancellable?
     
-    init(context: JXContext) {
-        self.context = context
 #if canImport(Foundation)
-        resourcesSubscription = self.loader.didChange.addListener(ResourceListener { [weak self] in
+    init(context: JXContext, resourceLoader: ResourceLoader = FSEventResourceLoader()) {
+        self.context = context
+        self.resourceLoader = resourceLoader
+        resourcesSubscription = self.resourceLoader.didChange.addListener(ResourceListener { [weak self] in
             self?.resourcesDidChange(urls: $0)
         })
-#endif
     }
+#else
+    init(context: JXContext) {
+        self.context = context
+    }
+#endif
     
     /// Invoked when scripts change.
     let didChange = ListenerCollection<ScriptListener>()
@@ -41,7 +45,8 @@ final class ScriptManager {
     
 #if canImport(Foundation)
     
-    private let loader = ResourceLoader()
+    private let resourceLoader: ResourceLoader
+    private var resourcesSubscription: JXCancellable?
     private var moduleCache: [String: Module] = [:]
     private var evalStack: [(key: String?, url: URL?, root: URL)] = []
     
@@ -60,8 +65,8 @@ final class ScriptManager {
         guard let evalState = evalStack.last else {
             throw JXError.unknownResourceRoot(for: resource)
         }
-        let url = try loader.resourceURL(resource: resource, relativeTo: evalState.url, root: evalState.root)
-        guard let js = try loader.loadScript(from: url) else {
+        let url = try resourceLoader.resourceURL(resource: resource, relativeTo: evalState.url, root: evalState.root)
+        guard let js = try resourceLoader.loadScript(from: url) else {
             throw JXError.resourceNotFound(resource)
         }
         // Add this resource to the stack so that it is recorded as a referrer of any modules it requires.
@@ -84,7 +89,7 @@ final class ScriptManager {
         guard let evalState = evalStack.last else {
             throw JXError.unknownResourceRoot(for: resource)
         }
-        let url = try loader.resourceURL(resource: resource, relativeTo: evalState.url, root: evalState.root)
+        let url = try resourceLoader.resourceURL(resource: resource, relativeTo: evalState.url, root: evalState.root)
         let key = key(for: url)
         didAccess.forEachListener { $0.handler([key]) }
         
@@ -96,11 +101,11 @@ final class ScriptManager {
             module.integratedInto(namespace: namespace)
             moduleCache[key] = module
             let exports = try module.exports(in: context)
-            try module.integrate(exports: exports, into: namespace)
+            try integrate(exports: exports, into: namespace)
             return exports
         }
         
-        guard let js = try loader.loadScript(from: url) else {
+        guard let js = try resourceLoader.loadScript(from: url) else {
             throw JXError.resourceNotFound(resource)
         }
         
@@ -115,7 +120,7 @@ final class ScriptManager {
         defer { evalStack.removeLast() }
         let moduleScript = toModuleScript(js, key: key)
         let exports = try context.eval(moduleScript)
-        try module.integrate(exports: exports, into: namespace)
+        try integrate(exports: exports, into: namespace)
         return exports
     }
     
@@ -131,7 +136,8 @@ final class ScriptManager {
         }
     }
     
-    private func resourcesDidChange(urls: Set<URL>) {
+    // Visible for testing
+    func resourcesDidChange(urls: Set<URL>) {
         // When a module changes, we have to reload that module and also all the modules that reference it,
         // as their exports could also be affected. And so on recursively. Perform a breadth-first traversal
         // of the reference graph to create an ordered list of modules to reload
@@ -174,7 +180,7 @@ final class ScriptManager {
         guard let context else {
             throw JXError.contextDeallocated()
         }
-        guard let js = try loader.loadScript(from: url) else {
+        guard let js = try resourceLoader.loadScript(from: url) else {
             throw JXError.resourceNotFound(url.absoluteString)
         }
         evalStack.append((module.key, url, root))
@@ -182,8 +188,19 @@ final class ScriptManager {
         let moduleScript = toModuleScript(js, key: module.key)
         let exports = try context.eval(moduleScript)
         for namespace in module.integratedIntoNamespaces {
-            try module.integrate(exports: exports, into: namespace)
+            try integrate(exports: exports, into: namespace)
         }
+    }
+    
+    @discardableResult private func integrate(exports: JXValue, into namespace: JXNamespace?) throws -> Bool {
+        guard let namespace else {
+            return false
+        }
+        let namespaceValue = try exports.context.global[namespace]
+        if try mergeExports(previous: namespaceValue, exports: exports).bool == false {
+            try namespaceValue.integrate(exports)
+        }
+        return true
     }
     
     private func key(for url: URL) -> String {
@@ -224,14 +241,6 @@ final class ScriptManager {
             return integratedIntoNamespaces.insert(namespace).inserted
         }
         
-        @discardableResult func integrate(exports: JXValue, into namespace: JXNamespace?) throws -> Bool {
-            guard let namespace else {
-                return false
-            }
-            try exports.context.global[namespace].integrate(exports)
-            return true
-        }
-        
         func exports(in context: JXContext) throws -> JXValue {
             switch type {
             case .js:
@@ -261,13 +270,23 @@ final class ScriptManager {
 #endif
     }
     
+    /// Logic for the function to merge previous exports - if any - with new exports.
+    func mergeExports(previous: JXValue, exports: JXValue) throws -> JXValue {
+        // TODO: Merge into previous exports by replacing prototypes so that state is preserved
+        return exports.context.boolean(false)
+    }
+    
     /// Return the JavaScript to run to evaluate the given script as a module.
     private func toModuleScript(_ script: String, key: String? = nil) -> String {
-        let cacheExports: String
+        let prepareExports: String
+        let updateExports: String
         if let key {
-            cacheExports = "\(JSCodeGenerator.moduleExportsCacheObject).\(key) = module.exports;"
+            let moduleExportsCacheKey = "\(JSCodeGenerator.moduleExportsCacheObject).\(key)"
+            prepareExports = "const previousExports = \(moduleExportsCacheKey); \(moduleExportsCacheKey) = module.exports;"
+            updateExports = "if (\(JSCodeGenerator.moduleExportsMergeFunction)(previousExports, module.exports)) { \(moduleExportsCacheKey) = previousExports; } else { \(moduleExportsCacheKey) = module.exports; }"
         } else {
-            cacheExports = ""
+            prepareExports = ""
+            updateExports = ""
         }
         // Cache the empty exports before running the body to vend partial exports in cases of circular dependencies
         // Cache again after running the body in case it resets module.exports = x
@@ -276,14 +295,14 @@ final class ScriptManager {
 (function() {
     const module = { exports: {} };
     const exports = module.exports;
-    \(cacheExports)
+    \(prepareExports)
     (function() {
         \(script)
     })()
     if (module.exports.import === undefined) {
         module.exports.import = function() { \(JSCodeGenerator.importFunction)(this); }
     }
-    \(cacheExports)
+    \(updateExports)
     return module.exports;
 })();
 """
