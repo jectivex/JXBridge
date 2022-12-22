@@ -1,4 +1,4 @@
-#if canImport(Combing)
+#if canImport(Combine)
 import Combine
 #else
 import OpenCombineShim
