@@ -1,4 +1,8 @@
+#if canImport(Combing)
 import Combine
+#else
+import OpenCombineShim
+#endif
 
 /// An ordered collection of event listeners.
 ///
