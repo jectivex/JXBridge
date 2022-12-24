@@ -1,4 +1,4 @@
-#if canImport(ObjectiveC)
+#if canImport(Foundation)
 import Foundation
 #endif
 import JXKit

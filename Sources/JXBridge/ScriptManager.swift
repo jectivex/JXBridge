@@ -7,19 +7,14 @@ import JXKit
 final class ScriptManager {
     private weak var context: JXContext?
     
-#if canImport(Foundation)
-    init(context: JXContext, resourceLoader: ResourceLoader = FSEventResourceLoader()) {
+    init(context: JXContext) {
         self.context = context
-        self.resourceLoader = resourceLoader
+#if canImport(Foundation)
         resourcesSubscription = self.resourceLoader.didChange.addListener(ResourceListener { [weak self] in
             self?.resourcesDidChange(urls: $0)
         })
-    }
-#else
-    init(context: JXContext) {
-        self.context = context
-    }
 #endif
+    }
     
     /// Invoked when scripts change.
     let didChange = ListenerCollection<ScriptListener>()
@@ -27,28 +22,19 @@ final class ScriptManager {
     /// Invoked when scripts are accessed.
     let didAccess = ListenerCollection<ScriptListener>()
     
-    /// Evaluate the given script as a JavaScript module, returning its exports.
-    ///
-    /// - Parameters:
-    ///   - namespace: If given, the module exports will be integrated into this namespace.
-    func evalModule(_ script: String, for namespace: JXNamespace? = nil) throws -> JXValue {
-        guard let context else {
-            throw JXError.contextDeallocated()
-        }
-        let moduleScript = toModuleScript(script)
-        let exports = try context.eval(moduleScript)
-        if let namespace {
-            try context.global[namespace].integrate(exports)
-        }
-        return exports
-    }
-    
 #if canImport(Foundation)
     
-    private let resourceLoader: ResourceLoader
+    var resourceLoader: ResourceLoader = FSEventResourceLoader() { // Visible for testing
+        didSet {
+            resourcesSubscription = self.resourceLoader.didChange.addListener(ResourceListener { [weak self] in
+                self?.resourcesDidChange(urls: $0)
+            })
+        }
+    }
     private var resourcesSubscription: JXCancellable?
     private var moduleCache: [String: Module] = [:]
     private var evalStack: [(key: String?, url: URL?, root: URL)] = []
+    private var scriptKeyGenerator = 0
     
     /// Perform a set of operations where any given resources use the given root URL.
     func withRoot(_ root: URL, perform: (ScriptManager) throws -> JXValue) throws -> JXValue {
@@ -78,47 +64,89 @@ final class ScriptManager {
         return try context.eval(js, this: this)
     }
     
+    /// Evaluate the given script as a JavaScript module, returning its exports.
+    ///
+    /// - Parameters:
+    ///   - namespace: If given, the module exports will be integrated into this namespace.
+    func evalModule(_ script: String, for namespace: JXNamespace? = nil) throws -> JXValue {
+        // We only need to treat this as a full cached module if we have to integrate it into a namespace and
+        // it might include other modules, which means we'll need to re-integrate if a dependency changes.
+        // Otherwise we can treat it as transient
+        if namespace != nil, let evalState = evalStack.last {
+            return try evalModule(script, resource: nil, for: namespace, evalState: evalState)
+        } else {
+            return try evalTransientModule(script)
+        }
+    }
+    
     /// Evaluate the given resource as a JavaScript module, returning its exports.
     ///
     /// - Parameters:
     ///   - namespace: If given, the module exports will be integrated into this namespace.
     func evalModule(resource: String, for namespace: JXNamespace? = nil) throws -> JXValue {
-        guard let context else {
-            throw JXError.contextDeallocated()
-        }
         guard let evalState = evalStack.last else {
             throw JXError.unknownResourceRoot(for: resource)
         }
-        let url = try resourceLoader.resourceURL(resource: resource, relativeTo: evalState.url, root: evalState.root)
-        let key = key(for: url)
-        didAccess.forEachListener { $0.handler([key]) }
-        
-        // Already have cached exports?
-        if var module = moduleCache[key] {
-            // Setup references before eval in case there are errors: when the script updates
-            // we want to be sure to update its references as well
-            module.referencedBy(key: evalState.key)
-            module.integratedInto(namespace: namespace)
-            moduleCache[key] = module
-            let exports = try module.exports(in: context)
-            try integrate(exports: exports, into: namespace)
-            return exports
+        return try evalModule(nil, resource: resource, for: namespace, evalState: evalState)
+    }
+    
+    private func evalModule(_ script: String?, resource: String?, for namespace: JXNamespace?, evalState: (key: String?, url: URL?, root: URL)) throws -> JXValue {
+        guard let context else {
+            throw JXError.contextDeallocated()
         }
         
-        guard let js = try resourceLoader.loadScript(from: url) else {
-            throw JXError.resourceNotFound(resource)
+        var module: Module
+        let js: String
+        let url: URL?
+        let cacheKey: String?
+        if let script {
+            let key = "s\(scriptKeyGenerator)"
+            scriptKeyGenerator += 1
+            module = Module(key: key, type: .js(script, evalState.root))
+            js = script
+            url = nil
+            cacheKey = nil
+        } else if let resource {
+            let resourceURL = try resourceLoader.resourceURL(resource: resource, relativeTo: evalState.url, root: evalState.root)
+            let key = key(for: resourceURL)
+            didAccess.forEachListener { $0.handler([key]) }
+            
+            // Already have cached exports?
+            if var module = moduleCache[key] {
+                // Setup references before eval in case there are errors: when the script updates
+                // we want to be sure to update its references as well
+                module.referencedBy(key: evalState.key)
+                module.integratedInto(namespace: namespace)
+                moduleCache[key] = module
+                let exports = try module.exports(in: context)
+                try integrate(exports: exports, into: namespace)
+                return exports
+            }
+            
+            guard let script = try resourceLoader.loadScript(from: resourceURL) else {
+                throw JXError.resourceNotFound(resource)
+            }
+            module = Module(key: key, type: .jsResource(resourceURL, evalState.root))
+            js = script
+            url = resourceURL
+            cacheKey = key
+        } else {
+            throw JXError.internalError("script == nil && resource == nil")
         }
         
         // Create a module reference before evaluating to avoid infinite recursion in the case of circular dependencies.
         // Also see note above about setting references before evaluating in case there is an error
-        var module = Module(key: key, type: .js(url, evalState.root))
-        module.referencedBy(key: evalState.key)
-        module.integratedInto(namespace: namespace)
-        moduleCache[key] = module
+        if let evalStateKey = evalState.key {
+            module.referencedBy(key: evalStateKey)
+        }
+        if let namespace {
+            module.integratedInto(namespace: namespace)
+        }
+        moduleCache[module.key] = module
         
-        evalStack.append((key, url, evalState.root))
+        evalStack.append((module.key, url, evalState.root))
         defer { evalStack.removeLast() }
-        let moduleScript = toModuleScript(js, key: key)
+        let moduleScript = toModuleScript(js, cacheKey: cacheKey)
         let exports = try context.eval(moduleScript)
         try integrate(exports: exports, into: namespace)
         return exports
@@ -136,8 +164,7 @@ final class ScriptManager {
         }
     }
     
-    // Visible for testing
-    func resourcesDidChange(urls: Set<URL>) {
+    private func resourcesDidChange(urls: Set<URL>) {
         // When a module changes, we have to reload that module and also all the modules that reference it,
         // as their exports could also be affected. And so on recursively. Perform a breadth-first traversal
         // of the reference graph to create an ordered list of modules to reload
@@ -163,10 +190,17 @@ final class ScriptManager {
             return
         }
         switch module.type {
-        case .js(let url, let root):
+        case .js(let script, let root):
+            do {
+                print("Reloading JavaScript module script \(key)...")
+                try reloadModule(module, script: script, url: nil, root: root)
+            } catch {
+                print("JavaScript module reload error: \(error)")
+            }
+        case .jsResource(let url, let root):
             do {
                 print("Reloading JavaScript module at \(url.absoluteString)...")
-                try reloadModule(module, url: url, root: root)
+                try reloadModule(module, script: nil, url: url, root: root)
             } catch {
                 print("JavaScript module reload error: \(error)")
             }
@@ -176,16 +210,27 @@ final class ScriptManager {
         }
     }
     
-    private func reloadModule(_ module: Module, url: URL, root: URL) throws {
+    private func reloadModule(_ module: Module, script: String?, url: URL?, root: URL) throws {
         guard let context else {
             throw JXError.contextDeallocated()
         }
-        guard let js = try resourceLoader.loadScript(from: url) else {
-            throw JXError.resourceNotFound(url.absoluteString)
+        let js: String
+        let cacheKey: String?
+        if let script {
+            js = script
+            cacheKey = nil
+        } else if let url {
+            guard let script = try resourceLoader.loadScript(from: url) else {
+                throw JXError.resourceNotFound(url.absoluteString)
+            }
+            js = script
+            cacheKey = module.key
+        } else {
+            throw JXError.internalError("script == nil && url == nil")
         }
         evalStack.append((module.key, url, root))
         defer { evalStack.removeLast() }
-        let moduleScript = toModuleScript(js, key: module.key)
+        let moduleScript = toModuleScript(js, cacheKey: cacheKey)
         let exports = try context.eval(moduleScript)
         for namespace in module.integratedIntoNamespaces {
             try integrate(exports: exports, into: namespace)
@@ -217,7 +262,8 @@ final class ScriptManager {
     private var resourceId = 0
     
     private enum ModuleType {
-        case js(URL, URL) // resource URL, root URL
+        case js(String, URL) // script, root URL
+        case jsResource(URL, URL) // resource URL, root URL
         case jx(JXNamespace)
     }
     
@@ -243,7 +289,7 @@ final class ScriptManager {
         
         func exports(in context: JXContext) throws -> JXValue {
             switch type {
-            case .js:
+            case .js, .jsResource:
                 return try context.global[JSCodeGenerator.moduleExportsCacheObject][key]
             case .jx(let namespace):
                 return try context.global[namespace]
@@ -251,7 +297,29 @@ final class ScriptManager {
         }
     }
     
+#else
+    
+    /// Evaluate the given script as a JavaScript module, returning its exports.
+    ///
+    /// - Parameters:
+    ///   - namespace: If given, the module exports will be integrated into this namespace.
+    func evalModule(_ script: String, for namespace: JXNamespace? = nil) throws -> JXValue {
+        let exports = try evalTransientModule(script)
+        if let namespace {
+            try context.global[namespace].integrate(exports)
+        }
+        return exports
+    }
+    
 #endif
+    
+    private func evalTransientModule(_ script: String) throws -> JXValue {
+        guard let context else {
+            throw JXError.contextDeallocated()
+        }
+        let moduleScript = toModuleScript(script)
+        return try context.eval(moduleScript)
+    }
     
     /// Logic for the `require` JavaScript module function.
     func require(_ value: JXValue) throws -> JXValue {
@@ -277,11 +345,11 @@ final class ScriptManager {
     }
     
     /// Return the JavaScript to run to evaluate the given script as a module.
-    private func toModuleScript(_ script: String, key: String? = nil) -> String {
+    private func toModuleScript(_ script: String, cacheKey: String? = nil) -> String {
         let prepareExports: String
         let updateExports: String
-        if let key {
-            let moduleExportsCacheKey = "\(JSCodeGenerator.moduleExportsCacheObject).\(key)"
+        if let cacheKey {
+            let moduleExportsCacheKey = "\(JSCodeGenerator.moduleExportsCacheObject).\(cacheKey)"
             prepareExports = "const previousExports = \(moduleExportsCacheKey); \(moduleExportsCacheKey) = module.exports;"
             updateExports = "if (\(JSCodeGenerator.moduleExportsMergeFunction)(previousExports, module.exports)) { \(moduleExportsCacheKey) = previousExports; } else { \(moduleExportsCacheKey) = module.exports; }"
         } else {

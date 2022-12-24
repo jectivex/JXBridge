@@ -58,8 +58,8 @@ extension JXContext {
     ///   - resource: The JavaScript file to load, in the form `/path/file.js` or `/path/file`. Note the leading `/` because the resource path is not being interpreted relative to another resource.
     ///   - root: The root of the JavaScript resources, typically `Bundle.module.resourceURL` for a Swift package. This is used to locate the resource and any scripts it references via `require`.
     public func eval(resource: String, root: URL, this: JXValue? = nil) throws -> JXValue {
-        return try prepareBridge(throwing: true).scriptManager.withRoot(root) { rm in
-            return try rm.eval(resource: resource, this: this)
+        return try prepareBridge(throwing: true).scriptManager.withRoot(root) { sm in
+            return try sm.eval(resource: resource, this: this)
         }
     }
     
@@ -79,8 +79,8 @@ extension JXContext {
     ///   - resource: The JavaScript file to load, in the form `/path/file.js` or `/path/file`. Note the leading `/` because the resource path is not being interpreted relative to another resource.
     ///   - root: The root of the JavaScript resources, typically `Bundle.module.resourceURL` for a Swift package. This is used to locate the resource and any scripts it references via `require`.
     public func evalModule(resource: String, root: URL) throws -> JXValue {
-        return try prepareBridge(throwing: true).scriptManager.withRoot(root) { rm in
-            return try rm.evalModule(resource: resource)
+        return try prepareBridge(throwing: true).scriptManager.withRoot(root) { sm in
+            return try sm.evalModule(resource: resource)
         }
     }
     
