@@ -1,4 +1,4 @@
-#if canImport(ObjectiveC)
+#if canImport(Foundation)
 import Foundation
 #endif
 import JXKit
@@ -100,12 +100,12 @@ final class ContextSPI {
             switch script.source {
 #if canImport(Foundation)
             case .resource(let resource, let root):
-                let _ = try scriptManager.withRoot(root, namespace: script.namespace) { sm in
-                    try sm.evalModule(resource: resource)
+                let _ = try scriptManager.withRoot(root) { sm in
+                    try sm.evalModule(resource: resource, for: script.namespace)
                 }
             case .jsWithRoot(let js, let root):
-                let _ = try scriptManager.withRoot(root, namespace: script.namespace) { sm in
-                    return try sm.evalModule(js)
+                let _ = try scriptManager.withRoot(root) { sm in
+                    return try sm.evalModule(js, for: script.namespace)
                 }
 #endif
             case .js(let js):
@@ -177,6 +177,17 @@ final class ContextSPI {
             return object
         }
         try context.global.setProperty(JSCodeGenerator.importFunction, importFunction)
+        
+        let mergeExportsFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
+            guard let self else {
+                throw JXError.contextDeallocated()
+            }
+            guard args.count == 2 else {
+                throw JXError.internalError("mergeExports")
+            }
+            return try self.scriptManager.mergeExports(previous: args[0], exports: args[1])
+        }
+        try context.global.setProperty(JSCodeGenerator.moduleExportsMergeFunction, mergeExportsFunction)
         
         // Define a symbol accessed through a namespace
         let defineFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in

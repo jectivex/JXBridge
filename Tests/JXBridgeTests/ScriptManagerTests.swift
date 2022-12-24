@@ -1,4 +1,4 @@
-#if canImport(Foundation) && canImport(ObjectiveC)
+#if canImport(Foundation)
 
 import JXKit
 import XCTest
@@ -6,7 +6,7 @@ import XCTest
 #if DEBUG
 @testable import JXBridge
 
-final class JSModuleScriptTests: XCTestCase {
+final class ScriptManagerTests: XCTestCase {
     func testModuleScriptString() throws {
         try moduleScriptTest(fromResource: false)
     }

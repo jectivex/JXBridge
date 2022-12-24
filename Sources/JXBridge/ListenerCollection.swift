@@ -1,9 +1,3 @@
-#if canImport(Combine)
-import Combine
-#else
-import OpenCombineShim
-#endif
-
 /// An ordered collection of event listeners.
 ///
 /// - Warning: Listeners are **strongly** held. This class should **not** be accessed concurrently.
