@@ -178,17 +178,6 @@ final class ContextSPI {
         }
         try context.global.setProperty(JSCodeGenerator.importFunction, importFunction)
         
-        let mergeExportsFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
-            guard let self else {
-                throw JXError.contextDeallocated()
-            }
-            guard args.count == 2 else {
-                throw JXError.internalError("mergeExports")
-            }
-            return try self.scriptManager.mergeExports(previous: args[0], exports: args[1])
-        }
-        try context.global.setProperty(JSCodeGenerator.moduleExportsMergeFunction, mergeExportsFunction)
-        
         // Define a symbol accessed through a namespace
         let defineFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {

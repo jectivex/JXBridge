@@ -164,6 +164,107 @@ final class ScriptManager {
         }
     }
     
+    func integrate(exports: JXValue, into namespace: JXNamespace?) throws {
+        guard let namespace else {
+            return
+        }
+        let namespaceValue = try exports.context.global[namespace]
+        try namespaceValue.integrate(exports)
+    }
+    
+    private func key(for url: URL) -> String {
+        if let key = resourceURLToKey[url] {
+            return key
+        }
+        let key = "_jxr\(resourceId)"
+        resourceId += 1
+        resourceURLToKey[url] = key
+        return key
+    }
+    
+    private var resourceURLToKey: [URL: String] = [:]
+    private var resourceId = 0
+        
+#else
+    
+    /// Evaluate the given script as a JavaScript module, returning its exports.
+    ///
+    /// - Parameters:
+    ///   - namespace: If given, the module exports will be integrated into this namespace.
+    func evalModule(_ script: String, for namespace: JXNamespace? = nil) throws -> JXValue {
+        let exports = try evalTransientModule(script)
+        if let namespace {
+            try context.global[namespace].integrate(exports)
+        }
+        return exports
+    }
+    
+#endif
+    
+    private func evalTransientModule(_ script: String) throws -> JXValue {
+        guard let context else {
+            throw JXError.contextDeallocated()
+        }
+        let moduleScript = toModuleScript(script)
+        return try context.eval(moduleScript)
+    }
+    
+    /// Logic for the `require` JavaScript module function.
+    func require(_ value: JXValue) throws -> JXValue {
+#if canImport(Foundation)
+        guard !value.isString else {
+            return try evalModule(resource: value.string)
+        }
+        let moduleNameValue = try value[JSCodeGenerator.namespaceProperty]
+        guard moduleNameValue.isString else {
+            throw JXError(message: "'require' expects a file path string or a JXModule namespace object, e.g. require('/module.js') or require(jxswiftui)")
+        }
+        try recordJXModuleReference(namespace: JXNamespace(moduleNameValue.string))
+        return value
+#else
+        throw JXError(message: "'require' is not available on platforms without Foundation support")
+#endif
+    }
+    
+    /// Return the JavaScript to run to evaluate the given script as a module.
+    private func toModuleScript(_ script: String, cacheKey: String? = nil) -> String {
+        let cacheExports: String
+        if let cacheKey {
+            cacheExports = "\(JSCodeGenerator.moduleExportsCacheObject).\(cacheKey) = module.exports;"
+        } else {
+            cacheExports = ""
+        }
+        // Cache the empty exports before running the body to vend partial exports in cases of circular dependencies
+        // Cache again after running the body in case it resets module.exports = x
+        // Note that we use IIFEs to give private scopes and namespaces to the module code
+        let js = """
+(function() {
+    const module = { exports: {} };
+    \(cacheExports)
+    const exports = module.exports;
+    (function() {
+        \(script)
+    })()
+    if (module.exports.import === undefined) {
+        module.exports.import = function() { \(JSCodeGenerator.importFunction)(this); }
+    }
+    \(cacheExports)
+    return module.exports;
+})();
+"""
+        //print(js)
+        return js
+    }
+}
+
+/// Listen for script IDs.
+struct ScriptListener {
+    let handler: (Set<String>) -> Void
+}
+
+#if canImport(Foundation)
+
+extension ScriptManager {
     private func resourcesDidChange(urls: Set<URL>) {
         // When a module changes, we have to reload that module and also all the modules that reference it,
         // as their exports could also be affected. And so on recursively. Perform a breadth-first traversal
@@ -236,150 +337,42 @@ final class ScriptManager {
             try integrate(exports: exports, into: namespace)
         }
     }
+}
+
+private enum ModuleType {
+    case js(String, URL) // script, root URL
+    case jsResource(URL, URL) // resource URL, root URL
+    case jx(JXNamespace)
+}
+
+private struct Module {
+    let key: String
+    let type: ModuleType
+    private(set) var referencedByKeys = Set<String>()
+    private(set) var integratedIntoNamespaces = Set<JXNamespace>()
     
-    @discardableResult private func integrate(exports: JXValue, into namespace: JXNamespace?) throws -> Bool {
+    @discardableResult mutating func referencedBy(key: String?) -> Bool {
+        guard let key else {
+            return false
+        }
+        return referencedByKeys.insert(key).inserted
+    }
+    
+    @discardableResult mutating func integratedInto(namespace: JXNamespace?) -> Bool {
         guard let namespace else {
             return false
         }
-        let namespaceValue = try exports.context.global[namespace]
-        if try mergeExports(previous: namespaceValue, exports: exports).bool == false {
-            try namespaceValue.integrate(exports)
-        }
-        return true
+        return integratedIntoNamespaces.insert(namespace).inserted
     }
     
-    private func key(for url: URL) -> String {
-        if let key = resourceURLToKey[url] {
-            return key
+    func exports(in context: JXContext) throws -> JXValue {
+        switch type {
+        case .js, .jsResource:
+            return try context.global[JSCodeGenerator.moduleExportsCacheObject][key]
+        case .jx(let namespace):
+            return try context.global[namespace]
         }
-        let key = "_jxr\(resourceId)"
-        resourceId += 1
-        resourceURLToKey[url] = key
-        return key
-    }
-    
-    private var resourceURLToKey: [URL: String] = [:]
-    private var resourceId = 0
-    
-    private enum ModuleType {
-        case js(String, URL) // script, root URL
-        case jsResource(URL, URL) // resource URL, root URL
-        case jx(JXNamespace)
-    }
-    
-    private struct Module {
-        let key: String
-        let type: ModuleType
-        private(set) var referencedByKeys = Set<String>()
-        private(set) var integratedIntoNamespaces = Set<JXNamespace>()
-        
-        @discardableResult mutating func referencedBy(key: String?) -> Bool {
-            guard let key else {
-                return false
-            }
-            return referencedByKeys.insert(key).inserted
-        }
-        
-        @discardableResult mutating func integratedInto(namespace: JXNamespace?) -> Bool {
-            guard let namespace else {
-                return false
-            }
-            return integratedIntoNamespaces.insert(namespace).inserted
-        }
-        
-        func exports(in context: JXContext) throws -> JXValue {
-            switch type {
-            case .js, .jsResource:
-                return try context.global[JSCodeGenerator.moduleExportsCacheObject][key]
-            case .jx(let namespace):
-                return try context.global[namespace]
-            }
-        }
-    }
-    
-#else
-    
-    /// Evaluate the given script as a JavaScript module, returning its exports.
-    ///
-    /// - Parameters:
-    ///   - namespace: If given, the module exports will be integrated into this namespace.
-    func evalModule(_ script: String, for namespace: JXNamespace? = nil) throws -> JXValue {
-        let exports = try evalTransientModule(script)
-        if let namespace {
-            try context.global[namespace].integrate(exports)
-        }
-        return exports
-    }
-    
-#endif
-    
-    private func evalTransientModule(_ script: String) throws -> JXValue {
-        guard let context else {
-            throw JXError.contextDeallocated()
-        }
-        let moduleScript = toModuleScript(script)
-        return try context.eval(moduleScript)
-    }
-    
-    /// Logic for the `require` JavaScript module function.
-    func require(_ value: JXValue) throws -> JXValue {
-#if canImport(Foundation)
-        guard !value.isString else {
-            return try evalModule(resource: value.string)
-        }
-        let moduleNameValue = try value[JSCodeGenerator.namespaceProperty]
-        guard moduleNameValue.isString else {
-            throw JXError(message: "'require' expects a file path string or a JXModule namespace object, e.g. require('/module.js') or require(jxswiftui)")
-        }
-        try recordJXModuleReference(namespace: JXNamespace(moduleNameValue.string))
-        return value
-#else
-        throw JXError(message: "'require' is not available on platforms without Foundation support")
-#endif
-    }
-    
-    /// Logic for the function to merge previous exports - if any - with new exports.
-    func mergeExports(previous: JXValue, exports: JXValue) throws -> JXValue {
-        // TODO: Merge into previous exports by replacing prototypes so that state is preserved
-        return exports.context.boolean(false)
-    }
-    
-    /// Return the JavaScript to run to evaluate the given script as a module.
-    private func toModuleScript(_ script: String, cacheKey: String? = nil) -> String {
-        let prepareExports: String
-        let updateExports: String
-        if let cacheKey {
-            let moduleExportsCacheKey = "\(JSCodeGenerator.moduleExportsCacheObject).\(cacheKey)"
-            prepareExports = "const previousExports = \(moduleExportsCacheKey); \(moduleExportsCacheKey) = module.exports;"
-            updateExports = "if (\(JSCodeGenerator.moduleExportsMergeFunction)(previousExports, module.exports)) { \(moduleExportsCacheKey) = previousExports; } else { \(moduleExportsCacheKey) = module.exports; }"
-        } else {
-            prepareExports = ""
-            updateExports = ""
-        }
-        // Cache the empty exports before running the body to vend partial exports in cases of circular dependencies
-        // Cache again after running the body in case it resets module.exports = x
-        // Note that we use IIFEs to give private scopes and namespaces to the module code
-        let js = """
-(function() {
-    const module = { exports: {} };
-    const exports = module.exports;
-    \(prepareExports)
-    (function() {
-        \(script)
-    })()
-    if (module.exports.import === undefined) {
-        module.exports.import = function() { \(JSCodeGenerator.importFunction)(this); }
-    }
-    \(updateExports)
-    return module.exports;
-})();
-"""
-        //print(js)
-        return js
     }
 }
 
-/// Listen for script IDs.
-struct ScriptListener {
-    let handler: (Set<String>) -> Void
-}
+#endif
