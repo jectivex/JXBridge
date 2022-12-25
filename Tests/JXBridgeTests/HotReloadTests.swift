@@ -111,56 +111,6 @@ exports.add = function(x) {
         result = try context.eval(script)
         XCTAssertEqual(try result.int, 8);
     }
-    
-    func testObjectState() throws {
-        let url = try resourceLoader.resourceURL(resource: "test", relativeTo: nil, root: rootURL)
-        resourceLoader.scripts["test"] = """
-exports.Person = class {
-    constructor(first, last, age) {
-        this.first = first;
-        this.last = last;
-        this.age = age;
-    }
-
-    info() {
-        return this.first + " " + this.last + " " + this.age;
-    }
-}
-"""
-        var script = "const m = require('/test'); const p = new m.Person('F', 'L', 20); p.info();"
-        var result = try context.eval(script, root: rootURL)
-        XCTAssertEqual(try result.string, "F L 20");
-
-        resourceLoader.scripts["test"] = """
-exports.Person = class {
-    constructor(first, last, age) {
-        this.first = first;
-        this.last = last;
-        this.age = age;
-    }
-
-    description() {
-        return this.last + ", " + this.first + ": " + this.age;
-    }
-}
-"""
-        resourceLoader.didChange.forEachListener { $0.handler([url]) }
-        
-        script = "const m2 = require('/test'); const p2 = new m2.Person('F2', 'L2', 22); p2.description();"
-        result = try context.eval(script, root: rootURL)
-        XCTAssertEqual(try result.string, "L2, F2: 22");
-
-        // TODO
-        // Test original export
-//        script = "const p3 = new m.Person('F3', 'L3', 23); p3.description();"
-//        result = try context.eval(script, root: rootURL)
-//        XCTAssertEqual(try result.string, "L3, F3: 23");
-//
-//        // Test existing object
-//        script = "p.description();"
-//        result = try context.eval(script, root: rootURL)
-//        XCTAssertEqual(try result.string, "L, F: 20");
-    }
 }
 
 private class TestResourceLoader: ResourceLoader {

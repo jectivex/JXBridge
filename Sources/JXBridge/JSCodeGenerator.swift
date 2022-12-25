@@ -10,7 +10,6 @@ struct JSCodeGenerator {
     static let setPropertyFunction = "_jxSet"
     static let callFunction = "_jxCall"
     static let importFunction = "_jxImport"
-    static let moduleExportsMergeFunction = "_jxMergeModuleExports"
     static let moduleExportsCacheObject = "_jxModuleExportsCache"
     
     /// Return a new namespace that performs a callback on any attempt to access its classes, giving us a chance to lazily define the requested class.
