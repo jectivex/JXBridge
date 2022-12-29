@@ -9,13 +9,13 @@ struct JSCodeGenerator {
     static let getPropertyFunction = "_jxGet"
     static let setPropertyFunction = "_jxSet"
     static let callFunction = "_jxCall"
-    static let importFunction = "_jxImport"
-    static let moduleExportsCacheObject = "_jxModuleExportsCache"
+    static let importFunction = "_jxNamespaceImport"
+    static let importProperty = "import"
     
     /// Return a new namespace that performs a callback on any attempt to access its classes, giving us a chance to lazily define the requested class.
     static func newNamespaceJSProxy(_ namespace: JXNamespace) -> String {
         return """
-new Proxy({ _jxNamespace: '\(namespace)', import() { _jxImport(this); } }, {
+new Proxy({ _jxNamespace: '\(namespace)', import() { _jxNamespaceImport(this); } }, {
     get(target, property) {
         if (target[property] === undefined) {
             _jxDefine(property, '\(namespace)');

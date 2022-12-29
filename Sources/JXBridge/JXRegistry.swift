@@ -1,7 +1,8 @@
-#if canImport(Foundation)
-import Foundation
-#endif
+import struct Foundation.URL
 import JXKit
+#if canImport(ObjectiveC)
+import ObjectiveC
+#endif
 
 /// Registry of bridged types.
 public final class JXRegistry {
@@ -12,7 +13,7 @@ public final class JXRegistry {
     private var unnamespacedModules: [JXModule] = []
     
     // Allow any context using this registry to listen for additions that require JS generation
-    let didUpdate = ListenerCollection<JXRegistryListener>()
+    let didUpdate = JXListenerCollection<JXRegistryListener>()
     var namespaces: AnyCollection<JXNamespace> {
         return AnyCollection(modulesByNamespace.keys)
     }
@@ -35,7 +36,7 @@ public final class JXRegistry {
         guard module.namespace != .none else {
             try module.register(with: self)
             unnamespacedModules.append(module)
-            try didUpdate.forEachListener { try $0.didRegisterModule(module) }
+            try didUpdate.forEach { try $0.didRegisterModule(module) }
             return true
         }
         
@@ -45,7 +46,7 @@ public final class JXRegistry {
         }
         modulesByNamespace[module.namespace] = [module] // Assign before initializing to avoid recursion on circular dependencies
         if existingModules == nil {
-            try didUpdate.forEachListener { try $0.didAddNamespace(module.namespace) }
+            try didUpdate.forEach { try $0.didAddNamespace(module.namespace) }
         }
         do {
             try module.register(with: self)
@@ -54,7 +55,7 @@ public final class JXRegistry {
             modulesByNamespace[module.namespace] = []
             throw error
         }
-        try didUpdate.forEachListener { try $0.didRegisterModule(module) }
+        try didUpdate.forEach { try $0.didRegisterModule(module) }
         return true
     }
     
@@ -79,10 +80,10 @@ public final class JXRegistry {
         bridgesByActualTypeName[actualTypeName] = preparedBridge
         
         if preparedBridge.namespace == .none {
-            try didUpdate.forEachListener { try $0.didRegisterUnnamespacedBridge(preparedBridge) }
+            try didUpdate.forEach { try $0.didRegisterUnnamespacedBridge(preparedBridge) }
         } else if modulesByNamespace[preparedBridge.namespace] == nil {
             modulesByNamespace[preparedBridge.namespace] = []
-            try didUpdate.forEachListener { try $0.didAddNamespace(preparedBridge.namespace) }
+            try didUpdate.forEach { try $0.didAddNamespace(preparedBridge.namespace) }
         }
     }
     
@@ -154,7 +155,6 @@ public final class JXRegistry {
     }
 
 #if canImport(ObjectiveC)
-    
     /// - Seealso: ``JXBridgeBuilder/reflectObjectiveCMembers(prefixes:)``
     public var objectiveCMemberPrefixes: [String] = []
 
@@ -180,11 +180,8 @@ public final class JXRegistry {
         try register(bridge)
         return builder.bridge
     }
-
 #endif
     
-#if canImport(Foundation)
-
     /// Register a JavaScript module resource to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.
     ///
     /// - Parameters:
@@ -201,9 +198,7 @@ public final class JXRegistry {
     public func registerModuleScript(_ script: String, root: URL, namespace: JXNamespace) throws {
         try registerModuleScript(JXModuleScript(source: .jsWithRoot(script, root), namespace: namespace))
     }
-    
-#endif
-    
+
     /// Register JavaScript module code to integrate into the given namespace. The JavaScript will be run and its exports will be added to the namespace.
     public func registerModuleScript(_ script: String, namespace: JXNamespace) throws {
         try registerModuleScript(JXModuleScript(source: .js(script), namespace: namespace))
@@ -213,18 +208,18 @@ public final class JXRegistry {
         if var existingScripts = moduleScriptsByNamespace[script.namespace] {
             existingScripts.append(script)
             moduleScriptsByNamespace[script.namespace] = existingScripts
-            try didUpdate.forEachListener { try $0.didRegisterModuleScript(script) }
+            try didUpdate.forEach { try $0.didRegisterModuleScript(script) }
             return
         }
         
         if script.namespace != .none {
             if !modulesByNamespace.keys.contains(script.namespace) {
                 modulesByNamespace[script.namespace] = []
-                try didUpdate.forEachListener { try $0.didAddNamespace(script.namespace) }
+                try didUpdate.forEach { try $0.didAddNamespace(script.namespace) }
             }
         }
         moduleScriptsByNamespace[script.namespace] = [script]
-        try didUpdate.forEachListener { try $0.didRegisterModuleScript(script) }
+        try didUpdate.forEach { try $0.didRegisterModuleScript(script) }
     }
 
     /// Return the registered bridge for the given type name, or nil if none has been registered.

@@ -1,3 +1,5 @@
+#if DEBUG // Needed for @testable import
+@testable import JXBridge
 import JXKit
 import XCTest
 #if canImport(Combine)
@@ -5,9 +7,6 @@ import Combine
 #else
 import OpenCombine
 #endif
-
-#if DEBUG
-@testable import JXBridge
 
 final class BridgedTypeTests: XCTestCase {
     func testBoxTypes() throws {
@@ -376,5 +375,4 @@ private class TestObservableClass: ObservableObject {
     init() {
     }
 }
-
-#endif // DEBUG
+#endif

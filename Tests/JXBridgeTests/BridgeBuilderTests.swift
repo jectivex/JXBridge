@@ -158,7 +158,6 @@ private class TestClass {
 }
 
 #if canImport(ObjectiveC)
-
 @objc private class TestObjCClass: NSObject {
     @objc var intProperty = 1
 
@@ -166,7 +165,6 @@ private class TestClass {
         return param + 1;
     }
 }
-
 #endif
 
 private actor TestActor {

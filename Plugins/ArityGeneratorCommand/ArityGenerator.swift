@@ -1,5 +1,3 @@
-#if canImport(Foundation)
-
 import Foundation
 
 /// Tool to generate all our arity variations for bridging Swift members.
@@ -677,5 +675,3 @@ extension ArityGeneratorError {
         return ArityGeneratorError(message: "Unterminated arity comment starting with '\(startMarker)'")
     }
 }
-
-#endif

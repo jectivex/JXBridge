@@ -1,10 +1,13 @@
+#if canImport(CoreGraphics)
+import CoreGraphics
+#endif
 #if canImport(Foundation)
 import Foundation
 #endif
+import JXKit
 #if canImport(UIKit)
 import UIKit
 #endif
-import JXKit
 
 extension Result: JXConvertible {
     public static func fromJX(_ value: JXValue) throws -> Result<Success, Failure> {
@@ -28,8 +31,7 @@ extension Result: JXConvertible {
     }
 }
 
-#if canImport(ObjectiveC)
-
+#if canImport(Foundation)
 extension Selector: JXConvertible {
     public static func fromJX(_ value: JXValue) throws -> Self {
         return try NSSelectorFromString(value.string)
@@ -39,10 +41,6 @@ extension Selector: JXConvertible {
         return context.string(NSStringFromSelector(self) as String)
     }
 }
-
-#endif
-
-#if canImport(Foundation)
 
 extension URL: JXConvertible {
     public static func fromJX(_ value: JXValue) throws -> Self {
@@ -66,11 +64,9 @@ extension NSRange: JXConvertible {
         return try context.object(fromDictionary: ["location": context.number(location), "length": context.number(length)])
     }
 }
-
 #endif
 
 #if canImport(CoreGraphics)
-
 extension CGPoint: JXConvertible {
     public static func fromJX(_ value: JXValue) throws -> Self {
         return try CGPoint(x: value["x"].double, y: value["y"].double)
@@ -100,5 +96,4 @@ extension CGRect: JXConvertible {
         return try context.object(fromDictionary: ["origin": origin.toJX(in: context), "size": size.toJX(in: context)])
     }
 }
-
 #endif

@@ -1,10 +1,10 @@
+#if DEBUG // Needed for @testable import
+@testable import JXBridge
 import JXKit
 import XCTest
 
-#if DEBUG
-@testable import JXBridge
-
 final class ConvertibleTypesTests: XCTestCase {
+#if canImport(Foundation)
     func testURL() throws {
         let context = JXContext()
         let url = URL(string: "http://www.javascript.org/spec")!
@@ -15,6 +15,7 @@ final class ConvertibleTypesTests: XCTestCase {
             XCTAssertEqual(resultURL, url)
         }
     }
+#endif
     
     private enum ConvertibleError: String, Error {
         case some

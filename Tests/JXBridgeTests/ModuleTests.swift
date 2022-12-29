@@ -1,8 +1,8 @@
+#if DEBUG // Needed for @testable import
+import Foundation
+@testable import JXBridge
 import JXKit
 import XCTest
-
-#if DEBUG
-@testable import JXBridge
 
 final class ModuleTests: XCTestCase {
     func testLazyModule() throws {
@@ -21,6 +21,21 @@ final class ModuleTests: XCTestCase {
         XCTAssertEqual(try result.int, 1)
     }
     
+    func testModuleWithScriptString() throws {
+        try moduleWithScriptTest(fromResource: false)
+    }
+    
+    func testModuleWithScriptResource() throws {
+        try moduleWithScriptTest(fromResource: false)
+    }
+    
+    private func moduleWithScriptTest(fromResource: Bool) throws {
+        let context = JXContext()
+        try context.registry.register(ScriptModule(fromResource: fromResource))
+        let result = try context.eval("const obj = new module.test.NameType(); obj.getClassName()")
+        XCTAssertEqual(try result.string, "classprivatefoo")
+    }
+
     func testModuleError() throws {
         var module = LazyModule()
         module.throwError = true
@@ -183,8 +198,22 @@ private struct EagerModule: JXModule {
     }
 }
 
+private var module1JS = (try? String(contentsOf: Bundle.module.url(forResource: "jsmodules/module1", withExtension: "js")!)) ?? ""
+
+private struct ScriptModule: JXModule {
+    let fromResource: Bool
+    let namespace = JXNamespace("module.test")
+    
+    func register(with registry: JXRegistry) throws {
+        if fromResource {
+            try registry.registerModuleScript(resource: "/jsmodules/module1", root: Bundle.module.resourceURL!, namespace: namespace)
+        } else {
+            try registry.registerModuleScript(module1JS, namespace: namespace)
+        }
+    }
+}
+
 private enum ModuleError: Error {
     case some(String)
 }
-
-#endif // DEBUG
+#endif

@@ -1,3 +1,4 @@
+import struct Foundation.URL
 #if canImport(Foundation)
 import Foundation
 #endif
@@ -11,7 +12,6 @@ final class ContextSPI {
     
     init(context: JXContext) {
         self.context = context
-        self.scriptManager = ScriptManager(context: context)
         do {
             try defineGlobalFunctions()
         } catch {
@@ -35,7 +35,7 @@ final class ContextSPI {
         }
         let registry = JXRegistry()
         _registry = registry
-        registrySubscription = registry.didUpdate.addListener(newRegistryListener())
+        registrySubscription = registry.didUpdate.add(newRegistryListener())
         do {
             try initializeRegistry(registry)
         } catch {
@@ -51,12 +51,10 @@ final class ContextSPI {
             return
         }
         _registry = registry
-        registrySubscription = registry.didUpdate.addListener(newRegistryListener())
+        registrySubscription = registry.didUpdate.add(newRegistryListener())
         try initializeRegistry(registry)
     }
     private var _registry: JXRegistry?
-    
-    let scriptManager: ScriptManager
     
     private func newRegistryListener() -> JXRegistryListener {
         weak var weakSelf = self
@@ -98,19 +96,12 @@ final class ContextSPI {
         }
         do {
             switch script.source {
-#if canImport(Foundation)
             case .resource(let resource, let root):
-                let _ = try scriptManager.withRoot(root) { sm in
-                    try sm.evalModule(resource: resource, for: script.namespace)
-                }
+                try context.evalModule(resource: resource, integratingExports: script.namespace.string, root: root)
             case .jsWithRoot(let js, let root):
-                let _ = try scriptManager.withRoot(root) { sm in
-                    return try sm.evalModule(js, for: script.namespace)
-                }
-#endif
+                try context.evalModule(js, integratingExports: script.namespace.string, root: root)
             case .js(let js):
-                let exports = try scriptManager.evalModule(js)
-                try context.global[script.namespace].integrate(exports)
+                try context.evalModule(js, integratingExports: script.namespace.string)
             }
         } catch {
             // When initialization isn't an immediate result of the dev registering the module, add context to help them track down the problem
@@ -148,18 +139,6 @@ final class ContextSPI {
         }
         try defineNamespace(.default)
         
-        let require = JXValue(newFunctionIn: context) { [weak self] context, this, args in
-            guard let self else {
-                return context.undefined()
-            }
-            guard args.count == 1 else {
-                throw JXError(message: "'require' expects a single argument")
-            }
-            return try self.scriptManager.require(args[0])
-        }
-        try context.global.setProperty("require", require)
-        try context.global.setProperty(JSCodeGenerator.moduleExportsCacheObject, context.object())
-        
         let importFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
                 throw JXError.contextDeallocated()
@@ -169,11 +148,7 @@ final class ContextSPI {
             }
             let object = args[0]
             let namespace = try object[JSCodeGenerator.namespaceProperty]
-            if namespace.isUndefined {
-                try self.importProperties(of: object)
-            } else {
-                try self.importNamespace(JXNamespace(namespace.string), value: object)
-            }
+            try self.importNamespace(JXNamespace(namespace.string), value: object)
             return object
         }
         try context.global.setProperty(JSCodeGenerator.importFunction, importFunction)
@@ -288,25 +263,14 @@ final class ContextSPI {
         // Now that all namespace symbols are defined, move them into the global namespace.
         // First define all registered types
         for bridge in context.registry.bridges(in: namespace) {
-            if !value.hasProperty(bridge.typeName) {
-                try defineClass(for: bridge, in: context)
-            }
-        }
-        try importProperties(of: value)
-    }
-    
-    private func importProperties(of value: JXValue) throws {
-        guard let context else {
-            return
+            try defineClass(for: bridge, in: context)
         }
         for entry in try value.dictionary {
-            // Don't import the namespace name (if present) or the import function itself
-            guard entry.key != JSCodeGenerator.namespaceProperty && entry.key != "import" else {
+            // Don't import the namespace name or the import function itself
+            guard entry.key != JSCodeGenerator.namespaceProperty && entry.key != JSCodeGenerator.importProperty else {
                 continue
             }
-            if !context.global.hasProperty(entry.key) {
-                try context.global.setProperty(entry.key, entry.value)
-            }
+            try context.global.setProperty(entry.key, entry.value)
         }
     }
 }
@@ -320,7 +284,7 @@ extension ContextSPI: JXContextSPI {
     func toJX(_ value: Any, in context: JXContext) throws -> JXValue? {
         try throwInitializationError()
         
-#if canImport(ObjectiveC)
+#if canImport(Foundation)
         // Although String, Int, Array, Dictionary, etc are JXConvertible, the NS* equivalents are not
         if let nsstring = value as? NSString {
             return context.string(nsstring as String)
@@ -356,6 +320,14 @@ extension ContextSPI: JXContextSPI {
     func fromJX<T>(_ value: JXValue, to type: T.Type) throws -> T? {
         try throwInitializationError()
         return try value.bridged as? T
+    }
+    
+    func require(_ value: JXValue) throws -> String? {
+        let moduleNameValue = try value[JSCodeGenerator.namespaceProperty]
+        guard moduleNameValue.isString else {
+            throw JXError(message: "'require' expects a file path string or a JXModule namespace object, e.g. require('/module.js') or require(jxswiftui)")
+        }
+        return try moduleNameValue.string
     }
     
     func errorDetail(conveying type: Any.Type) -> String? {

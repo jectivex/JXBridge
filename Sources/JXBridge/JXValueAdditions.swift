@@ -15,16 +15,6 @@ extension JXValue {
         }
     }
     
-    /// Import the properties of the given value into this value.
-    public func integrate(_ value: JXValue) throws {
-        guard value.isObject else {
-            return
-        }
-        for entry in try value.dictionary {
-            try setProperty(entry.key, entry.value)
-        }
-    }
-    
     /// Bind the bridged instance properties and functions of the given object to the type's namespace on this value.
     ///
     /// - Parameters:
@@ -75,7 +65,7 @@ extension JXValue {
         guard namespace != .none else {
             return true
         }
-        let (parent, property) = try traverseNamespace(namespace)
+        let (parent, property) = try keyPath(namespace.string)
         return !parent.isUndefined && parent.hasProperty(property)
     }
     
@@ -85,7 +75,7 @@ extension JXValue {
             guard namespace != .none else {
                 return self
             }
-            let (parent, property) = try traverseNamespace(namespace)
+            let (parent, property) = try keyPath(namespace.string)
             return try parent.isUndefined ? parent : parent[property]
         }
     }
@@ -95,7 +85,7 @@ extension JXValue {
         guard namespace != .none else {
             return self
         }
-        let (parent, property) = try traverseNamespace(namespace, createIntermediates: true)
+        let (parent, property) = try keyPath(namespace.string, createIntermediates: true)
         let existing = try parent[property]
         guard existing.isNullOrUndefined else {
             return existing
@@ -110,30 +100,8 @@ extension JXValue {
         guard namespace != .none else {
             return false
         }
-        let (parent, property) = try traverseNamespace(namespace)
+        let (parent, property) = try keyPath(namespace.string)
         return try !parent.isUndefined && parent.deleteProperty(property)
-    }
-    
-    /// Traverse a '.'-separated namespace, returning the object hosting the ultimate namespace property as well as the name of that property.
-    private func traverseNamespace(_ namespace: JXNamespace, createIntermediates: Bool = false) throws -> (parent: JXValue, property: String) {
-        let tokens = namespace.string.split(separator: ".")
-        guard tokens.count > 1 && !self.isUndefined else {
-            return (self, namespace.string)
-        }
-        
-        let property = String(tokens.last!)
-        var parent = self
-        for i in 0..<(tokens.count - 1) {
-            let token = String(tokens[i])
-            if parent.hasProperty(token) {
-                parent = try parent[token]
-            } else if createIntermediates {
-                parent = try parent.setProperty(token, context.object())
-            } else {
-                return (context.undefined(), property)
-            }
-        }
-        return (parent, property)
     }
 }
 

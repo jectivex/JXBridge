@@ -446,7 +446,6 @@ extension JXBridgeBuilder {
 }
 
 #if canImport(ObjectiveC)
-
 extension JXBridgeBuilder where T: NSObject {
     /// Add properties and methods discovered via ObjectiveC reflection.
     ///
@@ -459,5 +458,4 @@ extension JXBridgeBuilder where T: NSObject {
         return self
     }
 }
-
 #endif

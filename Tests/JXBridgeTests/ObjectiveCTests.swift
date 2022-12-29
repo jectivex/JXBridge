@@ -1,10 +1,9 @@
+#if DEBUG // Needed for @testable import
 #if canImport(ObjectiveC)
-
+import Foundation
+@testable import JXBridge
 import JXKit
 import XCTest
-
-#if DEBUG
-@testable import JXBridge
 
 final class ObjectiveCTests: XCTestCase {
     // TODO: Flesh out tests
@@ -20,6 +19,5 @@ files.length;
         XCTAssertGreaterThanOrEqual(try result.int, 0)
     }
 }
-
 #endif
 #endif
