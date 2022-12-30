@@ -2361,22 +2361,6 @@
           {
             "children" : [
               {
-                "title" : "Instance Methods",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/jxcancellable\/cancel()",
-                "title" : "func cancel()",
-                "type" : "method"
-              }
-            ],
-            "path" : "\/documentation\/jxbridge\/jxcancellable",
-            "title" : "JXCancellable",
-            "type" : "class"
-          },
-          {
-            "children" : [
-              {
                 "title" : "Initializers",
                 "type" : "groupMarker"
               },

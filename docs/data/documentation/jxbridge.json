@@ -36,7 +36,6 @@
       "identifiers" : [
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JX",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridgeBuilder",
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXCancellable",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXPublished",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXRegistry",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXState"
@@ -344,48 +343,6 @@
   "title" : "JXBridging",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridging"
-},
-"doc://JXBridge/documentation/JXBridge/JXCancellable": {
-  "abstract" : [
-    {
-      "text" : "Type similar to ",
-      "type" : "text"
-    },
-    {
-      "code" : "Combine.Cancellable",
-      "type" : "codeVoice"
-    },
-    {
-      "text" : " that is used to cancel subscriptions to events.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "class"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "JXCancellable"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXCancellable",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "JXCancellable"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "JXCancellable",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxcancellable"
 },
 "doc://JXBridge/documentation/JXBridge/JXClassFunc": {
   "abstract" : [

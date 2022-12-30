@@ -1,6 +1,4 @@
-#if canImport(Foundation)
 import Foundation
-#endif
 import PackagePlugin
 #if canImport(System)
 import System
@@ -13,7 +11,7 @@ import System
 /// - Note: The location of your Command Line Tools must be set in Xcode->Settings->Locations
 @main struct ArityGeneratorCommand: CommandPlugin {
     func performCommand(context: PluginContext, arguments: [String]) async throws {
-#if canImport(Foundation) && canImport(System)
+#if canImport(System)
         if arguments.isEmpty {
             print(usage())
             return
@@ -47,7 +45,7 @@ import System
 #endif
     }
     
-#if canImport(Foundation) && canImport(System)
+#if canImport(System)
     private func processArguments(_ arguments: [String]) throws -> (options: [ArityGenerator.Option: Int], files: [String], outputDir: FilePath?) {
         var options: [ArityGenerator.Option: Int] = [:]
         var files: [String] = []

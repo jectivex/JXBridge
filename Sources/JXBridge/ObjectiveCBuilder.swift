@@ -1,5 +1,4 @@
 #if canImport(ObjectiveC)
-
 import JXBridgeObjC
 import JXKit
 
@@ -274,5 +273,4 @@ private func conveyFromObjectiveC(_ object: Any?, into context: JXContext, fromB
     }
     throw JXError(message: "Cannot convey ObjectiveC value '\(object)' to JavaScript. The ObjectiveC type is not supported")
 }
-
 #endif

@@ -1,7 +1,6 @@
-import XCTest
-
-#if DEBUG
+#if DEBUG // Needed for @testable import
 @testable import JXBridge
+import XCTest
 
 class TypeNameTests: XCTestCase {
     func testTypeNames() {

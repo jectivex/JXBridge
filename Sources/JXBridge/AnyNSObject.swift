@@ -1,5 +1,4 @@
 #if canImport(ObjectiveC)
-
 import Foundation
 import JXKit
 
@@ -23,5 +22,4 @@ public struct AnyNSObject: JXModule {
         return true
     }
 }
-
 #endif
