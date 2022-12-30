@@ -31,7 +31,7 @@ extension Result: JXConvertible {
     }
 }
 
-#if canImport(Foundation)
+#if canImport(ObjectiveC)
 extension Selector: JXConvertible {
     public static func fromJX(_ value: JXValue) throws -> Self {
         return try NSSelectorFromString(value.string)
@@ -41,7 +41,9 @@ extension Selector: JXConvertible {
         return context.string(NSStringFromSelector(self) as String)
     }
 }
+#endif
 
+#if canImport(Foundation)
 extension URL: JXConvertible {
     public static func fromJX(_ value: JXValue) throws -> Self {
         guard let url = try URL(string: value.string) else {
