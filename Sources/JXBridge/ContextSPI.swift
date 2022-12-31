@@ -325,7 +325,7 @@ extension ContextSPI: JXContextSPI {
     func require(_ value: JXValue) throws -> String? {
         let moduleNameValue = try value[JSCodeGenerator.namespaceProperty]
         guard moduleNameValue.isString else {
-            throw JXError(message: "'require' expects a file path string or a JXModule namespace object, e.g. require('/module.js') or require(jxswiftui)")
+            return nil
         }
         return try moduleNameValue.string
     }

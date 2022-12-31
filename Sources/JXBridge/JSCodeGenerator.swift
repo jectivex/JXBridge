@@ -13,6 +13,7 @@ struct JSCodeGenerator {
     static let importProperty = "import"
     
     /// Return a new namespace that performs a callback on any attempt to access its classes, giving us a chance to lazily define the requested class.
+    /// We also associate the namespace with every type and object so that our SPI's require() function can detect the namespace of objects that scripts return.
     static func newNamespaceJSProxy(_ namespace: JXNamespace) -> String {
         return """
 new Proxy({ _jxNamespace: '\(namespace)', import() { _jxNamespaceImport(this); } }, {
@@ -21,6 +22,16 @@ new Proxy({ _jxNamespace: '\(namespace)', import() { _jxNamespaceImport(this); }
             _jxDefine(property, '\(namespace)');
         }
         return target[property];
+    },
+    set(target, property, value) {
+        const type = typeof(value);
+        if (type === 'object') {
+            value._jxNamespace = '\(namespace)';
+        } else if (type === 'function' && value.prototype !== undefined) {
+            value.prototype._jxNamespace = '\(namespace)';
+        }
+        target[property] = value;
+        return true;
     }
 });
 """
