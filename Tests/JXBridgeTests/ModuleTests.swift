@@ -80,10 +80,10 @@ final class ModuleTests: XCTestCase {
             "jx.TestBridgingSubclass": TestBridgingSubclass()
         ]))
 
-        var result = try context.eval("var obj = new jx.TestStaticBridgingSubclass(); obj.stringVar + obj.intVar;")
+        var result = try context.evalClosure("const obj = new jx.TestStaticBridgingSubclass(); return obj.stringVar + obj.intVar;")
         XCTAssertEqual(try result.string, "a1")
         
-        result = try context.eval("var obj = new jx.TestBridgingSubclass(); obj.stringVar + obj.intVar;")
+        result = try context.evalClosure("const obj = new jx.TestBridgingSubclass(); return obj.stringVar + obj.intVar;")
         XCTAssertEqual(try result.string, "b2")
     }
 }

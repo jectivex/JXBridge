@@ -185,10 +185,10 @@ caughtErr;
                 .func.asyncFunc { TestBaseClass.asyncFunc }
                 .bridge
         }
-        var result = try await context.eval("const obj = new jx.TestBaseClass(); obj.asyncVar", priority: .low)
+        var result = try await context.eval("const obj = new jx.TestBaseClass(); obj.asyncVar").awaitPromise(priority: .low)
         XCTAssertEqual(try result.string, "async")
         
-        result = try await context.eval("obj.asyncFunc()", priority: .low)
+        result = try await context.eval("obj.asyncFunc()").awaitPromise(priority: .low)
         XCTAssertEqual(try result.string, "asyncFunc")
         
         result = try await context.eval("""
@@ -197,7 +197,7 @@ async function invokeAsync(obj) {
     return result + "Success";
 }
 invokeAsync(obj);
-""", priority: .low)
+""").awaitPromise(priority: .low)
         XCTAssertEqual(try result.string, "asyncFuncSuccess")
     }
     
@@ -224,18 +224,18 @@ invokeAsync(obj);
                 .func.callbackFunc { TestStruct.callbackFunc }
                 .bridge
         }
-        var result = try context.eval("""
-var s = new jx.TestStruct();
+        var result = try context.evalClosure("""
+const s = new jx.TestStruct();
 s.readWriteInt = 2;
 let result = 0
 s.callbackFunc(3, (r) => { result = r; });
-result;
+return result;
 """)
         XCTAssertEqual(try result.int, 5)
         
-        result = try context.eval("""
-var s = new jx.TestStruct();
-s.callbackFunc(2, null);
+        result = try context.evalClosure("""
+const s = new jx.TestStruct();
+return s.callbackFunc(2, null);
 """)
         XCTAssertEqual(result.bool, false)
     }

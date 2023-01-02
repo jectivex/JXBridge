@@ -1,7 +1,4 @@
-import struct Foundation.URL
-#if canImport(Foundation)
 import Foundation
-#endif
 import JXKit
 
 /// SPI integration with the `JXContext`.
@@ -284,7 +281,7 @@ extension ContextSPI: JXContextSPI {
     func toJX(_ value: Any, in context: JXContext) throws -> JXValue? {
         try throwInitializationError()
         
-#if canImport(Foundation)
+#if canImport(ObjectiveC)
         // Although String, Int, Array, Dictionary, etc are JXConvertible, the NS* equivalents are not
         if let nsstring = value as? NSString {
             return context.string(nsstring as String)
