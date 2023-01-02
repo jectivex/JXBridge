@@ -50,9 +50,7 @@ final class PropertyWrapperTests: XCTestCase {
             callbackCalled = true
             XCTAssertEqual(sum, 3)
         }
-        try context.withValues([JXClosure.Arity1(callback)]) {
-            try context.eval("jx.sum(2, $0)")
-        }
+        try context.evalClosure("jx.sum(2, $0)", withArguments: [JXClosure.Arity1(callback)])
         XCTAssertTrue(callbackCalled)
     }
     
@@ -60,7 +58,7 @@ final class PropertyWrapperTests: XCTestCase {
         let context = JXContext()
         try context.registry.registerBridge(for: TestClass(intVar: 0))
 
-        let result = try context.eval("var test = new jx.TestClass(1); test.increment(2); test.intVar")
+        let result = try context.eval("const test = new jx.TestClass(1); test.increment(2); test.intVar")
         XCTAssertEqual(try result.int, 3)
     }
     
@@ -155,9 +153,7 @@ final class PropertyWrapperTests: XCTestCase {
         XCTAssertEqual(publishedUpdateCount, 1)
         XCTAssertEqual(publishedValue, 1.0)
         
-        try context.withValues(obj) {
-            try context.eval("$0.intVar += 1")
-        }
+        try context.evalClosure("$0.intVar += 1", withArguments: [obj])
         XCTAssertEqual(obj.intVar, 3)
         XCTAssertEqual(objectUpdateCount, 2)
         XCTAssertEqual(jxPublishedUpdateCount, 3)
@@ -187,9 +183,9 @@ final class PropertyWrapperTests: XCTestCase {
     func testAsync() async throws {
         let context = JXContext()
         try context.registry.registerBridge(for: TestAsync())
-        var result = try await context.eval("const obj = new jx.TestAsync(); obj.asyncVar", priority: .low)
+        var result = try await context.eval("const obj = new jx.TestAsync(); obj.asyncVar").awaitPromise(priority: .low)
         XCTAssertEqual(try result.int, 100)
-        result = try await context.eval("obj.compute()", priority: .low)
+        result = try await context.eval("obj.compute()").awaitPromise(priority: .low)
         XCTAssertEqual(try result.int, 1000)
     }
 }

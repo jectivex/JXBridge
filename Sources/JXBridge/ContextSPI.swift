@@ -1,7 +1,4 @@
-import struct Foundation.URL
-#if canImport(Foundation)
 import Foundation
-#endif
 import JXKit
 
 /// SPI integration with the `JXContext`.
@@ -284,7 +281,7 @@ extension ContextSPI: JXContextSPI {
     func toJX(_ value: Any, in context: JXContext) throws -> JXValue? {
         try throwInitializationError()
         
-#if canImport(Foundation)
+#if canImport(ObjectiveC)
         // Although String, Int, Array, Dictionary, etc are JXConvertible, the NS* equivalents are not
         if let nsstring = value as? NSString {
             return context.string(nsstring as String)
@@ -325,7 +322,7 @@ extension ContextSPI: JXContextSPI {
     func require(_ value: JXValue) throws -> String? {
         let moduleNameValue = try value[JSCodeGenerator.namespaceProperty]
         guard moduleNameValue.isString else {
-            throw JXError(message: "'require' expects a file path string or a JXModule namespace object, e.g. require('/module.js') or require(jxswiftui)")
+            return nil
         }
         return try moduleNameValue.string
     }

@@ -1,9 +1,7 @@
 #if canImport(CoreGraphics)
 import CoreGraphics
 #endif
-#if canImport(Foundation)
 import Foundation
-#endif
 import JXKit
 #if canImport(UIKit)
 import UIKit
@@ -43,7 +41,6 @@ extension Selector: JXConvertible {
 }
 #endif
 
-#if canImport(Foundation)
 extension URL: JXConvertible {
     public static func fromJX(_ value: JXValue) throws -> Self {
         guard let url = try URL(string: value.string) else {
@@ -66,7 +63,6 @@ extension NSRange: JXConvertible {
         return try context.object(fromDictionary: ["location": context.number(location), "length": context.number(length)])
     }
 }
-#endif
 
 #if canImport(CoreGraphics)
 extension CGPoint: JXConvertible {
