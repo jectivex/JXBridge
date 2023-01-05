@@ -5,10 +5,16 @@ import JXKit
 final class ContextSPI {
     private weak var context: JXContext?
     private var initializationError: Error?
+    private var scriptsSubscription: JXCancellable?
     private var registrySubscription: JXCancellable?
     
     init(context: JXContext) {
         self.context = context
+        scriptsSubscription = context.onScriptsDidChange { [weak self] scripts in
+            // Script changes may add or change symbols in namespaces, so the next time
+            // a namespace is imported we should re-check all the symbols
+            scripts.forEach { self?.importedNamespaces.remove($0) }
+        }
         do {
             try defineGlobalFunctions()
         } catch {
@@ -245,7 +251,7 @@ final class ContextSPI {
     private var definedTypeNames: Set<String> = []
     
     private func importNamespace(_ namespace: JXNamespace, value: JXValue) throws {
-        guard let context else {
+        guard let context, !importedNamespaces.contains(namespace.string) else {
             return
         }
         guard namespace != .none && namespace != .default else {
@@ -269,7 +275,9 @@ final class ContextSPI {
             }
             try context.global.setProperty(entry.key, entry.value)
         }
+        importedNamespaces.insert(namespace.string)
     }
+    private var importedNamespaces: Set<String> = []
 }
 
 extension ContextSPI: JXContextSPI {
