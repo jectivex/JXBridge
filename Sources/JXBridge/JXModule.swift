@@ -1,4 +1,5 @@
 import JXKit
+import Foundation
 
 /// A self-contained set of native functionality exported to JavaScript under a namespace.
 public protocol JXModule {
@@ -48,3 +49,17 @@ extension JXModule {
         return true
     }
 }
+
+/// A module with the capability of having its scripts and resources dynamically loaded from an external source.
+///
+/// The transport scheme and loading mechaism is to be implemented by a host container.
+public protocol JXDynamicModule : JXModule {
+    /// The path to the locally-installed folder containing the scripts and resources for the app.
+    static var localURL: URL { get }
+
+    /// The logical path to the remote root folder in the source archive whose file and folder layout matches the structure of the localURL.
+    ///
+    /// The returned URL is not necessarily directly reachable; rather, it is expected that the URL's `baseURL` and `relativePath` are used separately in the context of a host environment to resolve individual versions of the module.
+    static var remoteURL: URL { get }
+}
+
