@@ -81,6 +81,14 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule"
+      ],
+      "kind" : "relationships",
+      "title" : "Inherited By",
+      "type" : "inheritedBy"
+    },
+    {
+      "identifiers" : [
         "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyJXBridging",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject"
       ],
@@ -267,6 +275,40 @@
   "title" : "JXBridging",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxbridging"
+},
+"doc://JXBridge/documentation/JXBridge/JXDynamicModule": {
+  "abstract" : [
+    {
+      "text" : "A module with the capability of having its scripts and resources dynamically loaded from an external source.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "JXDynamicModule"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "JXDynamicModule"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXDynamicModule",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxdynamicmodule"
 },
 "doc://JXBridge/documentation/JXBridge/JXModule": {
   "abstract" : [

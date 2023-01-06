@@ -2562,6 +2562,27 @@
           {
             "children" : [
               {
+                "title" : "Type Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/jxbridge\/jxdynamicmodule\/localurl",
+                "title" : "static var localURL: URL",
+                "type" : "property"
+              },
+              {
+                "path" : "\/documentation\/jxbridge\/jxdynamicmodule\/remoteurl",
+                "title" : "static var remoteURL: URL",
+                "type" : "property"
+              }
+            ],
+            "path" : "\/documentation\/jxbridge\/jxdynamicmodule",
+            "title" : "JXDynamicModule",
+            "type" : "protocol"
+          },
+          {
+            "children" : [
+              {
                 "title" : "Instance Properties",
                 "type" : "groupMarker"
               },

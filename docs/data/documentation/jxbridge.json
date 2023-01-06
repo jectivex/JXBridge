@@ -45,6 +45,7 @@
     {
       "identifiers" : [
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXBridging",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXStaticBridging"
       ],
@@ -465,6 +466,40 @@
   "title" : "JXClosure",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxclosure"
+},
+"doc://JXBridge/documentation/JXBridge/JXDynamicModule": {
+  "abstract" : [
+    {
+      "text" : "A module with the capability of having its scripts and resources dynamically loaded from an external source.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "protocol"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "JXDynamicModule"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule",
+  "kind" : "symbol",
+  "navigatorTitle" : [
+    {
+      "kind" : "identifier",
+      "text" : "JXDynamicModule"
+    }
+  ],
+  "role" : "symbol",
+  "title" : "JXDynamicModule",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxdynamicmodule"
 },
 "doc://JXBridge/documentation/JXBridge/JXFunc": {
   "abstract" : [
