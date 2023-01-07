@@ -146,7 +146,7 @@ private struct LazyModule: JXModule {
     var throwError = false
     var throwInitializeError = false
     var addDependency: JXModule?
-    var namespace = JXNamespace("lazy")
+    static let namespace = JXNamespace("lazy")
     
     func register(with registry: JXRegistry) throws {
         if throwError {
@@ -183,7 +183,7 @@ private struct LazyModule: JXModule {
 
 private struct EagerModule: JXModule {
     var throwError = false
-    let namespace = JXNamespace("eager")
+    static let namespace = JXNamespace("eager")
     
     func register(with registry: JXRegistry) throws {
         if throwError {
@@ -202,7 +202,7 @@ private var module1JS = (try? String(contentsOf: Bundle.module.url(forResource: 
 
 private struct ScriptModule: JXModule {
     let fromResource: Bool
-    let namespace = JXNamespace("module.test")
+    static let namespace = JXNamespace("module.test")
     
     func register(with registry: JXRegistry) throws {
         if fromResource {

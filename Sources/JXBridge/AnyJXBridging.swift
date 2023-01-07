@@ -22,7 +22,7 @@ public struct AnyJXBridging: JXModule {
         self.map = map
     }
     
-    public let namespace: JXNamespace = .none
+    public static let namespace: JXNamespace = .none
     
     public func define(symbol: String, namespace: JXNamespace, in context: JXContext) throws -> Bool {
         guard let value = map(symbol, namespace) else {
