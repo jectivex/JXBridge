@@ -6,7 +6,7 @@ public protocol JXModule {
     /// The namespace for this module.
     ///
     /// - Note: Use ``JXNamespace/none`` for meta-modules that auto-register types in any namespace.
-    var namespace: JXNamespace { get }
+    static var namespace: JXNamespace { get }
     
     /// Use this function to pre-register types or other required modules. It is called once when the module is added to the registry.
     func register(with registry: JXRegistry) throws
@@ -50,16 +50,43 @@ extension JXModule {
     }
 }
 
+extension JXModule {
+    /// Returns this type's namespace.
+    var namespace: JXNamespace {
+        Self.namespace
+    }
+}
+
 /// A module with the capability of having its scripts and resources dynamically loaded from an external source.
 ///
 /// The transport scheme and loading mechaism is to be implemented by a host container.
 public protocol JXDynamicModule : JXModule {
-    /// The path to the locally-installed folder containing the scripts and resources for the app.
-    static var localURL: URL { get }
+    /// The bundle that will contain the local module sources and resources.
+    static var bundle: Bundle { get }
 
-    /// The logical path to the remote root folder in the source archive whose file and folder layout matches the structure of the localURL.
+    /// The path to the locally-installed folder that is expected to contain the scripts and resources for the app.
+    ///
+    /// The default implementation will look in `bundle`'s subfolder `/jx/<namespace>/`.
+    ///
+    /// This folder must be included as a `.copy("jx")` directive for the module's `Package.swift`
+    static var localModuleRoot: URL { get }
+
+    /// The logical path to the remote root folder in the source archive whose file and folder layout matches the structure of the `localModuleRoot`.
     ///
     /// The returned URL is not necessarily directly reachable; rather, it is expected that the URL's `baseURL` and `relativePath` are used separately in the context of a host environment to resolve individual versions of the module.
-    static var remoteURL: URL { get }
+    static var remoteModuleSource: URL? { get }
 }
 
+public extension JXDynamicModule {
+    /// No-op default implementation
+    static var remoteModuleSource: URL? {
+        nil
+    }
+
+    /// The default local URL for the module is based on the modules name's relative to the resource URL.
+    ///
+    /// For example, the module `xyz` will have it's resources stored in `Resources/jx/xyz/SomeFile.js`
+    static var localModuleRoot: URL {
+        URL(fileURLWithPath: Self.namespace.string, relativeTo: URL(fileURLWithPath: "jx", relativeTo: bundle.resourceURL))
+    }
+}

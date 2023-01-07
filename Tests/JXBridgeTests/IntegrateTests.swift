@@ -38,16 +38,16 @@ final class IntegrateTests: XCTestCase {
 private class TestModule: JXModule {
     var testClass: TestClass? = TestClass() // Allow assignment to nil to test weak ref
     
-    var namespace = JXNamespace("test")
+    static let namespace = JXNamespace("test")
     
     func register(with registry: JXRegistry) throws {
-        try registry.registerBridge(for: TestStruct.self, namespace: namespace)
-        try registry.registerBridge(for: TestClass.self, namespace: namespace)
+        try registry.registerBridge(for: TestStruct.self, namespace: Self.namespace)
+        try registry.registerBridge(for: TestClass.self, namespace: Self.namespace)
     }
     
     func initialize(in context: JXContext) throws {
-        try context.global.integrate(TestStruct(), namespace: namespace)
-        try context.global.integrate(testClass!, namespace: namespace)
+        try context.global.integrate(TestStruct(), namespace: Self.namespace)
+        try context.global.integrate(testClass!, namespace: Self.namespace)
     }
 }
 
