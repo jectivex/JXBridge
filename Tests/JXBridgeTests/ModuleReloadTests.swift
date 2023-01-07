@@ -80,7 +80,7 @@ private class TestScriptLoader: JXScriptLoader {
 private struct TestJXModule: JXModule {
     var fromResource: String?
     var fromScript: String?
-    let namespace: JXNamespace = "jxtest"
+    static let namespace: JXNamespace = "jxtest"
     
     func register(with registry: JXRegistry) throws {
         if let fromResource {

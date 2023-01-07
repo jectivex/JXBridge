@@ -202,16 +202,16 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyJXBridging\/namespace"
-      ],
-      "title" : "Instance Properties"
-    },
-    {
-      "identifiers" : [
         "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyJXBridging\/define(for:in:)",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyJXBridging\/define(symbol:namespace:in:)"
       ],
       "title" : "Instance Methods"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyJXBridging\/namespace"
+      ],
+      "title" : "Type Properties"
     },
     {
       "generated" : true,
@@ -633,6 +633,14 @@
 
   ],
   "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
     {
       "kind" : "keyword",
       "text" : "let"

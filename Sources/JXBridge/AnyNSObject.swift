@@ -4,7 +4,7 @@ import JXKit
 
 /// Module that auto-registers any `NSObject` type.
 public struct AnyNSObject: JXModule {    
-    public let namespace: JXNamespace = .none
+    public static let namespace: JXNamespace = .none
     
     public func define(symbol: String, namespace: JXNamespace, in context: JXContext) throws -> Bool {
         guard let cls = NSClassFromString(symbol), let nsobjectType = cls as? NSObject.Type else {

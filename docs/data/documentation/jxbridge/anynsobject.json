@@ -107,16 +107,16 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject\/namespace"
-      ],
-      "title" : "Instance Properties"
-    },
-    {
-      "identifiers" : [
         "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject\/define(for:in:)",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject\/define(symbol:namespace:in:)"
       ],
       "title" : "Instance Methods"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/AnyNSObject\/namespace"
+      ],
+      "title" : "Type Properties"
     },
     {
       "generated" : true,
@@ -377,6 +377,14 @@
 
   ],
   "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
     {
       "kind" : "keyword",
       "text" : "let"

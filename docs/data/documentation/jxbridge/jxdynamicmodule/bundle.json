@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "The path to the locally-installed folder containing the scripts and resources for the app.",
+      "text" : "The bundle that will contain the local module sources and resources.",
       "type" : "text"
     }
   ],
@@ -15,11 +15,11 @@
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/localURL"
+    "url" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/bundle"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:8JXBridge15JXDynamicModuleP8localURL10Foundation0E0VvpZ",
+    "externalID" : "s:8JXBridge15JXDynamicModuleP6bundleSo8NSBundleCvpZ",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -39,7 +39,7 @@
       },
       {
         "kind" : "identifier",
-        "text" : "localURL"
+        "text" : "bundle"
       },
       {
         "kind" : "text",
@@ -47,8 +47,8 @@
       },
       {
         "kind" : "typeIdentifier",
-        "preciseIdentifier" : "s:10Foundation3URLV",
-        "text" : "URL"
+        "preciseIdentifier" : "c:objc(cs)NSBundle",
+        "text" : "Bundle"
       }
     ],
     "modules" : [
@@ -60,7 +60,7 @@
     "role" : "symbol",
     "roleHeading" : "Type Property",
     "symbolKind" : "property",
-    "title" : "localURL"
+    "title" : "bundle"
   },
   "primaryContentSections" : [
     {
@@ -91,7 +91,7 @@
             },
             {
               "kind" : "identifier",
-              "text" : "localURL"
+              "text" : "bundle"
             },
             {
               "kind" : "text",
@@ -99,8 +99,8 @@
             },
             {
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:10Foundation3URLV",
-              "text" : "URL"
+              "preciseIdentifier" : "c:objc(cs)NSBundle",
+              "text" : "Bundle"
             },
             {
               "kind" : "text",
@@ -131,7 +131,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/jxbridge\/jxdynamicmodule\/localurl"
+        "\/documentation\/jxbridge\/jxdynamicmodule\/bundle"
       ],
       "traits" : [
         {
@@ -187,10 +187,10 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxdynamicmodule"
 },
-"doc://JXBridge/documentation/JXBridge/JXDynamicModule/localURL": {
+"doc://JXBridge/documentation/JXBridge/JXDynamicModule/bundle": {
   "abstract" : [
     {
-      "text" : "The path to the locally-installed folder containing the scripts and resources for the app.",
+      "text" : "The bundle that will contain the local module sources and resources.",
       "type" : "text"
     }
   ],
@@ -213,7 +213,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "localURL"
+      "text" : "bundle"
     },
     {
       "kind" : "text",
@@ -221,17 +221,17 @@
     },
     {
       "kind" : "typeIdentifier",
-      "preciseIdentifier" : "s:10Foundation3URLV",
-      "text" : "URL"
+      "preciseIdentifier" : "c:objc(cs)NSBundle",
+      "text" : "Bundle"
     }
   ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/localURL",
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/bundle",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "localURL",
+  "title" : "bundle",
   "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxdynamicmodule\/localurl"
+  "url" : "\/documentation\/jxbridge\/jxdynamicmodule\/bundle"
 }
 }
 }

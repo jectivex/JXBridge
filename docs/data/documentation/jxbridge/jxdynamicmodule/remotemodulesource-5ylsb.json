@@ -1,28 +1,53 @@
 {
   "abstract" : [
     {
-      "text" : "A module with the capability of having its scripts and resources dynamically loaded from an external source.",
+      "text" : "The logical path to the remote root folder in the source archive whose file and folder layout matches the structure of the ",
       "type" : "text"
+    },
+    {
+      "code" : "localModuleRoot",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "defaultImplementationsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/remoteModuleSource-2mp1k"
+      ],
+      "title" : "JXDynamicModule Implementations"
     }
   ],
   "hierarchy" : {
     "paths" : [
       [
-        "doc:\/\/JXBridge\/documentation\/JXBridge"
+        "doc:\/\/JXBridge\/documentation\/JXBridge",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule"
+    "url" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/remoteModuleSource-5ylsb"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:8JXBridge15JXDynamicModuleP",
+    "externalID" : "s:8JXBridge15JXDynamicModuleP06remoteC6Source10Foundation3URLVSgvpZ",
     "fragments" : [
       {
         "kind" : "keyword",
-        "text" : "protocol"
+        "text" : "static"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "var"
       },
       {
         "kind" : "text",
@@ -30,7 +55,20 @@
       },
       {
         "kind" : "identifier",
-        "text" : "JXDynamicModule"
+        "text" : "remoteModuleSource"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:10Foundation3URLV",
+        "text" : "URL"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
       }
     ],
     "modules" : [
@@ -38,16 +76,11 @@
         "name" : "JXBridge"
       }
     ],
-    "navigatorTitle" : [
-      {
-        "kind" : "identifier",
-        "text" : "JXDynamicModule"
-      }
-    ],
+    "required" : true,
     "role" : "symbol",
-    "roleHeading" : "Protocol",
-    "symbolKind" : "protocol",
-    "title" : "JXDynamicModule"
+    "roleHeading" : "Type Property",
+    "symbolKind" : "property",
+    "title" : "remoteModuleSource"
   },
   "primaryContentSections" : [
     {
@@ -62,7 +95,15 @@
           "tokens" : [
             {
               "kind" : "keyword",
-              "text" : "protocol"
+              "text" : "static"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "var"
             },
             {
               "kind" : "text",
@@ -70,17 +111,28 @@
             },
             {
               "kind" : "identifier",
-              "text" : "JXDynamicModule"
+              "text" : "remoteModuleSource"
             },
             {
               "kind" : "text",
-              "text" : " : "
+              "text" : ": "
             },
             {
-              "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule",
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:8JXBridge8JXModuleP",
-              "text" : "JXModule"
+              "preciseIdentifier" : "s:10Foundation3URLV",
+              "text" : "URL"
+            },
+            {
+              "kind" : "text",
+              "text" : "? { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
             }
           ]
         }
@@ -90,15 +142,31 @@
     {
       "content" : [
         {
-          "anchor" : "overview",
+          "anchor" : "discussion",
           "level" : 2,
-          "text" : "Overview",
+          "text" : "Discussion",
           "type" : "heading"
         },
         {
           "inlineContent" : [
             {
-              "text" : "The transport scheme and loading mechaism is to be implemented by a host container.",
+              "text" : "The returned URL is not necessarily directly reachable; rather, it is expected that the URL’s ",
+              "type" : "text"
+            },
+            {
+              "code" : "baseURL",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " and ",
+              "type" : "text"
+            },
+            {
+              "code" : "relativePath",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " are used separately in the context of a host environment to resolve individual versions of the module.",
               "type" : "text"
             }
           ],
@@ -106,16 +174,6 @@
         }
       ],
       "kind" : "content"
-    }
-  ],
-  "relationshipsSections" : [
-    {
-      "identifiers" : [
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule"
-      ],
-      "kind" : "relationships",
-      "title" : "Inherits From",
-      "type" : "inheritsFrom"
     }
   ],
   "schemaVersion" : {
@@ -126,20 +184,10 @@
   "sections" : [
 
   ],
-  "topicSections" : [
-    {
-      "identifiers" : [
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/bundle",
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/localModuleRoot-9zftp",
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/remoteModuleSource-5ylsb"
-      ],
-      "title" : "Type Properties"
-    }
-  ],
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/jxbridge\/jxdynamicmodule"
+        "\/documentation\/jxbridge\/jxdynamicmodule\/remotemodulesource-5ylsb"
       ],
       "traits" : [
         {
@@ -195,10 +243,10 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxdynamicmodule"
 },
-"doc://JXBridge/documentation/JXBridge/JXDynamicModule/bundle": {
+"doc://JXBridge/documentation/JXBridge/JXDynamicModule/remoteModuleSource-2mp1k": {
   "abstract" : [
     {
-      "text" : "The bundle that will contain the local module sources and resources.",
+      "text" : "No-op default implementation",
       "type" : "text"
     }
   ],
@@ -221,54 +269,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "bundle"
-    },
-    {
-      "kind" : "text",
-      "text" : ": "
-    },
-    {
-      "kind" : "typeIdentifier",
-      "preciseIdentifier" : "c:objc(cs)NSBundle",
-      "text" : "Bundle"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/bundle",
-  "kind" : "symbol",
-  "required" : true,
-  "role" : "symbol",
-  "title" : "bundle",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxdynamicmodule\/bundle"
-},
-"doc://JXBridge/documentation/JXBridge/JXDynamicModule/localModuleRoot-9zftp": {
-  "abstract" : [
-    {
-      "text" : "The path to the locally-installed folder that is expected to contain the scripts and resources for the app.",
-      "type" : "text"
-    }
-  ],
-  "defaultImplementations" : 1,
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "static"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "keyword",
-      "text" : "var"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "localModuleRoot"
+      "text" : "remoteModuleSource"
     },
     {
       "kind" : "text",
@@ -278,15 +279,18 @@
       "kind" : "typeIdentifier",
       "preciseIdentifier" : "s:10Foundation3URLV",
       "text" : "URL"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
     }
   ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/localModuleRoot-9zftp",
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/remoteModuleSource-2mp1k",
   "kind" : "symbol",
-  "required" : true,
   "role" : "symbol",
-  "title" : "localModuleRoot",
+  "title" : "remoteModuleSource",
   "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxdynamicmodule\/localmoduleroot-9zftp"
+  "url" : "\/documentation\/jxbridge\/jxdynamicmodule\/remotemodulesource-2mp1k"
 },
 "doc://JXBridge/documentation/JXBridge/JXDynamicModule/remoteModuleSource-5ylsb": {
   "abstract" : [
@@ -346,40 +350,6 @@
   "title" : "remoteModuleSource",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxdynamicmodule\/remotemodulesource-5ylsb"
-},
-"doc://JXBridge/documentation/JXBridge/JXModule": {
-  "abstract" : [
-    {
-      "text" : "A self-contained set of native functionality exported to JavaScript under a namespace.",
-      "type" : "text"
-    }
-  ],
-  "fragments" : [
-    {
-      "kind" : "keyword",
-      "text" : "protocol"
-    },
-    {
-      "kind" : "text",
-      "text" : " "
-    },
-    {
-      "kind" : "identifier",
-      "text" : "JXModule"
-    }
-  ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXModule",
-  "kind" : "symbol",
-  "navigatorTitle" : [
-    {
-      "kind" : "identifier",
-      "text" : "JXModule"
-    }
-  ],
-  "role" : "symbol",
-  "title" : "JXModule",
-  "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxmodule"
 }
 }
 }

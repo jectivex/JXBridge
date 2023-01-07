@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "text" : "The logical path to the remote root folder in the source archive whose file and folder layout matches the structure of the localURL.",
+      "text" : "No-op default implementation",
       "type" : "text"
     }
   ],
@@ -9,17 +9,19 @@
     "paths" : [
       [
         "doc:\/\/JXBridge\/documentation\/JXBridge",
-        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule"
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/remoteModuleSource-5ylsb"
       ]
     ]
   },
   "identifier" : {
     "interfaceLanguage" : "swift",
-    "url" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/remoteURL"
+    "url" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/remoteModuleSource-2mp1k"
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:8JXBridge15JXDynamicModuleP9remoteURL10Foundation0E0VvpZ",
+    "extendedModule" : "JXBridge",
+    "externalID" : "s:8JXBridge15JXDynamicModulePAAE06remoteC6Source10Foundation3URLVSgvpZ",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -39,7 +41,7 @@
       },
       {
         "kind" : "identifier",
-        "text" : "remoteURL"
+        "text" : "remoteModuleSource"
       },
       {
         "kind" : "text",
@@ -49,6 +51,10 @@
         "kind" : "typeIdentifier",
         "preciseIdentifier" : "s:10Foundation3URLV",
         "text" : "URL"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
       }
     ],
     "modules" : [
@@ -56,11 +62,10 @@
         "name" : "JXBridge"
       }
     ],
-    "required" : true,
     "role" : "symbol",
     "roleHeading" : "Type Property",
     "symbolKind" : "property",
-    "title" : "remoteURL"
+    "title" : "remoteModuleSource"
   },
   "primaryContentSections" : [
     {
@@ -91,7 +96,7 @@
             },
             {
               "kind" : "identifier",
-              "text" : "remoteURL"
+              "text" : "remoteModuleSource"
             },
             {
               "kind" : "text",
@@ -104,7 +109,7 @@
             },
             {
               "kind" : "text",
-              "text" : " { "
+              "text" : "? { "
             },
             {
               "kind" : "keyword",
@@ -118,42 +123,6 @@
         }
       ],
       "kind" : "declarations"
-    },
-    {
-      "content" : [
-        {
-          "anchor" : "discussion",
-          "level" : 2,
-          "text" : "Discussion",
-          "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "The returned URL is not necessarily directly reachable; rather, it is expected that the URL’s ",
-              "type" : "text"
-            },
-            {
-              "code" : "baseURL",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : " and ",
-              "type" : "text"
-            },
-            {
-              "code" : "relativePath",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : " are used separately in the context of a host environment to resolve individual versions of the module.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
-        }
-      ],
-      "kind" : "content"
     }
   ],
   "schemaVersion" : {
@@ -167,7 +136,7 @@
   "variants" : [
     {
       "paths" : [
-        "\/documentation\/jxbridge\/jxdynamicmodule\/remoteurl"
+        "\/documentation\/jxbridge\/jxdynamicmodule\/remotemodulesource-2mp1k"
       ],
       "traits" : [
         {
@@ -223,10 +192,10 @@
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxdynamicmodule"
 },
-"doc://JXBridge/documentation/JXBridge/JXDynamicModule/remoteURL": {
+"doc://JXBridge/documentation/JXBridge/JXDynamicModule/remoteModuleSource-2mp1k": {
   "abstract" : [
     {
-      "text" : "The logical path to the remote root folder in the source archive whose file and folder layout matches the structure of the localURL.",
+      "text" : "No-op default implementation",
       "type" : "text"
     }
   ],
@@ -249,7 +218,7 @@
     },
     {
       "kind" : "identifier",
-      "text" : "remoteURL"
+      "text" : "remoteModuleSource"
     },
     {
       "kind" : "text",
@@ -259,15 +228,77 @@
       "kind" : "typeIdentifier",
       "preciseIdentifier" : "s:10Foundation3URLV",
       "text" : "URL"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
     }
   ],
-  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/remoteURL",
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/remoteModuleSource-2mp1k",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "remoteModuleSource",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxdynamicmodule\/remotemodulesource-2mp1k"
+},
+"doc://JXBridge/documentation/JXBridge/JXDynamicModule/remoteModuleSource-5ylsb": {
+  "abstract" : [
+    {
+      "text" : "The logical path to the remote root folder in the source archive whose file and folder layout matches the structure of the ",
+      "type" : "text"
+    },
+    {
+      "code" : "localModuleRoot",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "defaultImplementations" : 1,
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "remoteModuleSource"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:10Foundation3URLV",
+      "text" : "URL"
+    },
+    {
+      "kind" : "text",
+      "text" : "?"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/remoteModuleSource-5ylsb",
   "kind" : "symbol",
   "required" : true,
   "role" : "symbol",
-  "title" : "remoteURL",
+  "title" : "remoteModuleSource",
   "type" : "topic",
-  "url" : "\/documentation\/jxbridge\/jxdynamicmodule\/remoteurl"
+  "url" : "\/documentation\/jxbridge\/jxdynamicmodule\/remotemodulesource-5ylsb"
 }
 }
 }

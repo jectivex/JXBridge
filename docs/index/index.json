@@ -2566,13 +2566,44 @@
                 "type" : "groupMarker"
               },
               {
-                "path" : "\/documentation\/jxbridge\/jxdynamicmodule\/localurl",
-                "title" : "static var localURL: URL",
+                "path" : "\/documentation\/jxbridge\/jxdynamicmodule\/bundle",
+                "title" : "static var bundle: Bundle",
                 "type" : "property"
               },
               {
-                "path" : "\/documentation\/jxbridge\/jxdynamicmodule\/remoteurl",
-                "title" : "static var remoteURL: URL",
+                "children" : [
+                  {
+                    "children" : [
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxdynamicmodule\/localmoduleroot-xyp",
+                        "title" : "static var localModuleRoot: URL",
+                        "type" : "property"
+                      }
+                    ],
+                    "title" : "JXDynamicModule Implementations",
+                    "type" : "groupMarker"
+                  }
+                ],
+                "path" : "\/documentation\/jxbridge\/jxdynamicmodule\/localmoduleroot-9zftp",
+                "title" : "static var localModuleRoot: URL",
+                "type" : "property"
+              },
+              {
+                "children" : [
+                  {
+                    "children" : [
+                      {
+                        "path" : "\/documentation\/jxbridge\/jxdynamicmodule\/remotemodulesource-2mp1k",
+                        "title" : "static var remoteModuleSource: URL?",
+                        "type" : "property"
+                      }
+                    ],
+                    "title" : "JXDynamicModule Implementations",
+                    "type" : "groupMarker"
+                  }
+                ],
+                "path" : "\/documentation\/jxbridge\/jxdynamicmodule\/remotemodulesource-5ylsb",
+                "title" : "static var remoteModuleSource: URL?",
                 "type" : "property"
               }
             ],
@@ -2582,15 +2613,6 @@
           },
           {
             "children" : [
-              {
-                "title" : "Instance Properties",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/jxmodule\/namespace",
-                "title" : "var namespace: JXNamespace",
-                "type" : "property"
-              },
               {
                 "title" : "Instance Methods",
                 "type" : "groupMarker"
@@ -2684,6 +2706,15 @@
                 "path" : "\/documentation\/jxbridge\/jxmodule\/register(with:)-4okgr",
                 "title" : "func register(with: JXRegistry) throws",
                 "type" : "method"
+              },
+              {
+                "title" : "Type Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/jxbridge\/jxmodule\/namespace",
+                "title" : "static var namespace: JXNamespace",
+                "type" : "property"
               }
             ],
             "path" : "\/documentation\/jxbridge\/jxmodule",
@@ -2727,15 +2758,6 @@
                 "type" : "init"
               },
               {
-                "title" : "Instance Properties",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/anyjxbridging\/namespace",
-                "title" : "let namespace: JXNamespace",
-                "type" : "property"
-              },
-              {
                 "title" : "Instance Methods",
                 "type" : "groupMarker"
               },
@@ -2748,6 +2770,15 @@
                 "path" : "\/documentation\/jxbridge\/anyjxbridging\/define(symbol:namespace:in:)",
                 "title" : "func define(symbol: String, namespace: JXNamespace, in: JXContext) throws -> Bool",
                 "type" : "method"
+              },
+              {
+                "title" : "Type Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/jxbridge\/anyjxbridging\/namespace",
+                "title" : "static let namespace: JXNamespace",
+                "type" : "property"
               },
               {
                 "title" : "Default Implementations",
@@ -2787,15 +2818,6 @@
           {
             "children" : [
               {
-                "title" : "Instance Properties",
-                "type" : "groupMarker"
-              },
-              {
-                "path" : "\/documentation\/jxbridge\/anynsobject\/namespace",
-                "title" : "let namespace: JXNamespace",
-                "type" : "property"
-              },
-              {
                 "title" : "Instance Methods",
                 "type" : "groupMarker"
               },
@@ -2808,6 +2830,15 @@
                 "path" : "\/documentation\/jxbridge\/anynsobject\/define(symbol:namespace:in:)",
                 "title" : "func define(symbol: String, namespace: JXNamespace, in: JXContext) throws -> Bool",
                 "type" : "method"
+              },
+              {
+                "title" : "Type Properties",
+                "type" : "groupMarker"
+              },
+              {
+                "path" : "\/documentation\/jxbridge\/anynsobject\/namespace",
+                "title" : "static let namespace: JXNamespace",
+                "type" : "property"
               },
               {
                 "title" : "Default Implementations",

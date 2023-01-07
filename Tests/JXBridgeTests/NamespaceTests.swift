@@ -110,11 +110,11 @@ private class TestModule: JXModule, JXBridging {
         "TestStruct2": TestStruct2.self
     ]
     
-    var namespace = JXNamespace("test")
+    static let namespace = JXNamespace("test")
     
     func initialize(in context: JXContext) throws {
-        try context.registry.registerBridge(for: self, namespace: namespace)
-        try context.global.integrate(self, namespace: namespace)
+        try context.registry.registerBridge(for: self, namespace: Self.namespace)
+        try context.global.integrate(self, namespace: Self.namespace)
     }
     
     func define(symbol: String, namespace: JXNamespace, in context: JXContext) throws -> Bool {
