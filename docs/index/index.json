@@ -2589,6 +2589,11 @@
                 "type" : "property"
               },
               {
+                "path" : "\/documentation\/jxbridge\/jxdynamicmodule\/modulerootpath",
+                "title" : "static var moduleRootPath: String",
+                "type" : "property"
+              },
+              {
                 "children" : [
                   {
                     "children" : [

@@ -131,6 +131,7 @@
       "identifiers" : [
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/bundle",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/localModuleRoot-9zftp",
+        "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/moduleRootPath",
         "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/remoteModuleSource-5ylsb"
       ],
       "title" : "Type Properties"
@@ -287,6 +288,51 @@
   "title" : "localModuleRoot",
   "type" : "topic",
   "url" : "\/documentation\/jxbridge\/jxdynamicmodule\/localmoduleroot-9zftp"
+},
+"doc://JXBridge/documentation/JXBridge/JXDynamicModule/moduleRootPath": {
+  "abstract" : [
+    {
+      "text" : "The folder name under which modules will be organized by namespace.",
+      "type" : "text"
+    }
+  ],
+  "fragments" : [
+    {
+      "kind" : "keyword",
+      "text" : "static"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "keyword",
+      "text" : "var"
+    },
+    {
+      "kind" : "text",
+      "text" : " "
+    },
+    {
+      "kind" : "identifier",
+      "text" : "moduleRootPath"
+    },
+    {
+      "kind" : "text",
+      "text" : ": "
+    },
+    {
+      "kind" : "typeIdentifier",
+      "preciseIdentifier" : "s:SS",
+      "text" : "String"
+    }
+  ],
+  "identifier" : "doc:\/\/JXBridge\/documentation\/JXBridge\/JXDynamicModule\/moduleRootPath",
+  "kind" : "symbol",
+  "role" : "symbol",
+  "title" : "moduleRootPath",
+  "type" : "topic",
+  "url" : "\/documentation\/jxbridge\/jxdynamicmodule\/modulerootpath"
 },
 "doc://JXBridge/documentation/JXBridge/JXDynamicModule/remoteModuleSource-5ylsb": {
   "abstract" : [
