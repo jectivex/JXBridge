@@ -78,6 +78,9 @@ public protocol JXDynamicModule : JXModule {
 }
 
 public extension JXDynamicModule {
+    /// The folder name under which modules will be organized by namespace.
+    static var moduleRootPath: String { "jx" }
+
     /// No-op default implementation
     static var remoteModuleSource: URL? {
         nil
@@ -87,6 +90,6 @@ public extension JXDynamicModule {
     ///
     /// For example, the module `xyz` will have it's resources stored in `Resources/jx/xyz/SomeFile.js`
     static var localModuleRoot: URL {
-        URL(fileURLWithPath: Self.namespace.string, relativeTo: URL(fileURLWithPath: "jx", relativeTo: bundle.resourceURL))
+        URL(fileURLWithPath: Self.namespace.string, relativeTo: URL(fileURLWithPath: Self.moduleRootPath, relativeTo: bundle.resourceURL))
     }
 }
