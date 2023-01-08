@@ -4,47 +4,53 @@
 import PackageDescription
 
 #if canImport(ObjectiveC)
-let products: [Product] = [
+var coreProducts: [Product] = [
     .library(name: "JXBridge", targets: ["JXBridge"]),
     .library(name: "JXBridgeObjC", targets: ["JXBridgeObjC"]),
 ]
-var targets: [Target] = [
+var coreTargets: [Target] = [
     .target(name: "JXBridge", dependencies: ["JXKit", "JXBridgeObjC"]),
     .target(name: "JXBridgeObjC", dependencies: []),
     .testTarget(name: "JXBridgeObjCTests", dependencies: ["JXBridgeObjC"]),
 ]
 #else
-let products: [Product] = [
-    .library(name: "JXBridge", targets: ["JXBridge"])
+var coreProducts: [Product] = [
+    .library(name: "JXBridge", targets: ["JXBridge"]),
 ]
-var targets: [Target] = [
+var coreTargets: [Target] = [
     .target(name: "JXBridge", dependencies: ["JXKit"]),
 ]
 #endif
-
-var dependencies: [Package.Dependency] = [
+var coreDependencies: [Package.Dependency] = [
     .package(url: "https://github.com/jectivex/JXKit.git", from: "3.5.0"),
 ]
 
 #if !canImport(Combine)
-dependencies += [.package(url: "https://github.com/OpenCombine/OpenCombine.git", from: "0.13.0")]
-targets[0].dependencies += [.product(name: "OpenCombineShim", package: "OpenCombine")]
+coreDependencies += [.package(url: "https://github.com/OpenCombine/OpenCombine.git", from: "0.13.0")]
+coreTargets[0].dependencies += [.product(name: "OpenCombineShim", package: "OpenCombine")]
 #endif
 
 let package = Package(
     name: "JXBridge",
     platforms: [ .macOS(.v12), .iOS(.v15), .tvOS(.v15) ],
-    products: products + [
+    products: coreProducts + [
     	.library(name: "JXBridgeExtended", targets: ["JXBridgeExtended"]),
+        .plugin(name: "JXBridgeGeneratorTool", targets: ["JXBridgeGeneratorTool"])
     ],
-    dependencies: dependencies,
-    targets: targets + [
-        .testTarget(name: "JXBridgeTests", dependencies: ["JXBridge"], resources: [.copy("jsmodules")]),
+    dependencies: coreDependencies + [
+        .package(url: "https://github.com/jpsim/SourceKitten.git", exact: "0.33.1"),
+    ],
+    targets: coreTargets + [
+        .testTarget(name: "JXBridgeTests", dependencies: ["JXBridge"], resources: [.copy("jsmodules")], plugins: ["JXBridgeGeneratorTool"]),
     	.target(name: "JXBridgeExtended", dependencies: ["JXBridge"]),
-        .plugin(name: "ArityGeneratorCommand",
+        .executableTarget(name: "JXBridgeGenerator", dependencies: [
+            .product(name: "SourceKittenFramework", package: "SourceKitten", condition: .when(platforms: [.macOS, .linux])),
+        ]),
+        .plugin(name: "JXArityGeneratorCommand",
                 capability: .command(intent: .custom(verb: "generate-arity", description: "Generate arity support"),
                     permissions: [
                         .writeToPackageDirectory(reason: "Write arity source files")
-                    ]), dependencies: [])
+                    ]), dependencies: []),
+        .plugin(name: "JXBridgeGeneratorTool", capability: .buildTool(), dependencies: ["JXBridgeGenerator"])
     ]
 )
