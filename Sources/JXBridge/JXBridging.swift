@@ -110,3 +110,7 @@ public final class JXState {
         }
     }
 }
+
+//~~~
+public protocol JXMarkerBridging {
+}

@@ -1,83 +1,137 @@
 import Foundation
 #if os(macOS) || os(Linux)
-//import SourceKittenFramework
+import SwiftTreeSitter
+import TreeSitterSwift
 
 @main
 public class BridgeGenerator {
+    /// Expected arguments:
+    ///
+    ///     - Executable
+    ///     - Target name
+    ///     - Output file
+    ///     - [Input files] or ["-d", Input directory]
     static func main() throws {
         let arguments = CommandLine.arguments
-        for argument in arguments {
-            print("ARGUMENT: \(argument)")
+        guard arguments.count > 3 else {
+            return
+        }
+        let target = arguments[1]
+        let outputFile = arguments[2]
+
+        let inputFiles: [String]
+        if arguments[3] == "-d" {
+            guard arguments.count > 4 else {
+                return
+            }
+            inputFiles = try findInputFiles(in: arguments[4])
+        } else {
+            inputFiles = Array(arguments[3...])
         }
 
-        guard arguments.count >= 3 else {
-            print("TOO FEW ARGUMENTS!")
-            return
-            //throw BridgeGeneratorError.usage()
+        let generator = BridgeGenerator(target: target)
+        let output = try generator.process(files: inputFiles)
+        try output.write(toFile: outputFile, atomically: true, encoding: .utf8)
+    }
+
+    private static func findInputFiles(in directory: String) throws -> [String] {
+        let directoryURL = URL(fileURLWithPath: directory, isDirectory: true)
+        guard let directoryEnumerator = FileManager.default.enumerator(at: directoryURL, includingPropertiesForKeys: [.isDirectoryKey], options: [.skipsHiddenFiles]) else {
+            return []
         }
-        let name = arguments[1]
-        let outputFile = arguments[2]
-        try """
-public class JXGeneratedClass {
-    public var name: String {
-        return "\(name)"
+        var sourceFiles: [String] = []
+        for case let fileURL as URL in directoryEnumerator {
+            guard fileURL.pathExtension == "swift", let resourceValues = try? fileURL.resourceValues(forKeys: [.isDirectoryKey]), resourceValues.isDirectory != true else {
+                continue
+            }
+            sourceFiles.append(fileURL.path)
+        }
+        return sourceFiles
+    }
+
+    let target: String
+    private var typeNameToFiles: [String: [String]] = [:]
+
+    init(target: String) {
+        self.target = target
+    }
+
+    func process(files: [String]) throws -> String {
+        let language = Language(language: tree_sitter_swift())
+        let parser = Parser()
+        try parser.setLanguage(language)
+        try files.forEach { try process(file: $0, with: parser) }
+        return ""
+    }
+
+    private func process(file: String, with parser: Parser) throws {
+        let source = try String(contentsOfFile: file)
+        let tree = parser.parse(source)
+        if let node = tree?.rootNode {
+            //Self.printTree(node, file: file, source: source)
+            try process(node: node, file: file, source: source, typePath: [])
+        } else {
+            print("Unable to parse source file: \(file)")
+        }
+    }
+
+    private func process(node: Node, file: String, source: String, typePath: [String]) throws {
+        let classDecs = node.children(of: "class_declaration")
+            .filter { $0.hasChild(ofAny: ["class", "struct", "extension"]) }
+        //~~~
+    }
+
+    private static func printTree(_ node: Node, file: String, source: String) {
+        print("----------")
+        print("File: \(file)")
+        printNode(node, source: source, level: 0)
+        print("----------")
+    }
+
+    private static func printNode(_ node: Node, source: String, level: Int) {
+        let prefix = String(repeating: "  ", count: level)
+        if let nodeType = node.nodeType, let string = node.string(in: source) {
+            print("\(prefix)\(nodeType): '\(string)'")
+        }
+        for i in 0..<node.childCount {
+            if let child = node.child(at: i) {
+                printNode(child, source: source, level: level + 1)
+            }
+        }
     }
 }
-""".write(toFile: outputFile, atomically: true, encoding: .utf8)
 
-// OR...
-
-//        setenv("IN_PROCESS_SOURCEKIT", "YES", 1) // Don't do this when running in Xcode?
-//        let inputDirectory = URL(fileURLWithPath: arguments[1], isDirectory: true)
-//        let outputDirectory = URL(fileURLWithPath: arguments[2], isDirectory: true)
-//        try BridgeGenerator(inputDirectory: inputDirectory, outputDirectory: outputDirectory).run()
+extension Node {
+    func children(of nodeType: String) -> [Node] {
+        var children: [Node] = []
+        for i in 0..<namedChildCount {
+            if let child = namedChild(at: i), child.nodeType == nodeType {
+                children.append(child)
+            }
+        }
+        return children
     }
 
-//    let inputDirectory: URL
-//
-//    init(inputDirectory: URL) {
-//        self.inputDirectory = inputDirectory
-//    }
-//
-//    func run() throws {
-//        guard let directoryEnumerator = FileManager.default.enumerator(at: inputDirectory, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles]) else {
-//            return
-//        }
-//        for case let fileURL as URL in directoryEnumerator {
-//            guard fileURL.pathExtension == "swift", let resourceValues = try? fileURL.resourceValues(forKeys: [.isRegularFileKey]),
-//                  resourceValues.isRegularFile == true else {
-//                continue
-//            }
-//            guard let file = File(path: fileURL.path) else {
-//                continue
-//            }
-//            print("FILE: \(fileURL)") //~~~
-//            let structure = try Structure(file: file)
-//            //print("STRUCTURE: \(structure.description)")
-//            //print("========================================")
-//            processCandidate(dictionary: structure.dictionary)
-//
-//        }
-//    }
-//
-//    private func processCandidate(dictionary: [String: SourceKitRepresentable]) {
-//        if let inheritedTypes = dictionary["key.inheritedtypes"] as? [[String: SourceKitRepresentable]], let name = dictionary["key.name"] as? String {
-//            if inheritedTypes.contains(where: { $0["key.name"] as? String == "JXStaticBridging" }) {
-//                print("FOUND NAME: \(name)")
-//            }
-//        }
-//        if let substructures = dictionary["key.substructure"] as? [[String: SourceKitRepresentable]] {
-//            for substructure in substructures {
-//                processCandidate(dictionary: substructure)
-//            }
-//        }
-//    }
+    func hasChild(ofAny nodeTypes: [String]) -> Bool {
+        for i in 0..<namedChildCount {
+            if let nodeType = namedChild(at: i)?.nodeType, nodeTypes.contains(nodeType) {
+                return true
+            }
+        }
+        return false
+    }
+
+    func string(in source: String) -> String? {
+        guard let stringRange = Range(range, in: source) else {
+            return nil
+        }
+        return String(source[stringRange])
+    }
 }
 #else
 @main
 public class BridgeGenerator {
     static func main() throws {
-        let argumentsString = CommandLine.arguments.joined(separator: ",")
         throw BridgeGeneratorError(message: "Unsupported platform")
     }
 }

@@ -38,13 +38,16 @@ let package = Package(
         .plugin(name: "JXBridgeGeneratorTool", targets: ["JXBridgeGeneratorTool"])
     ],
     dependencies: coreDependencies + [
-        .package(url: "https://github.com/jpsim/SourceKitten.git", exact: "0.33.1"),
+        .package(url: "https://github.com/ChimeHQ/SwiftTreeSitter", branch: "main"),
+        .package(url: "https://github.com/alex-pinkus/tree-sitter-swift", branch: "with-generated-files"),
     ],
     targets: coreTargets + [
-        .testTarget(name: "JXBridgeTests", dependencies: ["JXBridge"], resources: [.copy("jsmodules")], plugins: ["JXBridgeGeneratorTool"]),
+        .testTarget(name: "JXBridgeTests", dependencies: ["JXBridge"], resources: [.copy("jsmodules")]),
+        .testTarget(name: "JXBridgeGeneratorTests", dependencies: ["JXBridge"], plugins: ["JXBridgeGeneratorTool"]),
     	.target(name: "JXBridgeExtended", dependencies: ["JXBridge"]),
         .executableTarget(name: "JXBridgeGenerator", dependencies: [
-            .product(name: "SourceKittenFramework", package: "SourceKitten", condition: .when(platforms: [.macOS, .linux])),
+            .product(name: "SwiftTreeSitter", package: "SwiftTreeSitter"),
+            .product(name: "TreeSitterSwift", package: "tree-sitter-swift")
         ]),
         .plugin(name: "JXArityGeneratorCommand",
                 capability: .command(intent: .custom(verb: "generate-arity", description: "Generate arity support"),

@@ -9,7 +9,7 @@ import PackagePlugin
         let inputDir = target.directory
         let bridgeGenerator = try context.tool(named: "JXBridgeGenerator").path
         return [
-            .buildCommand(displayName: "JXBridgeBuilder", executable: bridgeGenerator, arguments: [name, outputFile, inputDir], outputFiles: [outputFile])
+            .buildCommand(displayName: "JXBridgeBuilder", executable: bridgeGenerator, arguments: [name, outputFile, "-d", inputDir], outputFiles: [outputFile])
         ]
     }
 }
