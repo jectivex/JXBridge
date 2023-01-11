@@ -1,9 +1,9 @@
 class TypeInfo: CustomStringConvertible {
     let qualifiedName: String
-    var extends = "" //~~~ Only add to type bridge at the end if super in same module? Otherwise could be in different and we don't know what to import and if we import all referenced modules there could be name conflicts
+    var type: TypeInfoType = .unknown
+    var extends: String?
     var visibility: Visibility = .unknown
     var isBridging = false
-    var isActor = false
     var members: [MemberInfo] = []
 
     init(qualifiedName: String) {
@@ -25,10 +25,10 @@ class TypeInfo: CustomStringConvertible {
             .joined(separator: "\n")
         return """
 \(qualifiedName) {
-    extends: \(extends)
+    type: \(type)
+    extends: \(extends ?? "nil")
     visibility: \(visibility)
     isBridging: \(isBridging)
-    isActor: \(isActor)
 }
 \(membersDescription)
 """
@@ -37,13 +37,26 @@ class TypeInfo: CustomStringConvertible {
 
 struct MemberInfo {
     var name: String
-    var type: MemberType = .property
+    var type: MemberInfoType = .property
     var visibility: Visibility = .internal
     var hasGetter = false
     var hasSetter = false
     var isAsync = false
     var isThrows = false
     var parameters: [ParameterInfo] = []
+
+    func isVisible(in typeInfo: TypeInfo) -> Bool {
+        switch typeInfo.visibility {
+        case .public, .open:
+            return visibility == .public || visibility == .open
+        case .internal:
+            return visibility != .private
+        case .private:
+            return true
+        case .unknown:
+            return visibility != .private
+        }
+    }
 
     func description(in typeName: String) -> String {
         return """
@@ -69,7 +82,15 @@ struct ParameterInfo: CustomStringConvertible {
     }
 }
 
-enum MemberType: Int, CustomStringConvertible {
+enum TypeInfoType: String {
+    case unknown
+    case `class`
+    case `struct`
+    case `actor`
+}
+
+// Extend Int for sortability
+enum MemberInfoType: Int, CustomStringConvertible {
     case constructor
     case property
     case function
@@ -104,6 +125,7 @@ enum MemberType: Int, CustomStringConvertible {
 enum Visibility: String {
     case unknown
     case `public`
+    case `open`
     case `internal`
     case `private`
 }
