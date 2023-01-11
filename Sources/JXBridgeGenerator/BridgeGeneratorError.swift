@@ -1,8 +1,8 @@
+//~~~ used?
 public struct BridgeGeneratorError: Error {
     var message: String
 
-    static func usage() -> BridgeGeneratorError {
-        //~~~
-        return BridgeGeneratorError(message: "usage")
+    static func `internal`(_ message: String) -> BridgeGeneratorError {
+        return BridgeGeneratorError(message: "Internal error: \(message)")
     }
 }
