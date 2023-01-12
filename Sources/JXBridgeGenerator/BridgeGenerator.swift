@@ -6,16 +6,12 @@ import SwiftSyntax
 // TODO: Generics, customization by comments
 
 /// Generate default bridge builders by analyzing Swift source.
-///
-///     swift package plugin generate-bridges [-o <output file>] <-d <input dir> | file>+
 @main public class BridgeGenerator {
     static func main() throws {
         let arguments = CommandLine.arguments
-        guard !arguments.isEmpty else {
-            print(usage())
-            return
+        if !arguments.isEmpty {
+            try run(Array(arguments[1...])) // Strip executable argument
         }
-        try run(Array(arguments[1...]))
     }
 
     /// Run the bridge generator on the given arguments.
@@ -29,10 +25,6 @@ import SwiftSyntax
         } else {
             print(output)
         }
-    }
-
-    private static func usage() -> String {
-        return "swift package plugin generate-bridges -o <output file> <-d <input dir> | file>+"
     }
 
     private static func processArguments(_ arguments: [String]) throws -> (files: [String], outputFile: String?) {
