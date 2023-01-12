@@ -41,13 +41,13 @@ private class TestModule: JXModule {
     static let namespace = JXNamespace("test")
     
     func register(with registry: JXRegistry) throws {
-        try registry.registerBridge(for: TestStruct.self, namespace: Self.namespace)
-        try registry.registerBridge(for: TestClass.self, namespace: Self.namespace)
+        try registry.registerBridge(for: TestStruct.self, namespace: namespace)
+        try registry.registerBridge(for: TestClass.self, namespace: namespace)
     }
     
     func initialize(in context: JXContext) throws {
-        try context.global.integrate(TestStruct(), namespace: Self.namespace)
-        try context.global.integrate(testClass!, namespace: Self.namespace)
+        try context.global.integrate(TestStruct(), namespace: namespace)
+        try context.global.integrate(testClass!, namespace: namespace)
     }
 }
 

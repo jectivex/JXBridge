@@ -9,7 +9,7 @@
 ///         }
 ///
 ///         static func jxBridge() -> JXBridge {
-///             return JXBridgeBuilder(Counter.self) // In non-final classes use explicit type. In structs and final classes can use 'self'
+///             return JXBridgeBuilder(type: Counter.self)
 ///                 .constructor { Counter.init }
 ///                 .var.count { \.count }
 ///                 .func.increment { Counter.increment }
@@ -21,14 +21,25 @@ public protocol JXBridging {
     static func jxBridge() throws -> JXBridge
 }
 
-//~~~
-//extension JXBridging {
-//
-//    static var jxDefaultNamespace: JXNamespace {
-//        return .default
-//    }
-//
-//    static func jxDefaultBridge() throws -> JXBridge {
-//
-//    }
-//}
+extension JXBridging {
+    /// The default implementation calls `jxBridgeBuilder` for any tool-generated bridging code.
+    public static func jxBridge() -> JXBridge {
+        return jxBridgeBuilder().bridge
+    }
+
+    /// Any intrinsic namespace for this type. Used by `jxDefaultBridge`. Defaults to `.none`.
+    public static var jxNamespace: JXNamespace {
+        return .none
+    }
+
+    /// A default JavaScript bridge builder for this type, which you can use in your ``JXBridging/jxBridge()`` method.
+    ///
+    ///     static func jxBridge() -> JXBridge {
+    ///         return jxBridgeBuilder()
+    ///             // Customizations...
+    ///             .bridge
+    ///     }
+    public static func jxBridgeBuilder() -> JXBridgeBuilder<Self> {
+        return JXBridgeBuilder(type: self, namespace: jxNamespace)
+    }
+}

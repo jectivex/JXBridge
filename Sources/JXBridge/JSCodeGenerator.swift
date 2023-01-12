@@ -93,9 +93,8 @@ new Proxy({ _jxNamespace: '\(namespace)', import() { _jxNamespaceImport(this); }
     }
 
     private var staticFunctionsJS: String {
-        let names = bridge.staticFunctions.map { $0.name }
-            + bridge.classFunctions.map { $0.name }
-        return names.map({ staticFunctionJS($0) }).joined(separator: "\n")
+        let functionNames = Set(bridge.staticFunctions.map { $0.name } + bridge.classFunctions.map { $0.name })
+        return functionNames.map({ staticFunctionJS($0) }).joined(separator: "\n")
     }
 
     private func staticFunctionJS(_ functionName: String) -> String {
@@ -155,7 +154,8 @@ new Proxy({ _jxNamespace: '\(namespace)', import() { _jxNamespaceImport(this); }
     }
 
     private var functionsJS: String {
-        return bridge.functions.map({ functionJS($0.name) }).joined(separator: "\n")
+        let functionNames = Set(bridge.functions.map { $0.name })
+        return functionNames.map({ functionJS($0) }).joined(separator: "\n")
     }
 
     private func functionJS(_ functionName: String) -> String {

@@ -112,11 +112,6 @@ private class TestModule: JXModule, JXBridging {
     
     static let namespace = JXNamespace("test")
     
-    func initialize(in context: JXContext) throws {
-        try context.registry.registerBridge(for: type(of: self))
-        try context.global.integrate(self, namespace: Self.namespace)
-    }
-    
     func define(symbol: String, namespace: JXNamespace, in context: JXContext) throws -> Bool {
         guard let type = typeMap[symbol] else {
             return false
@@ -127,7 +122,7 @@ private class TestModule: JXModule, JXBridging {
     
     func defineAll(in context: JXContext) throws -> Bool {
         for entry in typeMap {
-            if context.registry.bridge(for: entry.key, namespace: Self.namespace) == nil {
+            if context.registry.bridge(for: entry.key, namespace: namespace) == nil {
                 try context.registry.registerBridge(for: entry.value)
             }
         }

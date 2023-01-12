@@ -33,9 +33,13 @@ public final class JXRegistry {
     
     /// Register a module for use in JavaScript. Has no effect if the module has a namespace and has already been registered.
     @discardableResult public func register(_ module: JXModule) throws -> Bool {
-        let namespace = type(of: module).namespace
+        let moduleType = type(of: module)
+        let namespace = moduleType.namespace
         guard namespace != .none else {
             try module.register(with: self)
+            if let bridgingModuleType = moduleType as? JXBridging.Type {
+                try registerBridge(for: bridgingModuleType, namespace: namespace)
+            }
             unnamespacedModules.append(module)
             try didUpdate.forEach { try $0.didRegisterModule(module) }
             return true
@@ -51,6 +55,9 @@ public final class JXRegistry {
         }
         do {
             try module.register(with: self)
+            if let bridgingModuleType = moduleType as? JXBridging.Type {
+                try registerBridge(for: bridgingModuleType, namespace: namespace)
+            }
         } catch {
             // Remove bad module
             modulesByNamespace[namespace] = []

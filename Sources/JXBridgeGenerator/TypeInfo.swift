@@ -3,16 +3,18 @@ class TypeInfo: CustomStringConvertible {
     var type: TypeInfoType = .unknown
     var extends: String?
     var visibility: Visibility = .unknown
-    var isBridging = false
+    var hasJXBridging = false
+    var hasJXModule = false
+    var hasJXSuperclass = false
     var members: [MemberInfo] = []
 
     init(qualifiedName: String) {
         self.qualifiedName = qualifiedName
     }
 
-    var hasDefaultBridge: Bool {
+    var hasBridgeBuilder: Bool {
         return members.contains { member in
-            return member.name == "jxDefaultBridge"
+            return member.name == "jxBridgeBuilder"
                 && (member.type == .staticFunction || member.type == .classFunction)
                 && member.parameters.isEmpty
         }
@@ -28,7 +30,8 @@ class TypeInfo: CustomStringConvertible {
     type: \(type)
     extends: \(extends ?? "nil")
     visibility: \(visibility)
-    isBridging: \(isBridging)
+    hasJXBridging: \(hasJXBridging)
+    hasJXSuperclass: \(hasJXSuperclass)
 }
 \(membersDescription)
 """
@@ -39,6 +42,7 @@ struct MemberInfo {
     var name: String
     var type: MemberInfoType = .property
     var visibility: Visibility = .internal
+    var isOverride = false
     var hasGetter = false
     var hasSetter = false
     var isAsync = false
@@ -56,6 +60,27 @@ struct MemberInfo {
         case .unknown:
             return visibility != .private
         }
+    }
+
+    func isJXProtocolMember(in typeInfo: TypeInfo) -> Bool {
+        if (name == "jxNamespace" || name == "jxSuperclass") && (type == .staticProperty || type == .classProperty) {
+            return true
+        }
+        if (name == "jxBridge" || name == "jxBridgeBuilder") && (type == .staticFunction || type == .classFunction) {
+            return true
+        }
+        guard typeInfo.hasJXModule else {
+            return false
+        }
+
+        // JXModule API
+        if name == "namespace" && (type == .staticProperty || type == .classProperty) {
+            return true
+        }
+        if type == .function {
+            return name == "register" || name == "initialize" || name == "define" || name == "defineAll"
+        }
+        return false
     }
 
     func description(in typeName: String) -> String {
@@ -91,6 +116,7 @@ enum TypeInfoType: String {
 
 // Extend Int for sortability
 enum MemberInfoType: Int, CustomStringConvertible {
+    case defaultConstructor
     case constructor
     case property
     case function
@@ -102,6 +128,8 @@ enum MemberInfoType: Int, CustomStringConvertible {
 
     var description: String {
         switch self {
+        case .defaultConstructor:
+            return "defaultConstructor"
         case .constructor:
             return "constructor"
         case .property:

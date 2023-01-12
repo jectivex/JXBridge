@@ -118,19 +118,20 @@ final class ContextSPI {
         }
     }
 
-    //~~~ Auto-integrate modules that implement JXBridging. Auto-register on regiser
-
     private func initializeModule(_ module: JXModule, addErrorContext: Bool = false) throws {
         guard let context else {
             return
         }
         do {
+            if module is JXBridging {
+                try context.global.integrate(module, namespace: module.namespace)
+            }
             try module.initialize(in: context)
         } catch {
             // When initialization isn't an immediate result of the dev registering the module, add context to help them track down the problem
             if addErrorContext {
                 var error = JXError(cause: error)
-                error.message = "Unable to initialize module '\(type(of: module).namespace)': \(error.message)"
+                error.message = "Unable to initialize module '\(module.namespace)': \(error.message)"
                 throw error
             } else {
                 throw error

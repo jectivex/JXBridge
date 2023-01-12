@@ -6,7 +6,7 @@ import System
 
 /// Command plugin to invoke our `ArityGenerator` tool with package `.arity` files.
 ///
-///     swift package plugin generate-arity <options> <source_files>
+///     swift package plugin generate-arity [-o <output dir>] [-<option> <number>] <-d <input dir> | file>+"
 ///
 /// - Note: The location of your Command Line Tools must be set in Xcode->Settings->Locations
 @main struct ArityGeneratorCommand: CommandPlugin {
@@ -21,7 +21,7 @@ import System
             for file in files {
                 let inputPath = FilePath(file)
                 let inputFileName = inputPath.lastComponent?.string ?? file
-                print("Reading input file \(inputFileName)...", terminator: "")
+                print("Processing file \(inputFileName)...", terminator: "")
                 let input = try String(contentsOfFile: inputPath.string)
                 guard let generator = try ArityGenerator(input: input, options: options) else {
                     print(" No arity comments found")
@@ -49,8 +49,9 @@ import System
     private func processArguments(_ arguments: [String]) throws -> (options: [ArityGenerator.Option: Int], files: [String], outputDir: FilePath?) {
         var options: [ArityGenerator.Option: Int] = [:]
         var files: [String] = []
-        var skipValue = false
+        var directories: [String] = []
         var outputDir: String? = nil
+        var skipValue = false
         for i in 0..<arguments.count {
             guard !skipValue else {
                 skipValue = false
@@ -58,6 +59,9 @@ import System
             }
             if arguments[i] == "-o" && i < (arguments.count - 1) {
                 outputDir = arguments[i + 1]
+                skipValue = true
+            } else if arguments[i] == "-d" && i < (arguments.count - 1) {
+                directories.append(arguments[i + 1])
                 skipValue = true
             } else if arguments[i].starts(with: "-") && i < (arguments.count - 1) {
                 let optionString = String(arguments[i].dropFirst())
@@ -76,14 +80,32 @@ import System
                 files.append(arguments[i])
             }
         }
+        for directory in directories {
+            files += try findInputFiles(in: directory)
+        }
         return (options, files, outputDir.map { FilePath($0) })
+    }
+
+    private func findInputFiles(in directory: String) throws -> [String] {
+        let directoryURL = URL(fileURLWithPath: directory, isDirectory: true)
+        guard let directoryEnumerator = FileManager.default.enumerator(at: directoryURL, includingPropertiesForKeys: [.isDirectoryKey], options: [.skipsHiddenFiles]) else {
+            return []
+        }
+        var sourceFiles: [String] = []
+        for case let fileURL as URL in directoryEnumerator {
+            guard fileURL.pathExtension == "swift", let resourceValues = try? fileURL.resourceValues(forKeys: [.isDirectoryKey]), resourceValues.isDirectory != true else {
+                continue
+            }
+            sourceFiles.append(fileURL.path)
+        }
+        return sourceFiles
     }
     
     private func header(source: String, options: [ArityGenerator.Option: Int]) -> String {
-        var header = "// THIS FILE IS AUTO GENERATED FROM \(source). DO NOT EDIT\n"
-        header.append("//\n//\t\tswift package plugin generate-arity \(source)\n")
+        var header = "// THIS FILE IS AUTO GENERATED FROM \(source)\n"
+        header.append("//\n//        swift package plugin generate-arity \(source)\n")
         for option in ArityGenerator.Option.allCases {
-            header.append("//\t\t\t-\(option.rawValue) \(option.value(in: options))\n")
+            header.append("//            -\(option.rawValue) \(option.value(in: options))\n")
         }
         if ArityGenerator.Option.beyondDefaults.value(in: options) > 0 {
             header.append("\nimport JXBridge")
@@ -93,10 +115,10 @@ import System
     }
     
     private func usage() -> String {
-        var usage = "swift package plugin generate-arity [-o <output dir>] [-<option> <number>] <files>"
+        var usage = "swift package plugin generate-arity [-o <output dir>] [-<option> <number>] <-d <input dir> | file>+"
         usage.append("\nOptions:")
         for option in ArityGenerator.Option.allCases {
-            usage.append("\n\t\(option.rawValue): Default value \(option.default)")
+            usage.append("\n    \(option.rawValue): Default value \(option.default)")
         }
         return usage
     }

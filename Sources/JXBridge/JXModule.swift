@@ -50,6 +50,13 @@ extension JXModule {
     }
 }
 
+extension JXModule {
+    /// Returns this type's namespace.
+    public var namespace: JXNamespace {
+        return Self.namespace
+    }
+}
+
 /// A module with the capability of having its scripts and resources dynamically loaded from an external source.
 ///
 /// The transport scheme and loading mechaism is to be implemented by a host container.
@@ -83,6 +90,6 @@ public extension JXDynamicModule {
     ///
     /// For example, the module `xyz` will have it's resources stored in `Resources/jx/xyz/SomeFile.js`
     static var localModuleRoot: URL {
-        URL(fileURLWithPath: Self.namespace.string, relativeTo: URL(fileURLWithPath: Self.moduleRootPath, relativeTo: bundle.resourceURL))
+        URL(fileURLWithPath: namespace.string, relativeTo: URL(fileURLWithPath: Self.moduleRootPath, relativeTo: bundle.resourceURL))
     }
 }

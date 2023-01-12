@@ -1,3 +1,5 @@
+import JXKit
+
 /// A namespace used for JavaScript bridged types.
 public struct JXNamespace: ExpressibleByStringLiteral, CustomStringConvertible, Hashable {
     /// The JX system namespace: `jx`
@@ -19,5 +21,15 @@ public struct JXNamespace: ExpressibleByStringLiteral, CustomStringConvertible, 
     
     public var description: String {
         return string
+    }
+}
+
+extension JXNamespace: JXConvertible {
+    public static func fromJX(_ value: JXValue) throws -> JXNamespace {
+        return try JXNamespace(value.string)
+    }
+
+    public func toJX(in context: JXContext) throws -> JXValue {
+        return context.string(string)
     }
 }

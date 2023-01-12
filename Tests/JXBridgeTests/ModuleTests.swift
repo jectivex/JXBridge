@@ -146,7 +146,7 @@ private struct LazyModule: JXModule {
     }
     
     func define(for instance: Any, in context: JXContext) throws -> Bool {
-        return try define(symbol: String(describing: type(of: instance)), namespace: Self.namespace, in: context)
+        return try define(symbol: String(describing: type(of: instance)), namespace: namespace, in: context)
     }
 }
 
@@ -159,7 +159,7 @@ private struct EagerModule: JXModule {
             throw ModuleError.some("EagerModule.register")
         }
         try registry.register {
-            JXBridgeBuilder(type: TestStruct.self, namespace: Self.namespace)
+            JXBridgeBuilder(type: TestStruct.self, namespace: namespace)
                 .constructor { TestStruct.init }
                 .var.intVar { \.intVar }
                 .bridge
@@ -175,9 +175,9 @@ private struct ScriptModule: JXModule {
     
     func register(with registry: JXRegistry) throws {
         if fromResource {
-            try registry.registerModuleScript(resource: "/jsmodules/module1", root: Bundle.module.resourceURL!, namespace: Self.namespace)
+            try registry.registerModuleScript(resource: "/jsmodules/module1", root: Bundle.module.resourceURL!, namespace: namespace)
         } else {
-            try registry.registerModuleScript(module1JS, namespace: Self.namespace)
+            try registry.registerModuleScript(module1JS, namespace: namespace)
         }
     }
 }
