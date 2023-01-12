@@ -76,15 +76,11 @@ final class ModuleTests: XCTestCase {
     func testAnyJXBridgingModule() throws {
         let context = JXContext()
         try context.registry.register(AnyJXBridging(map: [
-            "jx.TestStaticBridgingSubclass": TestStaticBridgingSubclass.self,
-            "jx.TestBridgingSubclass": TestBridgingSubclass()
+            "jx.TestBridgingSubclass": TestBridgingSubclass.self
         ]))
 
-        var result = try context.evalClosure("const obj = new jx.TestStaticBridgingSubclass(); return obj.stringVar + obj.intVar;")
+        let result = try context.evalClosure("const obj = new jx.TestBridgingSubclass(); return obj.stringVar + obj.intVar;")
         XCTAssertEqual(try result.string, "a1")
-        
-        result = try context.evalClosure("const obj = new jx.TestBridgingSubclass(); return obj.stringVar + obj.intVar;")
-        XCTAssertEqual(try result.string, "b2")
     }
 }
 
@@ -92,48 +88,21 @@ private struct TestStruct {
     var intVar = 1
 }
 
-private class TestStaticBridgingBaseClass: JXStaticBridging {
+private class TestBridgingBaseClass: JXBridging {
     var intVar = 1
     
-    class func jxBridge() throws -> JXBridge {
-        return JXBridgeBuilder(type: TestStaticBridgingBaseClass.self)
-            .constructor { TestStaticBridgingBaseClass.init }
-            .var.intVar { \.intVar }
-            .bridge
-    }
-}
-
-private class TestStaticBridgingSubclass: TestStaticBridgingBaseClass {
-    var stringVar = "a"
-    
-    override class func jxBridge() throws -> JXBridge {
-        return JXBridgeBuilder(type: TestStaticBridgingSubclass.self)
-            .superclass(TestStaticBridgingBaseClass.self)
-            .constructor { TestStaticBridgingSubclass.init }
-            .var.stringVar { \.stringVar }
-            .bridge
-    }
-}
-
-private class TestBridgingBaseClass: JXBridging {
-    var intVar = 2
-    
-    class func jxBridge(mirror: Mirror) throws -> JXBridge {
+    static func jxBridge() throws -> JXBridge {
         return JXBridgeBuilder(type: TestBridgingBaseClass.self)
             .constructor { TestBridgingBaseClass.init }
             .var.intVar { \.intVar }
             .bridge
     }
-    
-#if !canImport(ObjectiveC)
-    var jxState: JXState?
-#endif
 }
 
 private class TestBridgingSubclass: TestBridgingBaseClass {
-    var stringVar = "b"
+    var stringVar = "a"
     
-    override class func jxBridge(mirror: Mirror) throws -> JXBridge {
+    override static func jxBridge() throws -> JXBridge {
         return JXBridgeBuilder(type: TestBridgingSubclass.self)
             .superclass(TestBridgingBaseClass.self)
             .constructor { TestBridgingSubclass.init }

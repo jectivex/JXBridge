@@ -3,6 +3,8 @@ import Foundation
 import SwiftParser
 import SwiftSyntax
 
+// TODO: Default constructor, conflicts in funcs overloaded by type, generics, customization by comments, customization in builder, emit warnings and errors
+
 @main
 public class BridgeGenerator {
     /// Expected arguments:

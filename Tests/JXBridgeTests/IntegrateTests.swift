@@ -51,7 +51,7 @@ private class TestModule: JXModule {
     }
 }
 
-private struct TestStruct: JXStaticBridging {
+private struct TestStruct: JXBridging {
     var intVar = 1
     
     mutating func addFunc(_ value: Int) -> Int {
@@ -67,7 +67,7 @@ private struct TestStruct: JXStaticBridging {
     }
 }
 
-private class TestClass: JXStaticBridging {
+private class TestClass: JXBridging {
     var stringVar = "a"
     
     func appendFunc(_ value: String) -> String {

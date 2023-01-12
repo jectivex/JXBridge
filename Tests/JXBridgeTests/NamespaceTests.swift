@@ -83,7 +83,7 @@ final class NamespaceTests: XCTestCase {
     }
 }
 
-private struct TestStruct: JXStaticBridging {
+private struct TestStruct: JXBridging {
     var intVar = 1
     
     static func jxBridge() throws -> JXBridge {
@@ -93,7 +93,7 @@ private struct TestStruct: JXStaticBridging {
             .bridge
     }
 }
-private struct TestStruct2: JXStaticBridging {
+private struct TestStruct2: JXBridging {
     var stringVar = "a"
     
     static func jxBridge() throws -> JXBridge {
@@ -105,7 +105,7 @@ private struct TestStruct2: JXStaticBridging {
 }
 
 private class TestModule: JXModule, JXBridging {
-    private var typeMap: [String: JXStaticBridging.Type] = [
+    private var typeMap: [String: JXBridging.Type] = [
         "TestStruct": TestStruct.self,
         "TestStruct2": TestStruct2.self
     ]
@@ -113,7 +113,7 @@ private class TestModule: JXModule, JXBridging {
     static let namespace = JXNamespace("test")
     
     func initialize(in context: JXContext) throws {
-        try context.registry.registerBridge(for: self, namespace: Self.namespace)
+        try context.registry.registerBridge(for: type(of: self), namespace: Self.namespace)
         try context.global.integrate(self, namespace: Self.namespace)
     }
     
@@ -134,10 +134,13 @@ private class TestModule: JXModule, JXBridging {
         return true
     }
     
-    @JXFunc var jxtestFunc = testFunc
     private func testFunc() -> String {
         return "testFunc"
     }
     
-    var jxState: JXState?
+    static func jxBridge() throws -> JXBridge {
+        return JXBridgeBuilder(type: self)
+            .func.testFunc { $0.testFunc() }
+            .bridge
+    }
 }

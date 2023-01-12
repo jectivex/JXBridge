@@ -435,16 +435,6 @@ ARITY*/
     }
 }
 
-extension JXBridgeBuilder {
-    /// Add properties and methods discovered via `JX*` property wrappers.
-    @discardableResult public func reflect(_ mirror: Mirror) -> JXBridgeBuilder<T> {
-        let builder = MirrorBuilder(mirror, bridge: bridge)
-        builder.addReflectedMembers()
-        bridge = builder.bridge
-        return self
-    }
-}
-
 #if canImport(ObjectiveC)
 extension JXBridgeBuilder where T: NSObject {
     /// Add properties and methods discovered via ObjectiveC reflection.

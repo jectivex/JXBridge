@@ -1,6 +1,6 @@
 import JXBridge
 
-struct StructType: JXMarkerBridging {
+struct StructType: JXBridging {
     let letValue = "let"
     var storedVar = 1
     var storedInitializerVar: Int = { return 2 }()
@@ -40,6 +40,10 @@ struct StructType: JXMarkerBridging {
     }
 
     func instanceFunc(arg: String) -> String {
+        return arg
+    }
+
+    func instanceFunc(arg: Int) -> Int {
         return arg
     }
 
@@ -87,7 +91,7 @@ class OuterType {
     }
 }
 
-public struct PublicType: JXMarkerBridging {
+public struct PublicType: JXBridging {
     public var publicVar = 1
     var internalVar = 2
 }
@@ -98,7 +102,7 @@ extension OuterType {
     }
 }
 
-extension OuterType.InnerType.InnerInnerType: JXMarkerBridging {
+extension OuterType.InnerType.InnerInnerType: JXBridging {
     var computedInnerInnerVar: Int {
         return 2
     }
