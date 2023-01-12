@@ -4,7 +4,7 @@ import PackagePlugin
 import System
 #endif
 
-/// Command plugin to invoke our `ArityGenerator` tool with package `.arity` files.
+/// Command plugin to invoke our `ArityGenerator` tool.
 ///
 ///     swift package plugin generate-arity [-o <output dir>] [-<option> <number>] <-d <input dir> | file>+"
 ///

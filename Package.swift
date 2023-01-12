@@ -49,10 +49,13 @@ let package = Package(
             .product(name: "SwiftSyntax", package: "swift-syntax", condition: .when(platforms: [.macOS, .linux])),
         ]),
         .plugin(name: "JXArityGeneratorCommand",
-                capability: .command(intent: .custom(verb: "generate-arity", description: "Generate arity support"),
-                    permissions: [
-                        .writeToPackageDirectory(reason: "Write arity source files")
-                    ]), dependencies: []),
-        .plugin(name: "JXBridgeGeneratorTool", capability: .buildTool(), dependencies: ["JXBridgeGenerator"])
+                capability: .command(intent: .custom(verb: "generate-arity", description: "Generate arity support"), permissions: [
+                    .writeToPackageDirectory(reason: "Write arity source files")
+                ]),
+                dependencies: []),
+        .plugin(name: "JXBridgeGeneratorTool", capability: .buildTool(), dependencies: ["JXBridgeGenerator"]),
+        .plugin(name: "JXBridgeGeneratorCommand",
+                capability: .command(intent: .custom(verb: "generate-bridges", description: "Generate bridging support")),
+                dependencies: ["JXBridgeGenerator"]),
     ]
 )

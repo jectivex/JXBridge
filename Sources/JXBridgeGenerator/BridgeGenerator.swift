@@ -7,7 +7,7 @@ import SwiftSyntax
 
 /// Generate default bridge builders by analyzing Swift source.
 ///
-///     swift package plugin generate-bridges -o <output file> <-d <input dir> | file>+
+///     swift package plugin generate-bridges [-o <output file>] <-d <input dir> | file>+
 @main public class BridgeGenerator {
     static func main() throws {
         let arguments = CommandLine.arguments
@@ -20,21 +20,22 @@ import SwiftSyntax
 
     /// Run the bridge generator on the given arguments.
     public static func run(_ arguments: [String]) throws {
-        guard let (files, outputFile) = try processArguments(arguments) else {
-            print(usage())
-            return
-        }
+        let (files, outputFile) = try processArguments(arguments)
         let generator = BridgeGenerator()
         let output = try generator.process(files: files)
-        print("Writing output to \(outputFile)...")
-        try output.write(toFile: outputFile, atomically: true, encoding: .utf8)
+        if let outputFile {
+            print("Writing output to \(outputFile)...")
+            try output.write(toFile: outputFile, atomically: true, encoding: .utf8)
+        } else {
+            print(output)
+        }
     }
 
     private static func usage() -> String {
         return "swift package plugin generate-bridges -o <output file> <-d <input dir> | file>+"
     }
 
-    private static func processArguments(_ arguments: [String]) throws -> (files: [String], outputFile: String)? {
+    private static func processArguments(_ arguments: [String]) throws -> (files: [String], outputFile: String?) {
         var files: [String] = []
         var directories: [String] = []
         var outputFile: String?
@@ -53,9 +54,6 @@ import SwiftSyntax
             } else {
                 files.append(arguments[i])
             }
-        }
-        guard let outputFile else {
-            return nil
         }
         for directory in directories {
             files += try findInputFiles(in: directory)
@@ -334,8 +332,7 @@ extension \(typeInfo.qualifiedName) {
 
 #else
 
-@main
-public class BridgeGenerator {
+@main public class BridgeGenerator {
     static func main() throws {
         throw BridgeGeneratorError(message: "Unsupported platform")
     }
