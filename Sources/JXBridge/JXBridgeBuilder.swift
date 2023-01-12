@@ -6,11 +6,11 @@ import JXKit
 /// Build the bridge for scripting a native type.
 public final class JXBridgeBuilder<T> {
     /// Supply the type to bridge.
-    public convenience init(type: T.Type, as typeName: String? = nil, namespace: JXNamespace = .default) {
+    public convenience init(type: T.Type, as typeName: String? = nil, namespace: JXNamespace = .none) {
         self.init(bridge: JXBridge(type: type, as: typeName, namespace: namespace))
     }
     
-    /// Supply an in-progress bridge to add to.
+    /// Supply an existing bridge to modify.
     public init(bridge: JXBridge) {
         self.bridge = bridge
     }

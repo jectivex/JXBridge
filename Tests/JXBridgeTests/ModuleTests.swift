@@ -76,7 +76,7 @@ final class ModuleTests: XCTestCase {
     func testAnyJXBridgingModule() throws {
         let context = JXContext()
         try context.registry.register(AnyJXBridging(map: [
-            "jx.TestBridgingSubclass": TestBridgingSubclass.self
+            "TestBridgingSubclass": TestBridgingSubclass.self
         ]))
 
         let result = try context.evalClosure("const obj = new jx.TestBridgingSubclass(); return obj.stringVar + obj.intVar;")
@@ -91,7 +91,7 @@ private struct TestStruct {
 private class TestBridgingBaseClass: JXBridging {
     var intVar = 1
     
-    static func jxBridge() throws -> JXBridge {
+    class func jxBridge() throws -> JXBridge {
         return JXBridgeBuilder(type: TestBridgingBaseClass.self)
             .constructor { TestBridgingBaseClass.init }
             .var.intVar { \.intVar }
@@ -102,7 +102,7 @@ private class TestBridgingBaseClass: JXBridging {
 private class TestBridgingSubclass: TestBridgingBaseClass {
     var stringVar = "a"
     
-    override static func jxBridge() throws -> JXBridge {
+    override class func jxBridge() throws -> JXBridge {
         return JXBridgeBuilder(type: TestBridgingSubclass.self)
             .superclass(TestBridgingBaseClass.self)
             .constructor { TestBridgingSubclass.init }
@@ -146,7 +146,7 @@ private struct LazyModule: JXModule {
     }
     
     func define(for instance: Any, in context: JXContext) throws -> Bool {
-        return try define(symbol: String(describing: type(of: instance)), namespace: namespace, in: context)
+        return try define(symbol: String(describing: type(of: instance)), namespace: Self.namespace, in: context)
     }
 }
 
@@ -159,7 +159,7 @@ private struct EagerModule: JXModule {
             throw ModuleError.some("EagerModule.register")
         }
         try registry.register {
-            JXBridgeBuilder(type: TestStruct.self, namespace: namespace)
+            JXBridgeBuilder(type: TestStruct.self, namespace: Self.namespace)
                 .constructor { TestStruct.init }
                 .var.intVar { \.intVar }
                 .bridge
@@ -175,9 +175,9 @@ private struct ScriptModule: JXModule {
     
     func register(with registry: JXRegistry) throws {
         if fromResource {
-            try registry.registerModuleScript(resource: "/jsmodules/module1", root: Bundle.module.resourceURL!, namespace: namespace)
+            try registry.registerModuleScript(resource: "/jsmodules/module1", root: Bundle.module.resourceURL!, namespace: Self.namespace)
         } else {
-            try registry.registerModuleScript(module1JS, namespace: namespace)
+            try registry.registerModuleScript(module1JS, namespace: Self.namespace)
         }
     }
 }

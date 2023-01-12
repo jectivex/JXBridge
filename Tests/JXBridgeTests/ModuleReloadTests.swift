@@ -84,9 +84,9 @@ private struct TestJXModule: JXModule {
     
     func register(with registry: JXRegistry) throws {
         if let fromResource {
-            try registry.registerModuleScript(resource: fromResource, root: rootURL, namespace: namespace)
+            try registry.registerModuleScript(resource: fromResource, root: rootURL, namespace: Self.namespace)
         } else if let fromScript {
-            try registry.registerModuleScript(fromScript, root: rootURL, namespace: namespace)
+            try registry.registerModuleScript(fromScript, root: rootURL, namespace: Self.namespace)
         }
     }
 }

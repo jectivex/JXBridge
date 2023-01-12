@@ -1,7 +1,7 @@
 import JXKit
 
 /// Module that auto-registers ``JXBridging`` types:
-/// 1. To support constructing instances from JavaScript, supply a map of qualified type name -> ``JXBridging`` types.
+/// 1. To support constructing instances from JavaScript, supply a map of  type name -> ``JXBridging`` types. The type names may be namespace-qualified.
 /// 2. Any ``JXBridging`` instance returned from bridged functions and properties will automatically be bridged.
 public struct AnyJXBridging: JXModule {
     private let map: (String, JXNamespace) -> JXBridging.Type?
@@ -14,7 +14,7 @@ public struct AnyJXBridging: JXModule {
             }
             return "\(namespace).\(typeName)"
         }
-        self.init(map: { map[qualifiedTypeName($0, namespace: $1)] })
+        self.init(map: { map[qualifiedTypeName($0, namespace: $1)] ?? map[$0] })
     }
     
     /// To construct instances in JavaScript, supply a mapping function of `(typeName, namespace)` to ``JXBridging`` types.

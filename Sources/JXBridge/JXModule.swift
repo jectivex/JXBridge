@@ -14,12 +14,12 @@ public protocol JXModule {
     /// Use this function to prepare the context for use with this module. It may be used to add values, `integrate` functionality, etc.
     func initialize(in context: JXContext) throws
     
-    /// This function is called to lazily define symbols accessed on this namespace. Use it to add values, register bridges, etc. Defaults to `false` as we assume that simple modules will use `register` and `initialize` to eagerly define all symbols.
+    /// This function is called to lazily define symbols accessed on this namespace. Use it to add values, register bridges, etc. Defaults to `false` as modules will typically use `register` and `initialize` to eagerly define all symbols.
     ///
     /// - Returns `true` if the symbol was added or a bridge was registered, `false` otherwise.
     func define(symbol: String, namespace: JXNamespace, in context: JXContext) throws -> Bool
     
-    /// Prepare for the given conveyed or returned  instance, typically by registering a type bridge. Defaults to `false` as we assume that simple modules will use `register` and `initialize` to eagerly define all symbols.
+    /// Prepare for the given conveyed or returned  instance, typically by registering a type bridge. Defaults to `false` as modules will typically use `register` and `initialize` to eagerly define all symbols.
     ///
     /// - Returns `true` if the instance was handled, `false` otherwise.
     func define(for instance: Any, in context: JXContext) throws -> Bool
@@ -27,7 +27,7 @@ public protocol JXModule {
     /// User has requested that this namespace define all symbols and bridges for use.
     ///
     /// - Returns `true` if this module supports defining all symbols, `false` otherwise. Defaults to `true` as we assume that simple modules will use `register` and `initialize` to eagerly define all symbols.
-    func defineAll(namespace: JXNamespace, in context: JXContext) throws -> Bool
+    func defineAll(in context: JXContext) throws -> Bool
 }
 
 extension JXModule {
@@ -45,22 +45,15 @@ extension JXModule {
         return false
     }
     
-    public func defineAll(namespace: JXNamespace, in context: JXContext) throws -> Bool {
+    public func defineAll(in context: JXContext) throws -> Bool {
         return true
-    }
-}
-
-extension JXModule {
-    /// Returns this type's namespace.
-    var namespace: JXNamespace {
-        Self.namespace
     }
 }
 
 /// A module with the capability of having its scripts and resources dynamically loaded from an external source.
 ///
 /// The transport scheme and loading mechaism is to be implemented by a host container.
-public protocol JXDynamicModule : JXModule {
+public protocol JXDynamicModule: JXModule {
     /// The bundle that will contain the local module sources and resources.
     static var bundle: Bundle { get }
 

@@ -9,7 +9,7 @@ final class ObjectiveCTests: XCTestCase {
     // TODO: Flesh out tests
     func testFileManagerReflection() throws {
         let context = JXContext()
-        try context.registry.register(AnyNSObject())
+        try context.registry.register(AnyNSObject(namespace: .jx))
         let result = try context.eval("""
 const fm = jx.NSFileManager.defaultManager;
 const tmpDir = fm.temporaryDirectory;

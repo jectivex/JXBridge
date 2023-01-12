@@ -31,7 +31,7 @@ final class NamespaceTests: XCTestCase {
         XCTAssertTrue(try context.global.deleteNamespace(namespace))
     }
     
-    func testNonDefaultNamespaceBridge() throws {
+    func testNamespaceBridge() throws {
         let context = JXContext()
         try context.registry.register {
             JXBridgeBuilder(type: TestStruct.self, namespace: "test.bridge")
@@ -113,7 +113,7 @@ private class TestModule: JXModule, JXBridging {
     static let namespace = JXNamespace("test")
     
     func initialize(in context: JXContext) throws {
-        try context.registry.registerBridge(for: type(of: self), namespace: Self.namespace)
+        try context.registry.registerBridge(for: type(of: self))
         try context.global.integrate(self, namespace: Self.namespace)
     }
     
@@ -125,9 +125,9 @@ private class TestModule: JXModule, JXBridging {
         return true
     }
     
-    func defineAll(namespace: JXNamespace, in context: JXContext) throws -> Bool {
+    func defineAll(in context: JXContext) throws -> Bool {
         for entry in typeMap {
-            if context.registry.bridge(for: entry.key, namespace: namespace) == nil {
+            if context.registry.bridge(for: entry.key, namespace: Self.namespace) == nil {
                 try context.registry.registerBridge(for: entry.value)
             }
         }
@@ -139,7 +139,7 @@ private class TestModule: JXModule, JXBridging {
     }
     
     static func jxBridge() throws -> JXBridge {
-        return JXBridgeBuilder(type: self)
+        return JXBridgeBuilder(type: self, namespace: namespace)
             .func.testFunc { $0.testFunc() }
             .bridge
     }

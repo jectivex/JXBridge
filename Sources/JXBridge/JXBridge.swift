@@ -6,7 +6,7 @@ import ObjectiveC
 /// Bridge a native type for use in scripting.
 public struct JXBridge {
     /// Supply the native type being bridged.
-    init(type: Any.Type, as typeName: String? = nil, namespace: JXNamespace = .default) {
+    init(type: Any.Type, as typeName: String? = nil, namespace: JXNamespace = .none) {
         self.type = type
         self.typeName = typeName ?? JXTypeName(for: type)
         self.namespace = namespace

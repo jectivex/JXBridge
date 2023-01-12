@@ -117,7 +117,9 @@ final class ContextSPI {
             }
         }
     }
-    
+
+    //~~~ Auto-integrate modules that implement JXBridging. Auto-register on regiser
+
     private func initializeModule(_ module: JXModule, addErrorContext: Bool = false) throws {
         guard let context else {
             return
@@ -128,7 +130,7 @@ final class ContextSPI {
             // When initialization isn't an immediate result of the dev registering the module, add context to help them track down the problem
             if addErrorContext {
                 var error = JXError(cause: error)
-                error.message = "Unable to initialize module '\(module.namespace)': \(error.message)"
+                error.message = "Unable to initialize module '\(type(of: module).namespace)': \(error.message)"
                 throw error
             } else {
                 throw error
@@ -140,7 +142,7 @@ final class ContextSPI {
         guard let context else {
             return
         }
-        try defineNamespace(.default)
+        try defineNamespace(.jx)
         
         let importFunction = JXValue(newFunctionIn: context) { [weak self] context, this, args in
             guard let self else {
@@ -254,11 +256,11 @@ final class ContextSPI {
         guard let context, !importedNamespaces.contains(namespace.string) else {
             return
         }
-        guard namespace != .none && namespace != .default else {
+        guard namespace != .none && namespace != .jx else {
             throw JXError(message: "Namespace '\(namespace)' does not support import()")
         }
         if let module = context.registry.module(for: namespace) {
-            guard try module.defineAll(namespace: namespace, in: context) else {
+            guard try module.defineAll(in: context) else {
                 throw JXError(message: "Module for namespace '\(namespace)' does not support import()")
             }
         }

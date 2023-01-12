@@ -39,7 +39,7 @@ final class BridgedTypeTests: XCTestCase {
             .var.computedInt { \.computedInt }
         try context.registry.register(builder.bridge)
 
-        var result = try context.eval("const obj = new jx.TestStruct(); obj.readWriteInt;")
+        var result = try context.eval("const obj = new TestStruct(); obj.readWriteInt;")
         XCTAssertEqual(try result.int, 1)
         result = try context.eval("obj.readWriteInt = 101; obj.readWriteInt;")
         XCTAssertEqual(try result.int, 101)
@@ -59,7 +59,7 @@ final class BridgedTypeTests: XCTestCase {
         try context.registry.register(builder.bridge)
 
         // We should not be able to set this private property
-        let result = try context.eval("const obj = new jx.TestStruct(); obj.readOnlyInt = 102; obj.readOnlyInt")
+        let result = try context.eval("const obj = new TestStruct(); obj.readOnlyInt = 102; obj.readOnlyInt")
         XCTAssertEqual(try result.int, 102)
     }
 
@@ -74,10 +74,10 @@ final class BridgedTypeTests: XCTestCase {
         try context.registry.register(structBuilder.bridge)
         try context.registry.register(relatedBuilder.bridge)
 
-        var result = try context.eval("const bridged = new jx.TestStruct(); bridged.related.string")
+        var result = try context.eval("const bridged = new TestStruct(); bridged.related.string")
         XCTAssertEqual(try result.string, "related")
 
-        result = try context.eval("const related = new jx.TestRelated(); related.string = 'updated'; bridged.related = related; bridged.related.string")
+        result = try context.eval("const related = new TestRelated(); related.string = 'updated'; bridged.related = related; bridged.related.string")
         XCTAssertEqual(try result.string, "updated")
     }
 
@@ -93,7 +93,7 @@ final class BridgedTypeTests: XCTestCase {
         try context.registry.register(relatedBuilder.bridge)
 
         let result = try context.eval("""
-const bridged = new jx.TestStruct();
+const bridged = new TestStruct();
 bridged.related.string = 'updated-ref';
 bridged.related.string;
 """)
@@ -109,7 +109,7 @@ bridged.related.string;
         try context.registry.register(structBuilder.bridge)
 
         let result = try context.eval("""
-const bridged = new jx.TestStruct();
+const bridged = new TestStruct();
 let caughtErr = '';
 try {
     bridged.exceptionFunc();
@@ -138,19 +138,19 @@ caughtErr;
         try context.registry.register(baseBuilder.bridge)
         try context.registry.register(subclassBuilder.bridge)
 
-        var result = try context.eval("const bridged = new jx.TestSubClass(); bridged.computedString;")
+        var result = try context.eval("const bridged = new TestSubClass(); bridged.computedString;")
         XCTAssertEqual(try result.string, "sub")
 
-        result = try context.eval("jx.TestSubClass.computedClassString;")
+        result = try context.eval("TestSubClass.computedClassString;")
         XCTAssertEqual(try result.string, "subClass")
 
-        result = try context.eval("jx.TestSubClass.baseClassString;")
+        result = try context.eval("TestSubClass.baseClassString;")
         XCTAssertEqual(try result.string, "baseOnlyClass")
 
-        result = try context.eval("jx.TestSubClass.classFunc();")
+        result = try context.eval("TestSubClass.classFunc();")
         XCTAssertEqual(try result.string, "subFunc")
 
-        result = try context.eval("jx.TestBaseClass.staticString;")
+        result = try context.eval("TestBaseClass.staticString;")
         XCTAssertEqual(try result.string, "baseStaticString")
     }
 
@@ -185,7 +185,7 @@ caughtErr;
                 .func.asyncFunc { TestBaseClass.asyncFunc }
                 .bridge
         }
-        var result = try await context.eval("const obj = new jx.TestBaseClass(); obj.asyncVar").awaitPromise(priority: .low)
+        var result = try await context.eval("const obj = new TestBaseClass(); obj.asyncVar").awaitPromise(priority: .low)
         XCTAssertEqual(try result.string, "async")
         
         result = try await context.eval("obj.asyncFunc()").awaitPromise(priority: .low)
@@ -209,7 +209,7 @@ invokeAsync(obj);
                 .func.tupleFunc { TestStruct.tupleFunc }
                 .bridge
         }
-        let result = try context.eval("new jx.TestStruct().tupleFunc()")
+        let result = try context.eval("new TestStruct().tupleFunc()")
         let t = try result.convey(to: (Int, String).self)
         XCTAssertEqual(t.0, 100)
         XCTAssertEqual(t.1, "200")
@@ -225,7 +225,7 @@ invokeAsync(obj);
                 .bridge
         }
         var result = try context.evalClosure("""
-const s = new jx.TestStruct();
+const s = new TestStruct();
 s.readWriteInt = 2;
 let result = 0
 s.callbackFunc(3, (r) => { result = r; });
@@ -234,7 +234,7 @@ return result;
         XCTAssertEqual(try result.int, 5)
         
         result = try context.evalClosure("""
-const s = new jx.TestStruct();
+const s = new TestStruct();
 return s.callbackFunc(2, null);
 """)
         XCTAssertEqual(result.bool, false)
@@ -255,31 +255,31 @@ return s.callbackFunc(2, null);
         }
 
         do {
-            try context.eval("var obj = new jx.TestBaseClass();")
+            try context.eval("var obj = new TestBaseClass();")
             XCTFail("Missing constructor")
         } catch {
-            XCTAssertEqual("\(error)", "Error calling TestBaseClass.init: No constructors registered <<script: var obj = new jx.TestBaseClass(); >>")
+            XCTAssertEqual("\(error)", "Error calling TestBaseClass.init: No constructors registered <<script: var obj = new TestBaseClass(); >>")
         }
         
         do {
-            try context.eval("var obj = new jx.TestStruct(); obj.readWriteInt = 'a';")
+            try context.eval("var obj = new TestStruct(); obj.readWriteInt = 'a';")
             XCTFail("Bad property type")
         } catch {
-            XCTAssertEqual("\(error)", "Error setting TestStruct.readWriteInt: JavaScript value 'a' converted to invalid number 'nan' <<script: var obj = new jx.TestStruct(); obj.readWriteInt = 'a'; >>")
+            XCTAssertEqual("\(error)", "Error setting TestStruct.readWriteInt: JavaScript value 'a' converted to invalid number 'nan' <<script: var obj = new TestStruct(); obj.readWriteInt = 'a'; >>")
         }
         
         do {
-            try context.eval("var obj = new jx.TestStruct(); obj.exceptionFunc(1);")
+            try context.eval("var obj = new TestStruct(); obj.exceptionFunc(1);")
             XCTFail("Wrong number of arguments")
         } catch {
-            XCTAssertEqual("\(error)", "Error calling TestStruct.exceptionFunc: No registered function with that name expecting 1 parameters <<script: var obj = new jx.TestStruct(); obj.exceptionFunc(1); >>")
+            XCTAssertEqual("\(error)", "Error calling TestStruct.exceptionFunc: No registered function with that name expecting 1 parameters <<script: var obj = new TestStruct(); obj.exceptionFunc(1); >>")
         }
         
         do {
-            try context.eval("var obj = new jx.TestStruct(); obj.exceptionFunc();")
+            try context.eval("var obj = new TestStruct(); obj.exceptionFunc();")
             XCTFail("exceptionFunc() should throw")
         } catch {
-            XCTAssertEqual("\(error)", "Error calling TestStruct.exceptionFunc: TestError(message: \"exceptionFunc error\") <<script: var obj = new jx.TestStruct(); obj.exceptionFunc(); >>")
+            XCTAssertEqual("\(error)", "Error calling TestStruct.exceptionFunc: TestError(message: \"exceptionFunc error\") <<script: var obj = new TestStruct(); obj.exceptionFunc(); >>")
         }
     }
 }
