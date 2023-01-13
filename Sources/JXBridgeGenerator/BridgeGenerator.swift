@@ -3,7 +3,8 @@ import Foundation
 import SwiftParser
 import SwiftSyntax
 
-// TODO: Generics, customization by comments
+// TODO: Change to jxGeneratedBridge and make optional?
+// TODO: Generics, customization by comments, lots more tests around subclassing etc
 
 /// Generate default bridge builders by analyzing Swift source.
 @main public class BridgeGenerator {
