@@ -22,24 +22,18 @@ public protocol JXBridging {
 }
 
 extension JXBridging {
-    /// The default implementation calls `jxBridgeBuilder` for any tool-generated bridging code.
     public static func jxBridge() -> JXBridge {
-        return jxBridgeBuilder().bridge
+        return jxDefaultBridge()
     }
 
-    /// Any intrinsic namespace for this type. Used by `jxDefaultBridge`. Defaults to `.none`.
-    public static var jxNamespace: JXNamespace {
-        return .none
-    }
-
-    /// A default JavaScript bridge builder for this type, which you can use in your ``JXBridging/jxBridge()`` method.
+    /// A default JavaScript bridge for this type. This may be implemented by tools. You can customize the default in your ``JXBridging/jxBridge()`` method:
     ///
     ///     static func jxBridge() -> JXBridge {
-    ///         return jxBridgeBuilder()
+    ///         return JXBridgeBuilder(type: self, bridge: jxDefaultBridge())
     ///             // Customizations...
     ///             .bridge
     ///     }
-    public static func jxBridgeBuilder() -> JXBridgeBuilder<Self> {
-        return JXBridgeBuilder(type: self, namespace: jxNamespace)
+    public static func jxDefaultBridge() -> JXBridge {
+        return JXBridge(type: self)
     }
 }

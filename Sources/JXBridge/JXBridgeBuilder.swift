@@ -7,11 +7,11 @@ import JXKit
 public final class JXBridgeBuilder<T> {
     /// Supply the type to bridge.
     public convenience init(type: T.Type, as typeName: String? = nil, namespace: JXNamespace = .none) {
-        self.init(bridge: JXBridge(type: type, as: typeName, namespace: namespace))
+        self.init(type: type, bridge: JXBridge(type: type, as: typeName, namespace: namespace))
     }
     
     /// Supply an existing bridge to modify.
-    public init(bridge: JXBridge) {
+    public init(type: T.Type, bridge: JXBridge) {
         self.bridge = bridge
     }
     

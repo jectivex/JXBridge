@@ -73,6 +73,11 @@ public struct JXBridge {
             throw JXError(message: "Error calling \(String(describing: type)).init: No registered constructor with \(count) parameters")
         }
     }
+
+    /// Whether we have a bridged constructor with the given parameter count.
+    func hasConstructor(forParameterCount count: Int, superclassRegistry: JXRegistry? = nil) -> Bool {
+        return findConstructor(forParameterCount: count, superclassRegistry: superclassRegistry) != nil
+    }
     
     private func findConstructor(forParameterCount count: Int, superclassRegistry: JXRegistry? = nil) -> ConstructorBridge? {
         // Look in reverse order so that later additions override earlier ones

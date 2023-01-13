@@ -102,7 +102,7 @@ import JXBridge
     }
 
     private func generate(for typeInfo: TypeInfo) -> String? {
-        guard !typeInfo.hasBridgeBuilder && typeInfo.type != .unknown else {
+        guard !typeInfo.hasJXDefaultBridge && typeInfo.type != .unknown else {
             return nil
         }
 
@@ -120,6 +120,7 @@ import JXBridge
             return nil
         }
 
+        let namespaceDeclaration = typeInfo.hasJXNamespace ? ", namespace: jxNamespace" : ""
         let memberDeclarations = Self.fixupMembers(of: typeInfo)
             .sorted { t1, t2 in
                 guard t1.type.rawValue != t2.type.rawValue else {
@@ -129,11 +130,19 @@ import JXBridge
             }
             .flatMap { Self.generate(for: $0, in: typeInfo, prefix: prefix) }
             .joined()
+
+        let jxBridgeImplementation = typeInfo.hasJXBridge ? "" : """
+
+    \(typeInfo.visibility) \(functionType) func jxBridge() -> JXBridge {
+        return jxDefaultBridge()
+    }
+
+"""
         return """
-extension \(typeInfo.qualifiedName) {
-    \(typeInfo.visibility) \(functionType) func jxBridgeBuilder() -> JXBridgeBuilder<\(typeInfo.qualifiedName)> {
-        let builder = JXBridgeBuilder(type: \(typeInfo.qualifiedName).self, namespace: jxNamespace)\(superclassDeclaration)\(memberDeclarations)
-        return builder
+extension \(typeInfo.qualifiedName) {\(jxBridgeImplementation)
+    \(typeInfo.visibility) \(functionType) func jxDefaultBridge() -> JXBridge {
+        let builder = JXBridgeBuilder(type: \(typeInfo.qualifiedName).self\(namespaceDeclaration))\(superclassDeclaration)\(memberDeclarations)
+        return builder.bridge
     }
 }
 """

@@ -87,18 +87,20 @@ class SwiftVisitor: SyntaxVisitor {
 
     override func visitPost(_ node: VariableDeclSyntax) {
         if let typeInfo = currentTypeInfo, let currentProperty, !currentProperty.name.isEmpty {
-            typeInfo.members.append(currentProperty)
+            if currentProperty.name == "jxSuperclass" {
+                typeInfo.hasJXSuperclass = true
+            } else if currentProperty.name == "jxNamespace" {
+                typeInfo.hasJXNamespace = true
+            } else {
+                typeInfo.members.append(currentProperty)
+            }
         }
         self.currentProperty = nil
     }
 
     override func visit(_ node: IdentifierPatternSyntax) -> SyntaxVisitorContinueKind {
         if currentProperty?.name.isEmpty == true {
-            let name = node.identifier.text
-            currentProperty?.name = name
-            if name == "jxSuperclass" {
-                currentTypeInfo?.hasJXSuperclass = true
-            }
+            currentProperty?.name = node.identifier.text
         }
         return .skipChildren
     }
@@ -144,7 +146,13 @@ class SwiftVisitor: SyntaxVisitor {
         function.type = .function
         Self.apply(modifiers: node.modifiers, to: &function, defaultVisibility: currentExtensionVisibility)
         Self.apply(signature: node.signature, to: &function)
-        typeInfo.members.append(function)
+        if function.name == "jxBridge" && function.parameters.isEmpty {
+            typeInfo.hasJXBridge = true
+        } else if function.name == "jxDefaultBridge" && function.parameters.isEmpty {
+            typeInfo.hasJXDefaultBridge = true
+        } else {
+            typeInfo.members.append(function)
+        }
         return .skipChildren
     }
 

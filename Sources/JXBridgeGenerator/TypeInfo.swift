@@ -5,19 +5,14 @@ class TypeInfo: CustomStringConvertible {
     var visibility: Visibility = .unknown
     var hasJXBridging = false
     var hasJXModule = false
+    var hasJXBridge = false
+    var hasJXDefaultBridge = false
     var hasJXSuperclass = false
+    var hasJXNamespace = false
     var members: [MemberInfo] = []
 
     init(qualifiedName: String) {
         self.qualifiedName = qualifiedName
-    }
-
-    var hasBridgeBuilder: Bool {
-        return members.contains { member in
-            return member.name == "jxBridgeBuilder"
-                && (member.type == .staticFunction || member.type == .classFunction)
-                && member.parameters.isEmpty
-        }
     }
 
     var description: String {
@@ -31,7 +26,11 @@ class TypeInfo: CustomStringConvertible {
     extends: \(extends ?? "nil")
     visibility: \(visibility)
     hasJXBridging: \(hasJXBridging)
+    hasJXModule: \(hasJXModule)
+    hasJXBridge: \(hasJXBridge)
+    hasJXDefaultBridge: \(hasJXDefaultBridge)
     hasJXSuperclass: \(hasJXSuperclass)
+    hasJXNamespace: \(hasJXNamespace)
 }
 \(membersDescription)
 """
